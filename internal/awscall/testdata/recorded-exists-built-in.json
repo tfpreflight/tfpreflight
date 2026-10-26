@@ -1,0 +1,236 @@
+{
+  "note": "Real AWS responses, recorded from a test account so the tests can check the engine reads each one as the AWS SDK does. Every account ID is replaced by the 123456789012 placeholder. This set covers existence lookups.",
+  "responses": [
+    {
+      "body": "\u003c?xml version=\"1.0\"?\u003e\n\u003cCachePolicy xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"\u003e\u003cId\u003e658327ea-f89d-4fab-a63d-7e88639e58f6\u003c/Id\u003e\u003cLastModifiedTime\u003e1970-01-01T00:00:00Z\u003c/LastModifiedTime\u003e\u003cCachePolicyConfig\u003e\u003cComment\u003ePolicy with caching enabled. Supports Gzip and Brotli compression.\u003c/Comment\u003e\u003cName\u003eManaged-CachingOptimized\u003c/Name\u003e\u003cDefaultTTL\u003e86400\u003c/DefaultTTL\u003e\u003cMaxTTL\u003e31536000\u003c/MaxTTL\u003e\u003cMinTTL\u003e1\u003c/MinTTL\u003e\u003cParametersInCacheKeyAndForwardedToOrigin\u003e\u003cEnableAcceptEncodingGzip\u003etrue\u003c/EnableAcceptEncodingGzip\u003e\u003cEnableAcceptEncodingBrotli\u003etrue\u003c/EnableAcceptEncodingBrotli\u003e\u003cHeadersConfig\u003e\u003cHeaderBehavior\u003enone\u003c/HeaderBehavior\u003e\u003c/HeadersConfig\u003e\u003cCookiesConfig\u003e\u003cCookieBehavior\u003enone\u003c/CookieBehavior\u003e\u003c/CookiesConfig\u003e\u003cQueryStringsConfig\u003e\u003cQueryStringBehavior\u003enone\u003c/QueryStringBehavior\u003e\u003c/QueryStringsConfig\u003e\u003c/ParametersInCacheKeyAndForwardedToOrigin\u003e\u003c/CachePolicyConfig\u003e\u003c/CachePolicy\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+      "label": "cloudfront/GetCachePolicy/Id/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeVpcsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003ef042a3f6-c6d2-4cf2-8105-a8d5f161388f\u003c/requestId\u003e\n    \u003cvpcSet\u003e\n        \u003citem\u003e\n            \u003cvpcId\u003evpc-0667df67c2b464191\u003c/vpcId\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003cstate\u003eavailable\u003c/state\u003e\n            \u003ccidrBlock\u003e172.31.0.0/16\u003c/cidrBlock\u003e\n            \u003ccidrBlockAssociationSet\u003e\n                \u003citem\u003e\n                    \u003ccidrBlock\u003e172.31.0.0/16\u003c/cidrBlock\u003e\n                    \u003cassociationId\u003evpc-cidr-assoc-0e795b2498ded8498\u003c/associationId\u003e\n                    \u003ccidrBlockState\u003e\n                        \u003cstate\u003eassociated\u003c/state\u003e\n                    \u003c/cidrBlockState\u003e\n                \u003c/item\u003e\n            \u003c/cidrBlockAssociationSet\u003e\n            \u003cdhcpOptionsId\u003edopt-0a4911363c6cedfa2\u003c/dhcpOptionsId\u003e\n            \u003cinstanceTenancy\u003edefault\u003c/instanceTenancy\u003e\n            \u003cisDefault\u003etrue\u003c/isDefault\u003e\n            \u003cblockPublicAccessStates\u003e\n                \u003cinternetGatewayBlockMode\u003eoff\u003c/internetGatewayBlockMode\u003e\n            \u003c/blockPublicAccessStates\u003e\n        \u003c/item\u003e\n    \u003c/vpcSet\u003e\n\u003c/DescribeVpcsResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "vpc-0667df67c2b464191",
+      "label": "ec2/DescribeVpcs/VpcIds/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeNetworkAclsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003eba798a93-a05b-4ac7-9730-586c527fa218\u003c/requestId\u003e\n    \u003cnetworkAclSet\u003e\n        \u003citem\u003e\n            \u003cnetworkAclId\u003eacl-002cba21fe40f1e86\u003c/networkAclId\u003e\n            \u003cvpcId\u003evpc-0667df67c2b464191\u003c/vpcId\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003cdefault\u003etrue\u003c/default\u003e\n            \u003centrySet\u003e\n                \u003citem\u003e\n                    \u003cruleNumber\u003e100\u003c/ruleNumber\u003e\n                    \u003cprotocol\u003e-1\u003c/protocol\u003e\n                    \u003cruleAction\u003eallow\u003c/ruleAction\u003e\n                    \u003cegress\u003etrue\u003c/egress\u003e\n                    \u003ccidrBlock\u003e0.0.0.0/0\u003c/cidrBlock\u003e\n                \u003c/item\u003e\n                \u003citem\u003e\n                    \u003cruleNumber\u003e32767\u003c/ruleNumber\u003e\n                    \u003cprotocol\u003e-1\u003c/protocol\u003e\n                    \u003cruleAction\u003edeny\u003c/ruleAction\u003e\n                    \u003cegress\u003etrue\u003c/egress\u003e\n                    \u003ccidrBlock\u003e0.0.0.0/0\u003c/cidrBlock\u003e\n                \u003c/item\u003e\n                \u003citem\u003e\n                    \u003cruleNumber\u003e100\u003c/ruleNumber\u003e\n                    \u003cprotocol\u003e-1\u003c/protocol\u003e\n                    \u003cruleAction\u003eallow\u003c/ruleAction\u003e\n                    \u003cegress\u003efalse\u003c/egress\u003e\n                    \u003ccidrBlock\u003e0.0.0.0/0\u003c/cidrBlock\u003e\n                \u003c/item\u003e\n                \u003citem\u003e\n                    \u003cruleNumber\u003e32767\u003c/ruleNumber\u003e\n                    \u003cprotocol\u003e-1\u003c/protocol\u003e\n                    \u003cruleAction\u003edeny\u003c/ruleAction\u003e\n                    \u003cegress\u003efalse\u003c/egress\u003e\n                    \u003ccidrBlock\u003e0.0.0.0/0\u003c/cidrBlock\u003e\n                \u003c/item\u003e\n            \u003c/entrySet\u003e\n            \u003cassociationSet\u003e\n                \u003citem\u003e\n                    \u003cnetworkAclAssociationId\u003eaclassoc-04629ba5b18b49917\u003c/networkAclAssociationId\u003e\n                    \u003cnetworkAclId\u003eacl-002cba21fe40f1e86\u003c/networkAclId\u003e\n                    \u003csubnetId\u003esubnet-0a5c60c597a9b3a33\u003c/subnetId\u003e\n                \u003c/item\u003e\n                \u003citem\u003e\n                    \u003cnetworkAclAssociationId\u003eaclassoc-0bfb6a7b7f26a06a3\u003c/networkAclAssociationId\u003e\n                    \u003cnetworkAclId\u003eacl-002cba21fe40f1e86\u003c/networkAclId\u003e\n                    \u003csubnetId\u003esubnet-0f5d2514ba86af62e\u003c/subnetId\u003e\n                \u003c/item\u003e\n                \u003citem\u003e\n                    \u003cnetworkAclAssociationId\u003eaclassoc-008a50b9b9ce5fca8\u003c/networkAclAssociationId\u003e\n                    \u003cnetworkAclId\u003eacl-002cba21fe40f1e86\u003c/networkAclId\u003e\n                    \u003csubnetId\u003esubnet-055af3519264084ca\u003c/subnetId\u003e\n                \u003c/item\u003e\n                \u003citem\u003e\n                    \u003cnetworkAclAssociationId\u003eaclassoc-0dde5c8c09645c255\u003c/networkAclAssociationId\u003e\n                    \u003cnetworkAclId\u003eacl-002cba21fe40f1e86\u003c/networkAclId\u003e\n                    \u003csubnetId\u003esubnet-09670e7668b6e8f71\u003c/subnetId\u003e\n                \u003c/item\u003e\n                \u003citem\u003e\n                    \u003cnetworkAclAssociationId\u003eaclassoc-098b97e538d9c1c2b\u003c/networkAclAssociationId\u003e\n                    \u003cnetworkAclId\u003eacl-002cba21fe40f1e86\u003c/networkAclId\u003e\n                    \u003csubnetId\u003esubnet-0159577dcb68d7a29\u003c/subnetId\u003e\n                \u003c/item\u003e\n                \u003citem\u003e\n                    \u003cnetworkAclAssociationId\u003eaclassoc-0ef8cba2063d516b9\u003c/networkAclAssociationId\u003e\n                    \u003cnetworkAclId\u003eacl-002cba21fe40f1e86\u003c/networkAclId\u003e\n                    \u003csubnetId\u003esubnet-054f1af8e146efc0f\u003c/subnetId\u003e\n                \u003c/item\u003e\n            \u003c/associationSet\u003e\n            \u003ctagSet/\u003e\n        \u003c/item\u003e\n    \u003c/networkAclSet\u003e\n\u003c/DescribeNetworkAclsResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "acl-002cba21fe40f1e86",
+      "label": "ec2/DescribeNetworkAcls/NetworkAclIds/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cGetRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cGetRoleResult\u003e\n    \u003cRole\u003e\n      \u003cAssumeRolePolicyDocument\u003e%7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Effect%22%3A%22Allow%22%2C%22Principal%22%3A%7B%22Service%22%3A%22support.amazonaws.com%22%7D%2C%22Action%22%3A%22sts%3AAssumeRole%22%7D%5D%7D\u003c/AssumeRolePolicyDocument\u003e\n      \u003cRoleId\u003eAROAQMKXI66BI5RPU22L7\u003c/RoleId\u003e\n      \u003cDescription\u003eEnables resource access for AWS to provide billing, administrative and support services\u003c/Description\u003e\n      \u003cPath\u003e/aws-service-role/support.amazonaws.com/\u003c/Path\u003e\n      \u003cMaxSessionDuration\u003e3600\u003c/MaxSessionDuration\u003e\n      \u003cRoleLastUsed\u003e\n        \u003cLastUsedDate\u003e2026-08-26T13:54:20Z\u003c/LastUsedDate\u003e\n        \u003cRegion\u003eus-east-1\u003c/Region\u003e\n      \u003c/RoleLastUsed\u003e\n      \u003cRoleName\u003eAWSServiceRoleForSupport\u003c/RoleName\u003e\n      \u003cArn\u003earn:aws:iam::123456789012:role/aws-service-role/support.amazonaws.com/AWSServiceRoleForSupport\u003c/Arn\u003e\n      \u003cCreateDate\u003e2026-08-19T19:29:10Z\u003c/CreateDate\u003e\n    \u003c/Role\u003e\n  \u003c/GetRoleResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003e6131054a-e62f-4725-b3ae-ee86b1ca2a35\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/GetRoleResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "AWSServiceRoleForSupport",
+      "label": "iam/GetRole/RoleName/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cGetPolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cGetPolicyResult\u003e\n    \u003cPolicy\u003e\n      \u003cPermissionsBoundaryUsageCount\u003e0\u003c/PermissionsBoundaryUsageCount\u003e\n      \u003cPath\u003e/\u003c/Path\u003e\n      \u003cUpdateDate\u003e2026-09-24T17:37:08Z\u003c/UpdateDate\u003e\n      \u003cDefaultVersionId\u003ev190\u003c/DefaultVersionId\u003e\n      \u003cPolicyId\u003eANPAILL3HVNFSB6DCOWYQ\u003c/PolicyId\u003e\n      \u003cIsAttachable\u003etrue\u003c/IsAttachable\u003e\n      \u003cPolicyName\u003eReadOnlyAccess\u003c/PolicyName\u003e\n      \u003cDescription\u003eProvides read-only access to AWS services and resources.\u003c/Description\u003e\n      \u003cAttachmentCount\u003e0\u003c/AttachmentCount\u003e\n      \u003cArn\u003earn:aws:iam::aws:policy/ReadOnlyAccess\u003c/Arn\u003e\n      \u003cTags/\u003e\n      \u003cCreateDate\u003e2015-02-06T18:39:48Z\u003c/CreateDate\u003e\n    \u003c/Policy\u003e\n  \u003c/GetPolicyResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003e4471bd5b-3986-4536-bddd-1ef2d2e54997\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/GetPolicyResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "arn:aws:iam::aws:policy/ReadOnlyAccess",
+      "label": "iam/GetPolicy/PolicyArn/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"Arn\":\"arn:aws:events:us-east-1:123456789012:event-bus/default\",\"Name\":\"default\"}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "default",
+      "label": "eventbridge/DescribeEventBus/Name/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"keyspaceName\":\"system_schema\",\"replicationStrategy\":\"SINGLE_REGION\",\"resourceArn\":\"arn:aws:cassandra:us-east-1:123456789012:/keyspace/system_schema/\"}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "id": "system_schema",
+      "label": "keyspaces/GetKeyspace/KeyspaceName/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"DeploymentDurationInMinutes\":0,\"Description\":\"Quick\",\"FinalBakeTimeInMinutes\":10,\"GrowthFactor\":100.0,\"GrowthType\":\"LINEAR\",\"Id\":\"AppConfig.AllAtOnce\",\"Name\":\"AppConfig.AllAtOnce\",\"ReplicateTo\":\"NONE\"}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "AppConfig.AllAtOnce",
+      "label": "appconfig/GetDeploymentStrategy/DeploymentStrategyId/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\"?\u003e\n\u003cOriginRequestPolicy xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"\u003e\u003cId\u003e216adef6-5c7f-47e4-b989-5492eafa07d3\u003c/Id\u003e\u003cLastModifiedTime\u003e1970-01-01T00:00:00Z\u003c/LastModifiedTime\u003e\u003cOriginRequestPolicyConfig\u003e\u003cComment\u003ePolicy to forward all parameters in viewer requests\u003c/Comment\u003e\u003cName\u003eManaged-AllViewer\u003c/Name\u003e\u003cHeadersConfig\u003e\u003cHeaderBehavior\u003eallViewer\u003c/HeaderBehavior\u003e\u003c/HeadersConfig\u003e\u003cCookiesConfig\u003e\u003cCookieBehavior\u003eall\u003c/CookieBehavior\u003e\u003c/CookiesConfig\u003e\u003cQueryStringsConfig\u003e\u003cQueryStringBehavior\u003eall\u003c/QueryStringBehavior\u003e\u003c/QueryStringsConfig\u003e\u003c/OriginRequestPolicyConfig\u003e\u003c/OriginRequestPolicy\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "216adef6-5c7f-47e4-b989-5492eafa07d3",
+      "label": "cloudfront/GetOriginRequestPolicy/Id/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\"?\u003e\n\u003cResponseHeadersPolicy xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"\u003e\u003cId\u003e67f7725c-6f97-4210-82d7-5512b31e9d03\u003c/Id\u003e\u003cLastModifiedTime\u003e1970-01-01T00:00:00Z\u003c/LastModifiedTime\u003e\u003cResponseHeadersPolicyConfig\u003e\u003cComment\u003eAdds a set of security headers to every response\u003c/Comment\u003e\u003cName\u003eManaged-SecurityHeadersPolicy\u003c/Name\u003e\u003cSecurityHeadersConfig\u003e\u003cXSSProtection\u003e\u003cOverride\u003efalse\u003c/Override\u003e\u003cProtection\u003etrue\u003c/Protection\u003e\u003cModeBlock\u003etrue\u003c/ModeBlock\u003e\u003c/XSSProtection\u003e\u003cFrameOptions\u003e\u003cOverride\u003efalse\u003c/Override\u003e\u003cFrameOption\u003eSAMEORIGIN\u003c/FrameOption\u003e\u003c/FrameOptions\u003e\u003cReferrerPolicy\u003e\u003cOverride\u003efalse\u003c/Override\u003e\u003cReferrerPolicy\u003estrict-origin-when-cross-origin\u003c/ReferrerPolicy\u003e\u003c/ReferrerPolicy\u003e\u003cContentSecurityPolicy/\u003e\u003cContentTypeOptions\u003e\u003cOverride\u003etrue\u003c/Override\u003e\u003c/ContentTypeOptions\u003e\u003cStrictTransportSecurity\u003e\u003cOverride\u003efalse\u003c/Override\u003e\u003cAccessControlMaxAgeSec\u003e31536000\u003c/AccessControlMaxAgeSec\u003e\u003c/StrictTransportSecurity\u003e\u003c/SecurityHeadersConfig\u003e\u003c/ResponseHeadersPolicyConfig\u003e\u003c/ResponseHeadersPolicy\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "67f7725c-6f97-4210-82d7-5512b31e9d03",
+      "label": "cloudfront/GetResponseHeadersPolicy/Id/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeSecurityGroupsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e33d9c7bb-602e-4eed-89ad-f8e6a0b30c54\u003c/requestId\u003e\n    \u003csecurityGroupInfo\u003e\n        \u003citem\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003cgroupId\u003esg-01709d461fbd99075\u003c/groupId\u003e\n            \u003cgroupName\u003edefault\u003c/groupName\u003e\n            \u003cgroupDescription\u003edefault VPC security group\u003c/groupDescription\u003e\n            \u003cvpcId\u003evpc-0667df67c2b464191\u003c/vpcId\u003e\n            \u003cipPermissions\u003e\n                \u003citem\u003e\n                    \u003cipProtocol\u003e-1\u003c/ipProtocol\u003e\n                    \u003cgroups\u003e\n                        \u003citem\u003e\n                            \u003cuserId\u003e123456789012\u003c/userId\u003e\n                            \u003cgroupId\u003esg-01709d461fbd99075\u003c/groupId\u003e\n                        \u003c/item\u003e\n                    \u003c/groups\u003e\n                    \u003cipRanges/\u003e\n                    \u003cipv6Ranges/\u003e\n                    \u003cprefixListIds/\u003e\n                \u003c/item\u003e\n            \u003c/ipPermissions\u003e\n            \u003cipPermissionsEgress\u003e\n                \u003citem\u003e\n                    \u003cipProtocol\u003e-1\u003c/ipProtocol\u003e\n                    \u003cgroups/\u003e\n                    \u003cipRanges\u003e\n                        \u003citem\u003e\n                            \u003ccidrIp\u003e0.0.0.0/0\u003c/cidrIp\u003e\n                        \u003c/item\u003e\n                    \u003c/ipRanges\u003e\n                    \u003cipv6Ranges/\u003e\n                    \u003cprefixListIds/\u003e\n                \u003c/item\u003e\n            \u003c/ipPermissionsEgress\u003e\n            \u003csecurityGroupArn\u003earn:aws:ec2:us-east-1:123456789012:security-group/sg-01709d461fbd99075\u003c/securityGroupArn\u003e\n        \u003c/item\u003e\n    \u003c/securityGroupInfo\u003e\n\u003c/DescribeSecurityGroupsResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "sg-01709d461fbd99075",
+      "label": "ec2/DescribeSecurityGroups/GroupIds/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeSubnetsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003ed9e97151-eb20-4635-8bea-91383d8cb834\u003c/requestId\u003e\n    \u003csubnetSet\u003e\n        \u003citem\u003e\n            \u003csubnetId\u003esubnet-0159577dcb68d7a29\u003c/subnetId\u003e\n            \u003csubnetArn\u003earn:aws:ec2:us-east-1:123456789012:subnet/subnet-0159577dcb68d7a29\u003c/subnetArn\u003e\n            \u003cstate\u003eavailable\u003c/state\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003cvpcId\u003evpc-0667df67c2b464191\u003c/vpcId\u003e\n            \u003ccidrBlock\u003e172.31.0.0/20\u003c/cidrBlock\u003e\n            \u003cipv6CidrBlockAssociationSet/\u003e\n            \u003cavailableIpAddressCount\u003e4091\u003c/availableIpAddressCount\u003e\n            \u003cavailabilityZone\u003eus-east-1a\u003c/availabilityZone\u003e\n            \u003cavailabilityZoneId\u003euse1-az1\u003c/availabilityZoneId\u003e\n            \u003cdefaultForAz\u003etrue\u003c/defaultForAz\u003e\n            \u003cmapPublicIpOnLaunch\u003etrue\u003c/mapPublicIpOnLaunch\u003e\n            \u003cassignIpv6AddressOnCreation\u003efalse\u003c/assignIpv6AddressOnCreation\u003e\n            \u003cmapCustomerOwnedIpOnLaunch\u003efalse\u003c/mapCustomerOwnedIpOnLaunch\u003e\n            \u003cprivateDnsNameOptionsOnLaunch\u003e\n                \u003chostnameType\u003eip-name\u003c/hostnameType\u003e\n                \u003cenableResourceNameDnsARecord\u003efalse\u003c/enableResourceNameDnsARecord\u003e\n                \u003cenableResourceNameDnsAAAARecord\u003efalse\u003c/enableResourceNameDnsAAAARecord\u003e\n            \u003c/privateDnsNameOptionsOnLaunch\u003e\n            \u003cipv6Native\u003efalse\u003c/ipv6Native\u003e\n            \u003cenableDns64\u003efalse\u003c/enableDns64\u003e\n            \u003cblockPublicAccessStates\u003e\n                \u003cinternetGatewayBlockMode\u003eoff\u003c/internetGatewayBlockMode\u003e\n            \u003c/blockPublicAccessStates\u003e\n        \u003c/item\u003e\n    \u003c/subnetSet\u003e\n\u003c/DescribeSubnetsResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "subnet-0159577dcb68d7a29",
+      "label": "ec2/DescribeSubnets/SubnetIds/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeInternetGatewaysResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003efc05049f-1320-4085-bed7-02225d14646e\u003c/requestId\u003e\n    \u003cinternetGatewaySet\u003e\n        \u003citem\u003e\n            \u003cinternetGatewayId\u003eigw-076e80c784498c5c6\u003c/internetGatewayId\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003cattachmentSet\u003e\n                \u003citem\u003e\n                    \u003cvpcId\u003evpc-0667df67c2b464191\u003c/vpcId\u003e\n                    \u003cstate\u003eavailable\u003c/state\u003e\n                \u003c/item\u003e\n            \u003c/attachmentSet\u003e\n            \u003ctagSet/\u003e\n        \u003c/item\u003e\n    \u003c/internetGatewaySet\u003e\n\u003c/DescribeInternetGatewaysResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "igw-076e80c784498c5c6",
+      "label": "ec2/DescribeInternetGateways/InternetGatewayIds/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeRouteTablesResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e9663ea32-9180-4029-9680-ef48c61dc0d8\u003c/requestId\u003e\n    \u003crouteTableSet\u003e\n        \u003citem\u003e\n            \u003crouteTableId\u003ertb-0f78d4d1969013052\u003c/routeTableId\u003e\n            \u003cvpcId\u003evpc-0667df67c2b464191\u003c/vpcId\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003crouteSet\u003e\n                \u003citem\u003e\n                    \u003cdestinationCidrBlock\u003e172.31.0.0/16\u003c/destinationCidrBlock\u003e\n                    \u003cgatewayId\u003elocal\u003c/gatewayId\u003e\n                    \u003cstate\u003eactive\u003c/state\u003e\n                    \u003corigin\u003eCreateRouteTable\u003c/origin\u003e\n                \u003c/item\u003e\n                \u003citem\u003e\n                    \u003cdestinationCidrBlock\u003e0.0.0.0/0\u003c/destinationCidrBlock\u003e\n                    \u003cgatewayId\u003eigw-076e80c784498c5c6\u003c/gatewayId\u003e\n                    \u003cstate\u003eactive\u003c/state\u003e\n                    \u003corigin\u003eCreateRoute\u003c/origin\u003e\n                \u003c/item\u003e\n            \u003c/routeSet\u003e\n            \u003cassociationSet\u003e\n                \u003citem\u003e\n                    \u003crouteTableAssociationId\u003ertbassoc-04282b4889ccb0db7\u003c/routeTableAssociationId\u003e\n                    \u003crouteTableId\u003ertb-0f78d4d1969013052\u003c/routeTableId\u003e\n                    \u003cmain\u003etrue\u003c/main\u003e\n                    \u003cassociationState\u003e\n                        \u003cstate\u003eassociated\u003c/state\u003e\n                    \u003c/associationState\u003e\n                \u003c/item\u003e\n            \u003c/associationSet\u003e\n            \u003cpropagatingVgwSet/\u003e\n            \u003ctagSet/\u003e\n        \u003c/item\u003e\n    \u003c/routeTableSet\u003e\n\u003c/DescribeRouteTablesResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "rtb-0f78d4d1969013052",
+      "label": "ec2/DescribeRouteTables/RouteTableIds/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeManagedPrefixListsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e13bd3bca-9933-4f01-a256-10e1b8452ba0\u003c/requestId\u003e\n    \u003cprefixListSet\u003e\n        \u003citem\u003e\n            \u003caddressFamily\u003eIPv4\u003c/addressFamily\u003e\n            \u003cownerId\u003eAWS\u003c/ownerId\u003e\n            \u003cprefixListArn\u003earn:aws:ec2:us-east-1:aws:prefix-list/pl-63a5400a\u003c/prefixListArn\u003e\n            \u003cprefixListId\u003epl-63a5400a\u003c/prefixListId\u003e\n            \u003cprefixListName\u003ecom.amazonaws.us-east-1.s3\u003c/prefixListName\u003e\n            \u003cstate\u003ecreate-complete\u003c/state\u003e\n            \u003ctagSet/\u003e\n        \u003c/item\u003e\n    \u003c/prefixListSet\u003e\n\u003c/DescribeManagedPrefixListsResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "pl-63a5400a",
+      "label": "ec2/DescribeManagedPrefixLists/PrefixListIds/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeImagesResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e171c76d3-cb91-446f-8b1e-e1614b6be1ae\u003c/requestId\u003e\n    \u003cimagesSet\u003e\n        \u003citem\u003e\n            \u003cimageId\u003eami-0d27e0fb3bac4d724\u003c/imageId\u003e\n            \u003cimageLocation\u003eamazon/al2023-ami-2023.12.20260930.0-kernel-6.18-x86_64\u003c/imageLocation\u003e\n            \u003cimageState\u003eavailable\u003c/imageState\u003e\n            \u003cimageOwnerId\u003e137112412989\u003c/imageOwnerId\u003e\n            \u003ccreationDate\u003e2026-09-29T19:49:02.000Z\u003c/creationDate\u003e\n            \u003cisPublic\u003etrue\u003c/isPublic\u003e\n            \u003carchitecture\u003ex86_64\u003c/architecture\u003e\n            \u003cimageType\u003emachine\u003c/imageType\u003e\n            \u003csriovNetSupport\u003esimple\u003c/sriovNetSupport\u003e\n            \u003cimageOwnerAlias\u003eamazon\u003c/imageOwnerAlias\u003e\n            \u003cname\u003eal2023-ami-2023.12.20260930.0-kernel-6.18-x86_64\u003c/name\u003e\n            \u003cdescription\u003eAmazon Linux 2023 AMI 2023.12.20260930.0 x86_64 HVM kernel-6.18\u003c/description\u003e\n            \u003crootDeviceType\u003eebs\u003c/rootDeviceType\u003e\n            \u003crootDeviceName\u003e/dev/xvda\u003c/rootDeviceName\u003e\n            \u003cblockDeviceMapping\u003e\n                \u003citem\u003e\n                    \u003cdeviceName\u003e/dev/xvda\u003c/deviceName\u003e\n                    \u003cebs\u003e\n                        \u003csnapshotId\u003esnap-0d9324d734d6e3ea2\u003c/snapshotId\u003e\n                        \u003cvolumeSize\u003e8\u003c/volumeSize\u003e\n                        \u003cdeleteOnTermination\u003etrue\u003c/deleteOnTermination\u003e\n                        \u003cvolumeType\u003egp3\u003c/volumeType\u003e\n                        \u003ciops\u003e3000\u003c/iops\u003e\n                        \u003cencrypted\u003efalse\u003c/encrypted\u003e\n                        \u003cthroughput\u003e125\u003c/throughput\u003e\n                    \u003c/ebs\u003e\n                \u003c/item\u003e\n            \u003c/blockDeviceMapping\u003e\n            \u003cvirtualizationType\u003ehvm\u003c/virtualizationType\u003e\n            \u003chypervisor\u003exen\u003c/hypervisor\u003e\n            \u003cenaSupport\u003etrue\u003c/enaSupport\u003e\n            \u003cplatformDetails\u003eLinux/UNIX\u003c/platformDetails\u003e\n            \u003cusageOperation\u003eRunInstances\u003c/usageOperation\u003e\n            \u003cbootMode\u003euefi-preferred\u003c/bootMode\u003e\n            \u003cimdsSupport\u003ev2.0\u003c/imdsSupport\u003e\n            \u003cdeprecationTime\u003e2026-12-28T19:51:00.000Z\u003c/deprecationTime\u003e\n            \u003cfreeTierEligible\u003etrue\u003c/freeTierEligible\u003e\n            \u003cpublicSsmParameterName\u003eaws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64\u003c/publicSsmParameterName\u003e\n            \u003csourceImageId\u003eami-0d53cc9bd365ad65b\u003c/sourceImageId\u003e\n            \u003csourceImageRegion\u003eus-west-2\u003c/sourceImageRegion\u003e\n        \u003c/item\u003e\n    \u003c/imagesSet\u003e\n\u003c/DescribeImagesResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "ami-0d27e0fb3bac4d724",
+      "label": "ec2/DescribeImages/ImageIds/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"ApprovalRules\":{\"PatchRules\":[{\"ApproveAfterDays\":7,\"ComplianceLevel\":\"UNSPECIFIED\",\"EnableNonSecurity\":false,\"PatchFilterGroup\":{\"PatchFilters\":[{\"Key\":\"CLASSIFICATION\",\"Values\":[\"Security\"]},{\"Key\":\"SEVERITY\",\"Values\":[\"Critical\",\"Important\"]}]}},{\"ApproveAfterDays\":7,\"ComplianceLevel\":\"UNSPECIFIED\",\"EnableNonSecurity\":false,\"PatchFilterGroup\":{\"PatchFilters\":[{\"Key\":\"CLASSIFICATION\",\"Values\":[\"Bugfix\"]}]}}]},\"ApprovedPatches\":[],\"ApprovedPatchesComplianceLevel\":\"UNSPECIFIED\",\"ApprovedPatchesEnableNonSecurity\":false,\"BaselineId\":\"arn:aws:ssm:us-east-1:123456789012:patchbaseline/pb-0028ca011460d5eaf\",\"CreatedDate\":1.660065490147E9,\"Description\":\"Default Patch Baseline for Amazon Linux 2022 Provided by AWS.\",\"GlobalFilters\":{\"PatchFilters\":[{\"Key\":\"PRODUCT\",\"Values\":[\"*\"]}]},\"ModifiedDate\":1.660065490147E9,\"Name\":\"AWS-AmazonLinux2022DefaultPatchBaseline\",\"OperatingSystem\":\"AMAZON_LINUX_2022\",\"PatchGroups\":[],\"RejectedPatches\":[],\"RejectedPatchesAction\":\"ALLOW_AS_DEPENDENCY\",\"Sources\":[]}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "arn:aws:ssm:us-east-1:123456789012:patchbaseline/pb-0028ca011460d5eaf",
+      "label": "ssm/GetPatchBaseline/BaselineId/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cDescribeCacheParameterGroupsResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\"\u003e\n  \u003cDescribeCacheParameterGroupsResult\u003e\n    \u003cCacheParameterGroups\u003e\n      \u003cCacheParameterGroup\u003e\n        \u003cCacheParameterGroupFamily\u003eredis7\u003c/CacheParameterGroupFamily\u003e\n        \u003cIsGlobal\u003efalse\u003c/IsGlobal\u003e\n        \u003cDescription\u003eDefault parameter group for redis7\u003c/Description\u003e\n        \u003cARN\u003earn:aws:elasticache:us-east-1:123456789012:parametergroup:default.redis7\u003c/ARN\u003e\n        \u003cCacheParameterGroupName\u003edefault.redis7\u003c/CacheParameterGroupName\u003e\n      \u003c/CacheParameterGroup\u003e\n    \u003c/CacheParameterGroups\u003e\n  \u003c/DescribeCacheParameterGroupsResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003e31479695-db11-46c5-995e-7da4eef19846\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/DescribeCacheParameterGroupsResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "default.redis7",
+      "label": "elasticache/DescribeCacheParameterGroups/CacheParameterGroupName/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeDhcpOptionsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e56923a0d-756d-4b8b-acfd-67cfa6bf98ea\u003c/requestId\u003e\n    \u003cdhcpOptionsSet\u003e\n        \u003citem\u003e\n            \u003cdhcpOptionsId\u003edopt-0a4911363c6cedfa2\u003c/dhcpOptionsId\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003cdhcpConfigurationSet\u003e\n                \u003citem\u003e\n                    \u003ckey\u003edomain-name\u003c/key\u003e\n                    \u003cvalueSet\u003e\n                        \u003citem\u003e\n                            \u003cvalue\u003eec2.internal\u003c/value\u003e\n                        \u003c/item\u003e\n                    \u003c/valueSet\u003e\n                \u003c/item\u003e\n                \u003citem\u003e\n                    \u003ckey\u003edomain-name-servers\u003c/key\u003e\n                    \u003cvalueSet\u003e\n                        \u003citem\u003e\n                            \u003cvalue\u003eAmazonProvidedDNS\u003c/value\u003e\n                        \u003c/item\u003e\n                    \u003c/valueSet\u003e\n                \u003c/item\u003e\n            \u003c/dhcpConfigurationSet\u003e\n            \u003ctagSet/\u003e\n            \u003ctype\u003evpc\u003c/type\u003e\n        \u003c/item\u003e\n    \u003c/dhcpOptionsSet\u003e\n\u003c/DescribeDhcpOptionsResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "dopt-0a4911363c6cedfa2",
+      "label": "ec2/DescribeDhcpOptions/DhcpOptionsIds/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cDescribeDBClusterParameterGroupsResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\"\u003e\n  \u003cDescribeDBClusterParameterGroupsResult\u003e\n    \u003cDBClusterParameterGroups\u003e\n      \u003cDBClusterParameterGroup\u003e\n        \u003cDBClusterParameterGroupArn\u003earn:aws:rds:us-east-1:123456789012:cluster-pg:default.neptune1.3\u003c/DBClusterParameterGroupArn\u003e\n        \u003cDBParameterGroupFamily\u003eneptune1.3\u003c/DBParameterGroupFamily\u003e\n        \u003cDBClusterParameterGroupName\u003edefault.neptune1.3\u003c/DBClusterParameterGroupName\u003e\n        \u003cDescription\u003eDefault cluster parameter group for neptune1.3\u003c/Description\u003e\n      \u003c/DBClusterParameterGroup\u003e\n    \u003c/DBClusterParameterGroups\u003e\n  \u003c/DescribeDBClusterParameterGroupsResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003e8f5ad632-258a-407e-8714-13c31bdd87b9\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/DescribeDBClusterParameterGroupsResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "default.neptune1.3",
+      "label": "neptune/DescribeDBClusterParameterGroups/DBClusterParameterGroupName/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"capacityProviders\":[{\"capacityProviderArn\":\"arn:aws:ecs:us-east-1:123456789012:capacity-provider/FARGATE\",\"name\":\"FARGATE\",\"status\":\"ACTIVE\",\"tags\":[],\"type\":\"FARGATE\"}],\"failures\":[]}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "FARGATE",
+      "label": "ecs/DescribeCapacityProviders/CapacityProviders/exists-built-in",
+      "region": "us-east-1",
+      "status": 200
+    }
+  ]
+}

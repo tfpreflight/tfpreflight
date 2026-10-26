@@ -1,0 +1,4 @@
+tfpreflight · AWS provider 6.64.0 · region unknown · 6 resources
+
+! AWS checks did not run: no AWS credentials found.
+  Only the plan was checked. Log in to AWS and run again.

@@ -1,0 +1,4 @@
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/tfpreflight/tfpreflight/security/advisories/new
+    about: Report privately, as described in SECURITY.md. Do not open a public issue.

@@ -1,0 +1,21 @@
+{
+ "note": "Runtime contract fixture listing the SDK modules used by the generated 6.64.0 adapters.",
+ "Services": {
+  "cloudfront": {
+   "Module": "github.com/aws/aws-sdk-go-v2/service/cloudfront",
+   "Version": "v1.72.0"
+  },
+  "dynamodb": {
+   "Module": "github.com/aws/aws-sdk-go-v2/service/dynamodb",
+   "Version": "v1.67.0"
+  },
+  "route53": {
+   "Module": "github.com/aws/aws-sdk-go-v2/service/route53",
+   "Version": "v1.69.0"
+  },
+  "s3": {
+   "Module": "github.com/aws/aws-sdk-go-v2/service/s3",
+   "Version": "v1.111.0"
+  }
+ }
+}

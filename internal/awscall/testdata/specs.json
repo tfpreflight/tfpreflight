@@ -1,0 +1,1503 @@
+{
+  "partitions": [
+    {
+      "name": "aws",
+      "region_regex": "^(us|eu|ap|sa|ca|me|af|il|mx)\\-\\w+\\-\\d+$",
+      "regions": [
+        "af-south-1",
+        "ap-east-1",
+        "ap-east-2",
+        "ap-northeast-1",
+        "ap-northeast-2",
+        "ap-northeast-3",
+        "ap-south-1",
+        "ap-south-2",
+        "ap-southeast-1",
+        "ap-southeast-2",
+        "ap-southeast-3",
+        "ap-southeast-4",
+        "ap-southeast-5",
+        "ap-southeast-6",
+        "ap-southeast-7",
+        "aws-global",
+        "ca-central-1",
+        "ca-west-1",
+        "eu-central-1",
+        "eu-central-2",
+        "eu-north-1",
+        "eu-south-1",
+        "eu-south-2",
+        "eu-west-1",
+        "eu-west-2",
+        "eu-west-3",
+        "il-central-1",
+        "me-central-1",
+        "me-south-1",
+        "mx-central-1",
+        "sa-east-1",
+        "us-east-1",
+        "us-east-2",
+        "us-west-1",
+        "us-west-2"
+      ]
+    },
+    {
+      "name": "aws-cn",
+      "region_regex": "^cn\\-\\w+\\-\\d+$",
+      "regions": [
+        "aws-cn-global",
+        "cn-north-1",
+        "cn-northwest-1"
+      ]
+    },
+    {
+      "name": "aws-eusc",
+      "region_regex": "^eusc\\-(de)\\-\\w+\\-\\d+$",
+      "regions": [
+        "eusc-de-east-1"
+      ]
+    },
+    {
+      "name": "aws-iso",
+      "region_regex": "^us\\-iso\\-\\w+\\-\\d+$",
+      "regions": [
+        "aws-iso-global",
+        "us-iso-east-1",
+        "us-iso-west-1"
+      ]
+    },
+    {
+      "name": "aws-iso-b",
+      "region_regex": "^us\\-isob\\-\\w+\\-\\d+$",
+      "regions": [
+        "aws-iso-b-global",
+        "us-isob-east-1",
+        "us-isob-west-1"
+      ]
+    },
+    {
+      "name": "aws-iso-e",
+      "region_regex": "^eu\\-isoe\\-\\w+\\-\\d+$",
+      "regions": [
+        "aws-iso-e-global",
+        "eu-isoe-west-1"
+      ]
+    },
+    {
+      "name": "aws-iso-f",
+      "region_regex": "^us\\-isof\\-\\w+\\-\\d+$",
+      "regions": [
+        "aws-iso-f-global",
+        "us-isof-east-1",
+        "us-isof-south-1"
+      ]
+    },
+    {
+      "name": "aws-us-gov",
+      "region_regex": "^us\\-gov\\-\\w+\\-\\d+$",
+      "regions": [
+        "aws-us-gov-global",
+        "us-gov-east-1",
+        "us-gov-west-1"
+      ]
+    }
+  ],
+  "specs": [
+    {
+      "service": "ec2",
+      "operation": "DescribeVpcs",
+      "field": "VpcIds",
+      "signing_name": "ec2",
+      "sdk_id": "EC2",
+      "sdk_layout": "classic",
+      "protocol": "ec2Query",
+      "endpoints": {
+        "standard": {
+          "partitions": {
+            "aws": {
+              "hostname": "ec2.{region}.amazonaws.com"
+            },
+            "aws-cn": {
+              "hostname": "ec2.{region}.amazonaws.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "ec2.{region}.amazonaws.eu"
+            },
+            "aws-iso": {
+              "hostname": "ec2.{region}.c2s.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "ec2.{region}.sc2s.sgov.gov"
+            },
+            "aws-iso-e": {
+              "hostname": "ec2.{region}.cloud.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "ec2.{region}.csp.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "ec2.{region}.amazonaws.com"
+            }
+          }
+        },
+        "fips": {
+          "partitions": {
+            "aws": {
+              "hostname": "ec2-fips.{region}.amazonaws.com"
+            },
+            "aws-cn": {
+              "hostname": "ec2-fips.{region}.amazonaws.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "ec2-fips.{region}.amazonaws.eu"
+            },
+            "aws-iso": {
+              "hostname": "ec2-fips.{region}.c2s.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "ec2-fips.{region}.sc2s.sgov.gov"
+            },
+            "aws-iso-e": {
+              "hostname": "ec2-fips.{region}.cloud.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "ec2-fips.{region}.csp.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "ec2.{region}.amazonaws.com"
+            }
+          }
+        },
+        "dualstack": {
+          "partitions": {
+            "aws": {
+              "hostname": "ec2.{region}.api.aws"
+            },
+            "aws-cn": {
+              "hostname": "ec2.{region}.api.amazonwebservices.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "ec2.{region}.api.amazonwebservices.eu"
+            },
+            "aws-iso": {
+              "hostname": "ec2.{region}.api.aws.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "ec2.{region}.api.aws.scloud"
+            },
+            "aws-iso-e": {
+              "hostname": "ec2.{region}.api.cloud-aws.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "ec2.{region}.api.aws.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "ec2.{region}.api.aws"
+            }
+          }
+        },
+        "fips_dualstack": {
+          "partitions": {
+            "aws": {
+              "hostname": "ec2-fips.{region}.api.aws"
+            },
+            "aws-cn": {
+              "hostname": "ec2-fips.{region}.api.amazonwebservices.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "ec2-fips.{region}.api.amazonwebservices.eu"
+            },
+            "aws-iso": {
+              "hostname": "ec2-fips.{region}.api.aws.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "ec2-fips.{region}.api.aws.scloud"
+            },
+            "aws-iso-e": {
+              "hostname": "ec2-fips.{region}.api.cloud-aws.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "ec2-fips.{region}.api.aws.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "ec2-fips.{region}.api.aws"
+            }
+          }
+        },
+        "custom_refuses": [
+          "fips",
+          "dualstack"
+        ]
+      },
+      "method": "POST",
+      "path": "/",
+      "api_version": "2016-11-15",
+      "inputs": [
+        {
+          "member": "VpcIds",
+          "location": "body",
+          "name": "VpcId",
+          "list": true
+        }
+      ],
+      "not_found": {
+        "codes": [
+          "InvalidVpcID.NotFound"
+        ]
+      },
+      "success": {
+        "mode": "identity_echo",
+        "paths": [
+          [
+            "vpcSet",
+            "item",
+            "vpcId"
+          ]
+        ]
+      },
+      "verification": {
+        "missing": true,
+        "malformed": true,
+        "exists": true
+      }
+    },
+    {
+      "service": "iam",
+      "operation": "GetRole",
+      "field": "RoleName",
+      "signing_name": "iam",
+      "sdk_id": "IAM",
+      "sdk_layout": "classic",
+      "protocol": "awsQuery",
+      "endpoints": {
+        "standard": {
+          "partitions": {
+            "aws": {
+              "hostname": "iam.amazonaws.com",
+              "signing_region": "us-east-1"
+            },
+            "aws-cn": {
+              "hostname": "iam.cn-north-1.amazonaws.com.cn",
+              "signing_region": "cn-north-1"
+            },
+            "aws-eusc": {
+              "hostname": "iam.eusc-de-east-1.amazonaws.eu",
+              "signing_region": "eusc-de-east-1"
+            },
+            "aws-iso": {
+              "hostname": "iam.us-iso-east-1.c2s.ic.gov",
+              "signing_region": "us-iso-east-1"
+            },
+            "aws-iso-b": {
+              "hostname": "iam.us-isob-east-1.sc2s.sgov.gov",
+              "signing_region": "us-isob-east-1"
+            },
+            "aws-iso-e": {
+              "hostname": "iam.eu-isoe-west-1.cloud.adc-e.uk",
+              "signing_region": "eu-isoe-west-1"
+            },
+            "aws-iso-f": {
+              "hostname": "iam.us-isof-south-1.csp.hci.ic.gov",
+              "signing_region": "us-isof-south-1"
+            },
+            "aws-us-gov": {
+              "hostname": "iam.us-gov.amazonaws.com",
+              "signing_region": "us-gov-west-1"
+            }
+          },
+          "regions": {
+            "cn-north-1": {
+              "hostname": "iam.cn-north-1.amazonaws.com.cn"
+            },
+            "eu-isoe-west-1": {
+              "hostname": "iam.eu-isoe-west-1.cloud.adc-e.uk"
+            },
+            "eusc-de-east-1": {
+              "hostname": "iam.eusc-de-east-1.amazonaws.eu"
+            },
+            "us-east-1": {
+              "hostname": "iam.amazonaws.com"
+            },
+            "us-gov-west-1": {
+              "hostname": "iam.us-gov.amazonaws.com"
+            },
+            "us-iso-east-1": {
+              "hostname": "iam.us-iso-east-1.c2s.ic.gov"
+            },
+            "us-isob-east-1": {
+              "hostname": "iam.us-isob-east-1.sc2s.sgov.gov"
+            },
+            "us-isof-south-1": {
+              "hostname": "iam.us-isof-south-1.csp.hci.ic.gov"
+            }
+          }
+        },
+        "fips": {
+          "partitions": {
+            "aws": {
+              "hostname": "iam-fips.amazonaws.com",
+              "signing_region": "us-east-1"
+            },
+            "aws-cn": {
+              "hostname": "iam-fips.amazonaws.com.cn",
+              "signing_region": "cn-north-1"
+            },
+            "aws-eusc": {
+              "hostname": "iam-fips.amazonaws.eu",
+              "signing_region": "eusc-de-east-1"
+            },
+            "aws-iso": {
+              "hostname": "iam-fips.us-iso-east-1.c2s.ic.gov",
+              "signing_region": "us-iso-east-1"
+            },
+            "aws-iso-b": {
+              "hostname": "iam-fips.us-isob-east-1.sc2s.sgov.gov",
+              "signing_region": "us-isob-east-1"
+            },
+            "aws-iso-e": {
+              "hostname": "iam-fips.cloud.adc-e.uk",
+              "signing_region": "eu-isoe-west-1"
+            },
+            "aws-iso-f": {
+              "hostname": "iam-fips.csp.hci.ic.gov",
+              "signing_region": "us-isof-south-1"
+            },
+            "aws-us-gov": {
+              "hostname": "iam.us-gov.amazonaws.com",
+              "signing_region": "us-gov-west-1"
+            }
+          },
+          "regions": {
+            "cn-north-1": {
+              "hostname": "iam-fips.amazonaws.com.cn"
+            },
+            "eu-isoe-west-1": {
+              "hostname": "iam-fips.cloud.adc-e.uk"
+            },
+            "eusc-de-east-1": {
+              "hostname": "iam-fips.amazonaws.eu"
+            },
+            "us-east-1": {
+              "hostname": "iam-fips.amazonaws.com"
+            },
+            "us-gov-west-1": {
+              "hostname": "iam.us-gov.amazonaws.com"
+            },
+            "us-iso-east-1": {
+              "hostname": "iam-fips.us-iso-east-1.c2s.ic.gov"
+            },
+            "us-isob-east-1": {
+              "hostname": "iam-fips.us-isob-east-1.sc2s.sgov.gov"
+            },
+            "us-isof-south-1": {
+              "hostname": "iam-fips.csp.hci.ic.gov"
+            }
+          }
+        },
+        "dualstack": {
+          "partitions": {
+            "aws": {
+              "hostname": "iam.global.api.aws",
+              "signing_region": "us-east-1"
+            },
+            "aws-cn": {
+              "hostname": "iam.global.api.amazonwebservices.com.cn",
+              "signing_region": "cn-north-1"
+            },
+            "aws-eusc": {
+              "hostname": "iam.global.api.amazonwebservices.eu",
+              "signing_region": "eusc-de-east-1"
+            },
+            "aws-iso": {
+              "hostname": "iam.api.aws.ic.gov",
+              "signing_region": "us-iso-east-1"
+            },
+            "aws-iso-b": {
+              "hostname": "iam.api.aws.scloud",
+              "signing_region": "us-isob-east-1"
+            },
+            "aws-iso-e": {
+              "hostname": "iam.api.cloud-aws.adc-e.uk",
+              "signing_region": "eu-isoe-west-1"
+            },
+            "aws-iso-f": {
+              "hostname": "iam.api.aws.hci.ic.gov",
+              "signing_region": "us-isof-south-1"
+            },
+            "aws-us-gov": {
+              "hostname": "iam.us-gov.api.aws",
+              "signing_region": "us-gov-west-1"
+            }
+          },
+          "regions": {
+            "cn-north-1": {
+              "hostname": "iam.global.api.amazonwebservices.com.cn"
+            },
+            "eu-isoe-west-1": {
+              "hostname": "iam.api.cloud-aws.adc-e.uk"
+            },
+            "eusc-de-east-1": {
+              "hostname": "iam.global.api.amazonwebservices.eu"
+            },
+            "us-east-1": {
+              "hostname": "iam.global.api.aws"
+            },
+            "us-gov-west-1": {
+              "hostname": "iam.us-gov.api.aws"
+            },
+            "us-iso-east-1": {
+              "hostname": "iam.api.aws.ic.gov"
+            },
+            "us-isob-east-1": {
+              "hostname": "iam.api.aws.scloud"
+            },
+            "us-isof-south-1": {
+              "hostname": "iam.api.aws.hci.ic.gov"
+            }
+          }
+        },
+        "fips_dualstack": {
+          "partitions": {
+            "aws": {
+              "hostname": "iam-fips.global.api.aws",
+              "signing_region": "us-east-1"
+            },
+            "aws-cn": {
+              "hostname": "iam-fips.api.amazonwebservices.com.cn",
+              "signing_region": "cn-north-1"
+            },
+            "aws-eusc": {
+              "hostname": "iam-fips.api.amazonwebservices.eu",
+              "signing_region": "eusc-de-east-1"
+            },
+            "aws-iso": {
+              "hostname": "iam-fips.api.aws.ic.gov",
+              "signing_region": "us-iso-east-1"
+            },
+            "aws-iso-b": {
+              "hostname": "iam-fips.api.aws.scloud",
+              "signing_region": "us-isob-east-1"
+            },
+            "aws-iso-e": {
+              "hostname": "iam-fips.api.cloud-aws.adc-e.uk",
+              "signing_region": "eu-isoe-west-1"
+            },
+            "aws-iso-f": {
+              "hostname": "iam-fips.api.aws.hci.ic.gov",
+              "signing_region": "us-isof-south-1"
+            },
+            "aws-us-gov": {
+              "hostname": "iam.us-gov.api.aws",
+              "signing_region": "us-gov-west-1"
+            }
+          },
+          "regions": {
+            "cn-north-1": {
+              "hostname": "iam-fips.api.amazonwebservices.com.cn"
+            },
+            "eu-isoe-west-1": {
+              "hostname": "iam-fips.api.cloud-aws.adc-e.uk"
+            },
+            "eusc-de-east-1": {
+              "hostname": "iam-fips.api.amazonwebservices.eu"
+            },
+            "us-east-1": {
+              "hostname": "iam-fips.global.api.aws"
+            },
+            "us-gov-west-1": {
+              "hostname": "iam.us-gov.api.aws"
+            },
+            "us-iso-east-1": {
+              "hostname": "iam-fips.api.aws.ic.gov"
+            },
+            "us-isob-east-1": {
+              "hostname": "iam-fips.api.aws.scloud"
+            },
+            "us-isof-south-1": {
+              "hostname": "iam-fips.api.aws.hci.ic.gov"
+            }
+          }
+        },
+        "custom_refuses": [
+          "fips",
+          "dualstack"
+        ]
+      },
+      "method": "POST",
+      "path": "/",
+      "api_version": "2010-05-08",
+      "inputs": [
+        {
+          "member": "RoleName",
+          "location": "body",
+          "name": "RoleName"
+        }
+      ],
+      "not_found": {
+        "codes": [
+          "NoSuchEntityException"
+        ],
+        "type": "NoSuchEntityException",
+        "type_codes": [
+          "NoSuchEntity"
+        ],
+        "type_name_matches": true
+      },
+      "success": {
+        "mode": "identity_echo_or_singular_success",
+        "paths": [
+          [
+            "Role",
+            "Arn"
+          ],
+          [
+            "Role",
+            "RoleId"
+          ],
+          [
+            "Role",
+            "RoleName"
+          ]
+        ]
+      },
+      "verification": {
+        "missing": true,
+        "malformed": true,
+        "exists": true
+      }
+    },
+    {
+      "service": "acm",
+      "operation": "DescribeCertificate",
+      "field": "CertificateArn",
+      "signing_name": "acm",
+      "sdk_id": "ACM",
+      "sdk_layout": "schema",
+      "protocol": "awsJson1_1",
+      "endpoints": {
+        "standard": {
+          "partitions": {
+            "aws": {
+              "hostname": "acm.{region}.amazonaws.com"
+            },
+            "aws-cn": {
+              "hostname": "acm.{region}.amazonaws.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "acm.{region}.amazonaws.eu"
+            },
+            "aws-iso": {
+              "hostname": "acm.{region}.c2s.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "acm.{region}.sc2s.sgov.gov"
+            },
+            "aws-iso-e": {
+              "hostname": "acm.{region}.cloud.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "acm.{region}.csp.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "acm.{region}.amazonaws.com"
+            }
+          }
+        },
+        "fips": {
+          "partitions": {
+            "aws": {
+              "hostname": "acm-fips.{region}.amazonaws.com"
+            },
+            "aws-cn": {
+              "hostname": "acm-fips.{region}.amazonaws.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "acm-fips.{region}.amazonaws.eu"
+            },
+            "aws-iso": {
+              "hostname": "acm-fips.{region}.c2s.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "acm-fips.{region}.sc2s.sgov.gov"
+            },
+            "aws-iso-e": {
+              "hostname": "acm-fips.{region}.cloud.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "acm-fips.{region}.csp.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "acm.{region}.amazonaws.com"
+            }
+          }
+        },
+        "dualstack": {
+          "partitions": {
+            "aws": {
+              "hostname": "acm.{region}.api.aws"
+            },
+            "aws-cn": {
+              "hostname": "acm.{region}.api.amazonwebservices.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "acm.{region}.api.amazonwebservices.eu"
+            },
+            "aws-iso": {
+              "hostname": "acm.{region}.api.aws.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "acm.{region}.api.aws.scloud"
+            },
+            "aws-iso-e": {
+              "hostname": "acm.{region}.api.cloud-aws.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "acm.{region}.api.aws.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "acm.{region}.api.aws"
+            }
+          }
+        },
+        "fips_dualstack": {
+          "partitions": {
+            "aws": {
+              "hostname": "acm-fips.{region}.api.aws"
+            },
+            "aws-cn": {
+              "hostname": "acm-fips.{region}.api.amazonwebservices.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "acm-fips.{region}.api.amazonwebservices.eu"
+            },
+            "aws-iso": {
+              "hostname": "acm-fips.{region}.api.aws.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "acm-fips.{region}.api.aws.scloud"
+            },
+            "aws-iso-e": {
+              "hostname": "acm-fips.{region}.api.cloud-aws.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "acm-fips.{region}.api.aws.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "acm-fips.{region}.api.aws"
+            }
+          }
+        }
+      },
+      "method": "POST",
+      "path": "/",
+      "target": "CertificateManager.DescribeCertificate",
+      "inputs": [
+        {
+          "member": "CertificateArn",
+          "location": "body",
+          "name": "CertificateArn"
+        }
+      ],
+      "not_found": {
+        "codes": [
+          "ResourceNotFoundException"
+        ]
+      },
+      "success": {
+        "mode": "identity_echo_or_singular_success",
+        "paths": [
+          [
+            "Certificate",
+            "CertificateArn"
+          ]
+        ]
+      },
+      "verification": {
+        "missing": true,
+        "malformed": true,
+        "exists": false
+      }
+    },
+    {
+      "service": "dynamodb",
+      "operation": "DescribeTable",
+      "field": "TableName",
+      "signing_name": "dynamodb",
+      "sdk_id": "DynamoDB",
+      "sdk_layout": "classic",
+      "protocol": "awsJson1_0",
+      "endpoints": {
+        "standard": {
+          "partitions": {
+            "aws": {
+              "hostname": "dynamodb.{region}.amazonaws.com"
+            },
+            "aws-cn": {
+              "hostname": "dynamodb.{region}.amazonaws.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "dynamodb.{region}.amazonaws.eu"
+            },
+            "aws-iso": {
+              "hostname": "dynamodb.{region}.c2s.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "dynamodb.{region}.sc2s.sgov.gov"
+            },
+            "aws-iso-e": {
+              "hostname": "dynamodb.{region}.cloud.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "dynamodb.{region}.csp.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "dynamodb.{region}.amazonaws.com"
+            }
+          }
+        },
+        "fips": {
+          "partitions": {
+            "aws": {
+              "hostname": "dynamodb-fips.{region}.amazonaws.com"
+            },
+            "aws-cn": {
+              "hostname": "dynamodb-fips.{region}.amazonaws.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "dynamodb-fips.{region}.amazonaws.eu"
+            },
+            "aws-iso": {
+              "hostname": "dynamodb-fips.{region}.c2s.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "dynamodb-fips.{region}.sc2s.sgov.gov"
+            },
+            "aws-iso-e": {
+              "hostname": "dynamodb-fips.{region}.cloud.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "dynamodb-fips.{region}.csp.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "dynamodb.{region}.amazonaws.com"
+            }
+          }
+        },
+        "dualstack": {
+          "partitions": {
+            "aws": {
+              "hostname": "dynamodb.{region}.api.aws"
+            },
+            "aws-cn": {
+              "hostname": "dynamodb.{region}.api.amazonwebservices.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "dynamodb.{region}.api.amazonwebservices.eu"
+            },
+            "aws-iso": {
+              "hostname": "dynamodb.{region}.api.aws.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "dynamodb.{region}.api.aws.scloud"
+            },
+            "aws-iso-e": {
+              "hostname": "dynamodb.{region}.api.cloud-aws.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "dynamodb.{region}.api.aws.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "dynamodb.{region}.api.aws"
+            }
+          }
+        },
+        "fips_dualstack": {
+          "partitions": {
+            "aws": {
+              "hostname": "dynamodb-fips.{region}.api.aws"
+            },
+            "aws-cn": {
+              "hostname": "dynamodb-fips.{region}.api.amazonwebservices.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "dynamodb-fips.{region}.api.amazonwebservices.eu"
+            },
+            "aws-iso": {
+              "hostname": "dynamodb-fips.{region}.api.aws.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "dynamodb-fips.{region}.api.aws.scloud"
+            },
+            "aws-iso-e": {
+              "hostname": "dynamodb-fips.{region}.api.cloud-aws.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "dynamodb-fips.{region}.api.aws.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "dynamodb-fips.{region}.api.aws"
+            }
+          }
+        },
+        "custom_refuses": [
+          "fips",
+          "dualstack"
+        ]
+      },
+      "method": "POST",
+      "path": "/",
+      "target": "DynamoDB_20120810.DescribeTable",
+      "endpoint_discovery": "optional",
+      "inputs": [
+        {
+          "member": "TableName",
+          "location": "body",
+          "name": "TableName"
+        }
+      ],
+      "not_found": {
+        "codes": [
+          "ResourceNotFoundException"
+        ],
+        "type": "ResourceNotFoundException",
+        "type_codes": [
+          "ResourceNotFoundException"
+        ],
+        "type_name_matches": true
+      },
+      "success": {
+        "mode": "identity_echo_or_singular_success",
+        "paths": [
+          [
+            "Table",
+            "TableArn"
+          ],
+          [
+            "Table",
+            "TableId"
+          ],
+          [
+            "Table",
+            "TableName"
+          ]
+        ]
+      },
+      "verification": {
+        "missing": true,
+        "malformed": true,
+        "exists": true
+      }
+    },
+    {
+      "service": "lambda",
+      "operation": "GetFunction",
+      "field": "FunctionName",
+      "signing_name": "lambda",
+      "sdk_id": "Lambda",
+      "sdk_layout": "classic",
+      "protocol": "restJson1",
+      "endpoints": {
+        "standard": {
+          "partitions": {
+            "aws": {
+              "hostname": "lambda.{region}.amazonaws.com"
+            },
+            "aws-cn": {
+              "hostname": "lambda.{region}.amazonaws.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "lambda.{region}.amazonaws.eu"
+            },
+            "aws-iso": {
+              "hostname": "lambda.{region}.c2s.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "lambda.{region}.sc2s.sgov.gov"
+            },
+            "aws-iso-e": {
+              "hostname": "lambda.{region}.cloud.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "lambda.{region}.csp.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "lambda.{region}.amazonaws.com"
+            }
+          }
+        },
+        "fips": {
+          "partitions": {
+            "aws": {
+              "hostname": "lambda-fips.{region}.amazonaws.com"
+            },
+            "aws-cn": {
+              "hostname": "lambda-fips.{region}.amazonaws.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "lambda-fips.{region}.amazonaws.eu"
+            },
+            "aws-iso": {
+              "hostname": "lambda-fips.{region}.c2s.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "lambda-fips.{region}.sc2s.sgov.gov"
+            },
+            "aws-iso-e": {
+              "hostname": "lambda-fips.{region}.cloud.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "lambda-fips.{region}.csp.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "lambda-fips.{region}.amazonaws.com"
+            }
+          }
+        },
+        "dualstack": {
+          "partitions": {
+            "aws": {
+              "hostname": "lambda.{region}.api.aws"
+            },
+            "aws-cn": {
+              "hostname": "lambda.{region}.api.amazonwebservices.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "lambda.{region}.api.amazonwebservices.eu"
+            },
+            "aws-iso": {
+              "hostname": "lambda.{region}.api.aws.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "lambda.{region}.api.aws.scloud"
+            },
+            "aws-iso-e": {
+              "hostname": "lambda.{region}.api.cloud-aws.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "lambda.{region}.api.aws.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "lambda.{region}.api.aws"
+            }
+          }
+        },
+        "fips_dualstack": {
+          "partitions": {
+            "aws": {
+              "hostname": "lambda-fips.{region}.api.aws"
+            },
+            "aws-cn": {
+              "hostname": "lambda-fips.{region}.api.amazonwebservices.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "lambda-fips.{region}.api.amazonwebservices.eu"
+            },
+            "aws-iso": {
+              "hostname": "lambda-fips.{region}.api.aws.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "lambda-fips.{region}.api.aws.scloud"
+            },
+            "aws-iso-e": {
+              "hostname": "lambda-fips.{region}.api.cloud-aws.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "lambda-fips.{region}.api.aws.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "lambda-fips.{region}.api.aws"
+            }
+          }
+        },
+        "custom_refuses": [
+          "fips",
+          "dualstack"
+        ]
+      },
+      "method": "GET",
+      "path": "/2015-03-31/functions/{FunctionName}",
+      "inputs": [
+        {
+          "member": "FunctionName",
+          "location": "label",
+          "name": "FunctionName"
+        }
+      ],
+      "not_found": {
+        "codes": [
+          "ResourceNotFoundException"
+        ],
+        "type": "ResourceNotFoundException",
+        "type_codes": [
+          "ResourceNotFoundException"
+        ],
+        "type_name_matches": true
+      },
+      "success": {
+        "mode": "identity_echo_or_singular_success",
+        "paths": [
+          [
+            "Configuration",
+            "FunctionArn"
+          ],
+          [
+            "Configuration",
+            "FunctionName"
+          ]
+        ]
+      },
+      "verification": {
+        "missing": true,
+        "malformed": true,
+        "exists": false
+      }
+    },
+    {
+      "service": "cloudfront",
+      "operation": "GetDistribution",
+      "field": "Id",
+      "signing_name": "cloudfront",
+      "sdk_id": "CloudFront",
+      "sdk_layout": "classic",
+      "protocol": "restXml",
+      "endpoints": {
+        "standard": {
+          "partitions": {
+            "aws": {
+              "hostname": "cloudfront.amazonaws.com",
+              "signing_region": "us-east-1"
+            },
+            "aws-cn": {
+              "hostname": "cloudfront.cn-northwest-1.amazonaws.com.cn",
+              "signing_region": "cn-northwest-1"
+            },
+            "aws-eusc": {
+              "hostname": "cloudfront.amazonaws.eu",
+              "signing_region": "eusc-de-east-1"
+            },
+            "aws-iso": {
+              "hostname": "cloudfront.c2s.ic.gov",
+              "signing_region": "us-iso-east-1"
+            },
+            "aws-iso-b": {
+              "hostname": "cloudfront.sc2s.sgov.gov",
+              "signing_region": "us-isob-east-1"
+            },
+            "aws-iso-e": {
+              "hostname": "cloudfront.cloud.adc-e.uk",
+              "signing_region": "eu-isoe-west-1"
+            },
+            "aws-iso-f": {
+              "hostname": "cloudfront.csp.hci.ic.gov",
+              "signing_region": "us-isof-south-1"
+            },
+            "aws-us-gov": {
+              "hostname": "cloudfront.amazonaws.com",
+              "signing_region": "us-gov-west-1"
+            }
+          },
+          "regions": {
+            "cn-northwest-1": {
+              "hostname": "cloudfront.cn-northwest-1.amazonaws.com.cn"
+            },
+            "eu-isoe-west-1": {
+              "hostname": "cloudfront.cloud.adc-e.uk"
+            },
+            "eusc-de-east-1": {
+              "hostname": "cloudfront.amazonaws.eu"
+            },
+            "us-east-1": {
+              "hostname": "cloudfront.amazonaws.com"
+            },
+            "us-gov-west-1": {
+              "hostname": "cloudfront.amazonaws.com"
+            },
+            "us-iso-east-1": {
+              "hostname": "cloudfront.c2s.ic.gov"
+            },
+            "us-isob-east-1": {
+              "hostname": "cloudfront.sc2s.sgov.gov"
+            },
+            "us-isof-south-1": {
+              "hostname": "cloudfront.csp.hci.ic.gov"
+            }
+          }
+        },
+        "fips": {
+          "partitions": {
+            "aws": {
+              "hostname": "cloudfront-fips.amazonaws.com",
+              "signing_region": "us-east-1"
+            },
+            "aws-cn": {
+              "hostname": "cloudfront-fips.cn-northwest-1.amazonaws.com.cn",
+              "signing_region": "cn-northwest-1"
+            },
+            "aws-eusc": {
+              "hostname": "cloudfront-fips.amazonaws.eu",
+              "signing_region": "eusc-de-east-1"
+            },
+            "aws-iso": {
+              "hostname": "cloudfront-fips.c2s.ic.gov",
+              "signing_region": "us-iso-east-1"
+            },
+            "aws-iso-b": {
+              "hostname": "cloudfront-fips.sc2s.sgov.gov",
+              "signing_region": "us-isob-east-1"
+            },
+            "aws-iso-e": {
+              "hostname": "cloudfront-fips.cloud.adc-e.uk",
+              "signing_region": "eu-isoe-west-1"
+            },
+            "aws-iso-f": {
+              "hostname": "cloudfront-fips.csp.hci.ic.gov",
+              "signing_region": "us-isof-south-1"
+            },
+            "aws-us-gov": {
+              "hostname": "cloudfront-fips.amazonaws.com",
+              "signing_region": "us-gov-west-1"
+            }
+          },
+          "regions": {
+            "cn-northwest-1": {
+              "hostname": "cloudfront-fips.cn-northwest-1.amazonaws.com.cn"
+            },
+            "eu-isoe-west-1": {
+              "hostname": "cloudfront-fips.cloud.adc-e.uk"
+            },
+            "eusc-de-east-1": {
+              "hostname": "cloudfront-fips.amazonaws.eu"
+            },
+            "us-east-1": {
+              "hostname": "cloudfront-fips.amazonaws.com"
+            },
+            "us-gov-west-1": {
+              "hostname": "cloudfront-fips.amazonaws.com"
+            },
+            "us-iso-east-1": {
+              "hostname": "cloudfront-fips.c2s.ic.gov"
+            },
+            "us-isob-east-1": {
+              "hostname": "cloudfront-fips.sc2s.sgov.gov"
+            },
+            "us-isof-south-1": {
+              "hostname": "cloudfront-fips.csp.hci.ic.gov"
+            }
+          }
+        },
+        "dualstack": {
+          "partitions": {
+            "aws": {
+              "hostname": "cloudfront.global.api.aws",
+              "signing_region": "us-east-1"
+            },
+            "aws-cn": {
+              "hostname": "cloudfront.api.amazonwebservices.com.cn",
+              "signing_region": "cn-northwest-1"
+            },
+            "aws-eusc": {
+              "hostname": "cloudfront.api.amazonwebservices.eu",
+              "signing_region": "eusc-de-east-1"
+            },
+            "aws-iso": {
+              "hostname": "cloudfront.api.aws.ic.gov",
+              "signing_region": "us-iso-east-1"
+            },
+            "aws-iso-b": {
+              "hostname": "cloudfront.api.aws.scloud",
+              "signing_region": "us-isob-east-1"
+            },
+            "aws-iso-e": {
+              "hostname": "cloudfront.api.cloud-aws.adc-e.uk",
+              "signing_region": "eu-isoe-west-1"
+            },
+            "aws-iso-f": {
+              "hostname": "cloudfront.api.aws.hci.ic.gov",
+              "signing_region": "us-isof-south-1"
+            },
+            "aws-us-gov": {
+              "hostname": "cloudfront.api.aws",
+              "signing_region": "us-gov-west-1"
+            }
+          },
+          "regions": {
+            "cn-northwest-1": {
+              "hostname": "cloudfront.api.amazonwebservices.com.cn"
+            },
+            "eu-isoe-west-1": {
+              "hostname": "cloudfront.api.cloud-aws.adc-e.uk"
+            },
+            "eusc-de-east-1": {
+              "hostname": "cloudfront.api.amazonwebservices.eu"
+            },
+            "us-east-1": {
+              "hostname": "cloudfront.global.api.aws"
+            },
+            "us-gov-west-1": {
+              "hostname": "cloudfront.api.aws"
+            },
+            "us-iso-east-1": {
+              "hostname": "cloudfront.api.aws.ic.gov"
+            },
+            "us-isob-east-1": {
+              "hostname": "cloudfront.api.aws.scloud"
+            },
+            "us-isof-south-1": {
+              "hostname": "cloudfront.api.aws.hci.ic.gov"
+            }
+          }
+        },
+        "fips_dualstack": {
+          "partitions": {
+            "aws": {
+              "hostname": "cloudfront-fips.global.api.aws",
+              "signing_region": "us-east-1"
+            },
+            "aws-cn": {
+              "hostname": "cloudfront-fips.api.amazonwebservices.com.cn",
+              "signing_region": "cn-northwest-1"
+            },
+            "aws-eusc": {
+              "hostname": "cloudfront-fips.api.amazonwebservices.eu",
+              "signing_region": "eusc-de-east-1"
+            },
+            "aws-iso": {
+              "hostname": "cloudfront-fips.api.aws.ic.gov",
+              "signing_region": "us-iso-east-1"
+            },
+            "aws-iso-b": {
+              "hostname": "cloudfront-fips.api.aws.scloud",
+              "signing_region": "us-isob-east-1"
+            },
+            "aws-iso-e": {
+              "hostname": "cloudfront-fips.api.cloud-aws.adc-e.uk",
+              "signing_region": "eu-isoe-west-1"
+            },
+            "aws-iso-f": {
+              "hostname": "cloudfront-fips.api.aws.hci.ic.gov",
+              "signing_region": "us-isof-south-1"
+            },
+            "aws-us-gov": {
+              "hostname": "cloudfront-fips.api.aws",
+              "signing_region": "us-gov-west-1"
+            }
+          },
+          "regions": {
+            "cn-northwest-1": {
+              "hostname": "cloudfront-fips.api.amazonwebservices.com.cn"
+            },
+            "eu-isoe-west-1": {
+              "hostname": "cloudfront-fips.api.cloud-aws.adc-e.uk"
+            },
+            "eusc-de-east-1": {
+              "hostname": "cloudfront-fips.api.amazonwebservices.eu"
+            },
+            "us-east-1": {
+              "hostname": "cloudfront-fips.global.api.aws"
+            },
+            "us-gov-west-1": {
+              "hostname": "cloudfront-fips.api.aws"
+            },
+            "us-iso-east-1": {
+              "hostname": "cloudfront-fips.api.aws.ic.gov"
+            },
+            "us-isob-east-1": {
+              "hostname": "cloudfront-fips.api.aws.scloud"
+            },
+            "us-isof-south-1": {
+              "hostname": "cloudfront-fips.api.aws.hci.ic.gov"
+            }
+          }
+        },
+        "custom_refuses": [
+          "fips",
+          "dualstack"
+        ]
+      },
+      "method": "GET",
+      "path": "/2020-05-31/distribution/{Id}",
+      "inputs": [
+        {
+          "member": "Id",
+          "location": "label",
+          "name": "Id"
+        }
+      ],
+      "not_found": {
+        "codes": [
+          "NoSuchDistribution"
+        ]
+      },
+      "success": {
+        "mode": "identity_echo_or_singular_success",
+        "paths": [
+          [
+            "Id"
+          ]
+        ]
+      },
+      "verification": {
+        "missing": true,
+        "malformed": true,
+        "exists": false
+      }
+    },
+    {
+      "service": "gamelift",
+      "operation": "DescribeFleetAttributes",
+      "field": "FleetIds",
+      "signing_name": "gamelift",
+      "sdk_id": "GameLift",
+      "sdk_layout": "schema",
+      "protocol": "rpcv2Cbor",
+      "endpoints": {
+        "standard": {
+          "partitions": {
+            "aws": {
+              "hostname": "gamelift.{region}.amazonaws.com"
+            },
+            "aws-cn": {
+              "hostname": "gamelift.{region}.amazonaws.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "gamelift.{region}.amazonaws.eu"
+            },
+            "aws-iso": {
+              "hostname": "gamelift.{region}.c2s.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "gamelift.{region}.sc2s.sgov.gov"
+            },
+            "aws-iso-e": {
+              "hostname": "gamelift.{region}.cloud.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "gamelift.{region}.csp.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "gamelift.{region}.amazonaws.com"
+            }
+          }
+        },
+        "fips": {
+          "partitions": {
+            "aws": {
+              "hostname": "gamelift-fips.{region}.amazonaws.com"
+            },
+            "aws-cn": {
+              "hostname": "gamelift-fips.{region}.amazonaws.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "gamelift-fips.{region}.amazonaws.eu"
+            },
+            "aws-iso": {
+              "hostname": "gamelift-fips.{region}.c2s.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "gamelift-fips.{region}.sc2s.sgov.gov"
+            },
+            "aws-iso-e": {
+              "hostname": "gamelift-fips.{region}.cloud.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "gamelift-fips.{region}.csp.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "gamelift-fips.{region}.amazonaws.com"
+            }
+          }
+        },
+        "dualstack": {
+          "partitions": {
+            "aws": {
+              "hostname": "gamelift.{region}.api.aws"
+            },
+            "aws-cn": {
+              "hostname": "gamelift.{region}.api.amazonwebservices.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "gamelift.{region}.api.amazonwebservices.eu"
+            },
+            "aws-iso": {
+              "hostname": "gamelift.{region}.api.aws.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "gamelift.{region}.api.aws.scloud"
+            },
+            "aws-iso-e": {
+              "hostname": "gamelift.{region}.api.cloud-aws.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "gamelift.{region}.api.aws.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "gamelift.{region}.api.aws"
+            }
+          }
+        },
+        "fips_dualstack": {
+          "partitions": {
+            "aws": {
+              "hostname": "gamelift-fips.{region}.api.aws"
+            },
+            "aws-cn": {
+              "hostname": "gamelift-fips.{region}.api.amazonwebservices.com.cn"
+            },
+            "aws-eusc": {
+              "hostname": "gamelift-fips.{region}.api.amazonwebservices.eu"
+            },
+            "aws-iso": {
+              "hostname": "gamelift-fips.{region}.api.aws.ic.gov"
+            },
+            "aws-iso-b": {
+              "hostname": "gamelift-fips.{region}.api.aws.scloud"
+            },
+            "aws-iso-e": {
+              "hostname": "gamelift-fips.{region}.api.cloud-aws.adc-e.uk"
+            },
+            "aws-iso-f": {
+              "hostname": "gamelift-fips.{region}.api.aws.hci.ic.gov"
+            },
+            "aws-us-gov": {
+              "hostname": "gamelift-fips.{region}.api.aws"
+            }
+          }
+        },
+        "custom_refuses": [
+          "fips",
+          "dualstack"
+        ]
+      },
+      "method": "POST",
+      "path": "/",
+      "target": "GameLift",
+      "inputs": [
+        {
+          "member": "FleetIds",
+          "location": "body",
+          "name": "FleetIds",
+          "list": true
+        }
+      ],
+      "not_found": {
+        "codes": [
+          "NotFoundException"
+        ]
+      },
+      "success": {
+        "mode": "identity_echo",
+        "paths": [
+          [
+            "FleetAttributes",
+            "FleetId"
+          ]
+        ]
+      },
+      "verification": {
+        "missing": true,
+        "malformed": true,
+        "exists": false
+      }
+    }
+  ]
+}

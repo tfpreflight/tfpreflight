@@ -1,0 +1,30 @@
+# Built CLI and release output.
+/tfpreflight
+/dist/
+/.build/
+
+# Terraform runtime state and provider plugins. Fixtures are built by the
+# tests themselves; a checked-in .terraform tree is a provider cache, not a
+# fixture, and costs hundreds of megabytes each.
+**/.terraform/
+**/.terraform.lock.hcl
+!cmd/tfpreflight/testdata/realworld/*/.terraform.lock.hcl
+*.tfplan
+*.tfstate
+*.tfstate.*
+tfplan
+
+# OS noise.
+.DS_Store
+
+# Local environment, editors, and Go test and profiling output.
+.env*
+.vscode/
+.idea/
+*.swp
+*.out
+coverage.html
+*.prof
+*.test
+tfpreflight.exe
+/private-notes/

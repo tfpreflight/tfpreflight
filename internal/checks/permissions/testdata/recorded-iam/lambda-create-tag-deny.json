@@ -1,0 +1,30 @@
+{
+  "about": "A role allowed lambda:* on *, with a statement that denies lambda:CreateFunction on * when aws:RequestTag/team is not platform.",
+  "context_keys": ["aws:RequestTag/team"],
+  "exchanges": [
+    {
+      "action": "lambda:CreateFunction",
+      "resource": "arn:aws:lambda:us-east-1:123456789012:function:api",
+      "context": {"aws:RequestedRegion": ["us-east-1"]},
+      "result": {"EvalActionName": "lambda:CreateFunction", "EvalResourceName": "arn:aws:lambda:us-east-1:123456789012:function:api", "EvalDecision": "explicitDeny", "MissingContextValues": ["aws:RequestTag/team"]}
+    },
+    {
+      "action": "lambda:CreateFunction",
+      "resource": "arn:aws:lambda:us-east-1:123456789012:function:api",
+      "context": {"aws:RequestTag/team": ["platform"], "aws:RequestedRegion": ["us-east-1"], "aws:TagKeys": ["team"]},
+      "result": {"EvalActionName": "lambda:CreateFunction", "EvalResourceName": "arn:aws:lambda:us-east-1:123456789012:function:api", "EvalDecision": "allowed", "MissingContextValues": []}
+    },
+    {
+      "action": "lambda:CreateFunction",
+      "resource": "arn:aws:lambda:us-east-1:123456789012:function:api",
+      "context": {"aws:RequestTag/team": ["data"], "aws:RequestedRegion": ["us-east-1"], "aws:TagKeys": ["team"]},
+      "result": {"EvalActionName": "lambda:CreateFunction", "EvalResourceName": "arn:aws:lambda:us-east-1:123456789012:function:api", "EvalDecision": "explicitDeny", "MissingContextValues": []}
+    },
+    {
+      "action": "lambda:CreateFunction",
+      "resource": "*",
+      "context": {"aws:RequestTag/team": ["data"], "aws:RequestedRegion": ["us-east-1"], "aws:TagKeys": ["team"]},
+      "result": {"EvalActionName": "lambda:CreateFunction", "EvalResourceName": "*", "EvalDecision": "explicitDeny", "MissingContextValues": []}
+    }
+  ]
+}

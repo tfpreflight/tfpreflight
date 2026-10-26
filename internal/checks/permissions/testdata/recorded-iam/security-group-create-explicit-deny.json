@@ -1,0 +1,11 @@
+{
+  "about": "The demo's deploy role: an identity-policy statement denies ec2:CreateSecurityGroup on *. The group's ID is assigned at create, so the request names *.",
+  "exchanges": [
+    {
+      "action": "ec2:CreateSecurityGroup",
+      "resource": "*",
+      "context": {"aws:RequestedRegion": ["us-east-1"]},
+      "result": {"EvalActionName": "ec2:CreateSecurityGroup", "EvalResourceName": "*", "EvalDecision": "explicitDeny", "MissingContextValues": []}
+    }
+  ]
+}

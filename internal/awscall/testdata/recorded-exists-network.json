@@ -1,0 +1,691 @@
+{
+  "note": "Real AWS responses, recorded from a test account so the tests can check the engine reads each one as the AWS SDK does. Every account ID is replaced by the 123456789012 placeholder. This set covers network existence lookups.",
+  "responses": [
+    {
+      "body": "{\"VpcConnector\":{\"CreatedAt\":1.791786473E9,\"SecurityGroups\":[\"sg-04666d0b84183c111\"],\"Status\":\"ACTIVE\",\"Subnets\":[\"subnet-043c3ec3fb3ad3284\"],\"VpcConnectorArn\":\"arn:aws:apprunner:us-east-1:123456789012:vpcconnector/tfpreflight-verify-0a63c6a033df/1/4b40845490934acdb9195d2adbea875c\",\"VpcConnectorName\":\"tfpreflight-verify-0a63c6a033df\",\"VpcConnectorRevision\":1}}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "id": "arn:aws:apprunner:us-east-1:123456789012:vpcconnector/tfpreflight-verify-0a63c6a033df/1/4b40845490934acdb9195d2adbea875c",
+      "label": "apprunner/DescribeVpcConnector/VpcConnectorArn/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeAddressesResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e2aa93e49-48c0-47a4-9c33-a94ae0a6a47d\u003c/requestId\u003e\n    \u003caddressesSet\u003e\n        \u003citem\u003e\n            \u003cpublicIp\u003e100.62.128.47\u003c/publicIp\u003e\n            \u003callocationId\u003eeipalloc-0a59c19fdae26fb94\u003c/allocationId\u003e\n            \u003cdomain\u003evpc\u003c/domain\u003e\n            \u003ctagSet\u003e\n                \u003citem\u003e\n                    \u003ckey\u003eName\u003c/key\u003e\n                    \u003cvalue\u003etfpreflight-verify-0a63c6a033df\u003c/value\u003e\n                \u003c/item\u003e\n            \u003c/tagSet\u003e\n            \u003cpublicIpv4Pool\u003eamazon\u003c/publicIpv4Pool\u003e\n            \u003cnetworkBorderGroup\u003eus-east-1\u003c/networkBorderGroup\u003e\n        \u003c/item\u003e\n    \u003c/addressesSet\u003e\n\u003c/DescribeAddressesResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "eipalloc-0a59c19fdae26fb94",
+      "label": "ec2/DescribeAddresses/AllocationIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeCustomerGatewaysResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e838af7d5-860b-4bf0-8c63-adb9fa8f2f7e\u003c/requestId\u003e\n    \u003ccustomerGatewaySet\u003e\n        \u003citem\u003e\n            \u003ccustomerGatewayId\u003ecgw-0bc891082bb00f2a5\u003c/customerGatewayId\u003e\n            \u003cstate\u003eavailable\u003c/state\u003e\n            \u003ctype\u003eipsec.1\u003c/type\u003e\n            \u003cipAddress\u003e198.51.100.10\u003c/ipAddress\u003e\n            \u003cbgpAsn\u003e65000\u003c/bgpAsn\u003e\n            \u003ccertificatePinning\u003efalse\u003c/certificatePinning\u003e\n            \u003ctagSet\u003e\n                \u003citem\u003e\n                    \u003ckey\u003eName\u003c/key\u003e\n                    \u003cvalue\u003etfpreflight-verify-0a63c6a033df\u003c/value\u003e\n                \u003c/item\u003e\n            \u003c/tagSet\u003e\n        \u003c/item\u003e\n    \u003c/customerGatewaySet\u003e\n\u003c/DescribeCustomerGatewaysResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "cgw-0bc891082bb00f2a5",
+      "label": "ec2/DescribeCustomerGateways/CustomerGatewayIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeDhcpOptionsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e616f1dae-0d22-4897-b1ae-fc158739a5f0\u003c/requestId\u003e\n    \u003cdhcpOptionsSet\u003e\n        \u003citem\u003e\n            \u003cdhcpOptionsId\u003edopt-04e578561bf52cec2\u003c/dhcpOptionsId\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003cdhcpConfigurationSet\u003e\n                \u003citem\u003e\n                    \u003ckey\u003edomain-name-servers\u003c/key\u003e\n                    \u003cvalueSet\u003e\n                        \u003citem\u003e\n                            \u003cvalue\u003eAmazonProvidedDNS\u003c/value\u003e\n                        \u003c/item\u003e\n                    \u003c/valueSet\u003e\n                \u003c/item\u003e\n            \u003c/dhcpConfigurationSet\u003e\n            \u003ctagSet/\u003e\n            \u003ctype\u003evpc\u003c/type\u003e\n        \u003c/item\u003e\n    \u003c/dhcpOptionsSet\u003e\n\u003c/DescribeDhcpOptionsResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "dopt-04e578561bf52cec2",
+      "label": "ec2/DescribeDhcpOptions/DhcpOptionsIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeInternetGatewaysResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e257125d9-e572-4d8d-92bf-c84def3ebb37\u003c/requestId\u003e\n    \u003cinternetGatewaySet\u003e\n        \u003citem\u003e\n            \u003cinternetGatewayId\u003eigw-03eca7763c8cbd42f\u003c/internetGatewayId\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003cattachmentSet\u003e\n                \u003citem\u003e\n                    \u003cvpcId\u003evpc-01daaac74a0993d36\u003c/vpcId\u003e\n                    \u003cstate\u003eavailable\u003c/state\u003e\n                \u003c/item\u003e\n            \u003c/attachmentSet\u003e\n            \u003ctagSet/\u003e\n        \u003c/item\u003e\n    \u003c/internetGatewaySet\u003e\n\u003c/DescribeInternetGatewaysResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "igw-03eca7763c8cbd42f",
+      "label": "ec2/DescribeInternetGateways/InternetGatewayIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeKeyPairsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e62c3a8b3-eb42-49ab-a9dc-d31ef33c7c2a\u003c/requestId\u003e\n    \u003ckeySet\u003e\n        \u003citem\u003e\n            \u003ckeyName\u003etfpreflight-verify-0a63c6a033df\u003c/keyName\u003e\n            \u003ckeyPairId\u003ekey-01086b468c3ec178a\u003c/keyPairId\u003e\n            \u003ckeyFingerprint\u003eb9fb90CiWA8zlo48j9YJiYi+bKWZ2ZU0k4BD4N+AxH8=\u003c/keyFingerprint\u003e\n            \u003ckeyType\u003eed25519\u003c/keyType\u003e\n            \u003ccreateTime\u003e2026-10-12T06:27:42.434Z\u003c/createTime\u003e\n            \u003ctagSet/\u003e\n        \u003c/item\u003e\n    \u003c/keySet\u003e\n\u003c/DescribeKeyPairsResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "tfpreflight-verify-0a63c6a033df",
+      "label": "ec2/DescribeKeyPairs/KeyNames/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeLaunchTemplatesResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e58f6cf7a-2b32-47c3-9478-b87017e0a95b\u003c/requestId\u003e\n    \u003claunchTemplates\u003e\n        \u003citem\u003e\n            \u003ccreateTime\u003e2026-10-12T06:27:43.000Z\u003c/createTime\u003e\n            \u003ccreatedBy\u003earn:aws:sts::123456789012:assumed-role/AWSReservedSSO_AdministratorAccess_7761398cef8ec4b6/tfpreflight-admin\u003c/createdBy\u003e\n            \u003cdefaultVersionNumber\u003e1\u003c/defaultVersionNumber\u003e\n            \u003clatestVersionNumber\u003e1\u003c/latestVersionNumber\u003e\n            \u003claunchTemplateId\u003elt-0580f20b0d452574f\u003c/launchTemplateId\u003e\n            \u003claunchTemplateName\u003etfpreflight-verify-0a63c6a033df\u003c/launchTemplateName\u003e\n            \u003coperator\u003e\n                \u003cmanaged\u003efalse\u003c/managed\u003e\n            \u003c/operator\u003e\n        \u003c/item\u003e\n    \u003c/launchTemplates\u003e\n\u003c/DescribeLaunchTemplatesResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "lt-0580f20b0d452574f",
+      "label": "ec2/DescribeLaunchTemplates/LaunchTemplateIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeManagedPrefixListsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003eb9683250-1fd8-47d9-a2c1-6b9c8d83d6c5\u003c/requestId\u003e\n    \u003cprefixListSet\u003e\n        \u003citem\u003e\n            \u003caddressFamily\u003eIPv4\u003c/addressFamily\u003e\n            \u003cmaxEntries\u003e1\u003c/maxEntries\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003cprefixListArn\u003earn:aws:ec2:us-east-1:123456789012:prefix-list/pl-073f672738bf3a647\u003c/prefixListArn\u003e\n            \u003cprefixListId\u003epl-073f672738bf3a647\u003c/prefixListId\u003e\n            \u003cprefixListName\u003etfpreflight-verify-0a63c6a033df\u003c/prefixListName\u003e\n            \u003cstate\u003ecreate-complete\u003c/state\u003e\n            \u003ctagSet/\u003e\n            \u003cversion\u003e1\u003c/version\u003e\n        \u003c/item\u003e\n    \u003c/prefixListSet\u003e\n\u003c/DescribeManagedPrefixListsResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "pl-073f672738bf3a647",
+      "label": "ec2/DescribeManagedPrefixLists/PrefixListIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeNetworkAclsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e2349f688-1371-4db0-bc02-d056caafd52b\u003c/requestId\u003e\n    \u003cnetworkAclSet\u003e\n        \u003citem\u003e\n            \u003cnetworkAclId\u003eacl-08459bd1fd9f3495e\u003c/networkAclId\u003e\n            \u003cvpcId\u003evpc-01daaac74a0993d36\u003c/vpcId\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003cdefault\u003efalse\u003c/default\u003e\n            \u003centrySet\u003e\n                \u003citem\u003e\n                    \u003cruleNumber\u003e32767\u003c/ruleNumber\u003e\n                    \u003cprotocol\u003e-1\u003c/protocol\u003e\n                    \u003cruleAction\u003edeny\u003c/ruleAction\u003e\n                    \u003cegress\u003etrue\u003c/egress\u003e\n                    \u003ccidrBlock\u003e0.0.0.0/0\u003c/cidrBlock\u003e\n                \u003c/item\u003e\n                \u003citem\u003e\n                    \u003cruleNumber\u003e32767\u003c/ruleNumber\u003e\n                    \u003cprotocol\u003e-1\u003c/protocol\u003e\n                    \u003cruleAction\u003edeny\u003c/ruleAction\u003e\n                    \u003cegress\u003efalse\u003c/egress\u003e\n                    \u003ccidrBlock\u003e0.0.0.0/0\u003c/cidrBlock\u003e\n                \u003c/item\u003e\n            \u003c/entrySet\u003e\n            \u003cassociationSet/\u003e\n            \u003ctagSet/\u003e\n        \u003c/item\u003e\n    \u003c/networkAclSet\u003e\n\u003c/DescribeNetworkAclsResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "acl-08459bd1fd9f3495e",
+      "label": "ec2/DescribeNetworkAcls/NetworkAclIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeNetworkInsightsPathsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003eefa04266-f4d0-44d1-bff3-c3ac6ff37218\u003c/requestId\u003e\n    \u003cnetworkInsightsPathSet\u003e\n        \u003citem\u003e\n            \u003ccreatedDate\u003e2026-10-12T06:27:52.708Z\u003c/createdDate\u003e\n            \u003cdestination\u003eigw-03eca7763c8cbd42f\u003c/destination\u003e\n            \u003cdestinationArn\u003earn:aws:ec2:us-east-1:123456789012:internet-gateway/igw-03eca7763c8cbd42f\u003c/destinationArn\u003e\n            \u003cnetworkInsightsPathArn\u003earn:aws:ec2:us-east-1:123456789012:network-insights-path/nip-062a186cb855ffe1e\u003c/networkInsightsPathArn\u003e\n            \u003cnetworkInsightsPathId\u003enip-062a186cb855ffe1e\u003c/networkInsightsPathId\u003e\n            \u003cprotocol\u003etcp\u003c/protocol\u003e\n            \u003csource\u003eeni-0bf84732c9bb1795e\u003c/source\u003e\n            \u003csourceArn\u003earn:aws:ec2:us-east-1:123456789012:network-interface/eni-0bf84732c9bb1795e\u003c/sourceArn\u003e\n            \u003ctagSet/\u003e\n        \u003c/item\u003e\n    \u003c/networkInsightsPathSet\u003e\n\u003c/DescribeNetworkInsightsPathsResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "nip-062a186cb855ffe1e",
+      "label": "ec2/DescribeNetworkInsightsPaths/NetworkInsightsPathIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeNetworkInterfacesResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e061fe39b-13b9-4dda-933f-4685c6b6f974\u003c/requestId\u003e\n    \u003cnetworkInterfaceSet\u003e\n        \u003citem\u003e\n            \u003cnetworkInterfaceId\u003eeni-0bf84732c9bb1795e\u003c/networkInterfaceId\u003e\n            \u003csubnetId\u003esubnet-043c3ec3fb3ad3284\u003c/subnetId\u003e\n            \u003cvpcId\u003evpc-01daaac74a0993d36\u003c/vpcId\u003e\n            \u003cavailabilityZone\u003eus-east-1a\u003c/availabilityZone\u003e\n            \u003cdescription/\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003crequesterId\u003eAROAQMKXI66BKRVQEI6OR:tfpreflight-admin\u003c/requesterId\u003e\n            \u003crequesterManaged\u003efalse\u003c/requesterManaged\u003e\n            \u003cstatus\u003eavailable\u003c/status\u003e\n            \u003cmacAddress\u003e02:ff:ea:9a:0b:37\u003c/macAddress\u003e\n            \u003cprivateIpAddress\u003e10.250.1.194\u003c/privateIpAddress\u003e\n            \u003cpublicDnsName/\u003e\n            \u003csourceDestCheck\u003etrue\u003c/sourceDestCheck\u003e\n            \u003cgroupSet\u003e\n                \u003citem\u003e\n                    \u003cgroupId\u003esg-087a56d6c9e3bc5b0\u003c/groupId\u003e\n                    \u003cgroupName\u003edefault\u003c/groupName\u003e\n                \u003c/item\u003e\n            \u003c/groupSet\u003e\n            \u003ctagSet/\u003e\n            \u003cprivateIpAddressesSet\u003e\n                \u003citem\u003e\n                    \u003cprivateIpAddress\u003e10.250.1.194\u003c/privateIpAddress\u003e\n                    \u003cprimary\u003etrue\u003c/primary\u003e\n                \u003c/item\u003e\n            \u003c/privateIpAddressesSet\u003e\n            \u003cipv6AddressesSet/\u003e\n            \u003cinterfaceType\u003einterface\u003c/interfaceType\u003e\n            \u003coperator\u003e\n                \u003cmanaged\u003efalse\u003c/managed\u003e\n                \u003chiddenByDefault\u003efalse\u003c/hiddenByDefault\u003e\n            \u003c/operator\u003e\n            \u003cavailabilityZoneId\u003euse1-az1\u003c/availabilityZoneId\u003e\n        \u003c/item\u003e\n    \u003c/networkInterfaceSet\u003e\n\u003c/DescribeNetworkInterfacesResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "eni-0bf84732c9bb1795e",
+      "label": "ec2/DescribeNetworkInterfaces/NetworkInterfaceIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeRouteTablesResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003ea1a1a548-8889-4a44-ad71-f2eee59cb457\u003c/requestId\u003e\n    \u003crouteTableSet\u003e\n        \u003citem\u003e\n            \u003crouteTableId\u003ertb-061754fba9e617f7a\u003c/routeTableId\u003e\n            \u003cvpcId\u003evpc-01daaac74a0993d36\u003c/vpcId\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003crouteSet\u003e\n                \u003citem\u003e\n                    \u003cdestinationCidrBlock\u003e10.250.0.0/16\u003c/destinationCidrBlock\u003e\n                    \u003cgatewayId\u003elocal\u003c/gatewayId\u003e\n                    \u003cstate\u003eactive\u003c/state\u003e\n                    \u003corigin\u003eCreateRouteTable\u003c/origin\u003e\n                \u003c/item\u003e\n                \u003citem\u003e\n                    \u003cdestinationCidrBlock\u003e169.254.171.0/24\u003c/destinationCidrBlock\u003e\n                    \u003cgatewayId\u003eVpcLattice\u003c/gatewayId\u003e\n                    \u003cstate\u003eactive\u003c/state\u003e\n                    \u003corigin\u003eCreateRoute\u003c/origin\u003e\n                \u003c/item\u003e\n                \u003citem\u003e\n                    \u003cdestinationIpv6CidrBlock\u003efd00:ec2:80::/64\u003c/destinationIpv6CidrBlock\u003e\n                    \u003cgatewayId\u003eVpcLattice\u003c/gatewayId\u003e\n                    \u003cstate\u003eactive\u003c/state\u003e\n                    \u003corigin\u003eCreateRoute\u003c/origin\u003e\n                \u003c/item\u003e\n            \u003c/routeSet\u003e\n            \u003cassociationSet/\u003e\n            \u003cpropagatingVgwSet/\u003e\n            \u003ctagSet/\u003e\n        \u003c/item\u003e\n    \u003c/routeTableSet\u003e\n\u003c/DescribeRouteTablesResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "rtb-061754fba9e617f7a",
+      "label": "ec2/DescribeRouteTables/RouteTableIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeSecurityGroupsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003eb7068f40-9917-4d11-83a4-b553ceb026c8\u003c/requestId\u003e\n    \u003csecurityGroupInfo\u003e\n        \u003citem\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003cgroupId\u003esg-04666d0b84183c111\u003c/groupId\u003e\n            \u003cgroupName\u003etfpreflight-verify-0a63c6a033df\u003c/groupName\u003e\n            \u003cgroupDescription\u003eManaged by Terraform\u003c/groupDescription\u003e\n            \u003cvpcId\u003evpc-01daaac74a0993d36\u003c/vpcId\u003e\n            \u003cipPermissions/\u003e\n            \u003cipPermissionsEgress/\u003e\n            \u003csecurityGroupArn\u003earn:aws:ec2:us-east-1:123456789012:security-group/sg-04666d0b84183c111\u003c/securityGroupArn\u003e\n        \u003c/item\u003e\n    \u003c/securityGroupInfo\u003e\n\u003c/DescribeSecurityGroupsResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "sg-04666d0b84183c111",
+      "label": "ec2/DescribeSecurityGroups/GroupIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeSubnetsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003ebdb1027d-d747-4cd1-a719-5caf5e22a9da\u003c/requestId\u003e\n    \u003csubnetSet\u003e\n        \u003citem\u003e\n            \u003csubnetId\u003esubnet-043c3ec3fb3ad3284\u003c/subnetId\u003e\n            \u003csubnetArn\u003earn:aws:ec2:us-east-1:123456789012:subnet/subnet-043c3ec3fb3ad3284\u003c/subnetArn\u003e\n            \u003cstate\u003eavailable\u003c/state\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003cvpcId\u003evpc-01daaac74a0993d36\u003c/vpcId\u003e\n            \u003ccidrBlock\u003e10.250.1.0/24\u003c/cidrBlock\u003e\n            \u003cipv6CidrBlockAssociationSet/\u003e\n            \u003cavailableIpAddressCount\u003e250\u003c/availableIpAddressCount\u003e\n            \u003cavailabilityZone\u003eus-east-1a\u003c/availabilityZone\u003e\n            \u003cavailabilityZoneId\u003euse1-az1\u003c/availabilityZoneId\u003e\n            \u003cdefaultForAz\u003efalse\u003c/defaultForAz\u003e\n            \u003cmapPublicIpOnLaunch\u003efalse\u003c/mapPublicIpOnLaunch\u003e\n            \u003cassignIpv6AddressOnCreation\u003efalse\u003c/assignIpv6AddressOnCreation\u003e\n            \u003cmapCustomerOwnedIpOnLaunch\u003efalse\u003c/mapCustomerOwnedIpOnLaunch\u003e\n            \u003cprivateDnsNameOptionsOnLaunch\u003e\n                \u003chostnameType\u003eip-name\u003c/hostnameType\u003e\n                \u003cenableResourceNameDnsARecord\u003efalse\u003c/enableResourceNameDnsARecord\u003e\n                \u003cenableResourceNameDnsAAAARecord\u003efalse\u003c/enableResourceNameDnsAAAARecord\u003e\n            \u003c/privateDnsNameOptionsOnLaunch\u003e\n            \u003cipv6Native\u003efalse\u003c/ipv6Native\u003e\n            \u003cenableDns64\u003efalse\u003c/enableDns64\u003e\n            \u003cblockPublicAccessStates\u003e\n                \u003cinternetGatewayBlockMode\u003eoff\u003c/internetGatewayBlockMode\u003e\n            \u003c/blockPublicAccessStates\u003e\n        \u003c/item\u003e\n    \u003c/subnetSet\u003e\n\u003c/DescribeSubnetsResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "subnet-043c3ec3fb3ad3284",
+      "label": "ec2/DescribeSubnets/SubnetIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeTrafficMirrorFiltersResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e37375c9e-1c9e-485f-b983-08c81c006865\u003c/requestId\u003e\n    \u003ctrafficMirrorFilterSet\u003e\n        \u003citem\u003e\n            \u003cdescription\u003etfpreflight-verify-0a63c6a033df\u003c/description\u003e\n            \u003cegressFilterRuleSet/\u003e\n            \u003cingressFilterRuleSet/\u003e\n            \u003cnetworkServiceSet/\u003e\n            \u003ctagSet/\u003e\n            \u003ctrafficMirrorFilterId\u003etmf-0244294d294af2e27\u003c/trafficMirrorFilterId\u003e\n        \u003c/item\u003e\n    \u003c/trafficMirrorFilterSet\u003e\n\u003c/DescribeTrafficMirrorFiltersResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "tmf-0244294d294af2e27",
+      "label": "ec2/DescribeTrafficMirrorFilters/TrafficMirrorFilterIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeVolumesResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e5301f05d-f60f-462c-9d41-b98f5c08b307\u003c/requestId\u003e\n    \u003cvolumeSet\u003e\n        \u003citem\u003e\n            \u003cvolumeId\u003evol-0d239bc647f2270a6\u003c/volumeId\u003e\n            \u003csize\u003e1\u003c/size\u003e\n            \u003csnapshotId/\u003e\n            \u003cavailabilityZone\u003eus-east-1a\u003c/availabilityZone\u003e\n            \u003cavailabilityZoneId\u003euse1-az1\u003c/availabilityZoneId\u003e\n            \u003cstatus\u003eavailable\u003c/status\u003e\n            \u003ccreateTime\u003e2026-10-12T06:27:43.544Z\u003c/createTime\u003e\n            \u003cattachmentSet/\u003e\n            \u003ctagSet\u003e\n                \u003citem\u003e\n                    \u003ckey\u003eName\u003c/key\u003e\n                    \u003cvalue\u003etfpreflight-verify-0a63c6a033df\u003c/value\u003e\n                \u003c/item\u003e\n            \u003c/tagSet\u003e\n            \u003cvolumeType\u003egp3\u003c/volumeType\u003e\n            \u003ciops\u003e3000\u003c/iops\u003e\n            \u003cencrypted\u003efalse\u003c/encrypted\u003e\n            \u003cmultiAttachEnabled\u003efalse\u003c/multiAttachEnabled\u003e\n            \u003cthroughput\u003e125\u003c/throughput\u003e\n            \u003coperator\u003e\n                \u003cmanaged\u003efalse\u003c/managed\u003e\n                \u003chiddenByDefault\u003efalse\u003c/hiddenByDefault\u003e\n            \u003c/operator\u003e\n            \u003cvolumeArn\u003earn:aws:ec2:us-east-1:123456789012:volume/vol-0d239bc647f2270a6\u003c/volumeArn\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n        \u003c/item\u003e\n    \u003c/volumeSet\u003e\n\u003c/DescribeVolumesResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "vol-0d239bc647f2270a6",
+      "label": "ec2/DescribeVolumes/VolumeIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeVpcEndpointsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e937614b2-fe55-40b0-b8d1-f763e35dd288\u003c/requestId\u003e\n    \u003cvpcEndpointSet\u003e\n        \u003citem\u003e\n            \u003ccreationTimestamp\u003e2026-10-12T06:27:48.000Z\u003c/creationTimestamp\u003e\n            \u003cdnsEntrySet/\u003e\n            \u003cdnsOptions\u003e\n                \u003cdnsRecordIpType\u003eservice-defined\u003c/dnsRecordIpType\u003e\n            \u003c/dnsOptions\u003e\n            \u003cgroupSet/\u003e\n            \u003cipAddressType\u003eipv4\u003c/ipAddressType\u003e\n            \u003cnetworkInterfaceIdSet/\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003cpolicyDocument\u003e{\"Version\":\"2008-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":\"*\",\"Action\":\"*\",\"Resource\":\"*\"}]}\u003c/policyDocument\u003e\n            \u003cprivateDnsEnabled\u003efalse\u003c/privateDnsEnabled\u003e\n            \u003crequesterManaged\u003efalse\u003c/requesterManaged\u003e\n            \u003crouteTableIdSet/\u003e\n            \u003cserviceName\u003ecom.amazonaws.us-east-1.s3\u003c/serviceName\u003e\n            \u003cserviceRegion\u003eus-east-1\u003c/serviceRegion\u003e\n            \u003cstate\u003eavailable\u003c/state\u003e\n            \u003csubnetIdSet/\u003e\n            \u003ctagSet/\u003e\n            \u003cvpcEndpointId\u003evpce-07df8bd44ccaaa775\u003c/vpcEndpointId\u003e\n            \u003cvpcEndpointType\u003eGateway\u003c/vpcEndpointType\u003e\n            \u003cvpcId\u003evpc-01daaac74a0993d36\u003c/vpcId\u003e\n        \u003c/item\u003e\n    \u003c/vpcEndpointSet\u003e\n\u003c/DescribeVpcEndpointsResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "vpce-07df8bd44ccaaa775",
+      "label": "ec2/DescribeVpcEndpoints/VpcEndpointIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeVpcsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003e3416f291-b7d1-4da8-ba65-8b47a1b0b56d\u003c/requestId\u003e\n    \u003cvpcSet\u003e\n        \u003citem\u003e\n            \u003cvpcId\u003evpc-01daaac74a0993d36\u003c/vpcId\u003e\n            \u003cownerId\u003e123456789012\u003c/ownerId\u003e\n            \u003cstate\u003eavailable\u003c/state\u003e\n            \u003ccidrBlock\u003e10.250.0.0/16\u003c/cidrBlock\u003e\n            \u003ccidrBlockAssociationSet\u003e\n                \u003citem\u003e\n                    \u003ccidrBlock\u003e10.250.0.0/16\u003c/cidrBlock\u003e\n                    \u003cassociationId\u003evpc-cidr-assoc-03d7daada3a305df5\u003c/associationId\u003e\n                    \u003ccidrBlockState\u003e\n                        \u003cstate\u003eassociated\u003c/state\u003e\n                    \u003c/cidrBlockState\u003e\n                \u003c/item\u003e\n            \u003c/cidrBlockAssociationSet\u003e\n            \u003cdhcpOptionsId\u003edopt-0a4911363c6cedfa2\u003c/dhcpOptionsId\u003e\n            \u003ctagSet\u003e\n                \u003citem\u003e\n                    \u003ckey\u003eName\u003c/key\u003e\n                    \u003cvalue\u003etfpreflight-verify-0a63c6a033df\u003c/value\u003e\n                \u003c/item\u003e\n            \u003c/tagSet\u003e\n            \u003cinstanceTenancy\u003edefault\u003c/instanceTenancy\u003e\n            \u003cisDefault\u003efalse\u003c/isDefault\u003e\n            \u003cblockPublicAccessStates\u003e\n                \u003cinternetGatewayBlockMode\u003eoff\u003c/internetGatewayBlockMode\u003e\n            \u003c/blockPublicAccessStates\u003e\n        \u003c/item\u003e\n    \u003c/vpcSet\u003e\n\u003c/DescribeVpcsResponse\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "vpc-01daaac74a0993d36",
+      "label": "ec2/DescribeVpcs/VpcIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeVpnGatewaysResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003ed445d9eb-17e2-49ad-845d-21ab7108bc92\u003c/requestId\u003e\n    \u003cvpnGatewaySet\u003e\n        \u003citem\u003e\n            \u003cvpnGatewayId\u003evgw-02b6bea940134329e\u003c/vpnGatewayId\u003e\n            \u003cstate\u003eavailable\u003c/state\u003e\n            \u003ctype\u003eipsec.1\u003c/type\u003e\n            \u003cattachments/\u003e\n            \u003camazonSideAsn\u003e64512\u003c/amazonSideAsn\u003e\n            \u003ctagSet\u003e\n                \u003citem\u003e\n                    \u003ckey\u003eName\u003c/key\u003e\n                    \u003cvalue\u003etfpreflight-verify-0a63c6a033df\u003c/value\u003e\n                \u003c/item\u003e\n            \u003c/tagSet\u003e\n        \u003c/item\u003e\n    \u003c/vpnGatewaySet\u003e\n\u003c/DescribeVpnGatewaysResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "vgw-02b6bea940134329e",
+      "label": "ec2/DescribeVpnGateways/VpnGatewayIds/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"AccessPoints\":[{\"AccessPointArn\":\"arn:aws:elasticfilesystem:us-east-1:123456789012:access-point/fsap-00d6e5b350ec2109b\",\"AccessPointId\":\"fsap-00d6e5b350ec2109b\",\"ClientToken\":\"37717f10-6c52-43be-879f-69c86bcd6725\",\"FileSystemId\":\"fs-07079e99788d5b778\",\"LifeCycleState\":\"available\",\"Name\":null,\"OwnerId\":\"123456789012\",\"PosixUser\":null,\"RootDirectory\":{\"CreationInfo\":null,\"Path\":\"/\"},\"Tags\":[]}],\"NextToken\":null}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "fsap-00d6e5b350ec2109b",
+      "label": "efs/DescribeAccessPoints/AccessPointId/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"FileSystems\":[{\"AvailabilityZoneId\":null,\"AvailabilityZoneName\":null,\"CreationTime\":1.791786462E9,\"CreationToken\":\"tfpreflight-verify-0a63c6a033df\",\"Encrypted\":false,\"FileSystemArn\":\"arn:aws:elasticfilesystem:us-east-1:123456789012:file-system/fs-07079e99788d5b778\",\"FileSystemId\":\"fs-07079e99788d5b778\",\"FileSystemProtection\":{\"ReplicationOverwriteProtection\":\"ENABLED\"},\"KmsKeyId\":null,\"LifeCycleState\":\"available\",\"Name\":null,\"NumberOfMountTargets\":0,\"OwnerId\":\"123456789012\",\"PerformanceMode\":\"generalPurpose\",\"ProvisionedThroughputInMibps\":null,\"SizeInBytes\":{\"Timestamp\":null,\"Value\":6144,\"ValueInArchive\":0,\"ValueInIA\":0,\"ValueInStandard\":6144},\"Tags\":[],\"ThroughputMode\":\"bursting\"}],\"Marker\":null,\"NextMarker\":null}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "fs-07079e99788d5b778",
+      "label": "efs/DescribeFileSystems/FileSystemId/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cDescribeCacheSubnetGroupsResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\"\u003e\n  \u003cDescribeCacheSubnetGroupsResult\u003e\n    \u003cCacheSubnetGroups\u003e\n      \u003cCacheSubnetGroup\u003e\n        \u003cSupportedNetworkTypes\u003e\n          \u003cmember\u003eipv4\u003c/member\u003e\n        \u003c/SupportedNetworkTypes\u003e\n        \u003cCacheSubnetGroupName\u003etfpreflight-verify-0a63c6a033df\u003c/CacheSubnetGroupName\u003e\n        \u003cVpcId\u003evpc-01daaac74a0993d36\u003c/VpcId\u003e\n        \u003cCacheSubnetGroupDescription\u003eManaged by Terraform\u003c/CacheSubnetGroupDescription\u003e\n        \u003cSubnets\u003e\n          \u003cSubnet\u003e\n            \u003cSupportedNetworkTypes\u003e\n              \u003cmember\u003eipv4\u003c/member\u003e\n            \u003c/SupportedNetworkTypes\u003e\n            \u003cSubnetIdentifier\u003esubnet-043c3ec3fb3ad3284\u003c/SubnetIdentifier\u003e\n            \u003cSubnetAvailabilityZone\u003e\n              \u003cName\u003eus-east-1a\u003c/Name\u003e\n            \u003c/SubnetAvailabilityZone\u003e\n          \u003c/Subnet\u003e\n        \u003c/Subnets\u003e\n        \u003cARN\u003earn:aws:elasticache:us-east-1:123456789012:subnetgroup:tfpreflight-verify-0a63c6a033df\u003c/ARN\u003e\n      \u003c/CacheSubnetGroup\u003e\n    \u003c/CacheSubnetGroups\u003e\n  \u003c/DescribeCacheSubnetGroupsResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003e87987907-112c-4b04-8e9b-0b5c975585ea\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/DescribeCacheSubnetGroupsResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-0a63c6a033df",
+      "label": "elasticache/DescribeCacheSubnetGroups/CacheSubnetGroupName/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cDescribeTargetGroupsResponse xmlns=\"http://elasticloadbalancing.amazonaws.com/doc/2015-12-01/\"\u003e\n  \u003cDescribeTargetGroupsResult\u003e\n    \u003cTargetGroups\u003e\n      \u003cmember\u003e\n        \u003cHealthCheckEnabled\u003etrue\u003c/HealthCheckEnabled\u003e\n        \u003cTargetGroupArn\u003earn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/tfpreflight-verify-0a63c6a033df/06d959ba5528fabf\u003c/TargetGroupArn\u003e\n        \u003cHealthCheckTimeoutSeconds\u003e5\u003c/HealthCheckTimeoutSeconds\u003e\n        \u003cHealthCheckPort\u003etraffic-port\u003c/HealthCheckPort\u003e\n        \u003cTargetType\u003einstance\u003c/TargetType\u003e\n        \u003cMatcher\u003e\n          \u003cHttpCode\u003e200\u003c/HttpCode\u003e\n        \u003c/Matcher\u003e\n        \u003cHealthCheckProtocol\u003eHTTP\u003c/HealthCheckProtocol\u003e\n        \u003cTargetGroupName\u003etfpreflight-verify-0a63c6a033df\u003c/TargetGroupName\u003e\n        \u003cIpAddressType\u003eipv4\u003c/IpAddressType\u003e\n        \u003cProtocol\u003eHTTP\u003c/Protocol\u003e\n        \u003cHealthCheckPath\u003e/\u003c/HealthCheckPath\u003e\n        \u003cPort\u003e80\u003c/Port\u003e\n        \u003cVpcId\u003evpc-01daaac74a0993d36\u003c/VpcId\u003e\n        \u003cHealthyThresholdCount\u003e5\u003c/HealthyThresholdCount\u003e\n        \u003cHealthCheckIntervalSeconds\u003e30\u003c/HealthCheckIntervalSeconds\u003e\n        \u003cProtocolVersion\u003eHTTP1\u003c/ProtocolVersion\u003e\n        \u003cLoadBalancerArns/\u003e\n        \u003cUnhealthyThresholdCount\u003e2\u003c/UnhealthyThresholdCount\u003e\n      \u003c/member\u003e\n    \u003c/TargetGroups\u003e\n  \u003c/DescribeTargetGroupsResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003e6916dd99-f49e-4434-baad-d40c97ad8e0c\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/DescribeTargetGroupsResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/tfpreflight-verify-0a63c6a033df/06d959ba5528fabf",
+      "label": "elasticloadbalancingv2/DescribeTargetGroups/TargetGroupArns/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"SubnetGroups\":[{\"ARN\":\"arn:aws:memorydb:us-east-1:123456789012:subnetgroup/tfpreflight-verify-0a63c6a033df\",\"Description\":\"Managed by Terraform\",\"Name\":\"tfpreflight-verify-0a63c6a033df\",\"Subnets\":[{\"AvailabilityZone\":{\"Name\":\"us-east-1a\"},\"Identifier\":\"subnet-043c3ec3fb3ad3284\",\"SupportedNetworkTypes\":[\"ipv4\"]}],\"SupportedNetworkTypes\":[\"ipv4\"],\"VpcId\":\"vpc-01daaac74a0993d36\"}]}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "tfpreflight-verify-0a63c6a033df",
+      "label": "memorydb/DescribeSubnetGroups/SubnetGroupName/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cDescribeClusterSubnetGroupsResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\"\u003e\n  \u003cDescribeClusterSubnetGroupsResult\u003e\n    \u003cClusterSubnetGroups\u003e\n      \u003cClusterSubnetGroup\u003e\n        \u003cVpcId\u003evpc-01daaac74a0993d36\u003c/VpcId\u003e\n        \u003cDescription\u003eManaged by Terraform\u003c/Description\u003e\n        \u003cSubnets\u003e\n          \u003cSubnet\u003e\n            \u003cSubnetIdentifier\u003esubnet-043c3ec3fb3ad3284\u003c/SubnetIdentifier\u003e\n            \u003cSubnetStatus\u003eActive\u003c/SubnetStatus\u003e\n            \u003cSubnetAvailabilityZone\u003e\n              \u003cName\u003eus-east-1a\u003c/Name\u003e\n            \u003c/SubnetAvailabilityZone\u003e\n          \u003c/Subnet\u003e\n        \u003c/Subnets\u003e\n        \u003cSupportedClusterIpAddressTypes\u003e\n          \u003citem\u003eipv4\u003c/item\u003e\n        \u003c/SupportedClusterIpAddressTypes\u003e\n        \u003cSubnetGroupStatus\u003eComplete\u003c/SubnetGroupStatus\u003e\n        \u003cClusterSubnetGroupName\u003etfpreflight-verify-0a63c6a033df\u003c/ClusterSubnetGroupName\u003e\n        \u003cTags/\u003e\n      \u003c/ClusterSubnetGroup\u003e\n    \u003c/ClusterSubnetGroups\u003e\n  \u003c/DescribeClusterSubnetGroupsResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003e81b1f65d-0f42-4f28-ae08-7948dc3a925f\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/DescribeClusterSubnetGroupsResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-0a63c6a033df",
+      "label": "redshift/DescribeClusterSubnetGroups/ClusterSubnetGroupName/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"FirewallDomainList\":{\"Arn\":\"arn:aws:route53resolver:us-east-1:123456789012:firewall-domain-list/rslvr-fdl-e489e94122f046a9\",\"CreationTime\":\"2026-10-12T06:27:42.193938541Z\",\"CreatorRequestId\":\"tf-r53-resolver-firewall-domain-list-20261012062741078100000001\",\"DomainCount\":0,\"Id\":\"rslvr-fdl-e489e94122f046a9\",\"ModificationTime\":\"2026-10-12T06:27:42.193938541Z\",\"Name\":\"tfpreflight-verify-0a63c6a033df\",\"Status\":\"COMPLETE\",\"StatusMessage\":\"Created Firewall Domain List\"}}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "rslvr-fdl-e489e94122f046a9",
+      "label": "route53resolver/GetFirewallDomainList/FirewallDomainListId/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"FirewallRuleGroup\":{\"Arn\":\"arn:aws:route53resolver:us-east-1:123456789012:firewall-rule-group/rslvr-frg-6d42e461b304492c\",\"CreationTime\":\"2026-10-12T06:27:42.193041966Z\",\"CreatorRequestId\":\"tf-r53-resolver-firewall-rule-group-20261012062741078100000002\",\"Id\":\"rslvr-frg-6d42e461b304492c\",\"ModificationTime\":\"2026-10-12T06:27:42.193041966Z\",\"Name\":\"tfpreflight-verify-0a63c6a033df\",\"OwnerId\":\"123456789012\",\"RuleCount\":0,\"ShareStatus\":\"NOT_SHARED\",\"Status\":\"COMPLETE\",\"StatusMessage\":\"Created Firewall Rule Group\"}}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "rslvr-frg-6d42e461b304492c",
+      "label": "route53resolver/GetFirewallRuleGroup/FirewallRuleGroupId/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"ResolverQueryLogConfig\":{\"Arn\":\"arn:aws:route53resolver:us-east-1:123456789012:resolver-query-log-config/rqlc-5dac7f5d62d48c8\",\"AssociationCount\":0,\"CreationTime\":\"2026-10-12T06:27:43.855041422Z\",\"CreatorRequestId\":\"tf-r53-resolver-query-log-config-20261012062743323100000003\",\"DestinationArn\":\"arn:aws:logs:us-east-1:123456789012:log-group:tfpreflight-verify-0a63c6a033df\",\"Id\":\"rqlc-5dac7f5d62d48c8\",\"Name\":\"tfpreflight-verify-0a63c6a033df\",\"OwnerId\":\"123456789012\",\"ShareStatus\":\"NOT_SHARED\",\"Status\":\"CREATED\"}}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "rqlc-5dac7f5d62d48c8",
+      "label": "route53resolver/GetResolverQueryLogConfig/ResolverQueryLogConfigId/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"Service\":{\"Arn\":\"arn:aws:servicediscovery:us-east-1:123456789012:service/srv-w6knmwgtpizdmhgs\",\"CreateDate\":1.791786510018E9,\"CreatedByAccount\":\"123456789012\",\"CreatorRequestId\":\"terraform-nN9X20G1OXDPmCFP4NcvECyUSD\",\"DnsConfig\":{},\"Id\":\"srv-w6knmwgtpizdmhgs\",\"Name\":\"tfpreflight-verify-0a63c6a033df\",\"NamespaceId\":\"ns-zb7mn6kmfxhz3ojb\",\"ResourceOwner\":\"123456789012\",\"Type\":\"HTTP\"}}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "srv-w6knmwgtpizdmhgs",
+      "label": "servicediscovery/GetService/Id/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"arn\":\"arn:aws:vpc-lattice:us-east-1:123456789012:servicenetwork/sn-0d883f6353725ca38\",\"authType\":\"NONE\",\"createdAt\":\"2026-10-12T06:27:42.436Z\",\"id\":\"sn-0d883f6353725ca38\",\"lastUpdatedAt\":\"2026-10-12T06:27:42.436Z\",\"name\":\"tfpreflight-verify-0a63c6a033df\",\"numberOfAssociatedServices\":0,\"numberOfAssociatedVPCs\":0,\"sharingConfig\":{\"enabled\":true}}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "arn:aws:vpc-lattice:us-east-1:123456789012:servicenetwork/sn-0d883f6353725ca38",
+      "label": "vpclattice/GetServiceNetwork/ServiceNetworkIdentifier/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"arn\":\"arn:aws:vpc-lattice:us-east-1:123456789012:targetgroup/tg-0f0cfa37decba43d5\",\"config\":{\"dynamicSni\":false,\"healthCheck\":{\"enabled\":true,\"healthCheckIntervalSeconds\":30,\"healthCheckTimeoutSeconds\":5,\"healthyThresholdCount\":5,\"matcher\":{\"httpCode\":\"200\"},\"path\":\"/\",\"protocol\":\"HTTP\",\"protocolVersion\":\"HTTP1\",\"unhealthyThresholdCount\":2},\"ipAddressType\":\"IPV4\",\"port\":80,\"protocol\":\"HTTP\",\"protocolVersion\":\"HTTP1\",\"vpcIdentifier\":\"vpc-01daaac74a0993d36\"},\"createdAt\":\"2026-10-12T06:27:47.912Z\",\"id\":\"tg-0f0cfa37decba43d5\",\"lastUpdatedAt\":\"2026-10-12T06:27:47.912Z\",\"name\":\"tfpreflight-verify-0a63c6a033df\",\"serviceArns\":[],\"status\":\"ACTIVE\",\"type\":\"INSTANCE\"}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "arn:aws:vpc-lattice:us-east-1:123456789012:targetgroup/tg-0f0cfa37decba43d5",
+      "label": "vpclattice/GetTargetGroup/TargetGroupIdentifier/exists-network",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"VpcConnector\":{\"CreatedAt\":1.791786473E9,\"DeletedAt\":1.791786584E9,\"SecurityGroups\":[\"sg-04666d0b84183c111\"],\"Status\":\"INACTIVE\",\"Subnets\":[\"subnet-043c3ec3fb3ad3284\"],\"VpcConnectorArn\":\"arn:aws:apprunner:us-east-1:123456789012:vpcconnector/tfpreflight-verify-0a63c6a033df/1/4b40845490934acdb9195d2adbea875c\",\"VpcConnectorName\":\"tfpreflight-verify-0a63c6a033df\",\"VpcConnectorRevision\":1}}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "id": "arn:aws:apprunner:us-east-1:123456789012:vpcconnector/tfpreflight-verify-0a63c6a033df/1/4b40845490934acdb9195d2adbea875c",
+      "label": "apprunner/DescribeVpcConnector/VpcConnectorArn/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidAllocationID.NotFound\u003c/Code\u003e\u003cMessage\u003eThe allocation ID 'eipalloc-0a59c19fdae26fb94' does not exist\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e78a18d73-986d-4102-adda-35dbfd1b03f4\u003c/RequestID\u003e\u003c/Response\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "eipalloc-0a59c19fdae26fb94",
+      "label": "ec2/DescribeAddresses/AllocationIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeCustomerGatewaysResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003edc2612e6-1821-440f-b155-943282f28fab\u003c/requestId\u003e\n    \u003ccustomerGatewaySet\u003e\n        \u003citem\u003e\n            \u003ccustomerGatewayId\u003ecgw-0bc891082bb00f2a5\u003c/customerGatewayId\u003e\n            \u003cstate\u003edeleted\u003c/state\u003e\n            \u003ctype\u003eipsec.1\u003c/type\u003e\n            \u003cipAddress\u003e198.51.100.10\u003c/ipAddress\u003e\n            \u003cbgpAsn\u003e65000\u003c/bgpAsn\u003e\n            \u003ccertificatePinning\u003efalse\u003c/certificatePinning\u003e\n        \u003c/item\u003e\n    \u003c/customerGatewaySet\u003e\n\u003c/DescribeCustomerGatewaysResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "cgw-0bc891082bb00f2a5",
+      "label": "ec2/DescribeCustomerGateways/CustomerGatewayIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidDhcpOptionID.NotFound\u003c/Code\u003e\u003cMessage\u003eThe dhcpOption ID 'dopt-04e578561bf52cec2' does not exist\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e27e7b04b-75a2-45fa-906a-3621d51f0b3e\u003c/RequestID\u003e\u003c/Response\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "dopt-04e578561bf52cec2",
+      "label": "ec2/DescribeDhcpOptions/DhcpOptionsIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidInternetGatewayID.NotFound\u003c/Code\u003e\u003cMessage\u003eThe internetGateway ID 'igw-03eca7763c8cbd42f' does not exist\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003ed9f32777-11cb-45d6-b4d7-8f74cff429cb\u003c/RequestID\u003e\u003c/Response\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "igw-03eca7763c8cbd42f",
+      "label": "ec2/DescribeInternetGateways/InternetGatewayIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidKeyPair.NotFound\u003c/Code\u003e\u003cMessage\u003eThe key pair 'tfpreflight-verify-0a63c6a033df' does not exist\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e900f1a75-1a55-46c3-b3e1-38ef99b13cf4\u003c/RequestID\u003e\u003c/Response\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "tfpreflight-verify-0a63c6a033df",
+      "label": "ec2/DescribeKeyPairs/KeyNames/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidLaunchTemplateId.NotFound\u003c/Code\u003e\u003cMessage\u003eAt least one of the launch templates specified in the request does not exist.\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003ec32c9c6c-ca4a-48d7-89c7-5c6262a438f6\u003c/RequestID\u003e\u003c/Response\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "lt-0580f20b0d452574f",
+      "label": "ec2/DescribeLaunchTemplates/LaunchTemplateIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidPrefixListID.NotFound\u003c/Code\u003e\u003cMessage\u003eThe prefix list (pl-073f672738bf3a647) does not exist.\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003ea2444873-1a82-467f-a1f9-88b5546096cd\u003c/RequestID\u003e\u003c/Response\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "pl-073f672738bf3a647",
+      "label": "ec2/DescribeManagedPrefixLists/PrefixListIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidNetworkAclID.NotFound\u003c/Code\u003e\u003cMessage\u003eThe networkAcl ID 'acl-08459bd1fd9f3495e' does not exist\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003ebbd18614-db41-4366-ba48-4048580cd227\u003c/RequestID\u003e\u003c/Response\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "acl-08459bd1fd9f3495e",
+      "label": "ec2/DescribeNetworkAcls/NetworkAclIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidNetworkInsightsPathId.NotFound\u003c/Code\u003e\u003cMessage\u003enip-062a186cb855ffe1e does not exist\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e38141d58-a88f-4a50-b8a5-9c19e2a92f0d\u003c/RequestID\u003e\u003c/Response\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "nip-062a186cb855ffe1e",
+      "label": "ec2/DescribeNetworkInsightsPaths/NetworkInsightsPathIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidNetworkInterfaceID.NotFound\u003c/Code\u003e\u003cMessage\u003eThe networkInterface ID 'eni-0bf84732c9bb1795e' does not exist\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e33923107-6cc2-4ff6-a9aa-1c1285ca01f3\u003c/RequestID\u003e\u003c/Response\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "eni-0bf84732c9bb1795e",
+      "label": "ec2/DescribeNetworkInterfaces/NetworkInterfaceIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidRouteTableID.NotFound\u003c/Code\u003e\u003cMessage\u003eThe routeTable ID 'rtb-061754fba9e617f7a' does not exist\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003ebbad19e0-0051-4d1b-8f19-ae85c447e090\u003c/RequestID\u003e\u003c/Response\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "rtb-061754fba9e617f7a",
+      "label": "ec2/DescribeRouteTables/RouteTableIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidGroup.NotFound\u003c/Code\u003e\u003cMessage\u003eThe security group 'sg-04666d0b84183c111' does not exist\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e7779d59f-3393-4220-b3bd-0d41393d3597\u003c/RequestID\u003e\u003c/Response\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "sg-04666d0b84183c111",
+      "label": "ec2/DescribeSecurityGroups/GroupIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidSubnetID.NotFound\u003c/Code\u003e\u003cMessage\u003eThe subnet ID 'subnet-043c3ec3fb3ad3284' does not exist\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003ec15a3d03-f0fc-42c1-9bd6-24d895e99f2a\u003c/RequestID\u003e\u003c/Response\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "subnet-043c3ec3fb3ad3284",
+      "label": "ec2/DescribeSubnets/SubnetIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidTrafficMirrorFilterId.NotFound\u003c/Code\u003e\u003cMessage\u003etmf-0244294d294af2e27 does not exist\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003ed9d90e1c-5e27-4493-80ad-dc5941c5aa1a\u003c/RequestID\u003e\u003c/Response\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "tmf-0244294d294af2e27",
+      "label": "ec2/DescribeTrafficMirrorFilters/TrafficMirrorFilterIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidVolume.NotFound\u003c/Code\u003e\u003cMessage\u003eThe volume 'vol-0d239bc647f2270a6' does not exist.\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e98191d41-284b-4d2b-9567-4a69d4d6f37c\u003c/RequestID\u003e\u003c/Response\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "vol-0d239bc647f2270a6",
+      "label": "ec2/DescribeVolumes/VolumeIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidVpcEndpointId.NotFound\u003c/Code\u003e\u003cMessage\u003eThe Vpc Endpoint Id 'vpce-07df8bd44ccaaa775' does not exist\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e4e44a5c5-4b2e-4931-94f4-a2b88e16149f\u003c/RequestID\u003e\u003c/Response\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "vpce-07df8bd44ccaaa775",
+      "label": "ec2/DescribeVpcEndpoints/VpcEndpointIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidVpcID.NotFound\u003c/Code\u003e\u003cMessage\u003eThe vpc ID 'vpc-01daaac74a0993d36' does not exist\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e4a17b2c5-fa7a-4d49-a548-b773590b48ee\u003c/RequestID\u003e\u003c/Response\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "vpc-01daaac74a0993d36",
+      "label": "ec2/DescribeVpcs/VpcIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cDescribeVpnGatewaysResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"\u003e\n    \u003crequestId\u003ec626df80-0ce6-4c6e-9d93-8f04967cd10e\u003c/requestId\u003e\n    \u003cvpnGatewaySet\u003e\n        \u003citem\u003e\n            \u003cvpnGatewayId\u003evgw-02b6bea940134329e\u003c/vpnGatewayId\u003e\n            \u003cstate\u003edeleted\u003c/state\u003e\n            \u003ctype\u003eipsec.1\u003c/type\u003e\n            \u003cattachments/\u003e\n            \u003camazonSideAsn\u003e64512\u003c/amazonSideAsn\u003e\n        \u003c/item\u003e\n    \u003c/vpnGatewaySet\u003e\n\u003c/DescribeVpnGatewaysResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml;charset=UTF-8"
+      },
+      "id": "vgw-02b6bea940134329e",
+      "label": "ec2/DescribeVpnGateways/VpnGatewayIds/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"ErrorCode\":\"AccessPointNotFound\",\"Message\":\"Access point 'fsap-00d6e5b350ec2109b' does not exist.\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "AccessPointNotFound:"
+      },
+      "id": "fsap-00d6e5b350ec2109b",
+      "label": "efs/DescribeAccessPoints/AccessPointId/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "{\"ErrorCode\":\"FileSystemNotFound\",\"Message\":\"File system 'fs-07079e99788d5b778' does not exist.\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "FileSystemNotFound:"
+      },
+      "id": "fs-07079e99788d5b778",
+      "label": "efs/DescribeFileSystems/FileSystemId/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003cErrorResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eCacheSubnetGroupNotFoundFault\u003c/Code\u003e\n    \u003cMessage\u003eCache subnet group tfpreflight-verify-0a63c6a033df not found.\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e4a86121d-767f-4625-9b06-bae246912de0\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-0a63c6a033df",
+      "label": "elasticache/DescribeCacheSubnetGroups/CacheSubnetGroupName/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003cErrorResponse xmlns=\"http://elasticloadbalancing.amazonaws.com/doc/2015-12-01/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eTargetGroupNotFound\u003c/Code\u003e\n    \u003cMessage\u003eOne or more target groups not found\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e3ff65cd8-2391-4b0a-8830-8df9f732e70b\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
+      "expected": "UNKNOWN",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/tfpreflight-verify-0a63c6a033df/06d959ba5528fabf",
+      "label": "elasticloadbalancingv2/DescribeTargetGroups/TargetGroupArns/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"__type\":\"SubnetGroupNotFoundFault\",\"message\":\"Subnet group tfpreflight-verify-0a63c6a033df not found.\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "tfpreflight-verify-0a63c6a033df",
+      "label": "memorydb/DescribeSubnetGroups/SubnetGroupName/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "\u003cErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eClusterSubnetGroupNotFoundFault\u003c/Code\u003e\n    \u003cMessage\u003eCluster Subnet group 'tfpreflight-verify-0a63c6a033df' not found.\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e641dee16-cb38-4e42-b7de-fa75db69d2b8\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-0a63c6a033df",
+      "label": "redshift/DescribeClusterSubnetGroups/ClusterSubnetGroupName/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"__type\":\"ResourceNotFoundException\",\"Message\":\"[RSLVR-02025] Can’t find the resource with ID \\\"rslvr-fdl-e489e94122f046a9\\\". Trace Id: \\\"1-6acc7ec0-0a578bd21bac50c8479faacd\\\"\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "rslvr-fdl-e489e94122f046a9",
+      "label": "route53resolver/GetFirewallDomainList/FirewallDomainListId/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"__type\":\"ResourceNotFoundException\",\"Message\":\"[RSLVR-02025] Can’t find the resource with ID \\\"rslvr-frg-6d42e461b304492c\\\". Trace Id: \\\"1-6acc7ec1-7422feea699b00fc25564a08\\\"\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "rslvr-frg-6d42e461b304492c",
+      "label": "route53resolver/GetFirewallRuleGroup/FirewallRuleGroupId/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"__type\":\"ResourceNotFoundException\",\"Message\":\"[RSLVR-01601] The specified query logging configuration doesn't exist. Trace Id: \\\"1-6acc7ec2-5de5ef9a0b314b02519cab1e\\\"\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "rqlc-5dac7f5d62d48c8",
+      "label": "route53resolver/GetResolverQueryLogConfig/ResolverQueryLogConfigId/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"__type\":\"ServiceNotFound\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "srv-w6knmwgtpizdmhgs",
+      "label": "servicediscovery/GetService/Id/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"message\":\"ServiceNetwork sn-0d883f6353725ca38 cannot be found.\",\"resourceId\":\"sn-0d883f6353725ca38\",\"resourceType\":\"SERVICE_NETWORK\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "id": "arn:aws:vpc-lattice:us-east-1:123456789012:servicenetwork/sn-0d883f6353725ca38",
+      "label": "vpclattice/GetServiceNetwork/ServiceNetworkIdentifier/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "{\"message\":\"TargetGroup tg-0f0cfa37decba43d5 cannot be found.\",\"resourceId\":\"tg-0f0cfa37decba43d5\",\"resourceType\":\"TARGET_GROUP\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "id": "arn:aws:vpc-lattice:us-east-1:123456789012:targetgroup/tg-0f0cfa37decba43d5",
+      "label": "vpclattice/GetTargetGroup/TargetGroupIdentifier/exists-network-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    }
+  ]
+}

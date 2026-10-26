@@ -1,0 +1,879 @@
+{
+  "note": "Real AWS responses, recorded from a test account so the tests can check the engine reads each one as the AWS SDK does. Every account ID is replaced by the 123456789012 placeholder. This set covers existence lookups.",
+  "responses": [
+    {
+      "body": "\u003c?xml version=\"1.0\"?\u003e\n\u003cCachePolicy xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"\u003e\u003cId\u003ee82a7153-d9a5-4e6e-8cfb-ce4ea420eb47\u003c/Id\u003e\u003cLastModifiedTime\u003e2026-10-12T06:51:24.380Z\u003c/LastModifiedTime\u003e\u003cCachePolicyConfig\u003e\u003cName\u003etfpreflight-verify-a6740b7ff351\u003c/Name\u003e\u003cDefaultTTL\u003e86400\u003c/DefaultTTL\u003e\u003cMaxTTL\u003e31536000\u003c/MaxTTL\u003e\u003cMinTTL\u003e0\u003c/MinTTL\u003e\u003cParametersInCacheKeyAndForwardedToOrigin\u003e\u003cEnableAcceptEncodingGzip\u003efalse\u003c/EnableAcceptEncodingGzip\u003e\u003cEnableAcceptEncodingBrotli\u003efalse\u003c/EnableAcceptEncodingBrotli\u003e\u003cHeadersConfig\u003e\u003cHeaderBehavior\u003enone\u003c/HeaderBehavior\u003e\u003c/HeadersConfig\u003e\u003cCookiesConfig\u003e\u003cCookieBehavior\u003enone\u003c/CookieBehavior\u003e\u003c/CookiesConfig\u003e\u003cQueryStringsConfig\u003e\u003cQueryStringBehavior\u003enone\u003c/QueryStringBehavior\u003e\u003c/QueryStringsConfig\u003e\u003c/ParametersInCacheKeyAndForwardedToOrigin\u003e\u003c/CachePolicyConfig\u003e\u003c/CachePolicy\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "e82a7153-d9a5-4e6e-8cfb-ce4ea420eb47",
+      "label": "cloudfront/GetCachePolicy/Id/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\"?\u003e\n\u003cFieldLevelEncryptionProfile xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"\u003e\u003cId\u003eP29C3UA991Y30R\u003c/Id\u003e\u003cLastModifiedTime\u003e2026-10-12T06:51:26.860Z\u003c/LastModifiedTime\u003e\u003cFieldLevelEncryptionProfileConfig\u003e\u003cName\u003etfpreflight-verify-a6740b7ff351\u003c/Name\u003e\u003cCallerReference\u003eterraform-pwaD1ReXpZ0INyybi9mVeSb1VU\u003c/CallerReference\u003e\u003cComment\u003e\u003c/Comment\u003e\u003cEncryptionEntities\u003e\u003cQuantity\u003e1\u003c/Quantity\u003e\u003cItems\u003e\u003cEncryptionEntity\u003e\u003cPublicKeyId\u003eK2MNVG0ZBF5G1S\u003c/PublicKeyId\u003e\u003cProviderId\u003etfpreflight\u003c/ProviderId\u003e\u003cFieldPatterns\u003e\u003cQuantity\u003e1\u003c/Quantity\u003e\u003cItems\u003e\u003cFieldPattern\u003ecard\u003c/FieldPattern\u003e\u003c/Items\u003e\u003c/FieldPatterns\u003e\u003c/EncryptionEntity\u003e\u003c/Items\u003e\u003c/EncryptionEntities\u003e\u003c/FieldLevelEncryptionProfileConfig\u003e\u003c/FieldLevelEncryptionProfile\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "P29C3UA991Y30R",
+      "label": "cloudfront/GetFieldLevelEncryptionProfile/Id/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\"?\u003e\n\u003cKeyGroup xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"\u003e\u003cId\u003efcdc5d48-3dc4-448b-bdbd-7b681650bebf\u003c/Id\u003e\u003cLastModifiedTime\u003e2026-10-12T06:51:27.435Z\u003c/LastModifiedTime\u003e\u003cKeyGroupConfig\u003e\u003cName\u003etfpreflight-verify-a6740b7ff351\u003c/Name\u003e\u003cItems\u003e\u003cPublicKey\u003eK2MNVG0ZBF5G1S\u003c/PublicKey\u003e\u003c/Items\u003e\u003c/KeyGroupConfig\u003e\u003c/KeyGroup\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "fcdc5d48-3dc4-448b-bdbd-7b681650bebf",
+      "label": "cloudfront/GetKeyGroup/Id/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\"?\u003e\n\u003cOriginRequestPolicy xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"\u003e\u003cId\u003e1c7a9b85-2191-4374-a11e-6802d45c37f6\u003c/Id\u003e\u003cLastModifiedTime\u003e2026-10-12T06:51:24.736Z\u003c/LastModifiedTime\u003e\u003cOriginRequestPolicyConfig\u003e\u003cName\u003etfpreflight-verify-a6740b7ff351\u003c/Name\u003e\u003cHeadersConfig\u003e\u003cHeaderBehavior\u003enone\u003c/HeaderBehavior\u003e\u003c/HeadersConfig\u003e\u003cCookiesConfig\u003e\u003cCookieBehavior\u003enone\u003c/CookieBehavior\u003e\u003c/CookiesConfig\u003e\u003cQueryStringsConfig\u003e\u003cQueryStringBehavior\u003enone\u003c/QueryStringBehavior\u003e\u003c/QueryStringsConfig\u003e\u003c/OriginRequestPolicyConfig\u003e\u003c/OriginRequestPolicy\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "1c7a9b85-2191-4374-a11e-6802d45c37f6",
+      "label": "cloudfront/GetOriginRequestPolicy/Id/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\"?\u003e\n\u003cPublicKey xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"\u003e\u003cId\u003eK2MNVG0ZBF5G1S\u003c/Id\u003e\u003cCreatedTime\u003e2026-10-12T06:51:24.610Z\u003c/CreatedTime\u003e\u003cPublicKeyConfig\u003e\u003cCallerReference\u003eterraform-5087BWoXoa6gXwZBd36vhuN35I\u003c/CallerReference\u003e\u003cName\u003etfpreflight-verify-a6740b7ff351\u003c/Name\u003e\u003cEncodedKey\u003e-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtgl43QF10OtyMgtGyk/w\nWDY8+KSsmKPiGWg4zf1lVSmbWAXeQJt3ehTW9Xkju0pn1xR8SyVjZpm/Zaq24CL8\ng72SDOU4aCchVzbrw7ciJzYZMZxcGfb8y3ygiOMkiEgD7Urb0BZNh3yy3ttwY3Z9\nPoj4O0DHTuIeJvw2lwU0vv8cw55jbvfFYwWJvyTpOia2ers+QhbBVGv0ObRBWii0\nVdBrU9O4HVDt69nsaiP1ZKgmd+Hx9nbn4hPjjVt2fbhA6ty4d/2UwNLDDrI5p8Ih\npgsI1aB4HW0LCQmRM1mwhtcDH+vzVmzlZ0akTMysng72/OxyiwIDs4wX79VhVq+I\nAwIDAQAB\n-----END PUBLIC KEY-----\n\u003c/EncodedKey\u003e\u003cComment\u003e\u003c/Comment\u003e\u003c/PublicKeyConfig\u003e\u003c/PublicKey\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "K2MNVG0ZBF5G1S",
+      "label": "cloudfront/GetPublicKey/Id/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\"?\u003e\n\u003cResponseHeadersPolicy xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"\u003e\u003cId\u003ee0bd39b7-e160-458e-a89a-5b34767dbc34\u003c/Id\u003e\u003cLastModifiedTime\u003e2026-10-12T06:51:25.419Z\u003c/LastModifiedTime\u003e\u003cResponseHeadersPolicyConfig\u003e\u003cName\u003etfpreflight-verify-a6740b7ff351\u003c/Name\u003e\u003cSecurityHeadersConfig\u003e\u003cXSSProtection/\u003e\u003cFrameOptions/\u003e\u003cReferrerPolicy/\u003e\u003cContentSecurityPolicy/\u003e\u003cContentTypeOptions\u003e\u003cOverride\u003etrue\u003c/Override\u003e\u003c/ContentTypeOptions\u003e\u003cStrictTransportSecurity/\u003e\u003c/SecurityHeadersConfig\u003e\u003c/ResponseHeadersPolicyConfig\u003e\u003c/ResponseHeadersPolicy\u003e",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "e0bd39b7-e160-458e-a89a-5b34767dbc34",
+      "label": "cloudfront/GetResponseHeadersPolicy/Id/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"CostCategory\":{\"CostCategoryArn\":\"arn:aws:ce::123456789012:costcategory/80974d7e-41b7-4bce-9998-605d9fb64d47\",\"EffectiveStart\":\"2026-10-01T00:00:00Z\",\"Name\":\"tfpreflight-verify-a6740b7ff351\",\"ProcessingStatus\":[{\"Component\":\"COST_EXPLORER\",\"Status\":\"APPLIED\"}],\"RuleVersion\":\"CostCategoryExpression.v1\",\"Rules\":[{\"Rule\":{\"Dimensions\":{\"Key\":\"LINKED_ACCOUNT_NAME\",\"MatchOptions\":[\"EQUALS\"],\"Values\":[\"tfpreflight-verify-a6740b7ff351\"]}},\"Type\":\"REGULAR\",\"Value\":\"tfpreflight\"}]}}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "arn:aws:ce::123456789012:costcategory/80974d7e-41b7-4bce-9998-605d9fb64d47",
+      "label": "costexplorer/DescribeCostCategoryDefinition/CostCategoryArn/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\n  \"Id\" : \"4f50b84c5f0d59c56808dbe01c2b8475\",\n  \"Arn\" : \"arn:aws:dataexchange:us-east-1:123456789012:data-sets/4f50b84c5f0d59c56808dbe01c2b8475\",\n  \"Name\" : \"tfpreflight-verify-a6740b7ff351\",\n  \"Description\" : \"tfpreflight\",\n  \"AssetType\" : \"S3_SNAPSHOT\",\n  \"CreatedAt\" : \"2026-10-12T06:51:26.132Z\",\n  \"UpdatedAt\" : \"2026-10-12T06:51:26.132Z\",\n  \"Origin\" : \"OWNED\",\n  \"Tags\" : { }\n}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "4f50b84c5f0d59c56808dbe01c2b8475",
+      "label": "dataexchange/GetDataSet/DataSetId/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cDescribeCacheParameterGroupsResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\"\u003e\n  \u003cDescribeCacheParameterGroupsResult\u003e\n    \u003cCacheParameterGroups\u003e\n      \u003cCacheParameterGroup\u003e\n        \u003cCacheParameterGroupFamily\u003eredis7\u003c/CacheParameterGroupFamily\u003e\n        \u003cIsGlobal\u003efalse\u003c/IsGlobal\u003e\n        \u003cDescription\u003eManaged by Terraform\u003c/Description\u003e\n        \u003cARN\u003earn:aws:elasticache:us-east-1:123456789012:parametergroup:tfpreflight-verify-a6740b7ff351\u003c/ARN\u003e\n        \u003cCacheParameterGroupName\u003etfpreflight-verify-a6740b7ff351\u003c/CacheParameterGroupName\u003e\n      \u003c/CacheParameterGroup\u003e\n    \u003c/CacheParameterGroups\u003e\n  \u003c/DescribeCacheParameterGroupsResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003ef17e283c-a139-4002-baac-b9c44e21744f\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/DescribeCacheParameterGroupsResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "elasticache/DescribeCacheParameterGroups/CacheParameterGroupName/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\n  \"recordingConfiguration\" : {\n    \"arn\" : \"arn:aws:ivs:us-east-1:123456789012:recording-configuration/M0SvWZbymenL\",\n    \"destinationConfiguration\" : {\n      \"s3\" : {\n        \"bucketName\" : \"tfpreflight-verify-a6740b7ff351\"\n      }\n    },\n    \"name\" : \"tfpreflight-verify-a6740b7ff351\",\n    \"recordingReconnectWindowSeconds\" : 0,\n    \"renditionConfiguration\" : {\n      \"renditionSelection\" : \"ALL\"\n    },\n    \"state\" : \"ACTIVE\",\n    \"tags\" : { },\n    \"thumbnailConfiguration\" : {\n      \"recordingMode\" : \"INTERVAL\",\n      \"storage\" : [ \"SEQUENTIAL\" ],\n      \"targetIntervalSeconds\" : 60\n    }\n  }\n}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "arn:aws:ivs:us-east-1:123456789012:recording-configuration/M0SvWZbymenL",
+      "label": "ivs/GetRecordingConfiguration/Arn/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\n  \"Code\" : \"ValidationException\",\n  \"Message\" : \"GetLoggingConfiguration.identifier does not match the required pattern ^arn:aws:ivschat:[a-z0-9-]+:[0-9]+:logging-configuration/[a-zA-Z0-9-]+$\",\n  \"RequestID\" : \"FHmBWFhqIAMEIZw=\",\n  \"Details\" : {\n    \"fieldList\" : [ {\n      \"message\" : \"GetLoggingConfiguration.identifier does not match the required pattern ^arn:aws:ivschat:[a-z0-9-]+:[0-9]+:logging-configuration/[a-zA-Z0-9-]+$\",\n      \"name\" : \"GetLoggingConfiguration.identifier\"\n    } ],\n    \"reason\" : \"FIELD_VALIDATION_FAILED\"\n  }\n}",
+      "expected": "UNKNOWN",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "id": "117WbnXptlKU",
+      "label": "ivschat/GetLoggingConfiguration/Identifier/exists-misc-b",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"arn\":\"arn:aws:kafka:us-east-1:123456789012:configuration/tfpreflight-verify-a6740b7ff351/ee0c4cfb-3875-47f4-b431-f79f2aefd227-13\",\"name\":\"tfpreflight-verify-a6740b7ff351\",\"kafkaVersions\":[],\"creationTime\":\"2026-10-12T06:51:22.465Z\",\"state\":\"ACTIVE\",\"latestRevision\":{\"revision\":1,\"creationTime\":\"2026-10-12T06:51:22.465Z\"}}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "arn:aws:kafka:us-east-1:123456789012:configuration/tfpreflight-verify-a6740b7ff351/ee0c4cfb-3875-47f4-b431-f79f2aefd227-13",
+      "label": "kafka/DescribeConfiguration/Arn/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"creationTime\":\"2026-10-12T06:51:19.189Z\",\"latestRevision\":{\"creationTime\":\"2026-10-12T06:51:19.189Z\",\"propertiesFileContent\":\"a2V5LmNvbnZlcnRlcj1vcmcuYXBhY2hlLmthZmthLmNvbm5lY3Quc3RvcmFnZS5TdHJpbmdDb252ZXJ0ZXIKdmFsdWUuY29udmVydGVyPW9yZy5hcGFjaGUua2Fma2EuY29ubmVjdC5zdG9yYWdlLlN0cmluZ0NvbnZlcnRlcg==\",\"revision\":1},\"name\":\"tfpreflight-verify-a6740b7ff351\",\"workerConfigurationArn\":\"arn:aws:kafkaconnect:us-east-1:123456789012:worker-configuration/tfpreflight-verify-a6740b7ff351/357fc27c-bcdb-4398-bce8-2e313b8657d5-3\",\"workerConfigurationState\":\"ACTIVE\"}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "arn:aws:kafkaconnect:us-east-1:123456789012:worker-configuration/tfpreflight-verify-a6740b7ff351/357fc27c-bcdb-4398-bce8-2e313b8657d5-3",
+      "label": "kafkaconnect/DescribeWorkerConfiguration/WorkerConfigurationArn/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"StreamDescriptionSummary\":{\"ChannelCount\":0,\"ConsumerCount\":0,\"EncryptionType\":\"NONE\",\"EnhancedMonitoring\":[{\"ShardLevelMetrics\":[]}],\"MaxRecordSizeInKiB\":1024,\"OpenShardCount\":1,\"RetentionPeriodHours\":24,\"StreamARN\":\"arn:aws:kinesis:us-east-1:123456789012:stream/tfpreflight-verify-a6740b7ff351\",\"StreamCreationTimestamp\":1.791787871E9,\"StreamModeDetails\":{\"StreamMode\":\"PROVISIONED\"},\"StreamName\":\"tfpreflight-verify-a6740b7ff351\",\"StreamStatus\":\"ACTIVE\"}}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "kinesis/DescribeStreamSummary/StreamName/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"StreamInfo\":{\"CreationTime\":1.791787873033E9,\"DataRetentionInHours\":0,\"DeviceName\":null,\"IngestionConfiguration\":null,\"KmsKeyId\":\"arn:aws:kms:us-east-1:123456789012:alias/aws/kinesisvideo\",\"MediaType\":null,\"Status\":\"ACTIVE\",\"StreamARN\":\"arn:aws:kinesisvideo:us-east-1:123456789012:stream/tfpreflight-verify-a6740b7ff351/1791787873033\",\"StreamName\":\"tfpreflight-verify-a6740b7ff351\",\"Version\":\"IKX4kVedifViQoGsCLGS\"}}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "arn:aws:kinesisvideo:us-east-1:123456789012:stream/tfpreflight-verify-a6740b7ff351/1791787873033",
+      "label": "kinesisvideo/DescribeStream/StreamARN/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\n  \"arn\" : \"arn:aws:medialive:us-east-1:123456789012:input:6773633\",\n  \"id\" : \"6773633\",\n  \"name\" : \"tfpreflight-verify-a6740b7ff351\",\n  \"type\" : \"URL_PULL\",\n  \"sources\" : [ {\n    \"url\" : \"https://tfpreflight-verify-a6740b7ff351.example.com/b.m3u8\"\n  }, {\n    \"url\" : \"https://tfpreflight-verify-a6740b7ff351.example.com/a.m3u8\"\n  } ],\n  \"smpte2110ReceiverGroupSettings\" : {\n    \"smpte2110ReceiverGroups\" : [ ]\n  },\n  \"inputSourceType\" : \"STATIC\",\n  \"destinations\" : [ ],\n  \"mediaConnectFlows\" : [ ],\n  \"inputDevices\" : [ ],\n  \"state\" : \"DETACHED\",\n  \"attachedChannels\" : [ ],\n  \"securityGroups\" : [ ],\n  \"tags\" : { },\n  \"inputClass\" : \"STANDARD\",\n  \"inputPartnerIds\" : [ ],\n  \"inputNetworkLocation\" : \"AWS\"\n}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "6773633",
+      "label": "medialive/DescribeInput/InputId/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\n  \"arn\" : \"arn:aws:medialive:us-east-1:123456789012:inputSecurityGroup:3886563\",\n  \"id\" : \"3886563\",\n  \"whitelistRules\" : [ {\n    \"cidr\" : \"198.51.100.0/24\"\n  } ],\n  \"inputs\" : [ ],\n  \"channels\" : [ ],\n  \"state\" : \"IDLE\",\n  \"tags\" : { }\n}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "3886563",
+      "label": "medialive/DescribeInputSecurityGroup/InputSecurityGroupId/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"ACLs\":[{\"ARN\":\"arn:aws:memorydb:us-east-1:123456789012:acl/tfpreflight-verify-a6740b7ff351\",\"Clusters\":[],\"MinimumEngineVersion\":\"6.2\",\"Name\":\"tfpreflight-verify-a6740b7ff351\",\"Status\":\"active\",\"UserNames\":[]}]}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "memorydb/DescribeACLs/ACLName/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"Users\":[{\"ACLNames\":[],\"ARN\":\"arn:aws:memorydb:us-east-1:123456789012:user/tfpreflight-verify-a6740b7ff351\",\"AccessString\":\"on ~* \u0026* +@all\",\"Authentication\":{\"Type\":\"iam\"},\"MinimumEngineVersion\":\"7.0\",\"Name\":\"tfpreflight-verify-a6740b7ff351\",\"Status\":\"active\"}]}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "memorydb/DescribeUsers/UserName/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\n  \"id\" : \"c-af12db21-257f-42c3-9267-246e1b105a91\",\n  \"name\" : \"tfpreflight-verify-a6740b7ff351\",\n  \"arn\" : \"arn:aws:mq:us-east-1:123456789012:configuration:c-af12db21-257f-42c3-9267-246e1b105a91\",\n  \"engineType\" : \"ActiveMQ\",\n  \"engineVersion\" : \"5.18\",\n  \"latestRevision\" : {\n    \"revision\" : 2,\n    \"created\" : \"2026-10-12T06:51:31.819Z\",\n    \"isInvalid\" : false\n  },\n  \"created\" : \"2026-10-12T06:51:31.015497596Z\",\n  \"authenticationStrategy\" : \"simple\",\n  \"tags\" : { }\n}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "c-af12db21-257f-42c3-9267-246e1b105a91",
+      "label": "mq/DescribeConfiguration/ConfigurationId/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cDescribeDBClusterParameterGroupsResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\"\u003e\n  \u003cDescribeDBClusterParameterGroupsResult\u003e\n    \u003cDBClusterParameterGroups\u003e\n      \u003cDBClusterParameterGroup\u003e\n        \u003cDBClusterParameterGroupArn\u003earn:aws:rds:us-east-1:123456789012:cluster-pg:tfpreflight-verify-a6740b7ff351\u003c/DBClusterParameterGroupArn\u003e\n        \u003cDBParameterGroupFamily\u003eneptune1.3\u003c/DBParameterGroupFamily\u003e\n        \u003cDBClusterParameterGroupName\u003etfpreflight-verify-a6740b7ff351\u003c/DBClusterParameterGroupName\u003e\n        \u003cDescription\u003eManaged by Terraform\u003c/Description\u003e\n      \u003c/DBClusterParameterGroup\u003e\n    \u003c/DBClusterParameterGroups\u003e\n  \u003c/DescribeDBClusterParameterGroupsResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003ec3514356-e48e-4978-ac00-73cf21afc10a\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/DescribeDBClusterParameterGroupsResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "neptune/DescribeDBClusterParameterGroups/DBClusterParameterGroupName/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"FirewallPolicy\":{\"EnableTLSSessionHolding\":false,\"StatelessDefaultActions\":[\"aws:forward_to_sfe\"],\"StatelessFragmentDefaultActions\":[\"aws:forward_to_sfe\"]},\"FirewallPolicyResponse\":{\"ConsumedStatefulDomainCapacity\":0,\"ConsumedStatefulRuleCapacity\":0,\"ConsumedStatelessRuleCapacity\":0,\"EncryptionConfiguration\":{\"KeyId\":\"AWS_OWNED_KMS_KEY\",\"Type\":\"AWS_OWNED_KMS_KEY\"},\"FirewallPolicyArn\":\"arn:aws:network-firewall:us-east-1:123456789012:firewall-policy/tfpreflight-verify-a6740b7ff351\",\"FirewallPolicyId\":\"21a8cb21-7e47-4a9f-816e-ab3b52e2e39c\",\"FirewallPolicyName\":\"tfpreflight-verify-a6740b7ff351\",\"FirewallPolicyStatus\":\"ACTIVE\",\"LastModifiedTime\":1.791787873507E9,\"NumberOfAssociations\":0,\"Tags\":[]},\"UpdateToken\":\"6faa487d-b4e7-4610-b245-ce59738b49be\"}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "id": "arn:aws:network-firewall:us-east-1:123456789012:firewall-policy/tfpreflight-verify-a6740b7ff351",
+      "label": "networkfirewall/DescribeFirewallPolicy/FirewallPolicyArn/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"RuleGroup\":{\"RulesSource\":{\"RulesString\":\"pass tcp any any -\u003e any any (sid:1;)\"}},\"RuleGroupResponse\":{\"Capacity\":10,\"ConsumedCapacity\":1,\"EncryptionConfiguration\":{\"KeyId\":\"AWS_OWNED_KMS_KEY\",\"Type\":\"AWS_OWNED_KMS_KEY\"},\"LastModifiedTime\":1.79178787364E9,\"NumberOfAssociations\":0,\"RuleGroupArn\":\"arn:aws:network-firewall:us-east-1:123456789012:stateful-rulegroup/tfpreflight-verify-a6740b7ff351\",\"RuleGroupId\":\"c668b8d4-41f5-49d7-afe2-22f23b18c688\",\"RuleGroupName\":\"tfpreflight-verify-a6740b7ff351\",\"RuleGroupStatus\":\"ACTIVE\",\"Tags\":[],\"Type\":\"STATEFUL\"},\"UpdateToken\":\"b0280255-6da7-42a4-9868-be5d53dd5a3f\"}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "id": "arn:aws:network-firewall:us-east-1:123456789012:stateful-rulegroup/tfpreflight-verify-a6740b7ff351",
+      "label": "networkfirewall/DescribeRuleGroup/RuleGroupArn/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\n  \"Arn\" : \"arn:aws:oam:us-east-1:123456789012:sink/3b02410b-19e6-42cf-82f0-c124eebbaa11\",\n  \"Id\" : \"3b02410b-19e6-42cf-82f0-c124eebbaa11\",\n  \"Name\" : \"tfpreflight-verify-a6740b7ff351\",\n  \"Tags\" : { }\n}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "arn:aws:oam:us-east-1:123456789012:sink/3b02410b-19e6-42cf-82f0-c124eebbaa11",
+      "label": "oam/GetSink/Identifier/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\n  \"Name\" : \"tfpreflight-verify-a6740b7ff351\",\n  \"Id\" : \"6549c274dcfd4439b9784cdec969446d\",\n  \"Arn\" : \"arn:aws:mobiletargeting:us-east-1:123456789012:apps/6549c274dcfd4439b9784cdec969446d\",\n  \"CreationDate\" : \"2026-10-12T06:51:14.628Z\",\n  \"tags\" : { }\n}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "6549c274dcfd4439b9784cdec969446d",
+      "label": "pinpoint/GetApp/ApplicationId/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cDescribeOptionGroupsResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\"\u003e\n  \u003cDescribeOptionGroupsResult\u003e\n    \u003cOptionGroupsList\u003e\n      \u003cOptionGroup\u003e\n        \u003cMajorEngineVersion\u003e8.0\u003c/MajorEngineVersion\u003e\n        \u003cOptionGroupArn\u003earn:aws:rds:us-east-1:123456789012:og:tfpreflight-verify-a6740b7ff351\u003c/OptionGroupArn\u003e\n        \u003cOptionGroupDescription\u003etfpreflight\u003c/OptionGroupDescription\u003e\n        \u003cAllowsVpcAndNonVpcInstanceMemberships\u003etrue\u003c/AllowsVpcAndNonVpcInstanceMemberships\u003e\n        \u003cOptions/\u003e\n        \u003cOptionGroupName\u003etfpreflight-verify-a6740b7ff351\u003c/OptionGroupName\u003e\n        \u003cEngineName\u003emysql\u003c/EngineName\u003e\n      \u003c/OptionGroup\u003e\n    \u003c/OptionGroupsList\u003e\n  \u003c/DescribeOptionGroupsResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003efacce4bb-c534-4552-9663-8b02ccdaca0b\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/DescribeOptionGroupsResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "rds/DescribeOptionGroups/OptionGroupName/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cDescribeSnapshotSchedulesResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\"\u003e\n  \u003cDescribeSnapshotSchedulesResult\u003e\n    \u003cSnapshotSchedules\u003e\n      \u003cSnapshotSchedule\u003e\n        \u003cScheduleDefinitions\u003e\n          \u003cScheduleDefinition\u003erate(12 hours)\u003c/ScheduleDefinition\u003e\n        \u003c/ScheduleDefinitions\u003e\n        \u003cAssociatedClusterCount\u003e0\u003c/AssociatedClusterCount\u003e\n        \u003cAssociatedClusters/\u003e\n        \u003cScheduleIdentifier\u003etfpreflight-verify-a6740b7ff351\u003c/ScheduleIdentifier\u003e\n        \u003cTags/\u003e\n      \u003c/SnapshotSchedule\u003e\n    \u003c/SnapshotSchedules\u003e\n  \u003c/DescribeSnapshotSchedulesResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003e90557991-5149-4edd-94ba-b938b6421ea2\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/DescribeSnapshotSchedulesResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "redshift/DescribeSnapshotSchedules/ScheduleIdentifier/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"CollectionARN\":\"arn:aws:rekognition:us-east-1:123456789012:collection/tfpreflight-verify-a6740b7ff351\",\"CreationTimestamp\":1.791787885106E9,\"FaceCount\":0,\"FaceModelVersion\":\"7.0\",\"UserCount\":0}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "rekognition/DescribeCollection/CollectionId/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"Group\":{\"GroupArn\":\"arn:aws:resource-groups:us-east-1:123456789012:group/tfpreflight-verify-a6740b7ff351\",\"Name\":\"tfpreflight-verify-a6740b7ff351\",\"OwnerId\":\"123456789012\"}}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "resourcegroups/GetGroup/GroupName/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"Profile\":{\"Arn\":\"arn:aws:route53profiles:us-east-1:123456789012:profile/rp-a00056b0d5cd41c3\",\"ClientToken\":\"terraform-7WtIqNqcdFKVwgG0O7rZ43ptSv\",\"CreationTime\":1.791787878833E9,\"Id\":\"rp-a00056b0d5cd41c3\",\"ModificationTime\":1.791787878833E9,\"Name\":\"tfpreflight-verify-a6740b7ff351\",\"OwnerId\":\"123456789012\",\"ShareStatus\":\"NOT_SHARED\",\"Status\":\"COMPLETE\",\"StatusMessage\":\"Created Profile\"}}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "rp-a00056b0d5cd41c3",
+      "label": "route53profiles/GetProfile/ProfileId/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\n  \"AppMonitor\" : {\n    \"AppMonitorConfiguration\" : {\n      \"AllowCookies\" : null,\n      \"EnableXRay\" : null,\n      \"ExcludedPages\" : null,\n      \"FavoritePages\" : null,\n      \"GuestRoleArn\" : null,\n      \"IdentityPoolId\" : null,\n      \"IncludedPages\" : null,\n      \"SessionSampleRate\" : 0.1,\n      \"Telemetries\" : null\n    },\n    \"Created\" : \"2026-10-12T06:51:26.906Z\",\n    \"CustomEvents\" : {\n      \"Status\" : \"DISABLED\"\n    },\n    \"DataStorage\" : {\n      \"CwLog\" : {\n        \"CwLogEnabled\" : false,\n        \"CwLogGroup\" : null\n      }\n    },\n    \"DeobfuscationConfiguration\" : {\n      \"JavaScriptSourceMaps\" : {\n        \"S3Uri\" : null,\n        \"Status\" : \"DISABLED\"\n      }\n    },\n    \"Domain\" : \"tfpreflight-verify-a6740b7ff351.example.com\",\n    \"DomainList\" : null,\n    \"Id\" : \"08beaa22-15d6-44d2-81a3-db8de0d6fbca\",\n    \"LastModified\" : null,\n    \"Name\" : \"tfpreflight-verify-a6740b7ff351\",\n    \"Platform\" : \"Web\",\n    \"State\" : \"CREATED\",\n    \"Tags\" : { }\n  }\n}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "rum/GetAppMonitor/Name/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"CreationTime\":1.791787889459E9,\"LastModifiedTime\":1.791787889472E9,\"StudioLifecycleConfigAppType\":\"JupyterServer\",\"StudioLifecycleConfigArn\":\"arn:aws:sagemaker:us-east-1:123456789012:studio-lifecycle-config/tfpreflight-verify-a6740b7ff351\",\"StudioLifecycleConfigContent\":\"ZWNobyB0ZnByZWZsaWdodA==\",\"StudioLifecycleConfigName\":\"tfpreflight-verify-a6740b7ff351\"}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "sagemaker/DescribeStudioLifecycleConfig/StudioLifecycleConfigName/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"Arn\":\"arn:aws:scheduler:us-east-1:123456789012:schedule-group/tfpreflight-verify-a6740b7ff351\",\"CreationDate\":1.791787877001E9,\"LastModificationDate\":1.791787877001E9,\"Name\":\"tfpreflight-verify-a6740b7ff351\",\"State\":\"ACTIVE\"}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "scheduler/GetScheduleGroup/Name/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\n  \"RegistryName\" : \"tfpreflight-verify-a6740b7ff351\",\n  \"RegistryArn\" : \"arn:aws:schemas:us-east-1:123456789012:registry/tfpreflight-verify-a6740b7ff351\",\n  \"tags\" : { }\n}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "schemas/DescribeRegistry/RegistryName/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"Budgets\":[],\"PortfolioDetail\":{\"ARN\":\"arn:aws:catalog:us-east-1:123456789012:portfolio/port-hfvtrypnm2hti\",\"CreatedTime\":1.791787882595E9,\"DisplayName\":\"tfpreflight-verify-a6740b7ff351\",\"Id\":\"port-hfvtrypnm2hti\",\"ProviderName\":\"tfpreflight\"},\"TagOptions\":[],\"Tags\":[]}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "port-hfvtrypnm2hti",
+      "label": "servicecatalog/DescribePortfolio/Id/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"TagOptionDetail\":{\"Active\":true,\"Id\":\"tag-4iakpjo2jplk2\",\"Key\":\"tfpreflight\",\"Owner\":\"123456789012\",\"Value\":\"tfpreflight-verify-a6740b7ff351\"}}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "tag-4iakpjo2jplk2",
+      "label": "servicecatalog/DescribeTagOption/Id/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"Group\":{\"Arn\":\"arn:aws:synthetics:us-east-1:123456789012:group:9s6pkzqx05\",\"CreatedTime\":1.791787873078E9,\"Id\":\"9s6pkzqx05\",\"LastModifiedTime\":1.791787873078E9,\"Name\":\"tfpreflight-verify-a6740b7ff351\",\"Tags\":{}}}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "synthetics/GetGroup/GroupIdentifier/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"Workflow\":{\"Arn\":\"arn:aws:transfer:us-east-1:123456789012:workflow/w-23506f8691cf5c643\",\"Description\":\"\",\"OnExceptionSteps\":[],\"Steps\":[{\"__type\":\"WorkflowStep\",\"DeleteStepDetails\":{\"Name\":\"d\",\"SourceFileLocation\":\"${previous.file}\"},\"Type\":\"DELETE\"}],\"Tags\":[],\"WorkflowId\":\"w-23506f8691cf5c643\"}}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "w-23506f8691cf5c643",
+      "label": "transfer/DescribeWorkflow/WorkflowId/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"policyStoreId\":\"DXY4UGrMtADJTV6xRKEbn3\",\"arn\":\"arn:aws:verifiedpermissions::123456789012:policy-store/DXY4UGrMtADJTV6xRKEbn3\",\"validationSettings\":{\"mode\":\"OFF\"},\"createdDate\":\"2026-10-12T06:51:13.892604Z\",\"lastUpdatedDate\":\"2026-10-12T06:51:13.892604Z\",\"deletionProtection\":\"DISABLED\",\"encryptionState\":{\"default\":{}},\"cedarVersion\":\"CEDAR_4\"}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "id": "DXY4UGrMtADJTV6xRKEbn3",
+      "label": "verifiedpermissions/GetPolicyStore/PolicyStoreId/exists-misc-b",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\"?\u003e\n\u003cErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"\u003e\u003cError\u003e\u003cType\u003eSender\u003c/Type\u003e\u003cCode\u003eNoSuchCachePolicy\u003c/Code\u003e\u003cMessage\u003eThe specified cache policy does not exist.\u003c/Message\u003e\u003c/Error\u003e\u003cRequestId\u003e6a970f1a-1199-42c6-864a-6ff616b41cbf\u003c/RequestId\u003e\u003c/ErrorResponse\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "e82a7153-d9a5-4e6e-8cfb-ce4ea420eb47",
+      "label": "cloudfront/GetCachePolicy/Id/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\"?\u003e\n\u003cErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"\u003e\u003cError\u003e\u003cType\u003eSender\u003c/Type\u003e\u003cCode\u003eNoSuchFieldLevelEncryptionProfile\u003c/Code\u003e\u003cMessage\u003eThe specified field level encryption profile does not exist.\u003c/Message\u003e\u003c/Error\u003e\u003cRequestId\u003ed1494fec-eb9f-4ebc-b26f-a57e85e61cc6\u003c/RequestId\u003e\u003c/ErrorResponse\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "P29C3UA991Y30R",
+      "label": "cloudfront/GetFieldLevelEncryptionProfile/Id/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\"?\u003e\n\u003cErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"\u003e\u003cError\u003e\u003cType\u003eSender\u003c/Type\u003e\u003cCode\u003eNoSuchResource\u003c/Code\u003e\u003cMessage\u003eThe specified key group does not exist.\u003c/Message\u003e\u003c/Error\u003e\u003cRequestId\u003eb6ffc813-a1a5-43a2-89bb-99959b0636db\u003c/RequestId\u003e\u003c/ErrorResponse\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "fcdc5d48-3dc4-448b-bdbd-7b681650bebf",
+      "label": "cloudfront/GetKeyGroup/Id/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\"?\u003e\n\u003cErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"\u003e\u003cError\u003e\u003cType\u003eSender\u003c/Type\u003e\u003cCode\u003eNoSuchOriginRequestPolicy\u003c/Code\u003e\u003cMessage\u003eThe specified origin request policy does not exist.\u003c/Message\u003e\u003c/Error\u003e\u003cRequestId\u003e2b1e6497-4f73-40d9-a332-30ee75c26861\u003c/RequestId\u003e\u003c/ErrorResponse\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "1c7a9b85-2191-4374-a11e-6802d45c37f6",
+      "label": "cloudfront/GetOriginRequestPolicy/Id/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\"?\u003e\n\u003cErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"\u003e\u003cError\u003e\u003cType\u003eSender\u003c/Type\u003e\u003cCode\u003eNoSuchPublicKey\u003c/Code\u003e\u003cMessage\u003eThe specified CloudFront public key does not exist.\u003c/Message\u003e\u003c/Error\u003e\u003cRequestId\u003eb0f78e79-670a-4ab1-ac08-4ae93e54b9aa\u003c/RequestId\u003e\u003c/ErrorResponse\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "K2MNVG0ZBF5G1S",
+      "label": "cloudfront/GetPublicKey/Id/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003c?xml version=\"1.0\"?\u003e\n\u003cErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"\u003e\u003cError\u003e\u003cType\u003eSender\u003c/Type\u003e\u003cCode\u003eNoSuchResponseHeadersPolicy\u003c/Code\u003e\u003cMessage\u003eThe specified response headers policy does not exist.\u003c/Message\u003e\u003c/Error\u003e\u003cRequestId\u003e7997a051-9e80-42aa-901a-8c26526278b0\u003c/RequestId\u003e\u003c/ErrorResponse\u003e",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "e0bd39b7-e160-458e-a89a-5b34767dbc34",
+      "label": "cloudfront/GetResponseHeadersPolicy/Id/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "{\"__type\":\"ResourceNotFoundException\",\"Message\":\"Failed to describe Cost Category: No Cost Categories found with ID 80974d7e-41b7-4bce-9998-605d9fb64d47 effective on 2026-10-12T06:55:08.780020645Z in account 123456789012\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "arn:aws:ce::123456789012:costcategory/80974d7e-41b7-4bce-9998-605d9fb64d47",
+      "label": "costexplorer/DescribeCostCategoryDefinition/CostCategoryArn/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\n  \"Message\" : \"The requested resource was not found.\",\n  \"ResourceType\" : \"DATA_SET\",\n  \"ResourceId\" : \"4f50b84c5f0d59c56808dbe01c2b8475\"\n}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "id": "4f50b84c5f0d59c56808dbe01c2b8475",
+      "label": "dataexchange/GetDataSet/DataSetId/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003cErrorResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eCacheParameterGroupNotFound\u003c/Code\u003e\n    \u003cMessage\u003eCacheParameterGroup tfpreflight-verify-a6740b7ff351 not found.\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e93305664-d91a-4fd6-b2ef-7fe1c12fa9cc\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "elasticache/DescribeCacheParameterGroups/CacheParameterGroupName/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "{\n  \"Code\" : \"ResourceNotFoundException\",\n  \"Message\" : \"Resource: arn:aws:ivs:us-east-1:123456789012:recording-configuration/M0SvWZbymenL not found\",\n  \"RequestID\" : \"FHmdVGupoAMEPUA=\"\n}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "id": "arn:aws:ivs:us-east-1:123456789012:recording-configuration/M0SvWZbymenL",
+      "label": "ivs/GetRecordingConfiguration/Arn/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "{\n  \"Code\" : \"ValidationException\",\n  \"Message\" : \"GetLoggingConfiguration.identifier does not match the required pattern ^arn:aws:ivschat:[a-z0-9-]+:[0-9]+:logging-configuration/[a-zA-Z0-9-]+$\",\n  \"RequestID\" : \"FHmenEhKIAMENKA=\",\n  \"Details\" : {\n    \"fieldList\" : [ {\n      \"message\" : \"GetLoggingConfiguration.identifier does not match the required pattern ^arn:aws:ivschat:[a-z0-9-]+:[0-9]+:logging-configuration/[a-zA-Z0-9-]+$\",\n      \"name\" : \"GetLoggingConfiguration.identifier\"\n    } ],\n    \"reason\" : \"FIELD_VALIDATION_FAILED\"\n  }\n}",
+      "expected": "UNKNOWN",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "id": "117WbnXptlKU",
+      "label": "ivschat/GetLoggingConfiguration/Identifier/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"invalidParameter\":\"arn\",\"message\":\"Configuration ARN does not exist.\"}",
+      "expected": "UNKNOWN",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "BadRequestException"
+      },
+      "id": "arn:aws:kafka:us-east-1:123456789012:configuration/tfpreflight-verify-a6740b7ff351/ee0c4cfb-3875-47f4-b431-f79f2aefd227-13",
+      "label": "kafka/DescribeConfiguration/Arn/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"message\":\"Invalid parameter workerConfigurationArn: The requested resource doesn’t exist.\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "id": "arn:aws:kafkaconnect:us-east-1:123456789012:worker-configuration/tfpreflight-verify-a6740b7ff351/357fc27c-bcdb-4398-bce8-2e313b8657d5-3",
+      "label": "kafkaconnect/DescribeWorkerConfiguration/WorkerConfigurationArn/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "{\"__type\":\"ResourceNotFoundException\",\"message\":\"Stream tfpreflight-verify-a6740b7ff351 under account 123456789012 not found.\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "kinesis/DescribeStreamSummary/StreamName/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"Message\":\"The requested stream is not found or not active.\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException:https://kinesisvideo.amazonaws.com/doc/2017-09-30/"
+      },
+      "id": "arn:aws:kinesisvideo:us-east-1:123456789012:stream/tfpreflight-verify-a6740b7ff351/1791787873033",
+      "label": "kinesisvideo/DescribeStream/StreamARN/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "{\n  \"arn\" : \"arn:aws:medialive:us-east-1:123456789012:input:6773633\",\n  \"id\" : \"6773633\",\n  \"name\" : \"tfpreflight-verify-a6740b7ff351\",\n  \"type\" : \"URL_PULL\",\n  \"sources\" : [ {\n    \"url\" : \"https://tfpreflight-verify-a6740b7ff351.example.com/b.m3u8\"\n  }, {\n    \"url\" : \"https://tfpreflight-verify-a6740b7ff351.example.com/a.m3u8\"\n  } ],\n  \"smpte2110ReceiverGroupSettings\" : {\n    \"smpte2110ReceiverGroups\" : [ ]\n  },\n  \"inputSourceType\" : \"STATIC\",\n  \"destinations\" : [ ],\n  \"mediaConnectFlows\" : [ ],\n  \"inputDevices\" : [ ],\n  \"state\" : \"DELETED\",\n  \"attachedChannels\" : [ ],\n  \"securityGroups\" : [ ],\n  \"tags\" : { },\n  \"inputClass\" : \"STANDARD\",\n  \"inputPartnerIds\" : [ ],\n  \"inputNetworkLocation\" : \"AWS\"\n}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "6773633",
+      "label": "medialive/DescribeInput/InputId/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\n  \"arn\" : \"arn:aws:medialive:us-east-1:123456789012:inputSecurityGroup:3886563\",\n  \"id\" : \"3886563\",\n  \"whitelistRules\" : [ {\n    \"cidr\" : \"198.51.100.0/24\"\n  } ],\n  \"inputs\" : [ ],\n  \"channels\" : [ ],\n  \"state\" : \"DELETED\",\n  \"tags\" : { }\n}",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "id": "3886563",
+      "label": "medialive/DescribeInputSecurityGroup/InputSecurityGroupId/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"__type\":\"ACLNotFoundFault\",\"message\":\"ACL tfpreflight-verify-a6740b7ff351 not found\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "memorydb/DescribeACLs/ACLName/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"__type\":\"UserNotFoundFault\",\"message\":\"User tfpreflight-verify-a6740b7ff351 not found.\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "memorydb/DescribeUsers/UserName/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\n  \"message\" : \"Configuration ID [c-af12db21-257f-42c3-9267-246e1b105a91] can't be found. Make sure it exists.\",\n  \"errorAttribute\" : \"configuration-id\"\n}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "id": "c-af12db21-257f-42c3-9267-246e1b105a91",
+      "label": "mq/DescribeConfiguration/ConfigurationId/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003cErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eDBParameterGroupNotFound\u003c/Code\u003e\n    \u003cMessage\u003eDBClusterParameterGroup not found: tfpreflight-verify-a6740b7ff351\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e2e13b4e2-5353-43b1-8989-f58b99b70eb7\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "neptune/DescribeDBClusterParameterGroups/DBClusterParameterGroupName/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "{\"__type\":\"com.amazonaws.networkfirewall.customerapi.v20201112#ResourceNotFoundException\",\"Message\":\"No object with the provided name or resource identifier was found\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "id": "arn:aws:network-firewall:us-east-1:123456789012:firewall-policy/tfpreflight-verify-a6740b7ff351",
+      "label": "networkfirewall/DescribeFirewallPolicy/FirewallPolicyArn/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"__type\":\"com.amazonaws.networkfirewall.customerapi.v20201112#ResourceNotFoundException\",\"Message\":\"No object with the provided name or resource identifier was found\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "id": "arn:aws:network-firewall:us-east-1:123456789012:stateful-rulegroup/tfpreflight-verify-a6740b7ff351",
+      "label": "networkfirewall/DescribeRuleGroup/RuleGroupArn/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\n  \"Message\" : \"Resource not found.\"\n}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "id": "arn:aws:oam:us-east-1:123456789012:sink/3b02410b-19e6-42cf-82f0-c124eebbaa11",
+      "label": "oam/GetSink/Identifier/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "{\n  \"RequestID\" : \"FHmj3GzwIAMEeJg=\",\n  \"Message\" : \"Application not found\"\n}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "id": "6549c274dcfd4439b9784cdec969446d",
+      "label": "pinpoint/GetApp/ApplicationId/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003cErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eOptionGroupNotFoundFault\u003c/Code\u003e\n    \u003cMessage\u003eSpecified OptionGroupName: tfpreflight-verify-a6740b7ff351 not found.\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003edc9d561d-e46d-44d5-951b-b9a9baca97f4\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "rds/DescribeOptionGroups/OptionGroupName/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003cDescribeSnapshotSchedulesResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\"\u003e\n  \u003cDescribeSnapshotSchedulesResult\u003e\n    \u003cSnapshotSchedules/\u003e\n  \u003c/DescribeSnapshotSchedulesResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003ed0209ba5-03bc-4ab3-992e-b1c6c512ae18\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/DescribeSnapshotSchedulesResponse\u003e\n",
+      "expected": "UNKNOWN",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "redshift/DescribeSnapshotSchedules/ScheduleIdentifier/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "{\"__type\":\"ResourceNotFoundException\",\"Code\":\"ResourceNotFoundException\",\"Message\":\"Collection:tfpreflight-verify-a6740b7ff351 not found!\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "rekognition/DescribeCollection/CollectionId/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"Message\":\"The specified group does not exist\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "resourcegroups/GetGroup/GroupName/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "{\"Message\":\"[RSLVR-05007] Can't find the resource with ID \\\"rp-a00056b0d5cd41c3\\\".\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "id": "rp-a00056b0d5cd41c3",
+      "label": "route53profiles/GetProfile/ProfileId/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\n  \"message\" : \"Resource not found tfpreflight-verify-a6740b7ff351\",\n  \"resourceName\" : null,\n  \"resourceType\" : null\n}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "rum/GetAppMonitor/Name/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "{\"__type\":\"ResourceNotFound\",\"Message\":\"LifecycleConfig [arn:aws:sagemaker:us-east-1:123456789012:studio-lifecycle-config/tfpreflight-verify-a6740b7ff351] does not exist.\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "sagemaker/DescribeStudioLifecycleConfig/StudioLifecycleConfigName/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"Message\":\"Schedule group tfpreflight-verify-a6740b7ff351 does not exist.\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException:http://internal.amazon.com/coral/com.amazonaws.chronos/"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "scheduler/GetScheduleGroup/Name/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "{\n  \"Code\" : \"ResourceNotFound\",\n  \"Message\" : \"Registry with name tfpreflight-verify-a6740b7ff351 does not exist.\"\n}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "schemas/DescribeRegistry/RegistryName/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "{\"__type\":\"ResourceNotFoundException\",\"Message\":\"There are no local or default portfolios with id port-hfvtrypnm2hti\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "port-hfvtrypnm2hti",
+      "label": "servicecatalog/DescribePortfolio/Id/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"__type\":\"ResourceNotFoundException\",\"Message\":\"TagOption with ID tag-4iakpjo2jplk2 not found\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "tag-4iakpjo2jplk2",
+      "label": "servicecatalog/DescribeTagOption/Id/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"Message\":\"Group does not exist: tfpreflight-verify-a6740b7ff351\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "id": "tfpreflight-verify-a6740b7ff351",
+      "label": "synthetics/GetGroup/GroupIdentifier/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "{\"__type\":\"ResourceNotFoundException\",\"Message\":\"Unknown workflow\",\"Resource\":\"w-23506f8691cf5c643\",\"ResourceType\":\"Workflow\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "id": "w-23506f8691cf5c643",
+      "label": "transfer/DescribeWorkflow/WorkflowId/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 400
+    },
+    {
+      "body": "{\"message\":\"Resource not found\",\"resourceId\":\"DXY4UGrMtADJTV6xRKEbn3\",\"resourceType\":\"POLICY_STORE\",\"__type\":\"com.aws.verifiedpermissions#ResourceNotFoundException\"}",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "id": "DXY4UGrMtADJTV6xRKEbn3",
+      "label": "verifiedpermissions/GetPolicyStore/PolicyStoreId/exists-misc-b-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    }
+  ]
+}

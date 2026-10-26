@@ -1,0 +1,15 @@
+version: 2
+# Actions are pinned to commit SHAs and the module to exact versions; these
+# updates are how pins move forward, each reviewed as its own pull request.
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+  - package-ecosystem: gomod
+    directory: /
+    schedule:
+      interval: weekly
+    ignore:
+      # AWS SDK versions are owned by the pack build, which pins them to the provider's.
+      - dependency-name: "github.com/aws/*"

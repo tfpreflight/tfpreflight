@@ -1,0 +1,38 @@
+name: Bug
+description: Report a crash, install problem, or other software defect
+title: "[bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Security vulnerabilities go to private reporting, not a public issue; see [SECURITY.md](https://github.com/tfpreflight/tfpreflight/blob/main/SECURITY.md).
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include the command, exit code, and exact error. Remove credentials and infrastructure identifiers.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How can we reproduce it?
+      placeholder: List the smallest safe sequence of steps.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: tfpreflight version
+      description: Paste the first line of `tfpreflight version`.
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Operating system and architecture
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Do not attach a Terraform plan. Review logs before sharing them.

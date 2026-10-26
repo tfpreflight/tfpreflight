@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "provider": "aws",
+  "terraform_provider": "hashicorp/aws",
+  "provider_version": "6.x",
+  "resources": {
+    "aws_s3_bucket": {
+      "resource_label": "S3 bucket",
+      "actions": {
+        "create": {
+          "operation_label": "Create",
+          "operations": [{"name": "CreateBucket", "permission": "s3:CreateBucket"}],
+          "conflict": {"type": "s3_bucket_exists", "identity_field": "bucket"}
+        }
+      }
+    },
+    "aws_instance": {
+      "resource_label": "EC2 instance",
+      "actions": {
+        "create": {
+          "operation_label": "Launch",
+          "operations": [{"name": "RunInstances", "permission": "ec2:RunInstances"}],
+          "quota": {"type": "ec2_standard_vcpu", "instance_type_field": "instance_type", "region_field": "region", "instance_type_prefix": "m6i."}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1296 @@
+{
+ "applyable": true,
+ "complete": true,
+ "configuration": {
+  "provider_config": {
+   "aws": {
+    "expressions": {
+     "region": {
+      "constant_value": "us-east-1"
+     },
+     "skip_credentials_validation": {
+      "constant_value": true
+     },
+     "skip_metadata_api_check": {
+      "constant_value": true
+     },
+     "skip_requesting_account_id": {
+      "constant_value": true
+     }
+    },
+    "full_name": "registry.terraform.io/hashicorp/aws",
+    "name": "aws",
+    "version_constraint": "6.64.0"
+   }
+  },
+  "root_module": {
+   "resources": [
+    {
+     "address": "aws_lambda_function.external",
+     "expressions": {
+      "filename": {
+       "constant_value": "fn.zip"
+      },
+      "function_name": {
+       "constant_value": "external"
+      },
+      "handler": {
+       "constant_value": "index.handler"
+      },
+      "role": {
+       "constant_value": "arn:aws:iam::123456789012:role/probe"
+      },
+      "runtime": {
+       "constant_value": "python3.12"
+      },
+      "vpc_config": [
+       {
+        "security_group_ids": {
+         "constant_value": [
+          "sg-0ddddddddddddddd0"
+         ]
+        },
+        "subnet_ids": {
+         "references": [
+          "var.external_subnet"
+         ]
+        }
+       }
+      ]
+     },
+     "mode": "managed",
+     "name": "external",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_lambda_function"
+    },
+    {
+     "address": "aws_lambda_function.mixed",
+     "expressions": {
+      "filename": {
+       "constant_value": "fn.zip"
+      },
+      "function_name": {
+       "constant_value": "mixed"
+      },
+      "handler": {
+       "constant_value": "index.handler"
+      },
+      "role": {
+       "constant_value": "arn:aws:iam::123456789012:role/probe"
+      },
+      "runtime": {
+       "constant_value": "python3.12"
+      },
+      "vpc_config": [
+       {
+        "security_group_ids": {
+         "constant_value": [
+          "sg-0ccccccccccccccc0"
+         ]
+        },
+        "subnet_ids": {
+         "references": [
+          "aws_subnet.produced.id",
+          "aws_subnet.produced"
+         ]
+        }
+       }
+      ]
+     },
+     "mode": "managed",
+     "name": "mixed",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_lambda_function"
+    },
+    {
+     "address": "aws_lambda_function.none",
+     "expressions": {
+      "filename": {
+       "constant_value": "fn.zip"
+      },
+      "function_name": {
+       "constant_value": "none"
+      },
+      "handler": {
+       "constant_value": "index.handler"
+      },
+      "role": {
+       "constant_value": "arn:aws:iam::123456789012:role/probe"
+      },
+      "runtime": {
+       "constant_value": "python3.12"
+      }
+     },
+     "mode": "managed",
+     "name": "none",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_lambda_function"
+    },
+    {
+     "address": "aws_lambda_function.same_plan",
+     "expressions": {
+      "filename": {
+       "constant_value": "fn.zip"
+      },
+      "function_name": {
+       "constant_value": "same-plan"
+      },
+      "handler": {
+       "constant_value": "index.handler"
+      },
+      "role": {
+       "constant_value": "arn:aws:iam::123456789012:role/probe"
+      },
+      "runtime": {
+       "constant_value": "python3.12"
+      },
+      "vpc_config": [
+       {
+        "security_group_ids": {
+         "references": [
+          "aws_security_group.produced.id",
+          "aws_security_group.produced"
+         ]
+        },
+        "subnet_ids": {
+         "references": [
+          "aws_subnet.produced.id",
+          "aws_subnet.produced"
+         ]
+        }
+       }
+      ]
+     },
+     "mode": "managed",
+     "name": "same_plan",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_lambda_function"
+    },
+    {
+     "address": "aws_security_group.produced",
+     "expressions": {
+      "name": {
+       "constant_value": "produced"
+      },
+      "vpc_id": {
+       "references": [
+        "aws_vpc.main.id",
+        "aws_vpc.main"
+       ]
+      }
+     },
+     "mode": "managed",
+     "name": "produced",
+     "provider_config_key": "aws",
+     "schema_version": 1,
+     "type": "aws_security_group"
+    },
+    {
+     "address": "aws_subnet.produced",
+     "expressions": {
+      "cidr_block": {
+       "constant_value": "10.0.1.0/24"
+      },
+      "vpc_id": {
+       "references": [
+        "aws_vpc.main.id",
+        "aws_vpc.main"
+       ]
+      }
+     },
+     "mode": "managed",
+     "name": "produced",
+     "provider_config_key": "aws",
+     "schema_version": 1,
+     "type": "aws_subnet"
+    },
+    {
+     "address": "aws_vpc.main",
+     "expressions": {
+      "cidr_block": {
+       "constant_value": "10.0.0.0/16"
+      }
+     },
+     "mode": "managed",
+     "name": "main",
+     "provider_config_key": "aws",
+     "schema_version": 1,
+     "type": "aws_vpc"
+    }
+   ],
+   "variables": {
+    "external_subnet": {
+     "default": "subnet-0aaaaaaaaaaaaaaaa"
+    }
+   }
+  }
+ },
+ "errored": false,
+ "format_version": "1.2",
+ "planned_values": {
+  "root_module": {
+   "resources": [
+    {
+     "address": "aws_lambda_function.external",
+     "identity": {
+      "account_id": null,
+      "function_name": null,
+      "region": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "external",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {
+      "architectures": [],
+      "capacity_provider_config": [],
+      "dead_letter_config": [],
+      "durable_config": [],
+      "environment": [],
+      "ephemeral_storage": [],
+      "file_system_config": [],
+      "image_config": [],
+      "logging_config": [],
+      "snap_start": [],
+      "tags_all": {},
+      "tenancy_config": [],
+      "tracing_config": [],
+      "vpc_config": [
+       {
+        "security_group_ids": [
+         false
+        ],
+        "subnet_ids": [
+         false
+        ]
+       }
+      ]
+     },
+     "type": "aws_lambda_function",
+     "values": {
+      "capacity_provider_config": [],
+      "code_signing_config_arn": null,
+      "dead_letter_config": [],
+      "description": null,
+      "durable_config": [],
+      "environment": [],
+      "file_system_config": [],
+      "filename": "fn.zip",
+      "function_name": "external",
+      "handler": "index.handler",
+      "image_config": [],
+      "image_uri": null,
+      "kms_key_arn": null,
+      "layers": null,
+      "memory_size": 128,
+      "package_type": "Zip",
+      "publish": false,
+      "publish_to": null,
+      "region": "us-east-1",
+      "replace_security_groups_on_destroy": null,
+      "replacement_security_group_ids": null,
+      "reserved_concurrent_executions": -1,
+      "role": "arn:aws:iam::123456789012:role/probe",
+      "runtime": "python3.12",
+      "s3_bucket": null,
+      "s3_key": null,
+      "s3_object_version": null,
+      "skip_destroy": false,
+      "snap_start": [],
+      "source_kms_key_arn": null,
+      "tags": null,
+      "tenancy_config": [],
+      "timeout": 3,
+      "timeouts": null,
+      "use_resource_timeout_for_propagation": null,
+      "vpc_config": [
+       {
+        "ipv6_allowed_for_dual_stack": false,
+        "security_group_ids": [
+         "sg-0ddddddddddddddd0"
+        ],
+        "subnet_ids": [
+         "subnet-0aaaaaaaaaaaaaaaa"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "address": "aws_lambda_function.mixed",
+     "identity": {
+      "account_id": null,
+      "function_name": null,
+      "region": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "mixed",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {
+      "architectures": [],
+      "capacity_provider_config": [],
+      "dead_letter_config": [],
+      "durable_config": [],
+      "environment": [],
+      "ephemeral_storage": [],
+      "file_system_config": [],
+      "image_config": [],
+      "logging_config": [],
+      "snap_start": [],
+      "tags_all": {},
+      "tenancy_config": [],
+      "tracing_config": [],
+      "vpc_config": [
+       {
+        "security_group_ids": [
+         false
+        ],
+        "subnet_ids": []
+       }
+      ]
+     },
+     "type": "aws_lambda_function",
+     "values": {
+      "capacity_provider_config": [],
+      "code_signing_config_arn": null,
+      "dead_letter_config": [],
+      "description": null,
+      "durable_config": [],
+      "environment": [],
+      "file_system_config": [],
+      "filename": "fn.zip",
+      "function_name": "mixed",
+      "handler": "index.handler",
+      "image_config": [],
+      "image_uri": null,
+      "kms_key_arn": null,
+      "layers": null,
+      "memory_size": 128,
+      "package_type": "Zip",
+      "publish": false,
+      "publish_to": null,
+      "region": "us-east-1",
+      "replace_security_groups_on_destroy": null,
+      "replacement_security_group_ids": null,
+      "reserved_concurrent_executions": -1,
+      "role": "arn:aws:iam::123456789012:role/probe",
+      "runtime": "python3.12",
+      "s3_bucket": null,
+      "s3_key": null,
+      "s3_object_version": null,
+      "skip_destroy": false,
+      "snap_start": [],
+      "source_kms_key_arn": null,
+      "tags": null,
+      "tenancy_config": [],
+      "timeout": 3,
+      "timeouts": null,
+      "use_resource_timeout_for_propagation": null,
+      "vpc_config": [
+       {
+        "ipv6_allowed_for_dual_stack": false,
+        "security_group_ids": [
+         "sg-0ccccccccccccccc0"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "address": "aws_lambda_function.none",
+     "identity": {
+      "account_id": null,
+      "function_name": null,
+      "region": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "none",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {
+      "architectures": [],
+      "capacity_provider_config": [],
+      "dead_letter_config": [],
+      "durable_config": [],
+      "environment": [],
+      "ephemeral_storage": [],
+      "file_system_config": [],
+      "image_config": [],
+      "logging_config": [],
+      "snap_start": [],
+      "tags_all": {},
+      "tenancy_config": [],
+      "tracing_config": [],
+      "vpc_config": []
+     },
+     "type": "aws_lambda_function",
+     "values": {
+      "capacity_provider_config": [],
+      "code_signing_config_arn": null,
+      "dead_letter_config": [],
+      "description": null,
+      "durable_config": [],
+      "environment": [],
+      "file_system_config": [],
+      "filename": "fn.zip",
+      "function_name": "none",
+      "handler": "index.handler",
+      "image_config": [],
+      "image_uri": null,
+      "kms_key_arn": null,
+      "layers": null,
+      "memory_size": 128,
+      "package_type": "Zip",
+      "publish": false,
+      "publish_to": null,
+      "region": "us-east-1",
+      "replace_security_groups_on_destroy": null,
+      "replacement_security_group_ids": null,
+      "reserved_concurrent_executions": -1,
+      "role": "arn:aws:iam::123456789012:role/probe",
+      "runtime": "python3.12",
+      "s3_bucket": null,
+      "s3_key": null,
+      "s3_object_version": null,
+      "skip_destroy": false,
+      "snap_start": [],
+      "source_kms_key_arn": null,
+      "tags": null,
+      "tenancy_config": [],
+      "timeout": 3,
+      "timeouts": null,
+      "use_resource_timeout_for_propagation": null,
+      "vpc_config": []
+     }
+    },
+    {
+     "address": "aws_lambda_function.same_plan",
+     "identity": {
+      "account_id": null,
+      "function_name": null,
+      "region": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "same_plan",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {
+      "architectures": [],
+      "capacity_provider_config": [],
+      "dead_letter_config": [],
+      "durable_config": [],
+      "environment": [],
+      "ephemeral_storage": [],
+      "file_system_config": [],
+      "image_config": [],
+      "logging_config": [],
+      "snap_start": [],
+      "tags_all": {},
+      "tenancy_config": [],
+      "tracing_config": [],
+      "vpc_config": [
+       {
+        "security_group_ids": [],
+        "subnet_ids": []
+       }
+      ]
+     },
+     "type": "aws_lambda_function",
+     "values": {
+      "capacity_provider_config": [],
+      "code_signing_config_arn": null,
+      "dead_letter_config": [],
+      "description": null,
+      "durable_config": [],
+      "environment": [],
+      "file_system_config": [],
+      "filename": "fn.zip",
+      "function_name": "same-plan",
+      "handler": "index.handler",
+      "image_config": [],
+      "image_uri": null,
+      "kms_key_arn": null,
+      "layers": null,
+      "memory_size": 128,
+      "package_type": "Zip",
+      "publish": false,
+      "publish_to": null,
+      "region": "us-east-1",
+      "replace_security_groups_on_destroy": null,
+      "replacement_security_group_ids": null,
+      "reserved_concurrent_executions": -1,
+      "role": "arn:aws:iam::123456789012:role/probe",
+      "runtime": "python3.12",
+      "s3_bucket": null,
+      "s3_key": null,
+      "s3_object_version": null,
+      "skip_destroy": false,
+      "snap_start": [],
+      "source_kms_key_arn": null,
+      "tags": null,
+      "tenancy_config": [],
+      "timeout": 3,
+      "timeouts": null,
+      "use_resource_timeout_for_propagation": null,
+      "vpc_config": [
+       {
+        "ipv6_allowed_for_dual_stack": false
+       }
+      ]
+     }
+    },
+    {
+     "address": "aws_security_group.produced",
+     "identity": {
+      "account_id": null,
+      "id": null,
+      "region": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "produced",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 1,
+     "sensitive_values": {
+      "egress": [],
+      "ingress": [],
+      "tags_all": {}
+     },
+     "type": "aws_security_group",
+     "values": {
+      "description": "Managed by Terraform",
+      "name": "produced",
+      "region": "us-east-1",
+      "revoke_rules_on_delete": false,
+      "tags": null,
+      "timeouts": null
+     }
+    },
+    {
+     "address": "aws_subnet.produced",
+     "identity": {
+      "account_id": null,
+      "id": null,
+      "region": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "produced",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 1,
+     "sensitive_values": {
+      "tags_all": {}
+     },
+     "type": "aws_subnet",
+     "values": {
+      "assign_ipv6_address_on_creation": false,
+      "cidr_block": "10.0.1.0/24",
+      "customer_owned_ipv4_pool": null,
+      "enable_dns64": false,
+      "enable_lni_at_device_index": null,
+      "enable_resource_name_dns_a_record_on_launch": false,
+      "enable_resource_name_dns_aaaa_record_on_launch": false,
+      "ipv4_ipam_pool_id": null,
+      "ipv4_netmask_length": null,
+      "ipv6_ipam_pool_id": null,
+      "ipv6_native": false,
+      "ipv6_netmask_length": null,
+      "map_customer_owned_ip_on_launch": null,
+      "map_public_ip_on_launch": false,
+      "outpost_arn": null,
+      "region": "us-east-1",
+      "tags": null,
+      "timeouts": null
+     }
+    },
+    {
+     "address": "aws_vpc.main",
+     "identity": {
+      "account_id": null,
+      "id": null,
+      "region": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "main",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 1,
+     "sensitive_values": {
+      "tags_all": {}
+     },
+     "type": "aws_vpc",
+     "values": {
+      "assign_generated_ipv6_cidr_block": null,
+      "cidr_block": "10.0.0.0/16",
+      "enable_dns_support": true,
+      "instance_tenancy": "default",
+      "ipv4_ipam_pool_id": null,
+      "ipv4_netmask_length": null,
+      "ipv6_ipam_pool_id": null,
+      "ipv6_netmask_length": null,
+      "region": "us-east-1",
+      "tags": null
+     }
+    }
+   ]
+  }
+ },
+ "relevant_attributes": [
+  {
+   "attribute": [
+    "id"
+   ],
+   "resource": "aws_security_group.produced"
+  },
+  {
+   "attribute": [
+    "id"
+   ],
+   "resource": "aws_subnet.produced"
+  },
+  {
+   "attribute": [
+    "id"
+   ],
+   "resource": "aws_vpc.main"
+  }
+ ],
+ "resource_changes": [
+  {
+   "address": "aws_lambda_function.external",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "capacity_provider_config": [],
+     "code_signing_config_arn": null,
+     "dead_letter_config": [],
+     "description": null,
+     "durable_config": [],
+     "environment": [],
+     "file_system_config": [],
+     "filename": "fn.zip",
+     "function_name": "external",
+     "handler": "index.handler",
+     "image_config": [],
+     "image_uri": null,
+     "kms_key_arn": null,
+     "layers": null,
+     "memory_size": 128,
+     "package_type": "Zip",
+     "publish": false,
+     "publish_to": null,
+     "region": "us-east-1",
+     "replace_security_groups_on_destroy": null,
+     "replacement_security_group_ids": null,
+     "reserved_concurrent_executions": -1,
+     "role": "arn:aws:iam::123456789012:role/probe",
+     "runtime": "python3.12",
+     "s3_bucket": null,
+     "s3_key": null,
+     "s3_object_version": null,
+     "skip_destroy": false,
+     "snap_start": [],
+     "source_kms_key_arn": null,
+     "tags": null,
+     "tenancy_config": [],
+     "timeout": 3,
+     "timeouts": null,
+     "use_resource_timeout_for_propagation": null,
+     "vpc_config": [
+      {
+       "ipv6_allowed_for_dual_stack": false,
+       "security_group_ids": [
+        "sg-0ddddddddddddddd0"
+       ],
+       "subnet_ids": [
+        "subnet-0aaaaaaaaaaaaaaaa"
+       ]
+      }
+     ]
+    },
+    "after_identity": {
+     "account_id": null,
+     "function_name": null,
+     "region": null
+    },
+    "after_sensitive": {
+     "architectures": [],
+     "capacity_provider_config": [],
+     "dead_letter_config": [],
+     "durable_config": [],
+     "environment": [],
+     "ephemeral_storage": [],
+     "file_system_config": [],
+     "image_config": [],
+     "logging_config": [],
+     "snap_start": [],
+     "tags_all": {},
+     "tenancy_config": [],
+     "tracing_config": [],
+     "vpc_config": [
+      {
+       "security_group_ids": [
+        false
+       ],
+       "subnet_ids": [
+        false
+       ]
+      }
+     ]
+    },
+    "after_unknown": {
+     "architectures": true,
+     "arn": true,
+     "capacity_provider_config": [],
+     "code_sha256": true,
+     "dead_letter_config": [],
+     "durable_config": [],
+     "environment": [],
+     "ephemeral_storage": true,
+     "file_system_config": [],
+     "id": true,
+     "image_config": [],
+     "invoke_arn": true,
+     "last_modified": true,
+     "logging_config": true,
+     "qualified_arn": true,
+     "qualified_invoke_arn": true,
+     "response_streaming_invoke_arn": true,
+     "signing_job_arn": true,
+     "signing_profile_version_arn": true,
+     "snap_start": [],
+     "source_code_hash": true,
+     "source_code_size": true,
+     "tags_all": true,
+     "tenancy_config": [],
+     "tracing_config": true,
+     "version": true,
+     "vpc_config": [
+      {
+       "security_group_ids": [
+        false
+       ],
+       "subnet_ids": [
+        false
+       ],
+       "vpc_id": true
+      }
+     ]
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "external",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_lambda_function"
+  },
+  {
+   "address": "aws_lambda_function.mixed",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "capacity_provider_config": [],
+     "code_signing_config_arn": null,
+     "dead_letter_config": [],
+     "description": null,
+     "durable_config": [],
+     "environment": [],
+     "file_system_config": [],
+     "filename": "fn.zip",
+     "function_name": "mixed",
+     "handler": "index.handler",
+     "image_config": [],
+     "image_uri": null,
+     "kms_key_arn": null,
+     "layers": null,
+     "memory_size": 128,
+     "package_type": "Zip",
+     "publish": false,
+     "publish_to": null,
+     "region": "us-east-1",
+     "replace_security_groups_on_destroy": null,
+     "replacement_security_group_ids": null,
+     "reserved_concurrent_executions": -1,
+     "role": "arn:aws:iam::123456789012:role/probe",
+     "runtime": "python3.12",
+     "s3_bucket": null,
+     "s3_key": null,
+     "s3_object_version": null,
+     "skip_destroy": false,
+     "snap_start": [],
+     "source_kms_key_arn": null,
+     "tags": null,
+     "tenancy_config": [],
+     "timeout": 3,
+     "timeouts": null,
+     "use_resource_timeout_for_propagation": null,
+     "vpc_config": [
+      {
+       "ipv6_allowed_for_dual_stack": false,
+       "security_group_ids": [
+        "sg-0ccccccccccccccc0"
+       ]
+      }
+     ]
+    },
+    "after_identity": {
+     "account_id": null,
+     "function_name": null,
+     "region": null
+    },
+    "after_sensitive": {
+     "architectures": [],
+     "capacity_provider_config": [],
+     "dead_letter_config": [],
+     "durable_config": [],
+     "environment": [],
+     "ephemeral_storage": [],
+     "file_system_config": [],
+     "image_config": [],
+     "logging_config": [],
+     "snap_start": [],
+     "tags_all": {},
+     "tenancy_config": [],
+     "tracing_config": [],
+     "vpc_config": [
+      {
+       "security_group_ids": [
+        false
+       ],
+       "subnet_ids": []
+      }
+     ]
+    },
+    "after_unknown": {
+     "architectures": true,
+     "arn": true,
+     "capacity_provider_config": [],
+     "code_sha256": true,
+     "dead_letter_config": [],
+     "durable_config": [],
+     "environment": [],
+     "ephemeral_storage": true,
+     "file_system_config": [],
+     "id": true,
+     "image_config": [],
+     "invoke_arn": true,
+     "last_modified": true,
+     "logging_config": true,
+     "qualified_arn": true,
+     "qualified_invoke_arn": true,
+     "response_streaming_invoke_arn": true,
+     "signing_job_arn": true,
+     "signing_profile_version_arn": true,
+     "snap_start": [],
+     "source_code_hash": true,
+     "source_code_size": true,
+     "tags_all": true,
+     "tenancy_config": [],
+     "tracing_config": true,
+     "version": true,
+     "vpc_config": [
+      {
+       "security_group_ids": [
+        false
+       ],
+       "subnet_ids": true,
+       "vpc_id": true
+      }
+     ]
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "mixed",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_lambda_function"
+  },
+  {
+   "address": "aws_lambda_function.none",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "capacity_provider_config": [],
+     "code_signing_config_arn": null,
+     "dead_letter_config": [],
+     "description": null,
+     "durable_config": [],
+     "environment": [],
+     "file_system_config": [],
+     "filename": "fn.zip",
+     "function_name": "none",
+     "handler": "index.handler",
+     "image_config": [],
+     "image_uri": null,
+     "kms_key_arn": null,
+     "layers": null,
+     "memory_size": 128,
+     "package_type": "Zip",
+     "publish": false,
+     "publish_to": null,
+     "region": "us-east-1",
+     "replace_security_groups_on_destroy": null,
+     "replacement_security_group_ids": null,
+     "reserved_concurrent_executions": -1,
+     "role": "arn:aws:iam::123456789012:role/probe",
+     "runtime": "python3.12",
+     "s3_bucket": null,
+     "s3_key": null,
+     "s3_object_version": null,
+     "skip_destroy": false,
+     "snap_start": [],
+     "source_kms_key_arn": null,
+     "tags": null,
+     "tenancy_config": [],
+     "timeout": 3,
+     "timeouts": null,
+     "use_resource_timeout_for_propagation": null,
+     "vpc_config": []
+    },
+    "after_identity": {
+     "account_id": null,
+     "function_name": null,
+     "region": null
+    },
+    "after_sensitive": {
+     "architectures": [],
+     "capacity_provider_config": [],
+     "dead_letter_config": [],
+     "durable_config": [],
+     "environment": [],
+     "ephemeral_storage": [],
+     "file_system_config": [],
+     "image_config": [],
+     "logging_config": [],
+     "snap_start": [],
+     "tags_all": {},
+     "tenancy_config": [],
+     "tracing_config": [],
+     "vpc_config": []
+    },
+    "after_unknown": {
+     "architectures": true,
+     "arn": true,
+     "capacity_provider_config": [],
+     "code_sha256": true,
+     "dead_letter_config": [],
+     "durable_config": [],
+     "environment": [],
+     "ephemeral_storage": true,
+     "file_system_config": [],
+     "id": true,
+     "image_config": [],
+     "invoke_arn": true,
+     "last_modified": true,
+     "logging_config": true,
+     "qualified_arn": true,
+     "qualified_invoke_arn": true,
+     "response_streaming_invoke_arn": true,
+     "signing_job_arn": true,
+     "signing_profile_version_arn": true,
+     "snap_start": [],
+     "source_code_hash": true,
+     "source_code_size": true,
+     "tags_all": true,
+     "tenancy_config": [],
+     "tracing_config": true,
+     "version": true,
+     "vpc_config": []
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "none",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_lambda_function"
+  },
+  {
+   "address": "aws_lambda_function.same_plan",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "capacity_provider_config": [],
+     "code_signing_config_arn": null,
+     "dead_letter_config": [],
+     "description": null,
+     "durable_config": [],
+     "environment": [],
+     "file_system_config": [],
+     "filename": "fn.zip",
+     "function_name": "same-plan",
+     "handler": "index.handler",
+     "image_config": [],
+     "image_uri": null,
+     "kms_key_arn": null,
+     "layers": null,
+     "memory_size": 128,
+     "package_type": "Zip",
+     "publish": false,
+     "publish_to": null,
+     "region": "us-east-1",
+     "replace_security_groups_on_destroy": null,
+     "replacement_security_group_ids": null,
+     "reserved_concurrent_executions": -1,
+     "role": "arn:aws:iam::123456789012:role/probe",
+     "runtime": "python3.12",
+     "s3_bucket": null,
+     "s3_key": null,
+     "s3_object_version": null,
+     "skip_destroy": false,
+     "snap_start": [],
+     "source_kms_key_arn": null,
+     "tags": null,
+     "tenancy_config": [],
+     "timeout": 3,
+     "timeouts": null,
+     "use_resource_timeout_for_propagation": null,
+     "vpc_config": [
+      {
+       "ipv6_allowed_for_dual_stack": false
+      }
+     ]
+    },
+    "after_identity": {
+     "account_id": null,
+     "function_name": null,
+     "region": null
+    },
+    "after_sensitive": {
+     "architectures": [],
+     "capacity_provider_config": [],
+     "dead_letter_config": [],
+     "durable_config": [],
+     "environment": [],
+     "ephemeral_storage": [],
+     "file_system_config": [],
+     "image_config": [],
+     "logging_config": [],
+     "snap_start": [],
+     "tags_all": {},
+     "tenancy_config": [],
+     "tracing_config": [],
+     "vpc_config": [
+      {
+       "security_group_ids": [],
+       "subnet_ids": []
+      }
+     ]
+    },
+    "after_unknown": {
+     "architectures": true,
+     "arn": true,
+     "capacity_provider_config": [],
+     "code_sha256": true,
+     "dead_letter_config": [],
+     "durable_config": [],
+     "environment": [],
+     "ephemeral_storage": true,
+     "file_system_config": [],
+     "id": true,
+     "image_config": [],
+     "invoke_arn": true,
+     "last_modified": true,
+     "logging_config": true,
+     "qualified_arn": true,
+     "qualified_invoke_arn": true,
+     "response_streaming_invoke_arn": true,
+     "signing_job_arn": true,
+     "signing_profile_version_arn": true,
+     "snap_start": [],
+     "source_code_hash": true,
+     "source_code_size": true,
+     "tags_all": true,
+     "tenancy_config": [],
+     "tracing_config": true,
+     "version": true,
+     "vpc_config": [
+      {
+       "security_group_ids": true,
+       "subnet_ids": true,
+       "vpc_id": true
+      }
+     ]
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "same_plan",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_lambda_function"
+  },
+  {
+   "address": "aws_security_group.produced",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "description": "Managed by Terraform",
+     "name": "produced",
+     "region": "us-east-1",
+     "revoke_rules_on_delete": false,
+     "tags": null,
+     "timeouts": null
+    },
+    "after_identity": {
+     "account_id": null,
+     "id": null,
+     "region": null
+    },
+    "after_sensitive": {
+     "egress": [],
+     "ingress": [],
+     "tags_all": {}
+    },
+    "after_unknown": {
+     "arn": true,
+     "egress": true,
+     "id": true,
+     "ingress": true,
+     "name_prefix": true,
+     "owner_id": true,
+     "tags_all": true,
+     "vpc_id": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "produced",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_security_group"
+  },
+  {
+   "address": "aws_subnet.produced",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "assign_ipv6_address_on_creation": false,
+     "cidr_block": "10.0.1.0/24",
+     "customer_owned_ipv4_pool": null,
+     "enable_dns64": false,
+     "enable_lni_at_device_index": null,
+     "enable_resource_name_dns_a_record_on_launch": false,
+     "enable_resource_name_dns_aaaa_record_on_launch": false,
+     "ipv4_ipam_pool_id": null,
+     "ipv4_netmask_length": null,
+     "ipv6_ipam_pool_id": null,
+     "ipv6_native": false,
+     "ipv6_netmask_length": null,
+     "map_customer_owned_ip_on_launch": null,
+     "map_public_ip_on_launch": false,
+     "outpost_arn": null,
+     "region": "us-east-1",
+     "tags": null,
+     "timeouts": null
+    },
+    "after_identity": {
+     "account_id": null,
+     "id": null,
+     "region": null
+    },
+    "after_sensitive": {
+     "tags_all": {}
+    },
+    "after_unknown": {
+     "arn": true,
+     "availability_zone": true,
+     "availability_zone_id": true,
+     "id": true,
+     "ipv6_cidr_block": true,
+     "ipv6_cidr_block_association_id": true,
+     "owner_id": true,
+     "private_dns_hostname_type_on_launch": true,
+     "tags_all": true,
+     "vpc_id": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "produced",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_subnet"
+  },
+  {
+   "address": "aws_vpc.main",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "assign_generated_ipv6_cidr_block": null,
+     "cidr_block": "10.0.0.0/16",
+     "enable_dns_support": true,
+     "instance_tenancy": "default",
+     "ipv4_ipam_pool_id": null,
+     "ipv4_netmask_length": null,
+     "ipv6_ipam_pool_id": null,
+     "ipv6_netmask_length": null,
+     "region": "us-east-1",
+     "tags": null
+    },
+    "after_identity": {
+     "account_id": null,
+     "id": null,
+     "region": null
+    },
+    "after_sensitive": {
+     "tags_all": {}
+    },
+    "after_unknown": {
+     "arn": true,
+     "default_network_acl_id": true,
+     "default_route_table_id": true,
+     "default_security_group_id": true,
+     "dhcp_options_id": true,
+     "enable_dns_hostnames": true,
+     "enable_network_address_usage_metrics": true,
+     "id": true,
+     "ipv6_association_id": true,
+     "ipv6_cidr_block": true,
+     "ipv6_cidr_block_network_border_group": true,
+     "main_route_table_id": true,
+     "owner_id": true,
+     "tags_all": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "main",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_vpc"
+  }
+ ],
+ "terraform_version": "1.12.0",
+ "timestamp": "2026-09-29T07:31:45Z",
+ "variables": {
+  "external_subnet": {
+   "value": "subnet-0aaaaaaaaaaaaaaaa"
+  }
+ }
+}

@@ -1,0 +1,9 @@
+tfpreflight · AWS provider 6.70.0 · us-east-1 · 6 resources
+Rules for 6.69.1 are newest; results are warnings only. Run: tfpreflight update
+
+WARN  aws_s3_bucket.logs
+      Bucket name "acme-logs" is already taken.
+      Fix: use a different name, or import the existing bucket.
+
+! 1 warning to check. Nothing found that is sure to make apply fail.
+  Checked 6 of 6 resources fully. Details: tfpreflight check --details

@@ -1,0 +1,59 @@
+version: "2"
+
+run:
+  timeout: 5m
+
+linters:
+  default: none
+  enable:
+    - govet
+    - staticcheck
+    - revive
+    - errcheck
+    - errorlint
+    - unused
+    - unparam
+    - ineffassign
+    - misspell
+    - gocritic
+    - godot
+    - dupl
+    - nestif
+    - gocognit
+    - funlen
+    - cyclop
+  settings:
+    revive:
+      rules:
+        - name: exported
+    dupl:
+      threshold: 150
+    nestif:
+      min-complexity: 4
+    gocognit:
+      min-complexity: 20
+    funlen:
+      lines: 60
+      statements: 40
+    cyclop:
+      max-complexity: 15
+  exclusions:
+    rules:
+      # Report output goes to stdout or a user-chosen writer. A failed write
+      # does not change the findings, and the exit code is set by the check
+      # result, not by whether the report could be printed.
+      - path: internal/report/
+        linters:
+          - errcheck
+        text: "Error return value of `fmt\\.Fprint"
+      # Tests are long tables and scenario scripts; their line count is not
+      # the readability problem funlen measures. Statement count still is.
+      - path: _test\.go
+        linters:
+          - funlen
+        text: "is too long"
+      # Table tests assert many independent fields, and each assertion is a
+      # branch. Nesting and cognitive complexity still apply to tests.
+      - path: _test\.go
+        linters:
+          - cyclop

@@ -1,0 +1,345 @@
+{
+  "note": "AWS response shapes per protocol, as documented and as the SDK decodes them. Account IDs are the 123456789012 placeholder.",
+  "responses": [
+    {
+      "operation": "DescribeVpcs",
+      "scenario": "success",
+      "status": 200,
+      "headers": {},
+      "body": "<DescribeVpcsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"><requestId>59dbff89-35bd-4eac-99ed-be587EXAMPLE</requestId><vpcSet><item><vpcId>vpc-0123456789abcdef0</vpcId><state>available</state><cidrBlock>172.31.0.0/16</cidrBlock><isDefault>true</isDefault></item></vpcSet></DescribeVpcsResponse>"
+    },
+    {
+      "operation": "DescribeVpcs",
+      "scenario": "success_without_echo",
+      "status": 200,
+      "headers": {},
+      "body": "<DescribeVpcsResponse xmlns=\"http://ec2.amazonaws.com/doc/2016-11-15/\"><requestId>r</requestId><vpcSet/></DescribeVpcsResponse>"
+    },
+    {
+      "operation": "DescribeVpcs",
+      "scenario": "not_found",
+      "status": 400,
+      "headers": {},
+      "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response><Errors><Error><Code>InvalidVpcID.NotFound</Code><Message>The vpc ID 'vpc-0123456789abcdef0' does not exist</Message></Error></Errors><RequestID>r</RequestID></Response>"
+    },
+    {
+      "operation": "DescribeVpcs",
+      "scenario": "access_denied",
+      "status": 403,
+      "headers": {},
+      "body": "<Response><Errors><Error><Code>UnauthorizedOperation</Code><Message>You are not authorized to perform this operation.</Message></Error></Errors><RequestID>r</RequestID></Response>"
+    },
+    {
+      "operation": "DescribeVpcs",
+      "scenario": "throttled",
+      "status": 503,
+      "headers": {},
+      "body": "<Response><Errors><Error><Code>RequestLimitExceeded</Code><Message>Request limit exceeded.</Message></Error></Errors><RequestID>r</RequestID></Response>"
+    },
+    {
+      "operation": "DescribeVpcs",
+      "scenario": "malformed",
+      "status": 200,
+      "headers": {},
+      "body": "<DescribeVpcsResponse><vpcSet><item><vpcId>vpc-0123456789abcdef0</vpcId>"
+    },
+    {
+      "operation": "GetRole",
+      "scenario": "success",
+      "status": 200,
+      "headers": {},
+      "body": "<GetRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"><GetRoleResult><Role><Path>/</Path><RoleName>app-role</RoleName><RoleId>AROAEXAMPLEID</RoleId><Arn>arn:aws:iam::123456789012:role/app-role</Arn></Role></GetRoleResult><ResponseMetadata><RequestId>r</RequestId></ResponseMetadata></GetRoleResponse>"
+    },
+    {
+      "operation": "GetRole",
+      "scenario": "not_found",
+      "status": 404,
+      "headers": {},
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"><Error><Type>Sender</Type><Code>NoSuchEntity</Code><Message>The role with name app-role cannot be found.</Message></Error><RequestId>r</RequestId></ErrorResponse>"
+    },
+    {
+      "operation": "GetRole",
+      "scenario": "access_denied",
+      "status": 403,
+      "headers": {},
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"><Error><Type>Sender</Type><Code>AccessDenied</Code><Message>User: arn:aws:sts::123456789012:assumed-role/x is not authorized to perform: iam:GetRole</Message></Error><RequestId>r</RequestId></ErrorResponse>"
+    },
+    {
+      "operation": "GetRole",
+      "scenario": "throttled",
+      "status": 400,
+      "headers": {},
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"><Error><Type>Sender</Type><Code>Throttling</Code><Message>Rate exceeded</Message></Error><RequestId>r</RequestId></ErrorResponse>"
+    },
+    {
+      "operation": "GetRole",
+      "scenario": "malformed",
+      "status": 200,
+      "headers": {},
+      "body": "<GetRoleResponse><GetRoleResult><Role><RoleName>app-role</RoleName></GetRoleResult>"
+    },
+    {
+      "operation": "DescribeCertificate",
+      "scenario": "success",
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "body": "{\"Certificate\": {\"CertificateArn\": \"arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012\", \"DomainName\": \"example.com\", \"Status\": \"ISSUED\"}}"
+    },
+    {
+      "operation": "DescribeCertificate",
+      "scenario": "not_found",
+      "status": 400,
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "body": "{\"__type\": \"ResourceNotFoundException\", \"message\": \"Could not find certificate arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012.\"}"
+    },
+    {
+      "operation": "DescribeCertificate",
+      "scenario": "access_denied",
+      "status": 400,
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "body": "{\"__type\": \"AccessDeniedException\", \"Message\": \"User is not authorized to perform: acm:DescribeCertificate\"}"
+    },
+    {
+      "operation": "DescribeCertificate",
+      "scenario": "throttled",
+      "status": 400,
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "body": "{\"__type\": \"ThrottlingException\", \"message\": \"Rate exceeded\"}"
+    },
+    {
+      "operation": "DescribeCertificate",
+      "scenario": "malformed",
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "body": "{\"Certificate\": {\"CertificateArn\": "
+    },
+    {
+      "operation": "DescribeTable",
+      "scenario": "success",
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "body": "{\"Table\": {\"TableName\": \"orders\", \"TableArn\": \"arn:aws:dynamodb:us-east-1:123456789012:table/orders\", \"TableStatus\": \"ACTIVE\"}}"
+    },
+    {
+      "operation": "DescribeTable",
+      "scenario": "not_found",
+      "status": 400,
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "body": "{\"__type\": \"com.amazonaws.dynamodb.v20120810#ResourceNotFoundException\", \"message\": \"Requested resource not found: Table: orders not found\"}"
+    },
+    {
+      "operation": "DescribeTable",
+      "scenario": "access_denied",
+      "status": 400,
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "body": "{\"__type\": \"com.amazon.coral.service#AccessDeniedException\", \"Message\": \"not authorized\"}"
+    },
+    {
+      "operation": "DescribeTable",
+      "scenario": "throttled",
+      "status": 400,
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "body": "{\"__type\": \"com.amazonaws.dynamodb.v20120810#ThrottlingException\", \"message\": \"Rate of requests exceeds the allowed throughput.\"}"
+    },
+    {
+      "operation": "DescribeTable",
+      "scenario": "malformed",
+      "status": 200,
+      "headers": {
+        "Content-Type": "text/html"
+      },
+      "body": "<html>gateway</html>"
+    },
+    {
+      "operation": "GetFunction",
+      "scenario": "success",
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": "{\"Configuration\": {\"FunctionName\": \"my-function\", \"FunctionArn\": \"arn:aws:lambda:us-east-1:123456789012:function:my-function\", \"Runtime\": \"python3.12\"}, \"Code\": {\"RepositoryType\": \"S3\"}}"
+    },
+    {
+      "operation": "GetFunction",
+      "scenario": "not_found",
+      "status": 404,
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException:http://internal.amazon.com/coral/com.amazonaws.awslambda.v20150331/"
+      },
+      "body": "{\"Type\": \"User\", \"Message\": \"Function not found: arn:aws:lambda:us-east-1:123456789012:function:my-function\"}"
+    },
+    {
+      "operation": "GetFunction",
+      "scenario": "access_denied",
+      "status": 403,
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "AccessDeniedException"
+      },
+      "body": "{\"Message\": \"User is not authorized to perform: lambda:GetFunction\"}"
+    },
+    {
+      "operation": "GetFunction",
+      "scenario": "throttled",
+      "status": 429,
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "TooManyRequestsException"
+      },
+      "body": "{\"Reason\": \"CallerRateLimitExceeded\", \"Type\": \"User\", \"message\": \"Rate Exceeded.\"}"
+    },
+    {
+      "operation": "GetFunction",
+      "scenario": "malformed",
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": "{\"Configuration\": [}"
+    },
+    {
+      "operation": "GetDistribution",
+      "scenario": "success",
+      "status": 200,
+      "headers": {
+        "Content-Type": "text/xml",
+        "ETag": "E3EXAMPLE"
+      },
+      "body": "<?xml version=\"1.0\"?>\n<Distribution xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"><Id>E2EXAMPLE</Id><ARN>arn:aws:cloudfront::123456789012:distribution/E2EXAMPLE</ARN><Status>Deployed</Status></Distribution>"
+    },
+    {
+      "operation": "GetDistribution",
+      "scenario": "not_found",
+      "status": 404,
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "body": "<?xml version=\"1.0\"?>\n<ErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"><Error><Type>Sender</Type><Code>NoSuchDistribution</Code><Message>The specified distribution does not exist.</Message></Error><RequestId>r</RequestId></ErrorResponse>"
+    },
+    {
+      "operation": "GetDistribution",
+      "scenario": "access_denied",
+      "status": 403,
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "body": "<?xml version=\"1.0\"?>\n<ErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"><Error><Type>Sender</Type><Code>AccessDenied</Code><Message>User is not authorized to perform: cloudfront:GetDistribution</Message></Error><RequestId>r</RequestId></ErrorResponse>"
+    },
+    {
+      "operation": "GetDistribution",
+      "scenario": "throttled",
+      "status": 400,
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "body": "<?xml version=\"1.0\"?>\n<ErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"><Error><Type>Sender</Type><Code>Throttling</Code><Message>Rate exceeded</Message></Error><RequestId>r</RequestId></ErrorResponse>"
+    },
+    {
+      "operation": "GetDistribution",
+      "scenario": "malformed",
+      "status": 200,
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "body": "<Distribution><Id>E2EXAMPLE</Distribution>"
+    },
+    {
+      "operation": "DescribeFleetAttributes",
+      "scenario": "success",
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/cbor",
+        "Smithy-Protocol": "rpc-v2-cbor"
+      },
+      "cbor": {
+        "FleetAttributes": [
+          {
+            "FleetId": "fleet-123",
+            "FleetArn": "arn:aws:gamelift:us-east-1:123456789012:fleet/fleet-123",
+            "Status": "ACTIVE"
+          }
+        ]
+      }
+    },
+    {
+      "operation": "DescribeFleetAttributes",
+      "scenario": "success_without_echo",
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/cbor",
+        "Smithy-Protocol": "rpc-v2-cbor"
+      },
+      "cbor": {
+        "FleetAttributes": []
+      }
+    },
+    {
+      "operation": "DescribeFleetAttributes",
+      "scenario": "not_found",
+      "status": 400,
+      "headers": {
+        "Content-Type": "application/cbor",
+        "Smithy-Protocol": "rpc-v2-cbor"
+      },
+      "cbor": {
+        "__type": "com.amazonaws.gamelift#NotFoundException",
+        "Message": "Fleet fleet-123 not found."
+      }
+    },
+    {
+      "operation": "DescribeFleetAttributes",
+      "scenario": "access_denied",
+      "status": 400,
+      "headers": {
+        "Content-Type": "application/cbor",
+        "Smithy-Protocol": "rpc-v2-cbor"
+      },
+      "cbor": {
+        "__type": "com.amazonaws.gamelift#UnauthorizedException",
+        "Message": "not authorized"
+      }
+    },
+    {
+      "operation": "DescribeFleetAttributes",
+      "scenario": "throttled",
+      "status": 400,
+      "headers": {
+        "Content-Type": "application/cbor",
+        "Smithy-Protocol": "rpc-v2-cbor"
+      },
+      "cbor": {
+        "__type": "com.amazonaws.gamelift#ThrottlingException",
+        "Message": "Rate exceeded"
+      }
+    },
+    {
+      "operation": "DescribeFleetAttributes",
+      "scenario": "malformed",
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/cbor",
+        "Smithy-Protocol": "rpc-v2-cbor"
+      },
+      "body": "\u00bfcFleetAttr"
+    }
+  ]
+}

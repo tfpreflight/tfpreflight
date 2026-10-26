@@ -1,0 +1,2118 @@
+{
+ "note": "Runtime contract fixture for 6.64.0: each tuple's lookup and state, and how many rules the runtime can run.",
+ "runtime_capable": 1584,
+ "tuples": [
+  {
+   "lookup": {
+    "service": "acm",
+    "operation": "DescribeCertificate",
+    "field": "CertificateArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "acmpca",
+    "operation": "DescribeCertificateAuthority",
+    "field": "CertificateAuthorityArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "amp",
+    "operation": "DescribeWorkspace",
+    "field": "WorkspaceId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "amplify",
+    "operation": "GetApp",
+    "field": "AppId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "apigateway",
+    "operation": "GetClientCertificate",
+    "field": "ClientCertificateId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "apigateway",
+    "operation": "GetRestApi",
+    "field": "RestApiId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "apigateway",
+    "operation": "GetUsagePlan",
+    "field": "UsagePlanId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "apigatewayv2",
+    "operation": "GetApi",
+    "field": "ApiId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "apigatewayv2",
+    "operation": "GetDomainName",
+    "field": "DomainName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "appconfig",
+    "operation": "GetApplication",
+    "field": "ApplicationId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "appconfig",
+    "operation": "GetDeploymentStrategy",
+    "field": "DeploymentStrategyId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "appfabric",
+    "operation": "GetAppBundle",
+    "field": "AppBundleIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "appmesh",
+    "operation": "DescribeMesh",
+    "field": "MeshName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "apprunner",
+    "operation": "DescribeAutoScalingConfiguration",
+    "field": "AutoScalingConfigurationArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "apprunner",
+    "operation": "DescribeObservabilityConfiguration",
+    "field": "ObservabilityConfigurationArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "apprunner",
+    "operation": "DescribeService",
+    "field": "ServiceArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "apprunner",
+    "operation": "DescribeVpcConnector",
+    "field": "VpcConnectorArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "appstream",
+    "operation": "DescribeFleets",
+    "field": "Names"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "appstream",
+    "operation": "DescribeStacks",
+    "field": "Names"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "auditmanager",
+    "operation": "GetAssessment",
+    "field": "AssessmentId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "auditmanager",
+    "operation": "GetAssessmentFramework",
+    "field": "FrameworkId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "auditmanager",
+    "operation": "GetControl",
+    "field": "ControlId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "backup",
+    "operation": "DescribeBackupVault",
+    "field": "BackupVaultName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "backup",
+    "operation": "GetBackupPlan",
+    "field": "BackupPlanId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "bedrockagent",
+    "operation": "GetAgent",
+    "field": "AgentId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "chimesdkvoice",
+    "operation": "GetSipMediaApplication",
+    "field": "SipMediaApplicationId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "chimesdkvoice",
+    "operation": "GetVoiceConnector",
+    "field": "VoiceConnectorId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "cloud9",
+    "operation": "DescribeEnvironments",
+    "field": "EnvironmentIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "cloudformation",
+    "operation": "DescribeStackSet",
+    "field": "StackSetName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "cloudfront",
+    "operation": "GetCachePolicy",
+    "field": "Id"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "cloudfront",
+    "operation": "GetContinuousDeploymentPolicy",
+    "field": "Id"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "cloudfront",
+    "operation": "GetDistribution",
+    "field": "Id"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "cloudfront",
+    "operation": "GetFieldLevelEncryptionProfile",
+    "field": "Id"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "cloudfront",
+    "operation": "GetKeyGroup",
+    "field": "Id"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "cloudfront",
+    "operation": "GetOriginRequestPolicy",
+    "field": "Id"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "cloudfront",
+    "operation": "GetPublicKey",
+    "field": "Id"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "cloudfront",
+    "operation": "GetRealtimeLogConfig",
+    "field": "ARN"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "cloudfront",
+    "operation": "GetResponseHeadersPolicy",
+    "field": "Id"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "cloudfront",
+    "operation": "GetVpcOrigin",
+    "field": "Id"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "codecommit",
+    "operation": "GetApprovalRuleTemplate",
+    "field": "ApprovalRuleTemplateName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "codecommit",
+    "operation": "GetRepository",
+    "field": "RepositoryName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "codeconnections",
+    "operation": "GetHost",
+    "field": "HostArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "codedeploy",
+    "operation": "GetApplication",
+    "field": "ApplicationName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "codestarconnections",
+    "operation": "GetHost",
+    "field": "HostArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "cognitoidentity",
+    "operation": "DescribeIdentityPool",
+    "field": "IdentityPoolId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "cognitoidentityprovider",
+    "operation": "DescribeUserPool",
+    "field": "UserPoolId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "configservice",
+    "operation": "DescribeConfigRules",
+    "field": "ConfigRuleNames"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "configservice",
+    "operation": "DescribeConfigurationRecorders",
+    "field": "ConfigurationRecorderNames"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "connect",
+    "operation": "DescribeInstance",
+    "field": "InstanceId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "connect",
+    "operation": "DescribePhoneNumber",
+    "field": "PhoneNumberId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "costexplorer",
+    "operation": "DescribeCostCategoryDefinition",
+    "field": "CostCategoryArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "dataexchange",
+    "operation": "GetDataSet",
+    "field": "DataSetId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "datapipeline",
+    "operation": "DescribePipelines",
+    "field": "PipelineIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "datazone",
+    "operation": "GetDomain",
+    "field": "Identifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "devicefarm",
+    "operation": "GetProject",
+    "field": "Arn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "directoryservice",
+    "operation": "DescribeDirectories",
+    "field": "DirectoryIds"
+   },
+   "state": "success_shape_unproven"
+  },
+  {
+   "lookup": {
+    "service": "docdb",
+    "operation": "DescribeDBClusters",
+    "field": "DBClusterIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "dynamodb",
+    "operation": "DescribeTable",
+    "field": "TableName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeAddresses",
+    "field": "AllocationIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeCapacityReservations",
+    "field": "CapacityReservationIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeClientVpnEndpoints",
+    "field": "ClientVpnEndpointIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeCustomerGateways",
+    "field": "CustomerGatewayIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeDhcpOptions",
+    "field": "DhcpOptionsIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeImages",
+    "field": "ImageIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeInstances",
+    "field": "InstanceIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeInternetGateways",
+    "field": "InternetGatewayIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeIpamPools",
+    "field": "IpamPoolIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeIpamResourceDiscoveries",
+    "field": "IpamResourceDiscoveryIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeIpams",
+    "field": "IpamIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeKeyPairs",
+    "field": "KeyNames"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeLaunchTemplates",
+    "field": "LaunchTemplateIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeManagedPrefixLists",
+    "field": "PrefixListIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeNatGateways",
+    "field": "NatGatewayIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeNetworkAcls",
+    "field": "NetworkAclIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeNetworkInsightsPaths",
+    "field": "NetworkInsightsPathIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeNetworkInterfaces",
+    "field": "NetworkInterfaceIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeRouteTables",
+    "field": "RouteTableIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeSecondarySubnets",
+    "field": "SecondarySubnetIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeSecurityGroups",
+    "field": "GroupIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeSnapshots",
+    "field": "SnapshotIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeSubnets",
+    "field": "SubnetIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeTrafficMirrorFilters",
+    "field": "TrafficMirrorFilterIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeTransitGatewayConnectPeers",
+    "field": "TransitGatewayConnectPeerIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeTransitGatewayConnects",
+    "field": "TransitGatewayAttachmentIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeTransitGatewayMulticastDomains",
+    "field": "TransitGatewayMulticastDomainIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeTransitGatewayPolicyTables",
+    "field": "TransitGatewayPolicyTableIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeTransitGatewayRouteTables",
+    "field": "TransitGatewayRouteTableIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeTransitGateways",
+    "field": "TransitGatewayIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeVerifiedAccessGroups",
+    "field": "VerifiedAccessGroupIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeVerifiedAccessInstances",
+    "field": "VerifiedAccessInstanceIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeVerifiedAccessTrustProviders",
+    "field": "VerifiedAccessTrustProviderIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeVolumes",
+    "field": "VolumeIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeVpcEndpointServiceConfigurations",
+    "field": "ServiceIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeVpcEndpoints",
+    "field": "VpcEndpointIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeVpcs",
+    "field": "VpcIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeVpnConnections",
+    "field": "VpnConnectionIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ec2",
+    "operation": "DescribeVpnGateways",
+    "field": "VpnGatewayIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ecr",
+    "operation": "DescribeRepositories",
+    "field": "RepositoryNames"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ecs",
+    "operation": "DescribeCapacityProviders",
+    "field": "CapacityProviders"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ecs",
+    "operation": "DescribeClusters",
+    "field": "Clusters"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "efs",
+    "operation": "DescribeAccessPoints",
+    "field": "AccessPointId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "efs",
+    "operation": "DescribeFileSystems",
+    "field": "FileSystemId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "eks",
+    "operation": "DescribeCluster",
+    "field": "Name"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "elasticache",
+    "operation": "DescribeCacheParameterGroups",
+    "field": "CacheParameterGroupName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "elasticache",
+    "operation": "DescribeCacheSubnetGroups",
+    "field": "CacheSubnetGroupName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "elasticache",
+    "operation": "DescribeReplicationGroups",
+    "field": "ReplicationGroupId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "elasticache",
+    "operation": "DescribeUserGroups",
+    "field": "UserGroupId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "elasticloadbalancing",
+    "operation": "DescribeLoadBalancers",
+    "field": "LoadBalancerNames"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "elasticloadbalancingv2",
+    "operation": "DescribeListeners",
+    "field": "ListenerArns"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "elasticloadbalancingv2",
+    "operation": "DescribeLoadBalancers",
+    "field": "LoadBalancerArns"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "elasticloadbalancingv2",
+    "operation": "DescribeRules",
+    "field": "RuleArns"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "elasticloadbalancingv2",
+    "operation": "DescribeTargetGroups",
+    "field": "TargetGroupArns"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "elasticloadbalancingv2",
+    "operation": "DescribeTrustStores",
+    "field": "TrustStoreArns"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "emr",
+    "operation": "DescribeCluster",
+    "field": "ClusterId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "eventbridge",
+    "operation": "DescribeEventBus",
+    "field": "Name"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "evidently",
+    "operation": "GetProject",
+    "field": "Project"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "evidently",
+    "operation": "GetSegment",
+    "field": "Segment"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "finspace",
+    "operation": "GetKxEnvironment",
+    "field": "EnvironmentId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "firehose",
+    "operation": "DescribeDeliveryStream",
+    "field": "DeliveryStreamName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "fms",
+    "operation": "GetResourceSet",
+    "field": "Identifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "fsx",
+    "operation": "DescribeBackups",
+    "field": "BackupIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "fsx",
+    "operation": "DescribeFileSystems",
+    "field": "FileSystemIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "fsx",
+    "operation": "DescribeStorageVirtualMachines",
+    "field": "StorageVirtualMachineIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "fsx",
+    "operation": "DescribeVolumes",
+    "field": "VolumeIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "gamelift",
+    "operation": "DescribeBuild",
+    "field": "BuildId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "gamelift",
+    "operation": "DescribeFleetAttributes",
+    "field": "FleetIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "gamelift",
+    "operation": "DescribeScript",
+    "field": "ScriptId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "globalaccelerator",
+    "operation": "DescribeAccelerator",
+    "field": "AcceleratorArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "globalaccelerator",
+    "operation": "DescribeCustomRoutingAccelerator",
+    "field": "AcceleratorArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "globalaccelerator",
+    "operation": "DescribeCustomRoutingListener",
+    "field": "ListenerArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "globalaccelerator",
+    "operation": "DescribeListener",
+    "field": "ListenerArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "glue",
+    "operation": "GetClassifier",
+    "field": "Name"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "glue",
+    "operation": "GetCrawler",
+    "field": "Name"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "glue",
+    "operation": "GetJob",
+    "field": "JobName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "glue",
+    "operation": "GetSecurityConfiguration",
+    "field": "Name"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "glue",
+    "operation": "GetWorkflow",
+    "field": "Name"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "grafana",
+    "operation": "DescribeWorkspace",
+    "field": "WorkspaceId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "iam",
+    "operation": "GetGroup",
+    "field": "GroupName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "iam",
+    "operation": "GetInstanceProfile",
+    "field": "InstanceProfileName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "iam",
+    "operation": "GetOpenIDConnectProvider",
+    "field": "OpenIDConnectProviderArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "iam",
+    "operation": "GetPolicy",
+    "field": "PolicyArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "iam",
+    "operation": "GetRole",
+    "field": "RoleName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "iam",
+    "operation": "GetSAMLProvider",
+    "field": "SAMLProviderArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "iam",
+    "operation": "GetServerCertificate",
+    "field": "ServerCertificateName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "iam",
+    "operation": "GetUser",
+    "field": "UserName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "iot",
+    "operation": "DescribeAuthorizer",
+    "field": "AuthorizerName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "iot",
+    "operation": "DescribeThing",
+    "field": "ThingName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "iot",
+    "operation": "DescribeThingGroup",
+    "field": "ThingGroupName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "iot",
+    "operation": "DescribeThingType",
+    "field": "ThingTypeName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "iot",
+    "operation": "GetPolicy",
+    "field": "PolicyName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ivs",
+    "operation": "GetRecordingConfiguration",
+    "field": "Arn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ivschat",
+    "operation": "GetLoggingConfiguration",
+    "field": "Identifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "kafka",
+    "operation": "DescribeCluster",
+    "field": "ClusterArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "kafka",
+    "operation": "DescribeClusterV2",
+    "field": "ClusterArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "kafka",
+    "operation": "DescribeConfiguration",
+    "field": "Arn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "kafkaconnect",
+    "operation": "DescribeCustomPlugin",
+    "field": "CustomPluginArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "kafkaconnect",
+    "operation": "DescribeWorkerConfiguration",
+    "field": "WorkerConfigurationArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "kendra",
+    "operation": "DescribeIndex",
+    "field": "Id"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "keyspaces",
+    "operation": "GetKeyspace",
+    "field": "KeyspaceName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "kinesis",
+    "operation": "DescribeStreamSummary",
+    "field": "StreamName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "kinesisanalyticsv2",
+    "operation": "DescribeApplication",
+    "field": "ApplicationName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "kinesisvideo",
+    "operation": "DescribeStream",
+    "field": "StreamARN"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "kms",
+    "operation": "DescribeKey",
+    "field": "KeyId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "lambda",
+    "operation": "GetCodeSigningConfig",
+    "field": "CodeSigningConfigArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "lambda",
+    "operation": "GetFunction",
+    "field": "FunctionName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "lexmodelsv2",
+    "operation": "DescribeBot",
+    "field": "BotId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "lightsail",
+    "operation": "GetBuckets",
+    "field": "BucketName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "lightsail",
+    "operation": "GetContainerServices",
+    "field": "ServiceName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "lightsail",
+    "operation": "GetDisk",
+    "field": "DiskName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "lightsail",
+    "operation": "GetDomain",
+    "field": "DomainName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "lightsail",
+    "operation": "GetInstance",
+    "field": "InstanceName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "lightsail",
+    "operation": "GetLoadBalancer",
+    "field": "LoadBalancerName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "lightsail",
+    "operation": "GetStaticIp",
+    "field": "StaticIpName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "m2",
+    "operation": "GetApplication",
+    "field": "ApplicationId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "m2",
+    "operation": "GetEnvironment",
+    "field": "EnvironmentId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "macie2",
+    "operation": "GetCustomDataIdentifier",
+    "field": "Id"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "mailmanager",
+    "operation": "GetRuleSet",
+    "field": "RuleSetId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "mailmanager",
+    "operation": "GetTrafficPolicy",
+    "field": "TrafficPolicyId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "medialive",
+    "operation": "DescribeInput",
+    "field": "InputId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "medialive",
+    "operation": "DescribeInputSecurityGroup",
+    "field": "InputSecurityGroupId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "mediastore",
+    "operation": "DescribeContainer",
+    "field": "ContainerName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "memorydb",
+    "operation": "DescribeACLs",
+    "field": "ACLName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "memorydb",
+    "operation": "DescribeSnapshots",
+    "field": "SnapshotName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "memorydb",
+    "operation": "DescribeSubnetGroups",
+    "field": "SubnetGroupName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "memorydb",
+    "operation": "DescribeUsers",
+    "field": "UserName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "mq",
+    "operation": "DescribeConfiguration",
+    "field": "ConfigurationId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "neptune",
+    "operation": "DescribeDBClusterParameterGroups",
+    "field": "DBClusterParameterGroupName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "neptune",
+    "operation": "DescribeDBClusterSnapshots",
+    "field": "DBClusterSnapshotIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "neptune",
+    "operation": "DescribeDBClusters",
+    "field": "DBClusterIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "neptunegraph",
+    "operation": "GetGraph",
+    "field": "GraphIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "networkfirewall",
+    "operation": "DescribeFirewall",
+    "field": "FirewallArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "networkfirewall",
+    "operation": "DescribeFirewallPolicy",
+    "field": "FirewallPolicyArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "networkfirewall",
+    "operation": "DescribeRuleGroup",
+    "field": "RuleGroupArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "networkmanager",
+    "operation": "DescribeGlobalNetworks",
+    "field": "GlobalNetworkIds"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "networkmanager",
+    "operation": "GetConnectAttachment",
+    "field": "AttachmentId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "networkmanager",
+    "operation": "GetCoreNetwork",
+    "field": "CoreNetworkId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "networkmanager",
+    "operation": "GetTransitGatewayPeering",
+    "field": "PeeringId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "notifications",
+    "operation": "GetNotificationConfiguration",
+    "field": "Arn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "oam",
+    "operation": "GetSink",
+    "field": "Identifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "opensearch",
+    "operation": "DescribeDomain",
+    "field": "DomainName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "organizations",
+    "operation": "DescribeOrganizationalUnit",
+    "field": "OrganizationalUnitId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "organizations",
+    "operation": "DescribePolicy",
+    "field": "PolicyId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "paymentcryptography",
+    "operation": "GetKey",
+    "field": "KeyIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "pinpoint",
+    "operation": "GetApp",
+    "field": "ApplicationId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "pinpointsmsvoicev2",
+    "operation": "DescribeOptOutLists",
+    "field": "OptOutListNames"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "qldb",
+    "operation": "DescribeLedger",
+    "field": "Name"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "rds",
+    "operation": "DescribeDBClusterSnapshots",
+    "field": "DBClusterSnapshotIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "rds",
+    "operation": "DescribeDBClusters",
+    "field": "DBClusterIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "rds",
+    "operation": "DescribeDBInstances",
+    "field": "DBInstanceIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "rds",
+    "operation": "DescribeDBProxies",
+    "field": "DBProxyName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "rds",
+    "operation": "DescribeDBSnapshots",
+    "field": "DBSnapshotIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "rds",
+    "operation": "DescribeOptionGroups",
+    "field": "OptionGroupName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "redshift",
+    "operation": "DescribeClusterSnapshots",
+    "field": "SnapshotIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "redshift",
+    "operation": "DescribeClusterSubnetGroups",
+    "field": "ClusterSubnetGroupName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "redshift",
+    "operation": "DescribeClusters",
+    "field": "ClusterIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "redshift",
+    "operation": "DescribeSnapshotSchedules",
+    "field": "ScheduleIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "rekognition",
+    "operation": "DescribeCollection",
+    "field": "CollectionId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "resourcegroups",
+    "operation": "GetGroup",
+    "field": "GroupName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "route53",
+    "operation": "GetHealthCheck",
+    "field": "HealthCheckId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "route53",
+    "operation": "GetHostedZone",
+    "field": "Id"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "route53profiles",
+    "operation": "GetProfile",
+    "field": "ProfileId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "route53resolver",
+    "operation": "GetFirewallDomainList",
+    "field": "FirewallDomainListId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "route53resolver",
+    "operation": "GetFirewallRuleGroup",
+    "field": "FirewallRuleGroupId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "route53resolver",
+    "operation": "GetResolverEndpoint",
+    "field": "ResolverEndpointId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "route53resolver",
+    "operation": "GetResolverQueryLogConfig",
+    "field": "ResolverQueryLogConfigId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "route53resolver",
+    "operation": "GetResolverRule",
+    "field": "ResolverRuleId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "rum",
+    "operation": "GetAppMonitor",
+    "field": "Name"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "s3",
+    "operation": "HeadBucket",
+    "field": "Bucket"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "s3files",
+    "operation": "GetFileSystem",
+    "field": "FileSystemId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "sagemaker",
+    "operation": "DescribeAlgorithm",
+    "field": "AlgorithmName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "sagemaker",
+    "operation": "DescribeDataQualityJobDefinition",
+    "field": "JobDefinitionName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "sagemaker",
+    "operation": "DescribeDomain",
+    "field": "DomainId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "sagemaker",
+    "operation": "DescribeHumanTaskUi",
+    "field": "HumanTaskUiName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "sagemaker",
+    "operation": "DescribeHyperParameterTuningJob",
+    "field": "HyperParameterTuningJobName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "sagemaker",
+    "operation": "DescribeImage",
+    "field": "ImageName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "sagemaker",
+    "operation": "DescribeStudioLifecycleConfig",
+    "field": "StudioLifecycleConfigName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "scheduler",
+    "operation": "GetScheduleGroup",
+    "field": "Name"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "schemas",
+    "operation": "DescribeRegistry",
+    "field": "RegistryName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "secretsmanager",
+    "operation": "DescribeSecret",
+    "field": "SecretId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "securitylake",
+    "operation": "GetSubscriber",
+    "field": "SubscriberId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "servicecatalog",
+    "operation": "DescribePortfolio",
+    "field": "Id"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "servicecatalog",
+    "operation": "DescribeProductAsAdmin",
+    "field": "Id"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "servicecatalog",
+    "operation": "DescribeTagOption",
+    "field": "Id"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "servicecatalogappregistry",
+    "operation": "GetApplication",
+    "field": "Application"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "servicecatalogappregistry",
+    "operation": "GetAttributeGroup",
+    "field": "AttributeGroup"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "servicediscovery",
+    "operation": "GetService",
+    "field": "Id"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ses",
+    "operation": "DescribeConfigurationSet",
+    "field": "ConfigurationSetName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "shield",
+    "operation": "DescribeProtection",
+    "field": "ProtectionId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "signer",
+    "operation": "GetSigningProfile",
+    "field": "ProfileName"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "sns",
+    "operation": "GetTopicAttributes",
+    "field": "TopicArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "sqs",
+    "operation": "GetQueueAttributes",
+    "field": "QueueUrl"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ssm",
+    "operation": "DescribeMaintenanceWindowTargets",
+    "field": "WindowId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ssm",
+    "operation": "GetMaintenanceWindow",
+    "field": "WindowId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ssm",
+    "operation": "GetPatchBaseline",
+    "field": "BaselineId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ssoadmin",
+    "operation": "DescribeApplication",
+    "field": "ApplicationArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "ssoadmin",
+    "operation": "DescribeTrustedTokenIssuer",
+    "field": "TrustedTokenIssuerArn"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "synthetics",
+    "operation": "GetGroup",
+    "field": "GroupIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "transfer",
+    "operation": "DescribeServer",
+    "field": "ServerId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "transfer",
+    "operation": "DescribeWorkflow",
+    "field": "WorkflowId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "verifiedpermissions",
+    "operation": "GetPolicyStore",
+    "field": "PolicyStoreId"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "vpclattice",
+    "operation": "GetResourceConfiguration",
+    "field": "ResourceConfigurationIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "vpclattice",
+    "operation": "GetService",
+    "field": "ServiceIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "vpclattice",
+    "operation": "GetServiceNetwork",
+    "field": "ServiceNetworkIdentifier"
+   },
+   "state": "generated"
+  },
+  {
+   "lookup": {
+    "service": "vpclattice",
+    "operation": "GetTargetGroup",
+    "field": "TargetGroupIdentifier"
+   },
+   "state": "generated"
+  }
+ ]
+}

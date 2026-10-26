@@ -1,0 +1,91 @@
+version: 2
+
+project_name: tfpreflight
+
+builds:
+  - id: tfpreflight
+    main: ./cmd/tfpreflight
+    binary: tfpreflight
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+    flags:
+      - -trimpath
+    ldflags:
+      - >-
+        -s -w
+        -X main.Version={{ .Version }}
+        -X main.Commit={{ .Commit }}
+        -X github.com/tfpreflight/tfpreflight/internal/packs.DefaultIndex=https://packs.tfpreflight.dev/index.json
+
+archives:
+  - id: release
+    ids:
+      - tfpreflight
+    name_template: >-
+      tfpreflight_{{ .Version }}_{{ .Os }}_{{ .Arch }}
+    formats:
+      - tar.gz
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+    files:
+      - LICENSE
+      - NOTICE
+# An SPDX SBOM per archive, listed in the checksum file, so the cosign
+# signature covers it too.
+sboms:
+  - artifacts: archive
+
+checksum:
+  name_template: tfpreflight_{{ .Version }}_checksums.txt
+  algorithm: sha256
+
+signs:
+  - id: checksum
+    cmd: cosign
+    artifacts: checksum
+    signature: ${artifact}.sigstore.json
+    args:
+      - sign-blob
+      - --bundle=${signature}
+      - ${artifact}
+      - --yes
+    output: true
+
+brews:
+  - name: tfpreflight
+    ids:
+      - release
+    repository:
+      owner: tfpreflight
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    directory: Formula
+    homepage: https://github.com/tfpreflight/tfpreflight
+    description: Check Terraform plans for predictable AWS apply failures
+    install: |
+      bin.install "tfpreflight"
+    test: |
+      system "#{bin}/tfpreflight", "version"
+
+changelog:
+  use: git
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+
+release:
+  prerelease: auto

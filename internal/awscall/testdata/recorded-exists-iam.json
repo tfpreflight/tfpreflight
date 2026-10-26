@@ -1,0 +1,181 @@
+{
+  "note": "Real AWS responses, recorded from a test account so the tests can check the engine reads each one as the AWS SDK does. Every account ID is replaced by the 123456789012 placeholder. This set covers IAM existence lookups.",
+  "responses": [
+    {
+      "body": "\u003cGetGroupResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cGetGroupResult\u003e\n    \u003cIsTruncated\u003efalse\u003c/IsTruncated\u003e\n    \u003cUsers/\u003e\n    \u003cGroup\u003e\n      \u003cPath\u003e/\u003c/Path\u003e\n      \u003cGroupName\u003etfpreflight-verify-82c4c7afa4ff\u003c/GroupName\u003e\n      \u003cGroupId\u003eAGPAQMKXI66BKJQOELWT7\u003c/GroupId\u003e\n      \u003cArn\u003earn:aws:iam::123456789012:group/tfpreflight-verify-82c4c7afa4ff\u003c/Arn\u003e\n      \u003cCreateDate\u003e2026-10-12T06:26:36Z\u003c/CreateDate\u003e\n    \u003c/Group\u003e\n  \u003c/GetGroupResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003e7b071b95-872f-41f4-b062-c72340d1f7f8\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/GetGroupResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-82c4c7afa4ff",
+      "label": "iam/GetGroup/GroupName/exists-iam",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cGetInstanceProfileResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cGetInstanceProfileResult\u003e\n    \u003cInstanceProfile\u003e\n      \u003cPath\u003e/\u003c/Path\u003e\n      \u003cInstanceProfileName\u003etfpreflight-verify-82c4c7afa4ff\u003c/InstanceProfileName\u003e\n      \u003cRoles\u003e\n        \u003cmember\u003e\n          \u003cAssumeRolePolicyDocument\u003e%7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Effect%22%3A%22Allow%22%2C%22Principal%22%3A%7B%22Service%22%3A%22ec2.amazonaws.com%22%7D%2C%22Action%22%3A%22sts%3AAssumeRole%22%7D%5D%7D\u003c/AssumeRolePolicyDocument\u003e\n          \u003cRoleId\u003eAROAQMKXI66BGCYBSC3Z2\u003c/RoleId\u003e\n          \u003cPath\u003e/\u003c/Path\u003e\n          \u003cRoleName\u003etfpreflight-verify-82c4c7afa4ff\u003c/RoleName\u003e\n          \u003cArn\u003earn:aws:iam::123456789012:role/tfpreflight-verify-82c4c7afa4ff\u003c/Arn\u003e\n          \u003cCreateDate\u003e2026-10-12T06:26:36Z\u003c/CreateDate\u003e\n        \u003c/member\u003e\n      \u003c/Roles\u003e\n      \u003cArn\u003earn:aws:iam::123456789012:instance-profile/tfpreflight-verify-82c4c7afa4ff\u003c/Arn\u003e\n      \u003cInstanceProfileId\u003eAIPAQMKXI66BGZZO264NK\u003c/InstanceProfileId\u003e\n      \u003cTags/\u003e\n      \u003cCreateDate\u003e2026-10-12T06:26:38Z\u003c/CreateDate\u003e\n    \u003c/InstanceProfile\u003e\n  \u003c/GetInstanceProfileResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003e8434911a-e526-454c-b61f-893d642bbd46\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/GetInstanceProfileResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-82c4c7afa4ff",
+      "label": "iam/GetInstanceProfile/InstanceProfileName/exists-iam",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cGetOpenIDConnectProviderResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cGetOpenIDConnectProviderResult\u003e\n    \u003cClientIDList\u003e\n      \u003cmember\u003ests.amazonaws.com\u003c/member\u003e\n    \u003c/ClientIDList\u003e\n    \u003cThumbprintList\u003e\n      \u003cmember\u003e9e99a48a9960b14926bb7f3b02e22da2b0ab7280\u003c/member\u003e\n    \u003c/ThumbprintList\u003e\n    \u003cUrl\u003etfpreflight-verify-82c4c7afa4ff.example.com\u003c/Url\u003e\n    \u003cTags/\u003e\n    \u003cCreateDate\u003e2026-10-12T06:26:36.356Z\u003c/CreateDate\u003e\n  \u003c/GetOpenIDConnectProviderResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003e7fa5b1b2-b4e9-42f3-ab49-bd14ed1bdd6c\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/GetOpenIDConnectProviderResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "arn:aws:iam::123456789012:oidc-provider/tfpreflight-verify-82c4c7afa4ff.example.com",
+      "label": "iam/GetOpenIDConnectProvider/OpenIDConnectProviderArn/exists-iam",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cGetPolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cGetPolicyResult\u003e\n    \u003cPolicy\u003e\n      \u003cPermissionsBoundaryUsageCount\u003e0\u003c/PermissionsBoundaryUsageCount\u003e\n      \u003cPath\u003e/\u003c/Path\u003e\n      \u003cUpdateDate\u003e2026-10-12T06:26:36Z\u003c/UpdateDate\u003e\n      \u003cDefaultVersionId\u003ev1\u003c/DefaultVersionId\u003e\n      \u003cPolicyId\u003eANPAQMKXI66BIKMNCCVZ3\u003c/PolicyId\u003e\n      \u003cIsAttachable\u003etrue\u003c/IsAttachable\u003e\n      \u003cPolicyName\u003etfpreflight-verify-82c4c7afa4ff\u003c/PolicyName\u003e\n      \u003cAttachmentCount\u003e0\u003c/AttachmentCount\u003e\n      \u003cArn\u003earn:aws:iam::123456789012:policy/tfpreflight-verify-82c4c7afa4ff\u003c/Arn\u003e\n      \u003cTags/\u003e\n      \u003cCreateDate\u003e2026-10-12T06:26:36Z\u003c/CreateDate\u003e\n    \u003c/Policy\u003e\n  \u003c/GetPolicyResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003eed9e73c8-df3c-4455-a89e-43f07660c81a\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/GetPolicyResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "arn:aws:iam::123456789012:policy/tfpreflight-verify-82c4c7afa4ff",
+      "label": "iam/GetPolicy/PolicyArn/exists-iam",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cGetRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cGetRoleResult\u003e\n    \u003cRole\u003e\n      \u003cAssumeRolePolicyDocument\u003e%7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Effect%22%3A%22Allow%22%2C%22Principal%22%3A%7B%22Service%22%3A%22ec2.amazonaws.com%22%7D%2C%22Action%22%3A%22sts%3AAssumeRole%22%7D%5D%7D\u003c/AssumeRolePolicyDocument\u003e\n      \u003cRoleId\u003eAROAQMKXI66BGCYBSC3Z2\u003c/RoleId\u003e\n      \u003cPath\u003e/\u003c/Path\u003e\n      \u003cMaxSessionDuration\u003e3600\u003c/MaxSessionDuration\u003e\n      \u003cRoleLastUsed/\u003e\n      \u003cRoleName\u003etfpreflight-verify-82c4c7afa4ff\u003c/RoleName\u003e\n      \u003cArn\u003earn:aws:iam::123456789012:role/tfpreflight-verify-82c4c7afa4ff\u003c/Arn\u003e\n      \u003cCreateDate\u003e2026-10-12T06:26:36Z\u003c/CreateDate\u003e\n    \u003c/Role\u003e\n  \u003c/GetRoleResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003ecdd1494d-e716-4fad-aadb-194c83320cef\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/GetRoleResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-82c4c7afa4ff",
+      "label": "iam/GetRole/RoleName/exists-iam",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cGetSAMLProviderResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cGetSAMLProviderResult\u003e\n    \u003cSAMLProviderUUID\u003eSAMLSPSKR9G9Y48JYKDZFP\u003c/SAMLProviderUUID\u003e\n    \u003cSAMLMetadataDocument\u003e\u0026lt;?xml version=\u0026quot;1.0\u0026quot;?\u0026gt;\n\u0026lt;EntityDescriptor xmlns=\u0026quot;urn:oasis:names:tc:SAML:2.0:metadata\u0026quot; entityID=\u0026quot;https://tfpreflight-verify-82c4c7afa4ff.example.com\u0026quot;\u0026gt;\n  \u0026lt;IDPSSODescriptor protocolSupportEnumeration=\u0026quot;urn:oasis:names:tc:SAML:2.0:protocol\u0026quot;\u0026gt;\n    \u0026lt;KeyDescriptor use=\u0026quot;signing\u0026quot;\u0026gt;\n      \u0026lt;KeyInfo xmlns=\u0026quot;http://www.w3.org/2000/09/xmldsig#\u0026quot;\u0026gt;\u0026lt;X509Data\u0026gt;\u0026lt;X509Certificate\u0026gt;MIIC+jCCAeKgAwIBAgIBATANBgkqhkiG9w0BAQsFADApMScwJQYDVQQDEx50ZnByZWZsaWdodC12ZXJpZnkuZXhhbXBsZS5jb20wHhcNMjYxMDEyMDUyNjI1WhcNMjYxMDEzMDYyNjI1WjApMScwJQYDVQQDEx50ZnByZWZsaWdodC12ZXJpZnkuZXhhbXBsZS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC5+7mF6QsNOXyWjzuqChSDn11fH5yhzVjLTb6/uxTZgCOa3izx/oKFsbBsp9lx+hl14tDr3bagyNnupjYod1ILQKtOhJAlm4fbNEw5Lgg8Fhn/CtKBmiM3dkzDhgbctQGeMaCCXIbhtmKmKOqPFhC/fNtPcjjyqvn/T6V32ChsVSPxJ5YoPNdZ3E5HtDnN0x8CW8ENBvRx6G+/Nnj4EF31ygDGbh91Q8CMoyvtQhtWuhIEgV/tU+cQ1qdZ/0qylDTwzJ/9mCZqaQZK4EqaSGMN3MBiRzj1hDyKs19u6l0QthB0Cn8q9MLR0YntkuDkEvWfNWEUJ6ix5V3fICWuVy1HAgMBAAGjLTArMCkGA1UdEQQiMCCCHnRmcHJlZmxpZ2h0LXZlcmlmeS5leGFtcGxlLmNvbTANBgkqhkiG9w0BAQsFAAOCAQEAHXpA2yPIJewoaXM4m+SJ25+3jUylfaVheTos3RDFxuawcu4NNPaSYYkrd+F02e138zcwI94vlhCMYx/Lx3sKv45Z+Gue0lQOwVDPezfuazC0VUSy7hoIMFbd+I8uqVdMNPbGCLCJm7hJ5aFdI3YW05hLhnHrOELACMqT/5tPalzPg6wf7Gwx6mPK8OpIe5GOhzvTt8p0OHhuPXUvMzndu/kWsP4+IhOhfR6RReM497cl87J1ny2QNxBbh18GwihIEG5Nm/ad3Cr+YlhUuXsWaY4IIWMeAcOPVvHuRhPSChu8jkU616/q0F3JxNybrD/QM0+6hKIjPfjGUxxuzLJHBA==\u0026lt;/X509Certificate\u0026gt;\u0026lt;/X509Data\u0026gt;\u0026lt;/KeyInfo\u0026gt;\n    \u0026lt;/KeyDescriptor\u0026gt;\n    \u0026lt;SingleSignOnService Binding=\u0026quot;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\u0026quot; Location=\u0026quot;https://tfpreflight-verify-82c4c7afa4ff.example.com/sso\u0026quot;/\u0026gt;\n  \u0026lt;/IDPSSODescriptor\u0026gt;\n\u0026lt;/EntityDescriptor\u0026gt;\n\u003c/SAMLMetadataDocument\u003e\n    \u003cPrivateKeyList/\u003e\n    \u003cSAMLKeyHash\u003e\n      \u003cmember\u003e\n        \u003cIssuerURL\u003ehttps://tfpreflight-verify-82c4c7afa4ff.example.com\u003c/IssuerURL\u003e\n        \u003cKeyHashes\u003e\n          \u003cmember\u003ee8bcaecbe546ed4d1c0519ed9eee18c3569d77ea7498303ea053b81ed9bdaec84d33c8e6523cb6810cc1dbf36d845a3e\u003c/member\u003e\n        \u003c/KeyHashes\u003e\n      \u003c/member\u003e\n    \u003c/SAMLKeyHash\u003e\n    \u003cValidUntil\u003e2126-10-12T06:26:36.377Z\u003c/ValidUntil\u003e\n    \u003cAssertionEncryptionMode\u003eAllowed\u003c/AssertionEncryptionMode\u003e\n    \u003cTags/\u003e\n    \u003cCreateDate\u003e2026-10-12T06:26:36.357Z\u003c/CreateDate\u003e\n  \u003c/GetSAMLProviderResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003e85b8402d-f14b-4545-9a39-6c794ad8769b\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/GetSAMLProviderResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "arn:aws:iam::123456789012:saml-provider/tfpreflight-verify-82c4c7afa4ff",
+      "label": "iam/GetSAMLProvider/SAMLProviderArn/exists-iam",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cGetServerCertificateResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cGetServerCertificateResult\u003e\n    \u003cServerCertificate\u003e\n      \u003cServerCertificateMetadata\u003e\n        \u003cPath\u003e/\u003c/Path\u003e\n        \u003cUploadDate\u003e2026-10-12T06:26:36Z\u003c/UploadDate\u003e\n        \u003cExpiration\u003e2026-10-13T06:26:25Z\u003c/Expiration\u003e\n        \u003cServerCertificateName\u003etfpreflight-verify-82c4c7afa4ff\u003c/ServerCertificateName\u003e\n        \u003cArn\u003earn:aws:iam::123456789012:server-certificate/tfpreflight-verify-82c4c7afa4ff\u003c/Arn\u003e\n        \u003cServerCertificateId\u003eASCAQMKXI66BP6R4ILNQQ\u003c/ServerCertificateId\u003e\n      \u003c/ServerCertificateMetadata\u003e\n      \u003cTags/\u003e\n      \u003cCertificateBody\u003e-----BEGIN CERTIFICATE-----\nMIIC+jCCAeKgAwIBAgIBATANBgkqhkiG9w0BAQsFADApMScwJQYDVQQDEx50ZnBy\nZWZsaWdodC12ZXJpZnkuZXhhbXBsZS5jb20wHhcNMjYxMDEyMDUyNjI1WhcNMjYx\nMDEzMDYyNjI1WjApMScwJQYDVQQDEx50ZnByZWZsaWdodC12ZXJpZnkuZXhhbXBs\nZS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC5+7mF6QsNOXyW\njzuqChSDn11fH5yhzVjLTb6/uxTZgCOa3izx/oKFsbBsp9lx+hl14tDr3bagyNnu\npjYod1ILQKtOhJAlm4fbNEw5Lgg8Fhn/CtKBmiM3dkzDhgbctQGeMaCCXIbhtmKm\nKOqPFhC/fNtPcjjyqvn/T6V32ChsVSPxJ5YoPNdZ3E5HtDnN0x8CW8ENBvRx6G+/\nNnj4EF31ygDGbh91Q8CMoyvtQhtWuhIEgV/tU+cQ1qdZ/0qylDTwzJ/9mCZqaQZK\n4EqaSGMN3MBiRzj1hDyKs19u6l0QthB0Cn8q9MLR0YntkuDkEvWfNWEUJ6ix5V3f\nICWuVy1HAgMBAAGjLTArMCkGA1UdEQQiMCCCHnRmcHJlZmxpZ2h0LXZlcmlmeS5l\neGFtcGxlLmNvbTANBgkqhkiG9w0BAQsFAAOCAQEAHXpA2yPIJewoaXM4m+SJ25+3\njUylfaVheTos3RDFxuawcu4NNPaSYYkrd+F02e138zcwI94vlhCMYx/Lx3sKv45Z\n+Gue0lQOwVDPezfuazC0VUSy7hoIMFbd+I8uqVdMNPbGCLCJm7hJ5aFdI3YW05hL\nhnHrOELACMqT/5tPalzPg6wf7Gwx6mPK8OpIe5GOhzvTt8p0OHhuPXUvMzndu/kW\nsP4+IhOhfR6RReM497cl87J1ny2QNxBbh18GwihIEG5Nm/ad3Cr+YlhUuXsWaY4I\nIWMeAcOPVvHuRhPSChu8jkU616/q0F3JxNybrD/QM0+6hKIjPfjGUxxuzLJHBA==\n-----END CERTIFICATE-----\u003c/CertificateBody\u003e\n    \u003c/ServerCertificate\u003e\n  \u003c/GetServerCertificateResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003ef5e69c1c-fdd4-4432-a9f1-9a557fc54022\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/GetServerCertificateResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-82c4c7afa4ff",
+      "label": "iam/GetServerCertificate/ServerCertificateName/exists-iam",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cGetUserResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cGetUserResult\u003e\n    \u003cUser\u003e\n      \u003cPath\u003e/\u003c/Path\u003e\n      \u003cUserName\u003etfpreflight-verify-82c4c7afa4ff\u003c/UserName\u003e\n      \u003cArn\u003earn:aws:iam::123456789012:user/tfpreflight-verify-82c4c7afa4ff\u003c/Arn\u003e\n      \u003cUserId\u003eAIDAQMKXI66BLWN3OD6AK\u003c/UserId\u003e\n      \u003cCreateDate\u003e2026-10-12T06:26:36Z\u003c/CreateDate\u003e\n    \u003c/User\u003e\n  \u003c/GetUserResult\u003e\n  \u003cResponseMetadata\u003e\n    \u003cRequestId\u003eb7403214-e603-4f43-a1f9-2683ccd99fec\u003c/RequestId\u003e\n  \u003c/ResponseMetadata\u003e\n\u003c/GetUserResponse\u003e\n",
+      "expected": "EXISTS",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-82c4c7afa4ff",
+      "label": "iam/GetUser/UserName/exists-iam",
+      "region": "us-east-1",
+      "status": 200
+    },
+    {
+      "body": "\u003cErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eNoSuchEntity\u003c/Code\u003e\n    \u003cMessage\u003eThe group with name tfpreflight-verify-82c4c7afa4ff cannot be found.\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e8c66c091-fd3a-4cac-9ccd-b345b0ea5f9d\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-82c4c7afa4ff",
+      "label": "iam/GetGroup/GroupName/exists-iam-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003cErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eNoSuchEntity\u003c/Code\u003e\n    \u003cMessage\u003eInstance Profile tfpreflight-verify-82c4c7afa4ff cannot be found.\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e77e91ff2-fdd2-4ea3-b68f-919a926a89cf\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-82c4c7afa4ff",
+      "label": "iam/GetInstanceProfile/InstanceProfileName/exists-iam-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003cErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eNoSuchEntity\u003c/Code\u003e\n    \u003cMessage\u003eOpenIDConnect Provider not found for arn arn:aws:iam::123456789012:oidc-provider/tfpreflight-verify-82c4c7afa4ff.example.com\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003ee0020592-3609-4cc5-adfb-56f1598b10fb\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "arn:aws:iam::123456789012:oidc-provider/tfpreflight-verify-82c4c7afa4ff.example.com",
+      "label": "iam/GetOpenIDConnectProvider/OpenIDConnectProviderArn/exists-iam-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003cErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eNoSuchEntity\u003c/Code\u003e\n    \u003cMessage\u003ePolicy arn:aws:iam::123456789012:policy/tfpreflight-verify-82c4c7afa4ff was not found.\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e825074d8-4957-4d67-b0eb-7678255a9322\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "arn:aws:iam::123456789012:policy/tfpreflight-verify-82c4c7afa4ff",
+      "label": "iam/GetPolicy/PolicyArn/exists-iam-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003cErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eNoSuchEntity\u003c/Code\u003e\n    \u003cMessage\u003eThe role with name tfpreflight-verify-82c4c7afa4ff cannot be found.\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e0c00717a-30aa-46c0-a998-1ed53d44ea64\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-82c4c7afa4ff",
+      "label": "iam/GetRole/RoleName/exists-iam-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003cErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eNoSuchEntity\u003c/Code\u003e\n    \u003cMessage\u003eManifest not found for arn arn:aws:iam::123456789012:saml-provider/tfpreflight-verify-82c4c7afa4ff\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e02594293-2a3e-4280-9a8a-8115af0f0426\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "arn:aws:iam::123456789012:saml-provider/tfpreflight-verify-82c4c7afa4ff",
+      "label": "iam/GetSAMLProvider/SAMLProviderArn/exists-iam-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003cErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eNoSuchEntity\u003c/Code\u003e\n    \u003cMessage\u003eThe Server Certificate with name tfpreflight-verify-82c4c7afa4ff cannot be found.\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e171f49b5-5bb4-4211-af18-25a464ef18e5\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-82c4c7afa4ff",
+      "label": "iam/GetServerCertificate/ServerCertificateName/exists-iam-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    },
+    {
+      "body": "\u003cErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eNoSuchEntity\u003c/Code\u003e\n    \u003cMessage\u003eThe user with name tfpreflight-verify-82c4c7afa4ff cannot be found.\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e27af8e53-a6fb-4441-8a39-ea39ecbb4a46\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
+      "expected": "NOT_FOUND",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "id": "tfpreflight-verify-82c4c7afa4ff",
+      "label": "iam/GetUser/UserName/exists-iam-destroyed",
+      "region": "us-east-1",
+      "status": 404
+    }
+  ]
+}

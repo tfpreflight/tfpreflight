@@ -1,0 +1,11 @@
+{
+  "about": "A role with a statement that denies ec2:CreateTags on *. The provider tags a security group with this call only in some cases.",
+  "exchanges": [
+    {
+      "action": "ec2:CreateTags",
+      "resource": "*",
+      "context": {"aws:RequestedRegion": ["us-east-1"]},
+      "result": {"EvalActionName": "ec2:CreateTags", "EvalResourceName": "*", "EvalDecision": "explicitDeny", "MissingContextValues": []}
+    }
+  ]
+}

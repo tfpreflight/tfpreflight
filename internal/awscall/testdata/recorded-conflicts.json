@@ -1,0 +1,4025 @@
+{
+  "note": "Real AWS responses, recorded from a test account so the tests can check the engine reads each one as the AWS SDK does. Every account ID is replaced by the 123456789012 placeholder. This set covers the name-conflict lookups.",
+  "responses": [
+    {
+      "body": "{\n  \"Message\" : \"Could not find EventIntegration with name: tfpreflight-absent-0123456789.\"\n}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "label": "appintegrations/GetEventIntegration/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "Name": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\n  \"message\" : \"1 validation error detected: Value '!!not a valid identifier!!' at 'name' failed to satisfy constraint: Member must satisfy regular expression pattern: ^[a-zA-Z0-9\\\\/\\\\._\\\\-]+$\"\n}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "label": "appintegrations/GetEventIntegration/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"Message\":\"Insufficient privileges to perform this action.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "AccessDeniedException"
+      },
+      "label": "backup/DescribeBackupVault/missing",
+      "region": "us-east-1",
+      "status": 403,
+      "values": {
+        "BackupVaultName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"Message\":\"Insufficient privileges to perform this action.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "AccessDeniedException"
+      },
+      "label": "backup/DescribeBackupVault/malformed",
+      "region": "us-east-1",
+      "status": 403,
+      "values": {
+        "BackupVaultName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"Message\":\"Insufficient privileges to perform this action.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "AccessDeniedException"
+      },
+      "label": "backup/DescribeBackupVault/missing",
+      "region": "eu-west-1",
+      "status": 403,
+      "values": {
+        "BackupVaultName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"Message\":\"Insufficient privileges to perform this action.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "AccessDeniedException"
+      },
+      "label": "backup/DescribeBackupVault/malformed",
+      "region": "eu-west-1",
+      "status": 403,
+      "values": {
+        "BackupVaultName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"Code\":null,\"Context\":null,\"Message\":\"Invalid framework name tfpreflight-absent-0123456789. Framework names must be between 1 and 256 characters, start with a letter (A-Z and a-z), and consist only of letters, numbers (0-9), and underscores (_). Type a valid framework name.\",\"Type\":null}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "InvalidParameterValueException:http://internal.amazon.com/coral/com.amazonaws.services.cryo/"
+      },
+      "label": "backup/DescribeFramework/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "FrameworkName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"Code\":null,\"Context\":null,\"Message\":\"Invalid framework name !!not a valid identifier!!. Framework names must be between 1 and 256 characters, start with a letter (A-Z and a-z), and consist only of letters, numbers (0-9), and underscores (_). Type a valid framework name.\",\"Type\":null}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "InvalidParameterValueException:http://internal.amazon.com/coral/com.amazonaws.services.cryo/"
+      },
+      "label": "backup/DescribeFramework/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "FrameworkName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"Code\":null,\"Context\":null,\"Message\":\"Invalid framework name tfpreflight-absent-0123456789. Framework names must be between 1 and 256 characters, start with a letter (A-Z and a-z), and consist only of letters, numbers (0-9), and underscores (_). Type a valid framework name.\",\"Type\":null}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "InvalidParameterValueException:http://internal.amazon.com/coral/com.amazonaws.services.cryo/"
+      },
+      "label": "backup/DescribeFramework/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "FrameworkName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"Code\":null,\"Context\":null,\"Message\":\"Invalid framework name !!not a valid identifier!!. Framework names must be between 1 and 256 characters, start with a letter (A-Z and a-z), and consist only of letters, numbers (0-9), and underscores (_). Type a valid framework name.\",\"Type\":null}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "InvalidParameterValueException:http://internal.amazon.com/coral/com.amazonaws.services.cryo/"
+      },
+      "label": "backup/DescribeFramework/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "FrameworkName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"Code\":null,\"Context\":null,\"Message\":\"Invalid report plan name tfpreflight-absent-0123456789. Report plan names must be between 1 and 256 characters, start with a letter (A-Z and a-z), and consist only of letters, numbers (0-9), and underscores (_). Type a valid report plan name.\",\"Type\":null}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "InvalidParameterValueException:http://internal.amazon.com/coral/com.amazonaws.services.cryo/"
+      },
+      "label": "backup/DescribeReportPlan/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ReportPlanName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"Code\":null,\"Context\":null,\"Message\":\"Invalid report plan name !!not a valid identifier!!. Report plan names must be between 1 and 256 characters, start with a letter (A-Z and a-z), and consist only of letters, numbers (0-9), and underscores (_). Type a valid report plan name.\",\"Type\":null}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "InvalidParameterValueException:http://internal.amazon.com/coral/com.amazonaws.services.cryo/"
+      },
+      "label": "backup/DescribeReportPlan/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ReportPlanName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"Code\":null,\"Context\":null,\"Message\":\"Invalid report plan name tfpreflight-absent-0123456789. Report plan names must be between 1 and 256 characters, start with a letter (A-Z and a-z), and consist only of letters, numbers (0-9), and underscores (_). Type a valid report plan name.\",\"Type\":null}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "InvalidParameterValueException:http://internal.amazon.com/coral/com.amazonaws.services.cryo/"
+      },
+      "label": "backup/DescribeReportPlan/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "ReportPlanName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"Code\":null,\"Context\":null,\"Message\":\"Invalid report plan name !!not a valid identifier!!. Report plan names must be between 1 and 256 characters, start with a letter (A-Z and a-z), and consist only of letters, numbers (0-9), and underscores (_). Type a valid report plan name.\",\"Type\":null}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "InvalidParameterValueException:http://internal.amazon.com/coral/com.amazonaws.services.cryo/"
+      },
+      "label": "backup/DescribeReportPlan/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "ReportPlanName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://cloudformation.amazonaws.com/doc/2010-05-15/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>StackSetNotFoundException</Code>\n    <Message>StackSet tfpreflight-absent-0123456789 not found</Message>\n  </Error>\n  <RequestId>92b7efd4-bf9e-49cb-859d-accfda3d1ef5</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "cloudformation/DescribeStackSet/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "StackSetName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://cloudformation.amazonaws.com/doc/2010-05-15/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ValidationError</Code>\n    <Message>1 validation error detected: Value '!!not a valid identifier!!' at 'stackSetName' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z][-a-zA-Z0-9]*(?::[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12})?</Message>\n  </Error>\n  <RequestId>e379c3d3-0026-47c8-aa6f-e029adfcf821</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "cloudformation/DescribeStackSet/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "StackSetName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://cloudformation.amazonaws.com/doc/2010-05-15/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>StackSetNotFoundException</Code>\n    <Message>StackSet tfpreflight-absent-0123456789 not found</Message>\n  </Error>\n  <RequestId>e8d0b648-903e-4b9e-812d-c0d954856e74</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "cloudformation/DescribeStackSet/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "StackSetName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://cloudformation.amazonaws.com/doc/2010-05-15/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ValidationError</Code>\n    <Message>1 validation error detected: Value '!!not a valid identifier!!' at 'stackSetName' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z][-a-zA-Z0-9]*(?::[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12})?</Message>\n  </Error>\n  <RequestId>2dc20b4b-a4b5-4b60-81f7-b5f397d65148</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "cloudformation/DescribeStackSet/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "StackSetName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<?xml version=\"1.0\"?>\n<ErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"><Error><Type>Sender</Type><Code>EntityNotFound</Code><Message>The specified connection group does not exist.</Message></Error><RequestId>488882f2-bbb3-47d5-a370-73d1a1a99626</RequestId></ErrorResponse>",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "cloudfront/GetConnectionGroup/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "Identifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<?xml version=\"1.0\"?>\n<ErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"><Error><Type>Sender</Type><Code>EntityNotFound</Code><Message>The specified connection group does not exist.</Message></Error><RequestId>5cdf14ad-5299-4755-ab20-410f818169f8</RequestId></ErrorResponse>",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "cloudfront/GetConnectionGroup/malformed",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "Identifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<?xml version=\"1.0\"?>\n<ErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"><Error><Type>Sender</Type><Code>EntityNotFound</Code><Message>The specified connection group does not exist.</Message></Error><RequestId>2736df0a-d210-4ac0-8780-14f5a35b1b08</RequestId></ErrorResponse>",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "cloudfront/GetConnectionGroup/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "Identifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<?xml version=\"1.0\"?>\n<ErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"><Error><Type>Sender</Type><Code>EntityNotFound</Code><Message>The specified connection group does not exist.</Message></Error><RequestId>dca602c6-ee90-4584-b360-bda91a3b9ac5</RequestId></ErrorResponse>",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "cloudfront/GetConnectionGroup/malformed",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "Identifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<?xml version=\"1.0\"?>\n<ErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"><Error><Type>Sender</Type><Code>InvalidArgument</Code><Message>Id format is invalid</Message></Error><RequestId>6c84d9bb-fd9e-4b66-8466-26f7edb45528</RequestId></ErrorResponse>",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "cloudfront/GetVpcOrigin/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Id": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<?xml version=\"1.0\"?>\n<ErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"><Error><Type>Sender</Type><Code>InvalidArgument</Code><Message>Id format is invalid</Message></Error><RequestId>5245b8a4-01a3-4e2e-bafe-5506d75e85c0</RequestId></ErrorResponse>",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "cloudfront/GetVpcOrigin/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Id": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<?xml version=\"1.0\"?>\n<ErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"><Error><Type>Sender</Type><Code>InvalidArgument</Code><Message>Id format is invalid</Message></Error><RequestId>26fc69cf-fa3a-49f0-adfe-cf82f14caeba</RequestId></ErrorResponse>",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "cloudfront/GetVpcOrigin/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "Id": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<?xml version=\"1.0\"?>\n<ErrorResponse xmlns=\"http://cloudfront.amazonaws.com/doc/2020-05-31/\"><Error><Type>Sender</Type><Code>InvalidArgument</Code><Message>Id format is invalid</Message></Error><RequestId>c3f9e226-7646-4edf-bd28-46ad7179aae7</RequestId></ErrorResponse>",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "cloudfront/GetVpcOrigin/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "Id": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>DBClusterSnapshotNotFoundFault</Code>\n    <Message>DBClusterSnapshot not found: tfpreflight-absent-0123456789</Message>\n  </Error>\n  <RequestId>1b62fa14-56eb-4db1-9757-bae89614f3fe</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "docdb/DescribeDBClusterSnapshots/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "DBClusterSnapshotIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Invalid cluster snapshot identifier:  !!not a valid identifier!!</Message>\n  </Error>\n  <RequestId>249de6c8-94f6-4fd3-aa99-82bb07e8e70b</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "docdb/DescribeDBClusterSnapshots/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "DBClusterSnapshotIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>DBClusterSnapshotNotFoundFault</Code>\n    <Message>DBClusterSnapshot not found: tfpreflight-absent-0123456789</Message>\n  </Error>\n  <RequestId>d1305a7d-7163-4185-bd8d-c2c383071f90</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "docdb/DescribeDBClusterSnapshots/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "DBClusterSnapshotIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Invalid cluster snapshot identifier:  !!not a valid identifier!!</Message>\n  </Error>\n  <RequestId>f1544138-5511-4af9-bf90-dda6a28b8bbd</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "docdb/DescribeDBClusterSnapshots/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "DBClusterSnapshotIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>GlobalClusterNotFoundFault</Code>\n    <Message>Global cluster 'tfpreflight-absent-0123456789' not found</Message>\n  </Error>\n  <RequestId>ec143a8e-9f4b-43fb-ae26-1642ff660c0c</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "docdb/DescribeGlobalClusters/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "GlobalClusterIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Invalid global cluster identifier:  !!not a valid identifier!!</Message>\n  </Error>\n  <RequestId>d68be04a-48ce-43b6-b5c1-05f209721f47</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "docdb/DescribeGlobalClusters/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "GlobalClusterIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>GlobalClusterNotFoundFault</Code>\n    <Message>Global cluster 'tfpreflight-absent-0123456789' not found</Message>\n  </Error>\n  <RequestId>c0aaa7fa-02e7-4b49-98b9-65d766e99218</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "docdb/DescribeGlobalClusters/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "GlobalClusterIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Invalid global cluster identifier:  !!not a valid identifier!!</Message>\n  </Error>\n  <RequestId>6c433dac-24fc-41bd-b46e-02a3047e79d0</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "docdb/DescribeGlobalClusters/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "GlobalClusterIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"com.amazonaws.dynamodb.v20120810#GlobalTableNotFoundException\",\"message\":\"Global table not found: Global table with name: 'tfpreflight-absent-0123456789' does not exist.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "label": "dynamodb/DescribeGlobalTable/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "GlobalTableName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"com.amazon.coral.validate#ValidationException\",\"message\":\"1 validation error detected: Value '!!not a valid identifier!!' at 'globalTableName' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z0-9_.-]+\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "label": "dynamodb/DescribeGlobalTable/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "GlobalTableName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"com.amazonaws.dynamodb.v20120810#GlobalTableNotFoundException\",\"message\":\"Global table not found: Global table with name: 'tfpreflight-absent-0123456789' does not exist.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "label": "dynamodb/DescribeGlobalTable/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "GlobalTableName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"com.amazon.coral.validate#ValidationException\",\"message\":\"1 validation error detected: Value '!!not a valid identifier!!' at 'globalTableName' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z0-9_.-]+\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "label": "dynamodb/DescribeGlobalTable/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "GlobalTableName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"PullThroughCacheRuleNotFoundException\",\"message\":\"A pull-through cache rule with repository prefix 'tfpreflight-absent-0123456789' does not exist in the registry with id '123456789012'\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "ecr/DescribePullThroughCacheRules/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "EcrRepositoryPrefixes": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"InvalidParameterException\",\"message\":\"Invalid parameter at 'ecrRepositoryPrefixes' failed to satisfy constraint: 'Member must satisfy constraint: [Member must have length less than or equal to 30, Member must have length greater than or equal to 2, Member must satisfy regular expression pattern: ^([a-z0-9]+((\\\\.|_|__|-+)[a-z0-9]+)*(\\\\/[a-z0-9]+((\\\\.|_|__|-+)[a-z0-9]+)*)*\\\\/?|ROOT)$]'\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "ecr/DescribePullThroughCacheRules/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "EcrRepositoryPrefixes": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"PullThroughCacheRuleNotFoundException\",\"message\":\"A pull-through cache rule with repository prefix 'tfpreflight-absent-0123456789' does not exist in the registry with id '123456789012'\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "ecr/DescribePullThroughCacheRules/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "EcrRepositoryPrefixes": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"InvalidParameterException\",\"message\":\"Invalid parameter at 'ecrRepositoryPrefixes' failed to satisfy constraint: 'Member must satisfy constraint: [Member must have length less than or equal to 30, Member must have length greater than or equal to 2, Member must satisfy regular expression pattern: ^([a-z0-9]+((\\\\.|_|__|-+)[a-z0-9]+)*(\\\\/[a-z0-9]+((\\\\.|_|__|-+)[a-z0-9]+)*)*\\\\/?|ROOT)$]'\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "ecr/DescribePullThroughCacheRules/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "EcrRepositoryPrefixes": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"RepositoryNotFoundException\",\"message\":\"The repository with name 'tfpreflight-absent-0123456789' does not exist in the registry with id '123456789012'\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "ecr/DescribeRepositories/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "RepositoryNames": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"InvalidParameterException\",\"message\":\"Invalid parameter at 'repositoryName' failed to satisfy constraint: 'must satisfy regular expression '[a-z0-9]+((\\\\.|_|__|-+)[a-z0-9]+)*(/[a-z0-9]+((\\\\.|_|__|-+)[a-z0-9]+)*)*''\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "ecr/DescribeRepositories/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "RepositoryNames": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"RepositoryNotFoundException\",\"message\":\"The repository with name 'tfpreflight-absent-0123456789' does not exist in the registry with id '123456789012'\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "ecr/DescribeRepositories/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "RepositoryNames": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"InvalidParameterException\",\"message\":\"Invalid parameter at 'repositoryName' failed to satisfy constraint: 'must satisfy regular expression '[a-z0-9]+((\\\\.|_|__|-+)[a-z0-9]+)*(/[a-z0-9]+((\\\\.|_|__|-+)[a-z0-9]+)*)*''\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "ecr/DescribeRepositories/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "RepositoryNames": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ServerlessCacheNotFoundFault</Code>\n    <Message>Serverless cache with name tfpreflight-absent-0123456789 not found.</Message>\n  </Error>\n  <RequestId>cad83f19-b682-42c6-bd6b-4e7d083c3705</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "elasticache/DescribeServerlessCaches/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "ServerlessCacheName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Serverless Cache Name specified is not a valid identifier. Identifiers must begin with a letter; must contain only ASCII letters, digits, and hyphens; and must not end with a hyphen or contain two consecutive hyphens.</Message>\n  </Error>\n  <RequestId>42726e00-2b07-40b2-8c62-3922b41fbe88</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "elasticache/DescribeServerlessCaches/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ServerlessCacheName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ServerlessCacheNotFoundFault</Code>\n    <Message>Serverless cache with name tfpreflight-absent-0123456789 not found.</Message>\n  </Error>\n  <RequestId>5bebc4f6-b8f9-48b3-9823-ad0482b9fda7</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "elasticache/DescribeServerlessCaches/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "ServerlessCacheName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Serverless Cache Name specified is not a valid identifier. Identifiers must begin with a letter; must contain only ASCII letters, digits, and hyphens; and must not end with a hyphen or contain two consecutive hyphens.</Message>\n  </Error>\n  <RequestId>eb32f315-eb6a-4b24-9954-354763683a4c</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "elasticache/DescribeServerlessCaches/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "ServerlessCacheName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>UserGroupNotFound</Code>\n    <Message>User group tfpreflight-absent-0123456789 not found.</Message>\n  </Error>\n  <RequestId>e856fc18-a151-4605-b0cf-378fad241c4b</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "elasticache/DescribeUserGroups/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "UserGroupId": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>UserGroupNotFound</Code>\n    <Message>User group !!not a valid identifier!! not found.</Message>\n  </Error>\n  <RequestId>9d437ba3-0ac8-4e5c-8c84-40b7a3578072</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "elasticache/DescribeUserGroups/malformed",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "UserGroupId": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>UserGroupNotFound</Code>\n    <Message>User group tfpreflight-absent-0123456789 not found.</Message>\n  </Error>\n  <RequestId>7df2502d-e2ca-4653-9ae8-06f0fa9585ea</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "elasticache/DescribeUserGroups/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "UserGroupId": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>UserGroupNotFound</Code>\n    <Message>User group !!not a valid identifier!! not found.</Message>\n  </Error>\n  <RequestId>88d9ed8b-d8c5-47d7-a2f1-7dba9c8f0ce6</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "elasticache/DescribeUserGroups/malformed",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "UserGroupId": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"ResourceNotFoundException\",\"message\":\"Firehose under account 123456789012 not found.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "firehose/DescribeDeliveryStream/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "DeliveryStreamName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"ValidationException\",\"message\":\"1 validation error detected: Value at 'deliveryStreamName' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z0-9_.-]+\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "firehose/DescribeDeliveryStream/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "DeliveryStreamName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"ResourceNotFoundException\",\"message\":\"Firehose under account 123456789012 not found.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "firehose/DescribeDeliveryStream/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "DeliveryStreamName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"ValidationException\",\"message\":\"1 validation error detected: Value at 'deliveryStreamName' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z0-9_.-]+\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "firehose/DescribeDeliveryStream/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "DeliveryStreamName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Catalog not found.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetCatalog/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "CatalogId": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Catalog not found.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetCatalog/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "CatalogId": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Catalog not found.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetCatalog/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "CatalogId": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Catalog not found.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetCatalog/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "CatalogId": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Crawler entry with name tfpreflight-absent-0123456789 does not exist\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetCrawler/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Crawler entry with name !!not a valid identifier!! does not exist\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetCrawler/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Crawler entry with name tfpreflight-absent-0123456789 does not exist\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetCrawler/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "Name": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Crawler entry with name !!not a valid identifier!! does not exist\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetCrawler/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "Name": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Cannot find Data Quality Ruleset in account 123456789012 with name tfpreflight-absent-0123456789\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetDataQualityRuleset/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Cannot find Data Quality Ruleset in account 123456789012 with name !!not a valid identifier!!\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetDataQualityRuleset/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Cannot find Data Quality Ruleset in account 123456789012 with name tfpreflight-absent-0123456789\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetDataQualityRuleset/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "Name": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Cannot find Data Quality Ruleset in account 123456789012 with name !!not a valid identifier!!\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetDataQualityRuleset/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "Name": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"AccessDeniedException\",\"Message\":\"GetDevEndpoint operation is currently disabled.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetDevEndpoint/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "EndpointName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"AccessDeniedException\",\"Message\":\"GetDevEndpoint operation is currently disabled.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetDevEndpoint/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "EndpointName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"AccessDeniedException\",\"Message\":\"GetDevEndpoint operation is currently disabled.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetDevEndpoint/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "EndpointName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"AccessDeniedException\",\"Message\":\"GetDevEndpoint operation is currently disabled.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetDevEndpoint/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "EndpointName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Job not found.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetJob/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "JobName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Job not found.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetJob/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "JobName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Job not found.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetJob/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "JobName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Job not found.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetJob/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "JobName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetSecurityConfiguration/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetSecurityConfiguration/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetSecurityConfiguration/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "Name": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetSecurityConfiguration/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "Name": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Trigger not found.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetTrigger/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Trigger not found.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetTrigger/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Trigger not found.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetTrigger/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "Name": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Trigger not found.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetTrigger/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "Name": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Entity not found\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetWorkflow/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Entity not found\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetWorkflow/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Entity not found\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetWorkflow/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "Name": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Entity not found\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetWorkflow/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "Name": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>NoSuchEntity</Code>\n    <Message>The group with name tfpreflight-absent-0123456789 cannot be found.</Message>\n  </Error>\n  <RequestId>076e0197-a8b2-4b3b-a85e-8b6864f04ca2</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "iam/GetGroup/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "GroupName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ValidationError</Code>\n    <Message>The specified value for groupName is invalid. It must contain only alphanumeric characters and/or the following: +=,.@_-</Message>\n  </Error>\n  <RequestId>83409b25-3710-4a01-9a51-3742ff7a1004</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "iam/GetGroup/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "GroupName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>NoSuchEntity</Code>\n    <Message>The group with name tfpreflight-absent-0123456789 cannot be found.</Message>\n  </Error>\n  <RequestId>232d0a67-6e9f-4f53-a113-3e7de4505926</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "iam/GetGroup/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "GroupName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ValidationError</Code>\n    <Message>The specified value for groupName is invalid. It must contain only alphanumeric characters and/or the following: +=,.@_-</Message>\n  </Error>\n  <RequestId>01c7e60d-11ef-40d0-9ce5-dfe4d71dbfb4</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "iam/GetGroup/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "GroupName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>NoSuchEntity</Code>\n    <Message>The user with name tfpreflight-absent-0123456789 cannot be found.</Message>\n  </Error>\n  <RequestId>8bc2c02c-40d5-4775-af3e-c43f8be596ae</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "iam/GetLoginProfile/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "UserName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ValidationError</Code>\n    <Message>The specified value for userName is invalid. It must contain only alphanumeric characters and/or the following: +=,.@_-</Message>\n  </Error>\n  <RequestId>7e8024f7-89e7-4b17-a401-e12f2cce5098</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "iam/GetLoginProfile/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "UserName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>NoSuchEntity</Code>\n    <Message>The user with name tfpreflight-absent-0123456789 cannot be found.</Message>\n  </Error>\n  <RequestId>b199d991-a3fa-4632-87be-a7b4c344dbab</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "iam/GetLoginProfile/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "UserName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ValidationError</Code>\n    <Message>The specified value for userName is invalid. It must contain only alphanumeric characters and/or the following: +=,.@_-</Message>\n  </Error>\n  <RequestId>d4fdc74f-6f0c-4937-a32b-096c4e1cec2d</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "iam/GetLoginProfile/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "UserName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>NoSuchEntity</Code>\n    <Message>The user with name tfpreflight-absent-0123456789 cannot be found.</Message>\n  </Error>\n  <RequestId>956435ad-69f5-406a-8298-2f714ba4ad36</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "iam/GetUser/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "UserName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ValidationError</Code>\n    <Message>The specified value for userName is invalid. It must contain only alphanumeric characters and/or the following: +=,.@_-</Message>\n  </Error>\n  <RequestId>03b7d2fc-0b16-4431-b695-153a7f2632fd</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "iam/GetUser/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "UserName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>NoSuchEntity</Code>\n    <Message>The user with name tfpreflight-absent-0123456789 cannot be found.</Message>\n  </Error>\n  <RequestId>3b0a8e99-8259-466b-90b3-b093846867bd</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "iam/GetUser/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "UserName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ValidationError</Code>\n    <Message>The specified value for userName is invalid. It must contain only alphanumeric characters and/or the following: +=,.@_-</Message>\n  </Error>\n  <RequestId>5fdbd583-c010-4f78-ac73-402ff86edc38</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "iam/GetUser/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "UserName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"com.amazon.helenuscqlheadend#ValidationException\",\"message\":\"1 validation error detected: Value 'tfpreflight-absent-0123456789' at 'keyspaceName' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z0-9][a-zA-Z0-9_]{0,47}\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "label": "keyspaces/GetKeyspace/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "KeyspaceName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"com.amazon.helenuscqlheadend#ValidationException\",\"message\":\"1 validation error detected: Value '!!not a valid identifier!!' at 'keyspaceName' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z0-9][a-zA-Z0-9_]{0,47}\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "label": "keyspaces/GetKeyspace/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "KeyspaceName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"__type\":\"com.amazon.helenuscqlheadend#ValidationException\",\"message\":\"1 validation error detected: Value 'tfpreflight-absent-0123456789' at 'keyspaceName' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z0-9][a-zA-Z0-9_]{0,47}\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "label": "keyspaces/GetKeyspace/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "KeyspaceName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"__type\":\"com.amazon.helenuscqlheadend#ValidationException\",\"message\":\"1 validation error detected: Value '!!not a valid identifier!!' at 'keyspaceName' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z0-9][a-zA-Z0-9_]{0,47}\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "label": "keyspaces/GetKeyspace/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "KeyspaceName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"Message\":\"Un-supported resource arn format\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "InvalidInputException:http://internal.amazon.com/coral/com.amazonaws.michigan.common.exceptions/"
+      },
+      "label": "lakeformation/DescribeResource/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ResourceArn": "arn:aws:lakeformation:us-east-1:123456789012:resource/tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"Message\":\"Un-supported resource arn format\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "InvalidInputException:http://internal.amazon.com/coral/com.amazonaws.michigan.common.exceptions/"
+      },
+      "label": "lakeformation/DescribeResource/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ResourceArn": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"Message\":\"Un-supported resource arn format\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "InvalidInputException:http://internal.amazon.com/coral/com.amazonaws.michigan.common.exceptions/"
+      },
+      "label": "lakeformation/DescribeResource/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "ResourceArn": "arn:aws:lakeformation:us-east-1:123456789012:resource/tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"Message\":\"Un-supported resource arn format\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "InvalidInputException:http://internal.amazon.com/coral/com.amazonaws.michigan.common.exceptions/"
+      },
+      "label": "lakeformation/DescribeResource/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "ResourceArn": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"Message\":\"Cannot find alias arn: arn:aws:lambda:us-east-1:123456789012:function:tfpreflight-absent-0123456789:tfpreflight-absent-0123456789\",\"Type\":\"User\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "label": "lambda/GetAlias/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "FunctionName": "tfpreflight-absent-0123456789",
+        "Name": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"2 validation errors detected: Value '!!not a valid identifier!!' at 'functionName' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:(aws[a-zA-Z-]*)?:lambda:)?((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\\\d{1}:)?(\\\\d{12}:)?(function:)?([a-zA-Z0-9-_]+)(:(\\\\$LATEST|[a-zA-Z0-9-_]+))?; Value '!!not a valid identifier!!' at 'name' failed to satisfy constraint: Member must satisfy regular expression pattern: (?!^[0-9]+$)([a-zA-Z0-9-_]+)\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "label": "lambda/GetAlias/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "FunctionName": "!!not a valid identifier!!",
+        "Name": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"Message\":\"Cannot find alias arn: arn:aws:lambda:eu-west-1:123456789012:function:tfpreflight-absent-0123456789:tfpreflight-absent-0123456789\",\"Type\":\"User\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "label": "lambda/GetAlias/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "FunctionName": "tfpreflight-absent-0123456789",
+        "Name": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"2 validation errors detected: Value '!!not a valid identifier!!' at 'functionName' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:(aws[a-zA-Z-]*)?:lambda:)?((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\\\d{1}:)?(\\\\d{12}:)?(function:)?([a-zA-Z0-9-_]+)(:(\\\\$LATEST|[a-zA-Z0-9-_]+))?; Value '!!not a valid identifier!!' at 'name' failed to satisfy constraint: Member must satisfy regular expression pattern: (?!^[0-9]+$)([a-zA-Z0-9-_]+)\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "label": "lambda/GetAlias/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "FunctionName": "!!not a valid identifier!!",
+        "Name": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"Type\":\"User\",\"Message\":\"Function not found: arn:aws:lambda:us-east-1:123456789012:function:tfpreflight-absent-0123456789\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "label": "lambda/GetFunction/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "FunctionName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value '!!not a valid identifier!!' at 'functionName' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:(aws[a-zA-Z-]*)?:lambda:)?((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\\\d{1}:)?(\\\\d{12}:)?(function:)?([a-zA-Z0-9-_\\\\.]+)(:(\\\\$LATEST(\\\\.PUBLISHED)?|[a-zA-Z0-9-_]+))?\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "label": "lambda/GetFunction/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "FunctionName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"Type\":\"User\",\"Message\":\"Function not found: arn:aws:lambda:eu-west-1:123456789012:function:tfpreflight-absent-0123456789\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "label": "lambda/GetFunction/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "FunctionName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value '!!not a valid identifier!!' at 'functionName' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:(aws[a-zA-Z-]*)?:lambda:)?((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\\\d{1}:)?(\\\\d{12}:)?(function:)?([a-zA-Z0-9-_\\\\.]+)(:(\\\\$LATEST(\\\\.PUBLISHED)?|[a-zA-Z0-9-_]+))?\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "label": "lambda/GetFunction/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "FunctionName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value 'tfpreflight-absent-0123456789' at 'qualifier' failed to satisfy constraint: Member must satisfy regular expression pattern: (\\\\$LATEST\\\\.PUBLISHED|[0-9]+)\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "label": "lambda/GetFunctionScalingConfig/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "FunctionName": "tfpreflight-absent-0123456789",
+        "Qualifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"2 validation errors detected: Value '!!not a valid identifier!!' at 'functionName' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:(aws[a-zA-Z-]*)?:lambda:)?((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\\\d{1}:)?(\\\\d{12}:)?(function:)?([a-zA-Z0-9-_]+); Value '!!not a valid identifier!!' at 'qualifier' failed to satisfy constraint: Member must satisfy regular expression pattern: (\\\\$LATEST\\\\.PUBLISHED|[0-9]+)\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "label": "lambda/GetFunctionScalingConfig/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "FunctionName": "!!not a valid identifier!!",
+        "Qualifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value 'tfpreflight-absent-0123456789' at 'qualifier' failed to satisfy constraint: Member must satisfy regular expression pattern: (\\\\$LATEST\\\\.PUBLISHED|[0-9]+)\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "label": "lambda/GetFunctionScalingConfig/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "FunctionName": "tfpreflight-absent-0123456789",
+        "Qualifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"2 validation errors detected: Value '!!not a valid identifier!!' at 'functionName' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:(aws[a-zA-Z-]*)?:lambda:)?((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\\\d{1}:)?(\\\\d{12}:)?(function:)?([a-zA-Z0-9-_]+); Value '!!not a valid identifier!!' at 'qualifier' failed to satisfy constraint: Member must satisfy regular expression pattern: (\\\\$LATEST\\\\.PUBLISHED|[0-9]+)\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "label": "lambda/GetFunctionScalingConfig/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "FunctionName": "!!not a valid identifier!!",
+        "Qualifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>DBClusterSnapshotNotFoundFault</Code>\n    <Message>DBClusterSnapshot not found: tfpreflight-absent-0123456789</Message>\n  </Error>\n  <RequestId>73b8e338-d916-4153-ae86-7a1e007a30ea</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "neptune/DescribeDBClusterSnapshots/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "DBClusterSnapshotIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Invalid cluster snapshot identifier:  !!not a valid identifier!!</Message>\n  </Error>\n  <RequestId>5f4a3881-2b15-478b-b332-2f3e0a1914b6</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "neptune/DescribeDBClusterSnapshots/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "DBClusterSnapshotIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>DBClusterSnapshotNotFoundFault</Code>\n    <Message>DBClusterSnapshot not found: tfpreflight-absent-0123456789</Message>\n  </Error>\n  <RequestId>02917ec6-ce38-49ef-a8ca-d5cb593e21ec</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "neptune/DescribeDBClusterSnapshots/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "DBClusterSnapshotIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Invalid cluster snapshot identifier:  !!not a valid identifier!!</Message>\n  </Error>\n  <RequestId>cab11d18-92f9-40f4-90bb-2f0db58de4e6</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "neptune/DescribeDBClusterSnapshots/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "DBClusterSnapshotIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>GlobalClusterNotFoundFault</Code>\n    <Message>Global cluster 'tfpreflight-absent-0123456789' not found</Message>\n  </Error>\n  <RequestId>6e31000f-397f-4244-87cb-cf15658d3f95</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "neptune/DescribeGlobalClusters/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "GlobalClusterIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Invalid global cluster identifier:  !!not a valid identifier!!</Message>\n  </Error>\n  <RequestId>dcefea23-667c-451e-9b0d-dcd6d0e7a69e</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "neptune/DescribeGlobalClusters/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "GlobalClusterIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>GlobalClusterNotFoundFault</Code>\n    <Message>Global cluster 'tfpreflight-absent-0123456789' not found</Message>\n  </Error>\n  <RequestId>ee50acba-8c89-4c80-af71-8e250f296d87</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "neptune/DescribeGlobalClusters/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "GlobalClusterIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Invalid global cluster identifier:  !!not a valid identifier!!</Message>\n  </Error>\n  <RequestId>177c0fd0-b041-4cef-af21-6f0ab4db68e3</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "neptune/DescribeGlobalClusters/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "GlobalClusterIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\n  \"message\" : \"No existing monitor found for account 123456789012 and monitorName tfpreflight-absent-0123456789.\"\n}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "label": "networkmonitor/GetMonitor/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "MonitorName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\n  \"message\" : \"1 validation error detected: Value '!!not a valid identifier!!' at 'monitorName' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z0-9_-]+\"\n}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "label": "networkmonitor/GetMonitor/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "MonitorName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\n  \"message\" : \"No existing monitor found for account 123456789012 and monitorName tfpreflight-absent-0123456789.\"\n}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "label": "networkmonitor/GetMonitor/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "MonitorName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\n  \"message\" : \"1 validation error detected: Value '!!not a valid identifier!!' at 'monitorName' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z0-9_-]+\"\n}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "label": "networkmonitor/GetMonitor/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "MonitorName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>DBProxyNotFoundFault</Code>\n    <Message>DBProxy 'tfpreflight-absent-0123456789' not found.</Message>\n  </Error>\n  <RequestId>904a44d5-7143-478c-871f-c04167254fbd</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeDBProxies/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "DBProxyName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ValidationError</Code>\n    <Message>1 validation error detected: Value '!!not a valid identifier!!' at 'dBProxyName' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z](?:-?[a-zA-Z0-9]+)*</Message>\n  </Error>\n  <RequestId>4b665977-cbef-4bd2-ba8f-b7f86872ab63</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeDBProxies/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "DBProxyName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>DBProxyNotFoundFault</Code>\n    <Message>DBProxy 'tfpreflight-absent-0123456789' not found.</Message>\n  </Error>\n  <RequestId>4ad59043-0b49-459d-9ce4-dca63cb8623c</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeDBProxies/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "DBProxyName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ValidationError</Code>\n    <Message>1 validation error detected: Value '!!not a valid identifier!!' at 'dBProxyName' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z](?:-?[a-zA-Z0-9]+)*</Message>\n  </Error>\n  <RequestId>3333d758-63da-4218-99a9-8a2bdef6dc39</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeDBProxies/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "DBProxyName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>DBShardGroupNotFound</Code>\n    <Message>DBShardGroup tfpreflight-absent-0123456789 not found.</Message>\n  </Error>\n  <RequestId>4f61b7f4-2947-451e-a98f-45cae8097005</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeDBShardGroups/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "DBShardGroupIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>1 validation error detected: Value '!!not a valid identifier!!' at 'dBShardGroupIdentifier' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z](?:-?[a-zA-Z0-9]+)*</Message>\n  </Error>\n  <RequestId>c869c80c-4e29-4204-8e20-c60b7011ba67</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeDBShardGroups/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "DBShardGroupIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>DBShardGroupNotFound</Code>\n    <Message>DBShardGroup tfpreflight-absent-0123456789 not found.</Message>\n  </Error>\n  <RequestId>8fcf5ecb-3ee4-4e80-8186-b2e55419324e</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeDBShardGroups/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "DBShardGroupIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>1 validation error detected: Value '!!not a valid identifier!!' at 'dBShardGroupIdentifier' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z](?:-?[a-zA-Z0-9]+)*</Message>\n  </Error>\n  <RequestId>18164f79-6ae5-4bdb-b3c1-0d9b0276571d</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeDBShardGroups/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "DBShardGroupIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>GlobalClusterNotFoundFault</Code>\n    <Message>Global cluster 'tfpreflight-absent-0123456789' not found</Message>\n  </Error>\n  <RequestId>23d7c79f-2705-41f9-b45b-59dc457a6bca</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeGlobalClusters/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "GlobalClusterIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Invalid global cluster identifier:  !!not a valid identifier!!</Message>\n  </Error>\n  <RequestId>85ae20c1-df0a-4804-97cb-cd1f5da5c3ee</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeGlobalClusters/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "GlobalClusterIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>GlobalClusterNotFoundFault</Code>\n    <Message>Global cluster 'tfpreflight-absent-0123456789' not found</Message>\n  </Error>\n  <RequestId>47096a3b-49a1-4f11-bbbd-4e9e7fc38f76</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeGlobalClusters/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "GlobalClusterIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Invalid global cluster identifier:  !!not a valid identifier!!</Message>\n  </Error>\n  <RequestId>76b964a2-562c-497c-9af4-2e43fe3c1849</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeGlobalClusters/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "GlobalClusterIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Invalid integration identifier: tfpreflight-absent-0123456789</Message>\n  </Error>\n  <RequestId>4cd14332-b1ce-4546-a13c-93f7cba22b1b</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeIntegrations/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "IntegrationIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Invalid integration identifier: !!not a valid identifier!!</Message>\n  </Error>\n  <RequestId>2e551c59-2dc3-4955-9b3f-b72883f6e9c6</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeIntegrations/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "IntegrationIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Invalid integration identifier: tfpreflight-absent-0123456789</Message>\n  </Error>\n  <RequestId>308f12dc-d8d0-424c-abf2-f1690e92e071</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeIntegrations/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "IntegrationIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Invalid integration identifier: !!not a valid identifier!!</Message>\n  </Error>\n  <RequestId>ef148ca4-d281-45df-8382-85f31cd16478</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeIntegrations/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "IntegrationIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>AuthenticationProfileNotFoundFault</Code>\n    <Message>The authentication profile does not exist. Check the name of the authentication profile and try the operation again.</Message>\n  </Error>\n  <RequestId>31d9035f-e755-4b29-a98b-a70cd5560406</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeAuthenticationProfiles/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "AuthenticationProfileName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ValidationError</Code>\n    <Message>1 validation error detected: Value '!!not a valid identifier!!' at 'authenticationProfileName' failed to satisfy constraint: Member must satisfy regular expression pattern: ^[a-zA-Z0-9\\-]+$</Message>\n  </Error>\n  <RequestId>115c1bd0-8e4e-4d16-bfb8-6a77b10d78b3</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeAuthenticationProfiles/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "AuthenticationProfileName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>AuthenticationProfileNotFoundFault</Code>\n    <Message>The authentication profile does not exist. Check the name of the authentication profile and try the operation again.</Message>\n  </Error>\n  <RequestId>3d3f860f-7fc4-4fe6-8bea-faa129bc11ed</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeAuthenticationProfiles/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "AuthenticationProfileName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>Throttling</Code>\n  </Error>\n  <RequestId>877c4c46-0edf-466f-ac10-b8f27b8e839e</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeAuthenticationProfiles/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "AuthenticationProfileName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>Throttling</Code>\n  </Error>\n  <RequestId>1ccfc213-0647-4a3d-b540-1b46e318f974</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeAuthenticationProfiles/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "AuthenticationProfileName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ValidationError</Code>\n    <Message>1 validation error detected: Value '!!not a valid identifier!!' at 'authenticationProfileName' failed to satisfy constraint: Member must satisfy regular expression pattern: ^[a-zA-Z0-9\\-]+$</Message>\n  </Error>\n  <RequestId>d769ade9-cd60-4991-b8b0-6da480990b47</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeAuthenticationProfiles/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "AuthenticationProfileName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ClusterSnapshotNotFound</Code>\n    <Message>Snapshot tfpreflight-absent-0123456789 not found.</Message>\n  </Error>\n  <RequestId>e6a5f7bf-e2a2-4831-a654-ef931c45cd25</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeClusterSnapshots/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "SnapshotIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ClusterSnapshotNotFound</Code>\n    <Message>Snapshot !!not a valid identifier!! not found.</Message>\n  </Error>\n  <RequestId>c0aaa689-7929-4239-87f7-05e5ec2b7e29</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeClusterSnapshots/malformed",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "SnapshotIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ClusterSnapshotNotFound</Code>\n    <Message>Snapshot tfpreflight-absent-0123456789 not found.</Message>\n  </Error>\n  <RequestId>a5f0a176-b45d-4a43-ac26-332d25c5865e</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeClusterSnapshots/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "SnapshotIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ClusterSnapshotNotFound</Code>\n    <Message>Snapshot !!not a valid identifier!! not found.</Message>\n  </Error>\n  <RequestId>8612b628-0cbb-4e18-91d2-8dd54d58f130</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeClusterSnapshots/malformed",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "SnapshotIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ClusterSubnetGroupNotFoundFault</Code>\n    <Message>Cluster Subnet group 'tfpreflight-absent-0123456789' not found.</Message>\n  </Error>\n  <RequestId>7d752661-2e79-4d63-8ee5-4da626717c91</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeClusterSubnetGroups/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ClusterSubnetGroupName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ClusterSubnetGroupNotFoundFault</Code>\n    <Message>Cluster Subnet group '!!not a valid identifier!!' not found.</Message>\n  </Error>\n  <RequestId>869deee6-3b3b-4e64-927e-50e1b7b5c372</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeClusterSubnetGroups/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ClusterSubnetGroupName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ClusterSubnetGroupNotFoundFault</Code>\n    <Message>Cluster Subnet group 'tfpreflight-absent-0123456789' not found.</Message>\n  </Error>\n  <RequestId>475408b7-e32e-40b8-9ca1-5a637862ccc1</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeClusterSubnetGroups/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "ClusterSubnetGroupName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ClusterSubnetGroupNotFoundFault</Code>\n    <Message>Cluster Subnet group '!!not a valid identifier!!' not found.</Message>\n  </Error>\n  <RequestId>e2852b10-89c1-460c-8c74-8fe32a9c86df</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeClusterSubnetGroups/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "ClusterSubnetGroupName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ClusterNotFound</Code>\n    <Message>Cluster tfpreflight-absent-0123456789 not found.</Message>\n  </Error>\n  <RequestId>798c1784-84fc-4dc8-99a6-71394e8d3894</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeClusters/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "ClusterIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>The parameter DBInstanceIdentifier is not a valid identifier. Identifiers must begin with a letter; must contain only ASCII letters, digits, and hyphens; and must not end with a hyphen or contain two consecutive hyphens.</Message>\n  </Error>\n  <RequestId>6c0b01b6-61b2-4186-8522-c460984fed3f</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeClusters/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ClusterIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ClusterNotFound</Code>\n    <Message>Cluster tfpreflight-absent-0123456789 not found.</Message>\n  </Error>\n  <RequestId>9c9caf15-f142-4cc8-bf04-4f2c944ed9ac</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeClusters/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "ClusterIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>The parameter DBInstanceIdentifier is not a valid identifier. Identifiers must begin with a letter; must contain only ASCII letters, digits, and hyphens; and must not end with a hyphen or contain two consecutive hyphens.</Message>\n  </Error>\n  <RequestId>74ee6896-1549-4599-a9eb-366f583005a0</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeClusters/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "ClusterIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>EndpointNotFound</Code>\n    <Message>Endpoint tfpreflight-absent-0123456789 can't be found</Message>\n  </Error>\n  <RequestId>e49b42ea-1723-41df-9d6e-ab14a8e09cd2</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeEndpointAccess/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "EndpointName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>EndpointNotFound</Code>\n    <Message>Endpoint !!not a valid identifier!! can't be found</Message>\n  </Error>\n  <RequestId>107c228c-52ee-4168-b829-af19ef65d2f0</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeEndpointAccess/malformed",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "EndpointName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>EndpointNotFound</Code>\n    <Message>Endpoint tfpreflight-absent-0123456789 can't be found</Message>\n  </Error>\n  <RequestId>f94578a5-ce13-4a77-9968-a62e603976c1</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeEndpointAccess/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "EndpointName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>EndpointNotFound</Code>\n    <Message>Endpoint !!not a valid identifier!! can't be found</Message>\n  </Error>\n  <RequestId>f5fdfcc9-2ce2-4da2-a4c7-0be69e7d5801</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeEndpointAccess/malformed",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "EndpointName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>HsmClientCertificateNotFoundFault</Code>\n    <Message>HSM client certificate 'tfpreflight-absent-0123456789' not found.</Message>\n  </Error>\n  <RequestId>9eeb3449-c9fb-4211-8886-75acd778c1c9</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeHsmClientCertificates/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "HsmClientCertificateIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>HsmClientCertificateNotFoundFault</Code>\n    <Message>HSM client certificate '!!not a valid identifier!!' not found.</Message>\n  </Error>\n  <RequestId>54f4d0e6-dbf2-4300-ae21-235620f57895</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeHsmClientCertificates/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "HsmClientCertificateIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>HsmClientCertificateNotFoundFault</Code>\n    <Message>HSM client certificate 'tfpreflight-absent-0123456789' not found.</Message>\n  </Error>\n  <RequestId>74c1706b-21bc-40c5-857a-b088429a2177</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeHsmClientCertificates/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "HsmClientCertificateIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>HsmClientCertificateNotFoundFault</Code>\n    <Message>HSM client certificate '!!not a valid identifier!!' not found.</Message>\n  </Error>\n  <RequestId>14c6ddff-f07a-4222-ab08-d52e6b587b86</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeHsmClientCertificates/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "HsmClientCertificateIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>HsmConfigurationNotFoundFault</Code>\n    <Message>HSM configuration 'tfpreflight-absent-0123456789' not found.</Message>\n  </Error>\n  <RequestId>b5126562-af2a-48f3-9033-070b18d17290</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeHsmConfigurations/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "HsmConfigurationIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>HsmConfigurationNotFoundFault</Code>\n    <Message>HSM configuration '!!not a valid identifier!!' not found.</Message>\n  </Error>\n  <RequestId>2185dbd2-3e73-42fe-b313-3e8c41450505</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeHsmConfigurations/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "HsmConfigurationIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>HsmConfigurationNotFoundFault</Code>\n    <Message>HSM configuration 'tfpreflight-absent-0123456789' not found.</Message>\n  </Error>\n  <RequestId>8daf5e7f-f5f7-4bb7-b275-57cff31a7cd8</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeHsmConfigurations/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "HsmConfigurationIdentifier": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>HsmConfigurationNotFoundFault</Code>\n    <Message>HSM configuration '!!not a valid identifier!!' not found.</Message>\n  </Error>\n  <RequestId>4685921f-c54a-4580-bad5-4ec7058e7586</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeHsmConfigurations/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "HsmConfigurationIdentifier": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>AccessDenied</Code>\n    <Message>User: arn:aws:sts::123456789012:assumed-role/AWSReservedSSO_AdministratorAccess_7761398cef8ec4b6/tfpreflight-admin is not authorized to perform: redshift:DescribeIntegrations on resource: arn:aws:redshift:us-east-1:123456789012:resource/tfpreflight-absent-0123456789</Message>\n  </Error>\n  <RequestId>e45d1491-0741-497f-a12e-6c9bece90340</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeIntegrations/missing",
+      "region": "us-east-1",
+      "status": 403,
+      "values": {
+        "IntegrationArn": "arn:aws:redshift:us-east-1:123456789012:resource/tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>AccessDenied</Code>\n    <Message>User: arn:aws:sts::123456789012:assumed-role/AWSReservedSSO_AdministratorAccess_7761398cef8ec4b6/tfpreflight-admin is not authorized to perform: redshift:DescribeIntegrations on resource: !!not a valid identifier!!</Message>\n  </Error>\n  <RequestId>4d7a2675-7087-40b9-95a5-c744306c599e</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeIntegrations/malformed",
+      "region": "us-east-1",
+      "status": 403,
+      "values": {
+        "IntegrationArn": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>AccessDenied</Code>\n    <Message>User: arn:aws:sts::123456789012:assumed-role/AWSReservedSSO_AdministratorAccess_7761398cef8ec4b6/tfpreflight-admin is not authorized to perform: redshift:DescribeIntegrations on resource: arn:aws:redshift:us-east-1:123456789012:resource/tfpreflight-absent-0123456789</Message>\n  </Error>\n  <RequestId>f5551e8c-ed43-4c1e-b527-8de320123453</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeIntegrations/missing",
+      "region": "eu-west-1",
+      "status": 403,
+      "values": {
+        "IntegrationArn": "arn:aws:redshift:us-east-1:123456789012:resource/tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>AccessDenied</Code>\n    <Message>User: arn:aws:sts::123456789012:assumed-role/AWSReservedSSO_AdministratorAccess_7761398cef8ec4b6/tfpreflight-admin is not authorized to perform: redshift:DescribeIntegrations on resource: !!not a valid identifier!!</Message>\n  </Error>\n  <RequestId>b6fef2c2-757c-4596-8443-329704d54f6d</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeIntegrations/malformed",
+      "region": "eu-west-1",
+      "status": 403,
+      "values": {
+        "IntegrationArn": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ScheduledActionNotFound</Code>\n    <Message>The scheduled action tfpreflight-absent-0123456789 was not found.</Message>\n  </Error>\n  <RequestId>c9136eab-d930-4125-9723-48dced74050b</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeScheduledActions/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ScheduledActionName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>The scheduled action name !!not a valid identifier!! is invalid.</Message>\n  </Error>\n  <RequestId>f8e17b92-6aef-47bc-a963-b760783cc4bb</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeScheduledActions/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ScheduledActionName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ScheduledActionNotFound</Code>\n    <Message>The scheduled action tfpreflight-absent-0123456789 was not found.</Message>\n  </Error>\n  <RequestId>acec3d04-f445-4cef-afc2-c40e0dff6a3c</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeScheduledActions/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "ScheduledActionName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>The scheduled action name !!not a valid identifier!! is invalid.</Message>\n  </Error>\n  <RequestId>01256538-7ff7-43a4-a051-c252d81f2167</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeScheduledActions/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "ScheduledActionName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>SnapshotCopyGrantNotFoundFault</Code>\n    <Message>Snapshot copy grant 'tfpreflight-absent-0123456789' not found.</Message>\n  </Error>\n  <RequestId>214a602a-d0e7-4bc6-8027-1af90ff74a97</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeSnapshotCopyGrants/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "SnapshotCopyGrantName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>SnapshotCopyGrantNotFoundFault</Code>\n    <Message>Snapshot copy grant '!!not a valid identifier!!' not found.</Message>\n  </Error>\n  <RequestId>93ed966c-c3ad-4cd6-804d-df55843377ca</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeSnapshotCopyGrants/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "SnapshotCopyGrantName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>SnapshotCopyGrantNotFoundFault</Code>\n    <Message>Snapshot copy grant 'tfpreflight-absent-0123456789' not found.</Message>\n  </Error>\n  <RequestId>05b7eae9-7539-4d19-af20-faaec1c0199d</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeSnapshotCopyGrants/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "SnapshotCopyGrantName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>SnapshotCopyGrantNotFoundFault</Code>\n    <Message>Snapshot copy grant '!!not a valid identifier!!' not found.</Message>\n  </Error>\n  <RequestId>1285d5c4-3d92-4b27-a7a7-878bbcb77a3c</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeSnapshotCopyGrants/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "SnapshotCopyGrantName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\n  \"message\" : \"Resource not found tfpreflight-absent-0123456789\",\n  \"resourceName\" : null,\n  \"resourceType\" : null\n}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "label": "rum/GetAppMonitor/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "Name": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\n  \"message\" : \"1 validation error detected: Value '!!not a valid identifier!!' at 'name' failed to satisfy constraint: Member must satisfy regular expression pattern: (?!\\\\.)[\\\\.\\\\-_#A-Za-z0-9]+\"\n}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "label": "rum/GetAppMonitor/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\n  \"message\" : \"Resource not found tfpreflight-absent-0123456789\",\n  \"resourceName\" : null,\n  \"resourceType\" : null\n}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "label": "rum/GetAppMonitor/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "Name": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\n  \"message\" : \"1 validation error detected: Value '!!not a valid identifier!!' at 'name' failed to satisfy constraint: Member must satisfy regular expression pattern: (?!\\\\.)[\\\\.\\\\-_#A-Za-z0-9]+\"\n}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "label": "rum/GetAppMonitor/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "Name": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"Resource not found tfpreflight-absent-0123456789\",\"resourceName\":null,\"resourceType\":null}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "label": "rum/ListRumMetricsDestinations/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "AppMonitorName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value '!!not a valid identifier!!' at 'appMonitorName' failed to satisfy constraint: Member must satisfy regular expression pattern: (?!\\\\.)[\\\\.\\\\-_#A-Za-z0-9]+\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "label": "rum/ListRumMetricsDestinations/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "AppMonitorName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"Resource not found tfpreflight-absent-0123456789\",\"resourceName\":null,\"resourceType\":null}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "label": "rum/ListRumMetricsDestinations/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "AppMonitorName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value '!!not a valid identifier!!' at 'appMonitorName' failed to satisfy constraint: Member must satisfy regular expression pattern: (?!\\\\.)[\\\\.\\\\-_#A-Za-z0-9]+\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "ValidationException"
+      },
+      "label": "rum/ListRumMetricsDestinations/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "AppMonitorName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value 'tfpreflight-absent-0123456789' at 'accessPointId' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:aws[-a-z]*:s3files:[0-9a-z-:]+:file-system/fs-[0-9a-f]{17,40}/access-point/fsap-[0-9a-f]{17,40}|fsap-[0-9a-f]{17,40})\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+      },
+      "label": "s3files/GetAccessPoint/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "AccessPointId": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value '!!not a valid identifier!!' at 'accessPointId' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:aws[-a-z]*:s3files:[0-9a-z-:]+:file-system/fs-[0-9a-f]{17,40}/access-point/fsap-[0-9a-f]{17,40}|fsap-[0-9a-f]{17,40})\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+      },
+      "label": "s3files/GetAccessPoint/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "AccessPointId": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value 'tfpreflight-absent-0123456789' at 'accessPointId' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:aws[-a-z]*:s3files:[0-9a-z-:]+:file-system/fs-[0-9a-f]{17,40}/access-point/fsap-[0-9a-f]{17,40}|fsap-[0-9a-f]{17,40})\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+      },
+      "label": "s3files/GetAccessPoint/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "AccessPointId": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value '!!not a valid identifier!!' at 'accessPointId' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:aws[-a-z]*:s3files:[0-9a-z-:]+:file-system/fs-[0-9a-f]{17,40}/access-point/fsap-[0-9a-f]{17,40}|fsap-[0-9a-f]{17,40})\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+      },
+      "label": "s3files/GetAccessPoint/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "AccessPointId": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value 'tfpreflight-absent-0123456789' at 'fileSystemId' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:aws[-a-z]*:s3files:[0-9a-z-:]+:file-system/fs-[0-9a-f]{17,40}|fs-[0-9a-f]{17,40})\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+      },
+      "label": "s3files/GetFileSystem/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "FileSystemId": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value '!!not a valid identifier!!' at 'fileSystemId' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:aws[-a-z]*:s3files:[0-9a-z-:]+:file-system/fs-[0-9a-f]{17,40}|fs-[0-9a-f]{17,40})\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+      },
+      "label": "s3files/GetFileSystem/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "FileSystemId": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value 'tfpreflight-absent-0123456789' at 'fileSystemId' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:aws[-a-z]*:s3files:[0-9a-z-:]+:file-system/fs-[0-9a-f]{17,40}|fs-[0-9a-f]{17,40})\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+      },
+      "label": "s3files/GetFileSystem/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "FileSystemId": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value '!!not a valid identifier!!' at 'fileSystemId' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:aws[-a-z]*:s3files:[0-9a-z-:]+:file-system/fs-[0-9a-f]{17,40}|fs-[0-9a-f]{17,40})\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+      },
+      "label": "s3files/GetFileSystem/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "FileSystemId": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value 'tfpreflight-absent-0123456789' at 'mountTargetId' failed to satisfy constraint: Member must satisfy regular expression pattern: fsmt-[0-9a-f]{17,40}\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+      },
+      "label": "s3files/GetMountTarget/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "MountTargetId": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value '!!not a valid identifier!!' at 'mountTargetId' failed to satisfy constraint: Member must satisfy regular expression pattern: fsmt-[0-9a-f]{17,40}\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+      },
+      "label": "s3files/GetMountTarget/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "MountTargetId": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value 'tfpreflight-absent-0123456789' at 'mountTargetId' failed to satisfy constraint: Member must satisfy regular expression pattern: fsmt-[0-9a-f]{17,40}\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+      },
+      "label": "s3files/GetMountTarget/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "MountTargetId": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value '!!not a valid identifier!!' at 'mountTargetId' failed to satisfy constraint: Member must satisfy regular expression pattern: fsmt-[0-9a-f]{17,40}\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+      },
+      "label": "s3files/GetMountTarget/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "MountTargetId": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value 'tfpreflight-absent-0123456789' at 'fileSystemId' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:aws[-a-z]*:s3files:[0-9a-z-:]+:file-system/fs-[0-9a-f]{17,40}|fs-[0-9a-f]{17,40})\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+      },
+      "label": "s3files/GetSynchronizationConfiguration/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "FileSystemId": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value '!!not a valid identifier!!' at 'fileSystemId' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:aws[-a-z]*:s3files:[0-9a-z-:]+:file-system/fs-[0-9a-f]{17,40}|fs-[0-9a-f]{17,40})\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+      },
+      "label": "s3files/GetSynchronizationConfiguration/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "FileSystemId": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value 'tfpreflight-absent-0123456789' at 'fileSystemId' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:aws[-a-z]*:s3files:[0-9a-z-:]+:file-system/fs-[0-9a-f]{17,40}|fs-[0-9a-f]{17,40})\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+      },
+      "label": "s3files/GetSynchronizationConfiguration/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "FileSystemId": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value '!!not a valid identifier!!' at 'fileSystemId' failed to satisfy constraint: Member must satisfy regular expression pattern: (arn:aws[-a-z]*:s3files:[0-9a-z-:]+:file-system/fs-[0-9a-f]{17,40}|fs-[0-9a-f]{17,40})\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ValidationException:http://internal.amazon.com/coral/com.amazon.coral.validate/"
+      },
+      "label": "s3files/GetSynchronizationConfiguration/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "FileSystemId": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://ses.amazonaws.com/doc/2010-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ConfigurationSetDoesNotExist</Code>\n    <Message>Configuration set &lt;tfpreflight-absent-0123456789&gt; does not exist.</Message>\n  </Error>\n  <RequestId>3dbf69d6-7991-42ef-b2a9-32acb3ca651c</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "ses/DescribeConfigurationSet/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ConfigurationSetName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://ses.amazonaws.com/doc/2010-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Invalid configuration set name &lt;!!not a valid identifier!!&gt;: only alphanumeric ASCII characters, '_', and '-' are allowed.</Message>\n  </Error>\n  <RequestId>87c08ec3-231e-43d6-a610-4182ba39ca39</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "ses/DescribeConfigurationSet/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ConfigurationSetName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://ses.amazonaws.com/doc/2010-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ConfigurationSetDoesNotExist</Code>\n    <Message>Configuration set &lt;tfpreflight-absent-0123456789&gt; does not exist.</Message>\n  </Error>\n  <RequestId>c7c18268-279a-45cb-b4d6-f2ef011dce2c</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "ses/DescribeConfigurationSet/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "ConfigurationSetName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://ses.amazonaws.com/doc/2010-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>InvalidParameterValue</Code>\n    <Message>Invalid configuration set name &lt;!!not a valid identifier!!&gt;: only alphanumeric ASCII characters, '_', and '-' are allowed.</Message>\n  </Error>\n  <RequestId>fb07c641-d126-491f-9744-483748e17125</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "ses/DescribeConfigurationSet/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "ConfigurationSetName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://ses.amazonaws.com/doc/2010-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>RuleSetDoesNotExist</Code>\n    <Message>Rule set does not exist: tfpreflight-absent-0123456789</Message>\n  </Error>\n  <RequestId>2cf728e5-7f3c-488e-8f02-4ae7f0cf87e1</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "ses/DescribeReceiptRuleSet/missing",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "RuleSetName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://ses.amazonaws.com/doc/2010-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ValidationError</Code>\n    <Message>1 validation error detected: Value at 'ruleSetName' failed to satisfy constraint: Member must satisfy regular expression pattern: ^[a-zA-Z0-9_.-]+$</Message>\n  </Error>\n  <RequestId>e7108239-24c2-4ef5-b3e0-3c10f2b66277</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "ses/DescribeReceiptRuleSet/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "RuleSetName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://ses.amazonaws.com/doc/2010-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>RuleSetDoesNotExist</Code>\n    <Message>Rule set does not exist: tfpreflight-absent-0123456789</Message>\n  </Error>\n  <RequestId>90d20add-8e52-4381-8a2a-a201a836b2aa</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "ses/DescribeReceiptRuleSet/missing",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "RuleSetName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://ses.amazonaws.com/doc/2010-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ValidationError</Code>\n    <Message>1 validation error detected: Value at 'ruleSetName' failed to satisfy constraint: Member must satisfy regular expression pattern: ^[a-zA-Z0-9_.-]+$</Message>\n  </Error>\n  <RequestId>58498cf6-5b8f-47bf-86e7-c38f49df320c</RequestId>\n</ErrorResponse>\n",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "ses/DescribeReceiptRuleSet/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "RuleSetName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"Configuration set <tfpreflight-absent-0123456789> does not exist.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "label": "sesv2/GetConfigurationSet/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "ConfigurationSetName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"Invalid configuration set name <!!not a valid identifier!!>: only alphanumeric ASCII characters, '_', and '-' are allowed.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "BadRequestException"
+      },
+      "label": "sesv2/GetConfigurationSet/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ConfigurationSetName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"Configuration set <tfpreflight-absent-0123456789> does not exist.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "label": "sesv2/GetConfigurationSet/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "ConfigurationSetName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"Invalid configuration set name <!!not a valid identifier!!>: only alphanumeric ASCII characters, '_', and '-' are allowed.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "BadRequestException"
+      },
+      "label": "sesv2/GetConfigurationSet/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "ConfigurationSetName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"List with name: tfpreflight-absent-0123456789 doesn't exist.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "label": "sesv2/GetContactList/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "ContactListName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"ContactListName can contain up to 64 characters. Only alphanumeric characters, underscores(_) and hyphens(-) are allowed.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "BadRequestException"
+      },
+      "label": "sesv2/GetContactList/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ContactListName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"List with name: tfpreflight-absent-0123456789 doesn't exist.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "label": "sesv2/GetContactList/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "ContactListName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"ContactListName can contain up to 64 characters. Only alphanumeric characters, underscores(_) and hyphens(-) are allowed.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "BadRequestException"
+      },
+      "label": "sesv2/GetContactList/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "ContactListName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"The requested pool <tfpreflight-absent-0123456789> does not exist.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "label": "sesv2/GetDedicatedIpPool/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "PoolName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"Pool names can contain lowercase letters, numbers, underscores (_) and hyphens (-). They can contain up to 64 characters.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "BadRequestException"
+      },
+      "label": "sesv2/GetDedicatedIpPool/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "PoolName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"The requested pool <tfpreflight-absent-0123456789> does not exist.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "label": "sesv2/GetDedicatedIpPool/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "PoolName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"Pool names can contain lowercase letters, numbers, underscores (_) and hyphens (-). They can contain up to 64 characters.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "BadRequestException"
+      },
+      "label": "sesv2/GetDedicatedIpPool/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "PoolName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"Email identity <tfpreflight-absent-0123456789> does not exist.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "label": "sesv2/GetEmailIdentity/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "EmailIdentity": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"Email identity <!!not a valid identifier!!> is invalid.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "BadRequestException"
+      },
+      "label": "sesv2/GetEmailIdentity/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "EmailIdentity": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":\"Email identity <tfpreflight-absent-0123456789> does not exist.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "label": "sesv2/GetEmailIdentity/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "EmailIdentity": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"Email identity <!!not a valid identifier!!> is invalid.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "BadRequestException"
+      },
+      "label": "sesv2/GetEmailIdentity/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "EmailIdentity": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":null}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "label": "sesv2/GetMultiRegionEndpoint/missing",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "EndpointName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value at 'endpointName' failed to satisfy constraint: Member must satisfy regular expression pattern: ^[\\\\w\\\\-_]+$\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "BadRequestException"
+      },
+      "label": "sesv2/GetMultiRegionEndpoint/malformed",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "EndpointName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"message\":null}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "label": "sesv2/GetMultiRegionEndpoint/missing",
+      "region": "eu-west-1",
+      "status": 404,
+      "values": {
+        "EndpointName": "tfpreflight-absent-0123456789"
+      }
+    },
+    {
+      "body": "{\"message\":\"1 validation error detected: Value at 'endpointName' failed to satisfy constraint: Member must satisfy regular expression pattern: ^[\\\\w\\\\-_]+$\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "BadRequestException"
+      },
+      "label": "sesv2/GetMultiRegionEndpoint/malformed",
+      "region": "eu-west-1",
+      "status": 400,
+      "values": {
+        "EndpointName": "!!not a valid identifier!!"
+      }
+    },
+    {
+      "body": "{\"Catalog\":{\"CatalogId\":\"123456789012\",\"CatalogIdentifier\":\"123456789012\",\"CatalogProperties\":{},\"CatalogType\":\"NATIVE\",\"CreateDatabaseDefaultPermissions\":[],\"CreateTableDefaultPermissions\":[],\"Description\":\"This is the Default Catalog.\",\"Name\":\"123456789012\",\"ResourceArn\":\"arn:aws:glue:us-east-1:123456789012:catalog\"}}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetCatalog/exists-built-in",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "CatalogId": "123456789012"
+      }
+    },
+    {
+      "body": "{\"keyspaceName\":\"system_schema\",\"replicationStrategy\":\"SINGLE_REGION\",\"resourceArn\":\"arn:aws:cassandra:us-east-1:123456789012:/keyspace/system_schema/\"}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "label": "keyspaces/GetKeyspace/exists-built-in",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "KeyspaceName": "system_schema"
+      }
+    },
+    {
+      "body": "{\"ApplianceArn\":null,\"BackupVaultArn\":\"arn:aws:backup:us-east-1:123456789012:backup-vault:tfpreflight-verify-1c4e2c98098d\",\"BackupVaultName\":\"tfpreflight-verify-1c4e2c98098d\",\"CreationDate\":1.791827476565E9,\"CreatorRequestId\":\"53a32cd6-2eb3-48e0-a201-36fbfbbb1112\",\"EncryptionKeyArn\":\"arn:aws:kms:us-east-1:123456789012:key/1544e82b-b2a8-4a18-bba9-66a1daa3d98e\",\"EncryptionKeyType\":null,\"LatestMpaApprovalTeamUpdate\":null,\"LockDate\":null,\"Locked\":false,\"MaxRetentionDays\":null,\"MinRetentionDays\":null,\"MpaApprovalTeamArn\":null,\"MpaSessionArn\":null,\"NumberOfRecoveryPoints\":0,\"SourceBackupVaultArn\":null,\"VaultState\":null,\"VaultType\":\"BACKUP_VAULT\"}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "label": "backup/DescribeBackupVault/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "BackupVaultName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"CreationTime\":1.791827476422E9,\"DeploymentStatus\":\"FAILED\",\"FrameworkArn\":\"arn:aws:backup:us-east-1:123456789012:framework:tfpreflight_verify_1c4e2c98098d-ae830b64-e118-47ce-8759-ab7919a49efa\",\"FrameworkControls\":[{\"ControlInputParameters\":[{\"ParameterName\":\"requiredRetentionDays\",\"ParameterValue\":\"35\"}],\"ControlName\":\"BACKUP_RECOVERY_POINT_MINIMUM_RETENTION_CHECK\",\"ControlScope\":null}],\"FrameworkDescription\":null,\"FrameworkName\":\"tfpreflight_verify_1c4e2c98098d\",\"FrameworkStatus\":\"INACTIVE\",\"IdempotencyToken\":null}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "label": "backup/DescribeFramework/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "FrameworkName": "tfpreflight_verify_1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"ReportPlan\":{\"CreationTime\":1.791827476423E9,\"DeploymentStatus\":\"COMPLETED\",\"LastAttemptedExecutionTime\":null,\"LastSuccessfulExecutionTime\":null,\"ReportDeliveryChannel\":{\"Formats\":[\"CSV\"],\"S3BucketName\":\"tfpreflight-verify-1c4e2c98098d-absent\",\"S3KeyPrefix\":null},\"ReportPlanArn\":\"arn:aws:backup:us-east-1:123456789012:report-plan:tfpreflight_verify_1c4e2c98098d-0157a7fa-67bc-4702-ade4-6abe35c93e8b\",\"ReportPlanDescription\":null,\"ReportPlanName\":\"tfpreflight_verify_1c4e2c98098d\",\"ReportSetting\":{\"Accounts\":[],\"FrameworkArns\":[],\"NumberOfFrameworks\":0,\"OrganizationUnits\":[],\"Regions\":[],\"ReportTemplate\":\"RESTORE_JOB_REPORT\"},\"ReportTiming\":{\"ReportFrequencyHours\":24,\"ReportStartHour\":0}}}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "label": "backup/DescribeReportPlan/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "ReportPlanName": "tfpreflight_verify_1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<DescribeGlobalClustersResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <DescribeGlobalClustersResult>\n    <GlobalClusters>\n      <GlobalClusterMember>\n        <EngineVersion>5.0.0</EngineVersion>\n        <GlobalClusterArn>arn:aws:rds::123456789012:global-cluster:tfpreflight-verify-1c4e2c98098d</GlobalClusterArn>\n        <StorageEncrypted>false</StorageEncrypted>\n        <GlobalClusterIdentifier>tfpreflight-verify-1c4e2c98098d</GlobalClusterIdentifier>\n        <DeletionProtection>false</DeletionProtection>\n        <TagList/>\n        <GlobalClusterResourceId>cluster-0f55a4b77e60c249</GlobalClusterResourceId>\n        <GlobalClusterMembers/>\n        <Engine>docdb</Engine>\n        <Status>available</Status>\n      </GlobalClusterMember>\n    </GlobalClusters>\n  </DescribeGlobalClustersResult>\n  <ResponseMetadata>\n    <RequestId>d95564f9-7b39-45ad-b323-780673189b32</RequestId>\n  </ResponseMetadata>\n</DescribeGlobalClustersResponse>\n",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "docdb/DescribeGlobalClusters/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "GlobalClusterIdentifier": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"pullThroughCacheRules\":[{\"createdAt\":1.791827474874E9,\"ecrRepositoryPrefix\":\"tfpv-1c4e2c98098d\",\"registryId\":\"123456789012\",\"upstreamRegistryUrl\":\"public.ecr.aws\"}]}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "ecr/DescribePullThroughCacheRules/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "EcrRepositoryPrefixes": "tfpv-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"repositories\":[{\"createdAt\":1.791827472977E9,\"encryptionConfiguration\":{\"encryptionType\":\"AES256\"},\"imageScanningConfiguration\":{\"scanOnPush\":false},\"imageTagMutability\":\"MUTABLE\",\"registryId\":\"123456789012\",\"repositoryArn\":\"arn:aws:ecr:us-east-1:123456789012:repository/tfpreflight-verify-1c4e2c98098d\",\"repositoryName\":\"tfpreflight-verify-1c4e2c98098d\",\"repositoryUri\":\"123456789012.dkr.ecr.us-east-1.amazonaws.com/tfpreflight-verify-1c4e2c98098d\"}]}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "ecr/DescribeRepositories/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "RepositoryNames": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<DescribeUserGroupsResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\">\n  <DescribeUserGroupsResult>\n    <UserGroups>\n      <member>\n        <UserGroupId>tfpreflight-verify-1c4e2c98098d</UserGroupId>\n        <MinimumEngineVersion>6.0</MinimumEngineVersion>\n        <ReplicationGroups/>\n        <Engine>redis</Engine>\n        <UserIds>\n          <member>tfpreflight-verify-1c4e2c98098d</member>\n        </UserIds>\n        <ServerlessCaches/>\n        <ARN>arn:aws:elasticache:us-east-1:123456789012:usergroup:tfpreflight-verify-1c4e2c98098d</ARN>\n        <Status>active</Status>\n      </member>\n    </UserGroups>\n  </DescribeUserGroupsResult>\n  <ResponseMetadata>\n    <RequestId>06027d63-6c3e-46a5-a60c-0347d3112394</RequestId>\n  </ResponseMetadata>\n</DescribeUserGroupsResponse>\n",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "elasticache/DescribeUserGroups/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "UserGroupId": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"Crawler\":{\"Classifiers\":[],\"CrawlElapsedTime\":0,\"CreationTime\":1.791827483E9,\"DatabaseName\":\"tfpreflight_verify_1c4e2c98098d\",\"LakeFormationConfiguration\":{\"AccountId\":\"\",\"UseLakeFormationCredentials\":false},\"LastUpdated\":1.791827483E9,\"LineageConfiguration\":{\"CrawlerLineageSettings\":\"DISABLE\"},\"Name\":\"tfpreflight-verify-1c4e2c98098d\",\"RecrawlPolicy\":{\"RecrawlBehavior\":\"CRAWL_EVERYTHING\"},\"Role\":\"tfpreflight-verify-1c4e2c98098d-glue\",\"SchemaChangePolicy\":{\"DeleteBehavior\":\"DEPRECATE_IN_DATABASE\",\"UpdateBehavior\":\"UPDATE_IN_DATABASE\"},\"State\":\"READY\",\"TableProfilingConfiguration\":{\"CollectTableStatistics\":false},\"Targets\":{\"CatalogTargets\":[],\"DeltaTargets\":[],\"DynamoDBTargets\":[],\"HudiTargets\":[],\"IcebergTargets\":[],\"JdbcTargets\":[],\"MongoDBTargets\":[],\"RestCatalogTargets\":[],\"S3Targets\":[{\"Exclusions\":[],\"Path\":\"s3://tfpreflight-verify-1c4e2c98098d/data/\"}]},\"Version\":1}}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetCrawler/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "Name": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"CreatedOn\":1.791827476396E9,\"Identifier\":\"dqruleset-574cdcb8e811446bbc2a6d7532fc5dfa\",\"LastModifiedOn\":1.791827476396E9,\"Name\":\"tfpreflight-verify-1c4e2c98098d\",\"Ruleset\":\"Rules = [ RowCount > 0 ]\",\"TargetTable\":{\"DatabaseName\":\"tfpreflight_verify_1c4e2c98098d\",\"TableName\":\"t\"}}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetDataQualityRuleset/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "Name": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"Job\":{\"AllocatedCapacity\":10,\"Command\":{\"Name\":\"glueetl\",\"PythonVersion\":\"2\",\"ScriptLocation\":\"s3://tfpreflight-verify-1c4e2c98098d-absent/script.py\"},\"CreatedOn\":1.791827475049E9,\"ExecutionProperty\":{\"MaxConcurrentRuns\":1},\"GlueVersion\":\"6.0\",\"JobMode\":\"SCRIPT\",\"JobRunQueuingEnabled\":false,\"LastModifiedOn\":1.791827475049E9,\"MaxCapacity\":10.0,\"MaxRetries\":0,\"Name\":\"tfpreflight-verify-1c4e2c98098d\",\"Role\":\"arn:aws:iam::123456789012:role/tfpreflight-verify-1c4e2c98098d-glue\",\"Timeout\":480}}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetJob/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "JobName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"SecurityConfiguration\":{\"CreatedTimeStamp\":1.79182747068E9,\"EncryptionConfiguration\":{\"CloudWatchEncryption\":{\"CloudWatchEncryptionMode\":\"DISABLED\"},\"EnforceJdbcSsl\":false,\"JobBookmarksEncryption\":{\"JobBookmarksEncryptionMode\":\"DISABLED\"},\"S3Encryption\":[{\"S3EncryptionMode\":\"DISABLED\"}]},\"Name\":\"tfpreflight-verify-1c4e2c98098d\"}}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetSecurityConfiguration/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "Name": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"Trigger\":{\"Actions\":[{\"JobName\":\"tfpreflight-verify-1c4e2c98098d\"}],\"Name\":\"tfpreflight-verify-1c4e2c98098d\",\"State\":\"CREATED\",\"Type\":\"ON_DEMAND\",\"WorkflowName\":\"tfpreflight-verify-1c4e2c98098d\"}}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetTrigger/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "Name": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"Workflow\":{\"CreatedOn\":1.791827470666E9,\"LastModifiedOn\":1.791827470666E9,\"LastRun\":{\"Name\":\"tfpreflight-verify-1c4e2c98098d\",\"StartedOn\":1.79182747659E9,\"Statistics\":{\"ErroredActions\":0,\"FailedActions\":0,\"RunningActions\":1,\"StoppedActions\":0,\"SucceededActions\":0,\"TimeoutActions\":0,\"TotalActions\":1,\"WaitingActions\":0},\"Status\":\"RUNNING\",\"WorkflowRunId\":\"wr_f1b5b919a82a6fe3f9a830f799056ae8cc3be561d7d003cfb12fdb9185ceda46\",\"WorkflowRunProperties\":{}},\"Name\":\"tfpreflight-verify-1c4e2c98098d\"}}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetWorkflow/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "Name": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<GetGroupResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <GetGroupResult>\n    <IsTruncated>false</IsTruncated>\n    <Users/>\n    <Group>\n      <Path>/</Path>\n      <GroupName>tfpreflight-verify-1c4e2c98098d</GroupName>\n      <GroupId>AGPAQMKXI66BGWX62LJHC</GroupId>\n      <Arn>arn:aws:iam::123456789012:group/tfpreflight-verify-1c4e2c98098d</Arn>\n      <CreateDate>2026-10-12T17:51:12Z</CreateDate>\n    </Group>\n  </GetGroupResult>\n  <ResponseMetadata>\n    <RequestId>282a97b2-6b58-43e2-b600-1f1cf38a1cd5</RequestId>\n  </ResponseMetadata>\n</GetGroupResponse>\n",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "iam/GetGroup/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "GroupName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<GetUserResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <GetUserResult>\n    <User>\n      <Path>/</Path>\n      <UserName>tfpreflight-verify-1c4e2c98098d</UserName>\n      <Arn>arn:aws:iam::123456789012:user/tfpreflight-verify-1c4e2c98098d</Arn>\n      <UserId>AIDAQMKXI66BFUO5HL3JY</UserId>\n      <CreateDate>2026-10-12T17:51:14Z</CreateDate>\n    </User>\n  </GetUserResult>\n  <ResponseMetadata>\n    <RequestId>493ad53f-e0d0-4258-bff3-99a544bf21e4</RequestId>\n  </ResponseMetadata>\n</GetUserResponse>\n",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "iam/GetUser/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "UserName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"keyspaceName\":\"tfpreflight_verify_1c4e2c98098d\",\"replicationStrategy\":\"SINGLE_REGION\",\"resourceArn\":\"arn:aws:cassandra:us-east-1:123456789012:/keyspace/tfpreflight_verify_1c4e2c98098d/\"}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "label": "keyspaces/GetKeyspace/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "KeyspaceName": "tfpreflight_verify_1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<DescribeGlobalClustersResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <DescribeGlobalClustersResult>\n    <GlobalClusters>\n      <GlobalClusterMember>\n        <EngineVersion>1.4.8.0</EngineVersion>\n        <GlobalClusterArn>arn:aws:rds::123456789012:global-cluster:tfpreflight-verify-1c4e2c98098d-n</GlobalClusterArn>\n        <StorageEncrypted>false</StorageEncrypted>\n        <GlobalClusterIdentifier>tfpreflight-verify-1c4e2c98098d-n</GlobalClusterIdentifier>\n        <DeletionProtection>false</DeletionProtection>\n        <TagList/>\n        <GlobalClusterResourceId>cluster-9877dff1cbc6e615</GlobalClusterResourceId>\n        <GlobalClusterMembers/>\n        <Engine>neptune</Engine>\n        <Status>available</Status>\n      </GlobalClusterMember>\n    </GlobalClusters>\n  </DescribeGlobalClustersResult>\n  <ResponseMetadata>\n    <RequestId>0cefd5a8-a07c-4aac-9db5-88a1d2ae42d8</RequestId>\n  </ResponseMetadata>\n</DescribeGlobalClustersResponse>\n",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "neptune/DescribeGlobalClusters/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "GlobalClusterIdentifier": "tfpreflight-verify-1c4e2c98098d-n"
+      }
+    },
+    {
+      "body": "<DescribeGlobalClustersResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <DescribeGlobalClustersResult>\n    <GlobalClusters>\n      <GlobalClusterMember>\n        <EngineVersion>18.6</EngineVersion>\n        <GlobalClusterArn>arn:aws:rds::123456789012:global-cluster:tfpreflight-verify-1c4e2c98098d-r</GlobalClusterArn>\n        <StorageEncryptionType>sse-rds</StorageEncryptionType>\n        <StorageEncrypted>false</StorageEncrypted>\n        <GlobalClusterIdentifier>tfpreflight-verify-1c4e2c98098d-r</GlobalClusterIdentifier>\n        <DeletionProtection>false</DeletionProtection>\n        <TagList/>\n        <GlobalClusterResourceId>cluster-edce0fec838ea3c0</GlobalClusterResourceId>\n        <Endpoint>tfpreflight-verify-1c4e2c98098d-r.global-g19x5pd9c76v.global.rds.amazonaws.com</Endpoint>\n        <GlobalClusterMembers/>\n        <Engine>aurora-postgresql</Engine>\n        <EngineLifecycleSupport>open-source-rds-extended-support</EngineLifecycleSupport>\n        <Status>available</Status>\n      </GlobalClusterMember>\n    </GlobalClusters>\n  </DescribeGlobalClustersResult>\n  <ResponseMetadata>\n    <RequestId>541702ed-cc27-4acd-853f-bf3b7134a2c4</RequestId>\n  </ResponseMetadata>\n</DescribeGlobalClustersResponse>\n",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeGlobalClusters/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "GlobalClusterIdentifier": "tfpreflight-verify-1c4e2c98098d-r"
+      }
+    },
+    {
+      "body": "<DescribeAuthenticationProfilesResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <DescribeAuthenticationProfilesResult>\n    <AuthenticationProfiles>\n      <member>\n        <AuthenticationProfileName>tfpreflight-verify-1c4e2c98098d</AuthenticationProfileName>\n        <AuthenticationProfileContent>{&quot;AllowDBUserOverride&quot;:&quot;1&quot;}</AuthenticationProfileContent>\n      </member>\n    </AuthenticationProfiles>\n  </DescribeAuthenticationProfilesResult>\n  <ResponseMetadata>\n    <RequestId>3ea20e44-1067-4187-98a9-c9877f952063</RequestId>\n  </ResponseMetadata>\n</DescribeAuthenticationProfilesResponse>\n",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeAuthenticationProfiles/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "AuthenticationProfileName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<DescribeClusterSubnetGroupsResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <DescribeClusterSubnetGroupsResult>\n    <ClusterSubnetGroups>\n      <ClusterSubnetGroup>\n        <VpcId>vpc-0667df67c2b464191</VpcId>\n        <Description>Managed by Terraform</Description>\n        <Subnets>\n          <Subnet>\n            <SubnetIdentifier>subnet-0159577dcb68d7a29</SubnetIdentifier>\n            <SubnetStatus>Active</SubnetStatus>\n            <SubnetAvailabilityZone>\n              <Name>us-east-1a</Name>\n            </SubnetAvailabilityZone>\n          </Subnet>\n          <Subnet>\n            <SubnetIdentifier>subnet-09670e7668b6e8f71</SubnetIdentifier>\n            <SubnetStatus>Active</SubnetStatus>\n            <SubnetAvailabilityZone>\n              <Name>us-east-1c</Name>\n            </SubnetAvailabilityZone>\n          </Subnet>\n          <Subnet>\n            <SubnetIdentifier>subnet-055af3519264084ca</SubnetIdentifier>\n            <SubnetStatus>Active</SubnetStatus>\n            <SubnetAvailabilityZone>\n              <Name>us-east-1f</Name>\n            </SubnetAvailabilityZone>\n          </Subnet>\n          <Subnet>\n            <SubnetIdentifier>subnet-0f5d2514ba86af62e</SubnetIdentifier>\n            <SubnetStatus>Active</SubnetStatus>\n            <SubnetAvailabilityZone>\n              <Name>us-east-1b</Name>\n            </SubnetAvailabilityZone>\n          </Subnet>\n          <Subnet>\n            <SubnetIdentifier>subnet-054f1af8e146efc0f</SubnetIdentifier>\n            <SubnetStatus>Active</SubnetStatus>\n            <SubnetAvailabilityZone>\n              <Name>us-east-1e</Name>\n            </SubnetAvailabilityZone>\n          </Subnet>\n          <Subnet>\n            <SubnetIdentifier>subnet-0a5c60c597a9b3a33</SubnetIdentifier>\n            <SubnetStatus>Active</SubnetStatus>\n            <SubnetAvailabilityZone>\n              <Name>us-east-1d</Name>\n            </SubnetAvailabilityZone>\n          </Subnet>\n        </Subnets>\n        <SupportedClusterIpAddressTypes>\n          <item>ipv4</item>\n        </SupportedClusterIpAddressTypes>\n        <SubnetGroupStatus>Complete</SubnetGroupStatus>\n        <ClusterSubnetGroupName>tfpreflight-verify-1c4e2c98098d</ClusterSubnetGroupName>\n        <Tags/>\n      </ClusterSubnetGroup>\n    </ClusterSubnetGroups>\n  </DescribeClusterSubnetGroupsResult>\n  <ResponseMetadata>\n    <RequestId>1ab17af0-b9b2-41fb-80ee-1af9b56d966b</RequestId>\n  </ResponseMetadata>\n</DescribeClusterSubnetGroupsResponse>\n",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeClusterSubnetGroups/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "ClusterSubnetGroupName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<DescribeHsmClientCertificatesResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <DescribeHsmClientCertificatesResult>\n    <HsmClientCertificates>\n      <HsmClientCertificate>\n        <HsmClientCertificatePublicKey>-----BEGIN CERTIFICATE-----\nMIIDbzCCAlegAwIBAgIBADANBgkqhkiG9w0BAQsFADB7MQswCQYDVQQGEwJDQTEQ\nMA4GA1UECBMHT250YXJpbzEPMA0GA1UEBxMGT3R0YXdhMRMwEQYDVQQKEwpNeSBj\nb21wYW55MTQwMgYDVQQDEyswMjY0ODk3MTQ1NjJ0ZnByZWZsaWdodC12ZXJpZnkt\nMWM0ZTJjOTgwOThkMB4XDTI2MTAxMTE3NTExM1oXDTM2MTAwOTE3NTExM1owezEL\nMAkGA1UEBhMCQ0ExEDAOBgNVBAgTB09udGFyaW8xDzANBgNVBAcTBk90dGF3YTET\nMBEGA1UEChMKTXkgY29tcGFueTE0MDIGA1UEAxMrMDI2NDg5NzE0NTYydGZwcmVm\nbGlnaHQtdmVyaWZ5LTFjNGUyYzk4MDk4ZDCCASIwDQYJKoZIhvcNAQEBBQADggEP\nADCCAQoCggEBAJoEf4A1bWBHVhoRmC8A3My8zF5/abjrQ77YbwYsY3GMSzTmOL/p\nlGzgAnifMgSnN+1sRlEOJT7PaUxXFayoQqTnBKPG5ypkQbz+rnacacPRHdvRGNKU\nQMvxdSl7SQNzird9hzCVm2TNtWTrD6gsNCvGshtiAluOgXvdGRteGCdRNEYfxK0w\ni7a+N4TDfI9jWtcH8GHC76h5RX7uaLFCQ7s4rGMIz9775EZzAJRxK3egXNgtNyfR\n8rM7y5gvKoeNbzGmrx4h5YA2Dukj/Xch90RnTxLJWGlqWoYCUi5EJygMPlGNQ+Ta\ncSxCTGwXLEJKdA9JMs8XvEb9jn9BDJyyH5MCAwEAATANBgkqhkiG9w0BAQsFAAOC\nAQEAeIUyz6cZrpADrqbfUqtY0gaGj3X+shr6BMx6whm5cNoi/BhS3St6NIv1PHNr\ndiWrouysiqLVquOmO9fOdzT+N9qGmujlEvledZCOYgwzksSCUg2Dcm00rVzPMGO2\n6K578RLJ+uNmeLf1U8Y8kLxO2e16IUoexgC6tDNyUhZ2lXVk36/QRc0LuSg8aS7u\nQ8QH14bwKnNLbAllEBc0cvpNkNiCA3p69I2TNLT9XHjWJQXcy3gGT9VCMlhmODpu\nDGLj3O+QFlglI88+NEUw0f2j/UZuBFSocBFragMKIGw0Xkz51NoYezeu/8rgLgcW\nWohIMOxu1loWXAXFcpvs/ASyzw==\n-----END CERTIFICATE-----\n</HsmClientCertificatePublicKey>\n        <HsmClientCertificateIdentifier>tfpreflight-verify-1c4e2c98098d</HsmClientCertificateIdentifier>\n        <Tags/>\n      </HsmClientCertificate>\n    </HsmClientCertificates>\n  </DescribeHsmClientCertificatesResult>\n  <ResponseMetadata>\n    <RequestId>aae81208-1c8b-4bd4-8feb-100c977e443e</RequestId>\n  </ResponseMetadata>\n</DescribeHsmClientCertificatesResponse>\n",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeHsmClientCertificates/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "HsmClientCertificateIdentifier": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\n  \"AppMonitor\" : {\n    \"AppMonitorConfiguration\" : {\n      \"AllowCookies\" : null,\n      \"EnableXRay\" : null,\n      \"ExcludedPages\" : null,\n      \"FavoritePages\" : null,\n      \"GuestRoleArn\" : null,\n      \"IdentityPoolId\" : null,\n      \"IncludedPages\" : null,\n      \"SessionSampleRate\" : 0.1,\n      \"Telemetries\" : null\n    },\n    \"Created\" : \"2026-10-12T17:51:11.084Z\",\n    \"CustomEvents\" : {\n      \"Status\" : \"DISABLED\"\n    },\n    \"DataStorage\" : {\n      \"CwLog\" : {\n        \"CwLogEnabled\" : false,\n        \"CwLogGroup\" : null\n      }\n    },\n    \"DeobfuscationConfiguration\" : {\n      \"JavaScriptSourceMaps\" : {\n        \"S3Uri\" : null,\n        \"Status\" : \"DISABLED\"\n      }\n    },\n    \"Domain\" : \"tfpreflight-verify-1c4e2c98098d.example.com\",\n    \"DomainList\" : null,\n    \"Id\" : \"e740411e-5d42-4034-9346-1379b7f94468\",\n    \"LastModified\" : null,\n    \"Name\" : \"tfpreflight-verify-1c4e2c98098d\",\n    \"Platform\" : \"Web\",\n    \"State\" : \"CREATED\",\n    \"Tags\" : { }\n  }\n}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "rum/GetAppMonitor/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "Name": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"Destinations\":[],\"NextToken\":null}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "rum/ListRumMetricsDestinations/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "AppMonitorName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<DescribeConfigurationSetResponse xmlns=\"http://ses.amazonaws.com/doc/2010-12-01/\">\n  <DescribeConfigurationSetResult>\n    <ConfigurationSet>\n      <Name>tfpreflight-verify-1c4e2c98098d</Name>\n    </ConfigurationSet>\n  </DescribeConfigurationSetResult>\n  <ResponseMetadata>\n    <RequestId>132f86b0-8fef-444f-ba70-09f402529048</RequestId>\n  </ResponseMetadata>\n</DescribeConfigurationSetResponse>\n",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "ses/DescribeConfigurationSet/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "ConfigurationSetName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<DescribeReceiptRuleSetResponse xmlns=\"http://ses.amazonaws.com/doc/2010-12-01/\">\n  <DescribeReceiptRuleSetResult>\n    <Metadata>\n      <CreatedTimestamp>2026-10-12T17:51:13.902Z</CreatedTimestamp>\n      <Name>tfpreflight-verify-1c4e2c98098d</Name>\n    </Metadata>\n    <Rules/>\n  </DescribeReceiptRuleSetResult>\n  <ResponseMetadata>\n    <RequestId>008b74e3-4e44-42a6-8956-d1980dcaefa9</RequestId>\n  </ResponseMetadata>\n</DescribeReceiptRuleSetResponse>\n",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "ses/DescribeReceiptRuleSet/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "RuleSetName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"ArchivingOptions\":null,\"ConfigurationSetName\":\"tfpreflight-verify-1c4e2c98098d-v2\",\"DeliveryOptions\":null,\"MessageSecurityOptions\":null,\"ReputationOptions\":{\"LastFreshStart\":null,\"ReputationMetricsEnabled\":true},\"SendingOptions\":{\"SendingEnabled\":true},\"SuppressionOptions\":null,\"Tags\":[],\"TrackingOptions\":null,\"VdmOptions\":null}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "sesv2/GetConfigurationSet/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "ConfigurationSetName": "tfpreflight-verify-1c4e2c98098d-v2"
+      }
+    },
+    {
+      "body": "{\"ContactListName\":\"tfpreflight-verify-1c4e2c98098d\",\"CreatedTimestamp\":1.791827474015E9,\"Description\":null,\"LastUpdatedTimestamp\":1.791827474015E9,\"Tags\":[],\"Topics\":null}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "sesv2/GetContactList/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "ContactListName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"ConfigurationSetName\":null,\"DkimAttributes\":{\"CurrentSigningKeyLength\":\"RSA_2048_BIT\",\"LastKeyGenerationTimestamp\":1.791827472013E9,\"NextSigningKeyLength\":\"RSA_2048_BIT\",\"SigningAttributesOrigin\":\"AWS_SES\",\"SigningEnabled\":true,\"SigningHostedZone\":\"dkim.amazonses.com\",\"Status\":\"PENDING\",\"Tokens\":[\"2ftt7nzepqqxkglsgnhjuiy2ztsxp7ul\",\"vqa75hlmklv5ymftbv4xw4yerykor24f\",\"tmlitsredjlw7vrdkuwjqjp6j34a7f5y\"]},\"FeedbackForwardingStatus\":true,\"IdentityType\":\"DOMAIN\",\"MailFromAttributes\":{\"BehaviorOnMxFailure\":\"USE_DEFAULT_VALUE\",\"MailFromDomain\":null,\"MailFromDomainStatus\":null},\"Policies\":{},\"Tags\":[],\"VdmAttributes\":null,\"VerificationInfo\":{\"ErrorType\":\"TYPE_NOT_FOUND\",\"LastCheckedTimestamp\":1.79182753234E9,\"LastSuccessTimestamp\":null,\"SOARecord\":null},\"VerificationStatus\":\"PENDING\",\"VerifiedForSendingStatus\":false}",
+      "expected": "exists",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "sesv2/GetEmailIdentity/exists",
+      "region": "us-east-1",
+      "status": 200,
+      "values": {
+        "EmailIdentity": "tfpreflight-verify-1c4e2c98098d.example.com"
+      }
+    },
+    {
+      "body": "{\"Message\":\"Insufficient privileges to perform this action.\"}",
+      "expected": "unknown",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "AccessDeniedException"
+      },
+      "label": "backup/DescribeBackupVault/after-destroy",
+      "region": "us-east-1",
+      "status": 403,
+      "values": {
+        "BackupVaultName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"Code\":null,\"Context\":null,\"Message\":\"Framework tfpreflight_verify_1c4e2c98098d not found in account 123456789012.\",\"Type\":null}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException:http://internal.amazon.com/coral/com.amazonaws.services.cryo/"
+      },
+      "label": "backup/DescribeFramework/after-destroy",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "FrameworkName": "tfpreflight_verify_1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"Code\":null,\"Context\":null,\"Message\":\"Report plan tfpreflight_verify_1c4e2c98098d not found in account 123456789012.\",\"Type\":null}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Amzn-Errortype": "ResourceNotFoundException:http://internal.amazon.com/coral/com.amazonaws.services.cryo/"
+      },
+      "label": "backup/DescribeReportPlan/after-destroy",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ReportPlanName": "tfpreflight_verify_1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>GlobalClusterNotFoundFault</Code>\n    <Message>Global cluster 'tfpreflight-verify-1c4e2c98098d' not found</Message>\n  </Error>\n  <RequestId>d2f67f7d-01ec-4333-9968-1159c972f027</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "docdb/DescribeGlobalClusters/after-destroy",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "GlobalClusterIdentifier": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"__type\":\"PullThroughCacheRuleNotFoundException\",\"message\":\"A pull-through cache rule with repository prefix 'tfpv-1c4e2c98098d' does not exist in the registry with id '123456789012'\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "ecr/DescribePullThroughCacheRules/after-destroy",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "EcrRepositoryPrefixes": "tfpv-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"__type\":\"RepositoryNotFoundException\",\"message\":\"The repository with name 'tfpreflight-verify-1c4e2c98098d' does not exist in the registry with id '123456789012'\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "ecr/DescribeRepositories/after-destroy",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "RepositoryNames": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>UserGroupNotFound</Code>\n    <Message>User group tfpreflight-verify-1c4e2c98098d not found.</Message>\n  </Error>\n  <RequestId>8d275146-0f09-4479-9178-c2cbcf7ab951</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "elasticache/DescribeUserGroups/after-destroy",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "UserGroupId": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Crawler entry with name tfpreflight-verify-1c4e2c98098d does not exist\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetCrawler/after-destroy",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Cannot find Data Quality Ruleset in account 123456789012 with name tfpreflight-verify-1c4e2c98098d\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetDataQualityRuleset/after-destroy",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Job not found.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetJob/after-destroy",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "JobName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetSecurityConfiguration/after-destroy",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Trigger not found.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetTrigger/after-destroy",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"__type\":\"EntityNotFoundException\",\"Message\":\"Entity not found\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1"
+      },
+      "label": "glue/GetWorkflow/after-destroy",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "Name": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>NoSuchEntity</Code>\n    <Message>The group with name tfpreflight-verify-1c4e2c98098d cannot be found.</Message>\n  </Error>\n  <RequestId>90fa2936-569a-4504-b5a4-177d27a51c7e</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "iam/GetGroup/after-destroy",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "GroupName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>NoSuchEntity</Code>\n    <Message>The user with name tfpreflight-verify-1c4e2c98098d cannot be found.</Message>\n  </Error>\n  <RequestId>8a5280df-1a4d-491a-b833-fcd761037f40</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "iam/GetUser/after-destroy",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "UserName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"__type\":\"com.amazon.helenuscqlheadend#ResourceNotFoundException\",\"message\":\"Keyspace tfpreflight_verify_1c4e2c98098d does not exist\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.0"
+      },
+      "label": "keyspaces/GetKeyspace/after-destroy",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "KeyspaceName": "tfpreflight_verify_1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>GlobalClusterNotFoundFault</Code>\n    <Message>Global cluster 'tfpreflight-verify-1c4e2c98098d-n' not found</Message>\n  </Error>\n  <RequestId>24ebc751-63a4-45ff-91f7-aacf749ab738</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "neptune/DescribeGlobalClusters/after-destroy",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "GlobalClusterIdentifier": "tfpreflight-verify-1c4e2c98098d-n"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://rds.amazonaws.com/doc/2014-10-31/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>GlobalClusterNotFoundFault</Code>\n    <Message>Global cluster 'tfpreflight-verify-1c4e2c98098d-r' not found</Message>\n  </Error>\n  <RequestId>5ceb95f6-1342-42f2-a862-142befef3576</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "rds/DescribeGlobalClusters/after-destroy",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "GlobalClusterIdentifier": "tfpreflight-verify-1c4e2c98098d-r"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>AuthenticationProfileNotFoundFault</Code>\n    <Message>The authentication profile does not exist. Check the name of the authentication profile and try the operation again.</Message>\n  </Error>\n  <RequestId>66dbfed1-5f21-4c48-920c-9463be6f9948</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeAuthenticationProfiles/after-destroy",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "AuthenticationProfileName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ClusterSubnetGroupNotFoundFault</Code>\n    <Message>Cluster Subnet group 'tfpreflight-verify-1c4e2c98098d' not found.</Message>\n  </Error>\n  <RequestId>a2ea537c-ba1a-4a14-ae83-1a92a29d26bb</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeClusterSubnetGroups/after-destroy",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ClusterSubnetGroupName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>HsmClientCertificateNotFoundFault</Code>\n    <Message>HSM client certificate 'tfpreflight-verify-1c4e2c98098d' not found.</Message>\n  </Error>\n  <RequestId>d610b635-fc05-4724-8a48-93d0949c9446</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "redshift/DescribeHsmClientCertificates/after-destroy",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "HsmClientCertificateIdentifier": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\n  \"message\" : \"Resource not found tfpreflight-verify-1c4e2c98098d\",\n  \"resourceName\" : null,\n  \"resourceType\" : null\n}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "label": "rum/GetAppMonitor/after-destroy",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "Name": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"message\":\"Resource not found tfpreflight-verify-1c4e2c98098d\",\"resourceName\":null,\"resourceType\":null}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "ResourceNotFoundException"
+      },
+      "label": "rum/ListRumMetricsDestinations/after-destroy",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "AppMonitorName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://ses.amazonaws.com/doc/2010-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>ConfigurationSetDoesNotExist</Code>\n    <Message>Configuration set &lt;tfpreflight-verify-1c4e2c98098d&gt; does not exist.</Message>\n  </Error>\n  <RequestId>9ebe89d7-1eea-4b3d-9d58-b472b9e84224</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "ses/DescribeConfigurationSet/after-destroy",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "ConfigurationSetName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "<ErrorResponse xmlns=\"http://ses.amazonaws.com/doc/2010-12-01/\">\n  <Error>\n    <Type>Sender</Type>\n    <Code>RuleSetDoesNotExist</Code>\n    <Message>Rule set does not exist: tfpreflight-verify-1c4e2c98098d</Message>\n  </Error>\n  <RequestId>fc55f412-6050-4afe-951e-efb91146a654</RequestId>\n</ErrorResponse>\n",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "text/xml"
+      },
+      "label": "ses/DescribeReceiptRuleSet/after-destroy",
+      "region": "us-east-1",
+      "status": 400,
+      "values": {
+        "RuleSetName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"message\":\"Configuration set <tfpreflight-verify-1c4e2c98098d-v2> does not exist.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "label": "sesv2/GetConfigurationSet/after-destroy",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "ConfigurationSetName": "tfpreflight-verify-1c4e2c98098d-v2"
+      }
+    },
+    {
+      "body": "{\"message\":\"List with name: tfpreflight-verify-1c4e2c98098d doesn't exist.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "label": "sesv2/GetContactList/after-destroy",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "ContactListName": "tfpreflight-verify-1c4e2c98098d"
+      }
+    },
+    {
+      "body": "{\"message\":\"Email identity <tfpreflight-verify-1c4e2c98098d.example.com> does not exist.\"}",
+      "expected": "not_found",
+      "headers": {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amzn-Errortype": "NotFoundException"
+      },
+      "label": "sesv2/GetEmailIdentity/after-destroy",
+      "region": "us-east-1",
+      "status": 404,
+      "values": {
+        "EmailIdentity": "tfpreflight-verify-1c4e2c98098d.example.com"
+      }
+    }
+  ]
+}

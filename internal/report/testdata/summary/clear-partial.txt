@@ -1,0 +1,4 @@
+tfpreflight · AWS provider 6.64.0 · us-east-1 · 6 resources
+
+✓ No problems found. Checked 4 of 6 resources fully.
+  2 could not be fully checked. Details: tfpreflight check --details
