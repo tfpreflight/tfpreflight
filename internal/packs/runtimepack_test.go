@@ -122,7 +122,11 @@ func TestExactProviderVersionIsLoaded(t *testing.T) {
 // version's knowledge, even when packs on either side exist.
 func TestUnshippedVersionDoesNotFallBack(t *testing.T) {
 	t.Parallel()
-	for _, version := range []string{"6.16.0", "6.57.0", "6.70.0", "7.0.0"} {
+	newer, err := NewerThanCovered()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, version := range []string{"6.16.0", "6.57.0", newer, "7.0.0"} {
 		pack, loaded, err := LoadRuntimePack(version)
 		if err != nil {
 			t.Fatalf("%s: %v", version, err)
