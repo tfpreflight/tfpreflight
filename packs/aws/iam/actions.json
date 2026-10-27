@@ -805,10 +805,60 @@
    ]
   },
   "aoss:listtagsforresource": {
-   "resources": []
+   "resources": [
+    {
+     "type": "Collection",
+     "formats": [
+      "arn:${Partition}:aoss:${Region}:${Account}:collection/${CollectionId}"
+     ]
+    },
+    {
+     "type": "CollectionGroup",
+     "formats": [
+      "arn:${Partition}:aoss:${Region}:${Account}:collection-group/${CollectionGroupId}"
+     ]
+    },
+    {
+     "type": "IngestionJob",
+     "formats": [
+      "arn:${Partition}:aoss:${Region}:${Account}:collection/${CollectionId}/ingestion-job/${IngestionJobId}"
+     ]
+    },
+    {
+     "type": "IngestionStream",
+     "formats": [
+      "arn:${Partition}:aoss:${Region}:${Account}:collection/${CollectionId}/ingestion-stream/${IngestionStreamId}"
+     ]
+    }
+   ]
   },
   "aoss:tagresource": {
-   "resources": [],
+   "resources": [
+    {
+     "type": "Collection",
+     "formats": [
+      "arn:${Partition}:aoss:${Region}:${Account}:collection/${CollectionId}"
+     ]
+    },
+    {
+     "type": "CollectionGroup",
+     "formats": [
+      "arn:${Partition}:aoss:${Region}:${Account}:collection-group/${CollectionGroupId}"
+     ]
+    },
+    {
+     "type": "IngestionJob",
+     "formats": [
+      "arn:${Partition}:aoss:${Region}:${Account}:collection/${CollectionId}/ingestion-job/${IngestionJobId}"
+     ]
+    },
+    {
+     "type": "IngestionStream",
+     "formats": [
+      "arn:${Partition}:aoss:${Region}:${Account}:collection/${CollectionId}/ingestion-stream/${IngestionStreamId}"
+     ]
+    }
+   ],
    "condition_keys": [
     "aws:RequestTag/${TagKey}",
     "aws:ResourceTag/${TagKey}",
@@ -6534,6 +6584,12 @@
      ]
     },
     {
+     "type": "retrieval-instruction",
+     "formats": [
+      "arn:${Partition}:bedrock:${Region}:${Account}:retrieval-instruction/${RetrievalInstructionId}"
+     ]
+    },
+    {
      "type": "session",
      "formats": [
       "arn:${Partition}:bedrock:${Region}:${Account}:session/${SessionId}"
@@ -6734,6 +6790,12 @@
      "type": "provisioned-model",
      "formats": [
       "arn:${Partition}:bedrock:${Region}:${Account}:provisioned-model/${ResourceId}"
+     ]
+    },
+    {
+     "type": "retrieval-instruction",
+     "formats": [
+      "arn:${Partition}:bedrock:${Region}:${Account}:retrieval-instruction/${RetrievalInstructionId}"
      ]
     },
     {
@@ -8644,6 +8706,36 @@
     }
    ]
   },
+  "cloudwatch:createaccessgrant": {
+   "resources": [],
+   "condition_keys": [
+    "cloudwatch:HasAccessGrant"
+   ]
+  },
+  "cloudwatch:createaccessprofile": {
+   "resources": [],
+   "condition_keys": [
+    "cloudwatch:HasAccessGrant"
+   ]
+  },
+  "cloudwatch:createdomain": {
+   "resources": []
+  },
+  "cloudwatch:createresourcemetricsconfiguration": {
+   "resources": [],
+   "condition_keys": [
+    "cloudwatch:ResourceArn"
+   ]
+  },
+  "cloudwatch:createspace": {
+   "resources": []
+  },
+  "cloudwatch:createview": {
+   "resources": [],
+   "condition_keys": [
+    "cloudwatch:HasAccessGrant"
+   ]
+  },
   "cloudwatch:describealarms": {
    "resources": [
     {
@@ -8677,6 +8769,32 @@
     }
    ]
   },
+  "cloudwatch:getaccessgrant": {
+   "resources": [
+    {
+     "type": "access-grant",
+     "formats": [
+      "arn:${Partition}:cloudwatch:${Region}:${Account}:access-grant/${GrantId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "cloudwatch:HasAccessGrant"
+   ]
+  },
+  "cloudwatch:getaccessprofile": {
+   "resources": [
+    {
+     "type": "access-profile",
+     "formats": [
+      "arn:${Partition}:cloudwatch:${Region}:${Account}:access-profile/${ProfileId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "cloudwatch:HasAccessGrant"
+   ]
+  },
   "cloudwatch:getalarmmuterule": {
    "resources": [
     {
@@ -8697,6 +8815,19 @@
     }
    ]
   },
+  "cloudwatch:getdomain": {
+   "resources": [
+    {
+     "type": "domain",
+     "formats": [
+      "arn:${Partition}:cloudwatch:${Region}:${Account}:domain/${DomainId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "cloudwatch:HasAccessGrant"
+   ]
+  },
   "cloudwatch:getmetricstream": {
    "resources": [
     {
@@ -8709,6 +8840,38 @@
   },
   "cloudwatch:getotelenrichment": {
    "resources": []
+  },
+  "cloudwatch:getresourcemetricsconfiguration": {
+   "resources": [],
+   "condition_keys": [
+    "cloudwatch:ResourceArn"
+   ]
+  },
+  "cloudwatch:getspace": {
+   "resources": [
+    {
+     "type": "space",
+     "formats": [
+      "arn:${Partition}:cloudwatch:${Region}:${Account}:space/${SpaceId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "cloudwatch:HasAccessGrant"
+   ]
+  },
+  "cloudwatch:getview": {
+   "resources": [
+    {
+     "type": "view",
+     "formats": [
+      "arn:${Partition}:cloudwatch:${Region}:${Account}:view/${ViewName}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "cloudwatch:HasAccessGrant"
+   ]
   },
   "cloudwatch:listmanagedinsightrules": {
    "resources": [],
@@ -8768,6 +8931,9 @@
       "arn:${Partition}:cloudwatch:${Region}:${Account}:slo/${SloName}"
      ]
     }
+   ],
+   "condition_keys": [
+    "cloudwatch:HasAccessGrant"
    ]
   },
   "cloudwatch:putalarmmuterule": {
@@ -8802,7 +8968,8 @@
    "condition_keys": [
     "aws:RequestTag/${TagKey}",
     "aws:TagKeys",
-    "cloudwatch:AlarmActions"
+    "cloudwatch:AlarmActions",
+    "cloudwatch:AlarmTagsPropagationEnabled"
    ]
   },
   "cloudwatch:putdashboard": {
@@ -8860,7 +9027,8 @@
    "condition_keys": [
     "aws:RequestTag/${TagKey}",
     "aws:TagKeys",
-    "cloudwatch:AlarmActions"
+    "cloudwatch:AlarmActions",
+    "cloudwatch:AlarmTagsPropagationEnabled"
    ]
   },
   "cloudwatch:putmetricstream": {
@@ -8933,7 +9101,8 @@
    ],
    "condition_keys": [
     "aws:RequestTag/${TagKey}",
-    "aws:TagKeys"
+    "aws:TagKeys",
+    "cloudwatch:HasAccessGrant"
    ]
   },
   "cloudwatch:untagresource": {
@@ -8988,8 +9157,12 @@
     }
    ],
    "condition_keys": [
-    "aws:TagKeys"
+    "aws:TagKeys",
+    "cloudwatch:HasAccessGrant"
    ]
+  },
+  "cloudwatch:updateotelenrichment": {
+   "resources": []
   },
   "codeartifact:associateexternalconnection": {
    "resources": [
@@ -11198,6 +11371,24 @@
   "connect:createsecurityprofile": {
    "resources": [
     {
+     "type": "application",
+     "formats": [
+      "arn:${Partition}:app-integrations:${Region}:${Account}:application/${ApplicationId}"
+     ]
+    },
+    {
+     "type": "contact-flow-module",
+     "formats": [
+      "arn:${Partition}:connect:${Region}:${Account}:instance/${InstanceId}/flow-module/${ContactFlowModuleId}"
+     ]
+    },
+    {
+     "type": "hierarchy-group",
+     "formats": [
+      "arn:${Partition}:connect:${Region}:${Account}:instance/${InstanceId}/agent-group/${HierarchyGroupId}"
+     ]
+    },
+    {
      "type": "security-profile",
      "formats": [
       "arn:${Partition}:connect:${Region}:${Account}:instance/${InstanceId}/security-profile/${SecurityProfileId}"
@@ -12184,7 +12375,14 @@
    ]
   },
   "datasync:createlocationazureblob": {
-   "resources": [],
+   "resources": [
+    {
+     "type": "agent",
+     "formats": [
+      "arn:${Partition}:datasync:${Region}:${AccountId}:agent/${AgentId}"
+     ]
+    }
+   ],
    "condition_keys": [
     "aws:RequestTag/${TagKey}",
     "aws:TagKeys"
@@ -12226,35 +12424,70 @@
    ]
   },
   "datasync:createlocationhdfs": {
-   "resources": [],
+   "resources": [
+    {
+     "type": "agent",
+     "formats": [
+      "arn:${Partition}:datasync:${Region}:${AccountId}:agent/${AgentId}"
+     ]
+    }
+   ],
    "condition_keys": [
     "aws:RequestTag/${TagKey}",
     "aws:TagKeys"
    ]
   },
   "datasync:createlocationnfs": {
-   "resources": [],
+   "resources": [
+    {
+     "type": "agent",
+     "formats": [
+      "arn:${Partition}:datasync:${Region}:${AccountId}:agent/${AgentId}"
+     ]
+    }
+   ],
    "condition_keys": [
     "aws:RequestTag/${TagKey}",
     "aws:TagKeys"
    ]
   },
   "datasync:createlocationobjectstorage": {
-   "resources": [],
+   "resources": [
+    {
+     "type": "agent",
+     "formats": [
+      "arn:${Partition}:datasync:${Region}:${AccountId}:agent/${AgentId}"
+     ]
+    }
+   ],
    "condition_keys": [
     "aws:RequestTag/${TagKey}",
     "aws:TagKeys"
    ]
   },
   "datasync:createlocations3": {
-   "resources": [],
+   "resources": [
+    {
+     "type": "agent",
+     "formats": [
+      "arn:${Partition}:datasync:${Region}:${AccountId}:agent/${AgentId}"
+     ]
+    }
+   ],
    "condition_keys": [
     "aws:RequestTag/${TagKey}",
     "aws:TagKeys"
    ]
   },
   "datasync:createlocationsmb": {
-   "resources": [],
+   "resources": [
+    {
+     "type": "agent",
+     "formats": [
+      "arn:${Partition}:datasync:${Region}:${AccountId}:agent/${AgentId}"
+     ]
+    }
+   ],
    "condition_keys": [
     "aws:RequestTag/${TagKey}",
     "aws:TagKeys"
@@ -14194,7 +14427,37 @@
     "drs:CreateAction"
    ]
   },
+  "ds-data:creategroup": {
+   "resources": [
+    {
+     "type": "directory",
+     "formats": [
+      "arn:${Partition}:ds:${Region}:${Account}:directory/${DirectoryId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "ds-data:Identifier",
+    "ds-data:Realm",
+    "ds-data:SAMAccountName"
+   ]
+  },
   "ds-data:createuser": {
+   "resources": [
+    {
+     "type": "directory",
+     "formats": [
+      "arn:${Partition}:ds:${Region}:${Account}:directory/${DirectoryId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "ds-data:Identifier",
+    "ds-data:Realm",
+    "ds-data:SAMAccountName"
+   ]
+  },
+  "ds-data:describegroup": {
    "resources": [
     {
      "type": "directory",
@@ -14351,6 +14614,16 @@
     }
    ]
   },
+  "ds:describesettings": {
+   "resources": [
+    {
+     "type": "directory",
+     "formats": [
+      "arn:${Partition}:ds:${Region}:${Account}:directory/${DirectoryId}"
+     ]
+    }
+   ]
+  },
   "ds:describeshareddirectories": {
    "resources": [
     {
@@ -14432,6 +14705,16 @@
    ]
   },
   "ds:updatenumberofdomaincontrollers": {
+   "resources": [
+    {
+     "type": "directory",
+     "formats": [
+      "arn:${Partition}:ds:${Region}:${Account}:directory/${DirectoryId}"
+     ]
+    }
+   ]
+  },
+  "ds:updatesettings": {
    "resources": [
     {
      "type": "directory",
@@ -15649,6 +15932,12 @@
   },
   "ec2:createfleet": {
    "resources": [
+    {
+     "type": "capacity-reservation",
+     "formats": [
+      "arn:${Partition}:ec2:${Region}:${Account}:capacity-reservation/${CapacityReservationId}"
+     ]
+    },
     {
      "type": "fleet",
      "formats": [
@@ -21152,6 +21441,12 @@
      ]
     },
     {
+     "type": "gateway",
+     "formats": [
+      "arn:${Partition}:ecs:${Region}:${Account}:gateway/${GatewayName}/${GatewayId}"
+     ]
+    },
+    {
      "type": "service",
      "formats": [
       "arn:${Partition}:ecs:${Region}:${Account}:service/${ClusterName}/${ServiceName}"
@@ -21213,6 +21508,12 @@
      "type": "daemon-task-definition",
      "formats": [
       "arn:${Partition}:ecs:${Region}:${Account}:daemon-task-definition/${DaemonTaskDefinitionFamilyName}:${DaemonTaskDefinitionRevisionNumber}"
+     ]
+    },
+    {
+     "type": "gateway",
+     "formats": [
+      "arn:${Partition}:ecs:${Region}:${Account}:gateway/${GatewayName}/${GatewayId}"
      ]
     },
     {
@@ -21563,6 +21864,12 @@
      ]
     },
     {
+     "type": "globalreplicationgroup",
+     "formats": [
+      "arn:${Partition}:elasticache::${Account}:globalreplicationgroup:${GlobalReplicationGroupId}"
+     ]
+    },
+    {
      "type": "parametergroup",
      "formats": [
       "arn:${Partition}:elasticache:${Region}:${Account}:parametergroup:${CacheParameterGroupName}"
@@ -21854,6 +22161,7 @@
     }
    ],
    "condition_keys": [
+    "aws:ResourceTag/${TagKey}",
     "elasticache:NumNodeGroups"
    ]
   },
@@ -21917,6 +22225,9 @@
       "arn:${Partition}:elasticache::${Account}:globalreplicationgroup:${GlobalReplicationGroupId}"
      ]
     }
+   ],
+   "condition_keys": [
+    "aws:ResourceTag/${TagKey}"
    ]
   },
   "elasticache:describereplicationgroups": {
@@ -21978,6 +22289,7 @@
     }
    ],
    "condition_keys": [
+    "aws:ResourceTag/${TagKey}",
     "elasticache:NumNodeGroups"
    ]
   },
@@ -22078,6 +22390,7 @@
     }
    ],
    "condition_keys": [
+    "aws:ResourceTag/${TagKey}",
     "elasticache:AutomaticFailoverEnabled",
     "elasticache:CacheNodeType",
     "elasticache:EngineVersion"
@@ -22123,6 +22436,12 @@
      "type": "cluster",
      "formats": [
       "arn:${Partition}:elasticache:${Region}:${Account}:cluster:${CacheClusterId}"
+     ]
+    },
+    {
+     "type": "globalreplicationgroup",
+     "formats": [
+      "arn:${Partition}:elasticache::${Account}:globalreplicationgroup:${GlobalReplicationGroupId}"
      ]
     },
     {
@@ -22850,7 +23169,6 @@
     "aws:RequestTag/${TagKey}",
     "aws:ResourceTag/${TagKey}",
     "aws:TagKeys",
-    "elasticloadbalancing:ListenerProtocol",
     "elasticloadbalancing:ResourceTag/${TagKey}",
     "elasticloadbalancing:Scheme",
     "elasticloadbalancing:SecurityGroup",
@@ -23783,7 +24101,9 @@
    ],
    "condition_keys": [
     "aws:RequestTag/${TagKey}",
-    "aws:TagKeys"
+    "aws:TagKeys",
+    "es:SecurityGroupIds",
+    "es:SubnetIds"
    ]
   },
   "es:createelasticsearchdomain": {
@@ -23797,7 +24117,9 @@
    ],
    "condition_keys": [
     "aws:RequestTag/${TagKey}",
-    "aws:TagKeys"
+    "aws:TagKeys",
+    "es:SecurityGroupIds",
+    "es:SubnetIds"
    ]
   },
   "es:createoutboundconnection": {
@@ -24007,6 +24329,12 @@
      "formats": [
       "arn:${Partition}:events:${Region}:${Account}:event-bus/${EventBusName}"
      ]
+    },
+    {
+     "type": "event-busv2",
+     "formats": [
+      "arn:${Partition}:events:${Region}:${Account}:event-busv2/${EventBusName}/${OpaqueId}"
+     ]
     }
    ],
    "condition_keys": [
@@ -24067,6 +24395,12 @@
      "formats": [
       "arn:${Partition}:events:${Region}:${Account}:event-bus/${EventBusName}"
      ]
+    },
+    {
+     "type": "event-busv2",
+     "formats": [
+      "arn:${Partition}:events:${Region}:${Account}:event-busv2/${EventBusName}/${OpaqueId}"
+     ]
     }
    ]
   },
@@ -24098,6 +24432,18 @@
      ]
     },
     {
+     "type": "event-busv2",
+     "formats": [
+      "arn:${Partition}:events:${Region}:${Account}:event-busv2/${EventBusName}/${OpaqueId}"
+     ]
+    },
+    {
+     "type": "event-sourcev2",
+     "formats": [
+      "arn:${Partition}:events:${Region}:${Account}:event-sourcev2/${SourceType}/${EventSourceName}/${OpaqueId}"
+     ]
+    },
+    {
      "type": "rule-on-custom-event-bus",
      "formats": [
       "arn:${Partition}:events:${Region}:${Account}:rule/${EventBusName}/${RuleName}"
@@ -24107,6 +24453,12 @@
      "type": "rule-on-default-event-bus",
      "formats": [
       "arn:${Partition}:events:${Region}:${Account}:rule/${RuleName}"
+     ]
+    },
+    {
+     "type": "subscriber",
+     "formats": [
+      "arn:${Partition}:events:${Region}:${Account}:subscriber/${SubscriberName}/${OpaqueId}"
      ]
     }
    ],
@@ -24193,6 +24545,18 @@
      ]
     },
     {
+     "type": "event-busv2",
+     "formats": [
+      "arn:${Partition}:events:${Region}:${Account}:event-busv2/${EventBusName}/${OpaqueId}"
+     ]
+    },
+    {
+     "type": "event-sourcev2",
+     "formats": [
+      "arn:${Partition}:events:${Region}:${Account}:event-sourcev2/${SourceType}/${EventSourceName}/${OpaqueId}"
+     ]
+    },
+    {
      "type": "rule-on-custom-event-bus",
      "formats": [
       "arn:${Partition}:events:${Region}:${Account}:rule/${EventBusName}/${RuleName}"
@@ -24202,6 +24566,12 @@
      "type": "rule-on-default-event-bus",
      "formats": [
       "arn:${Partition}:events:${Region}:${Account}:rule/${RuleName}"
+     ]
+    },
+    {
+     "type": "subscriber",
+     "formats": [
+      "arn:${Partition}:events:${Region}:${Account}:subscriber/${SubscriberName}/${OpaqueId}"
      ]
     }
    ],
@@ -24220,6 +24590,18 @@
      ]
     },
     {
+     "type": "event-busv2",
+     "formats": [
+      "arn:${Partition}:events:${Region}:${Account}:event-busv2/${EventBusName}/${OpaqueId}"
+     ]
+    },
+    {
+     "type": "event-sourcev2",
+     "formats": [
+      "arn:${Partition}:events:${Region}:${Account}:event-sourcev2/${SourceType}/${EventSourceName}/${OpaqueId}"
+     ]
+    },
+    {
      "type": "rule-on-custom-event-bus",
      "formats": [
       "arn:${Partition}:events:${Region}:${Account}:rule/${EventBusName}/${RuleName}"
@@ -24230,117 +24612,17 @@
      "formats": [
       "arn:${Partition}:events:${Region}:${Account}:rule/${RuleName}"
      ]
+    },
+    {
+     "type": "subscriber",
+     "formats": [
+      "arn:${Partition}:events:${Region}:${Account}:subscriber/${SubscriberName}/${OpaqueId}"
+     ]
     }
    ],
    "condition_keys": [
     "aws:TagKeys",
     "events:creatorAccount"
-   ]
-  },
-  "evidently:createfeature": {
-   "resources": [],
-   "condition_keys": [
-    "aws:RequestTag/${TagKey}",
-    "aws:TagKeys"
-   ]
-  },
-  "evidently:createlaunch": {
-   "resources": [],
-   "condition_keys": [
-    "aws:RequestTag/${TagKey}",
-    "aws:TagKeys"
-   ]
-  },
-  "evidently:createproject": {
-   "resources": [],
-   "condition_keys": [
-    "aws:RequestTag/${TagKey}",
-    "aws:TagKeys"
-   ]
-  },
-  "evidently:createsegment": {
-   "resources": [],
-   "condition_keys": [
-    "aws:RequestTag/${TagKey}",
-    "aws:TagKeys"
-   ]
-  },
-  "evidently:getfeature": {
-   "resources": [
-    {
-     "type": "Feature",
-     "formats": [
-      "arn:${Partition}:evidently:${Region}:${Account}:project/${ProjectName}/feature/${FeatureName}"
-     ]
-    }
-   ]
-  },
-  "evidently:getlaunch": {
-   "resources": [
-    {
-     "type": "Launch",
-     "formats": [
-      "arn:${Partition}:evidently:${Region}:${Account}:project/${ProjectName}/launch/${LaunchName}"
-     ]
-    }
-   ]
-  },
-  "evidently:getproject": {
-   "resources": [
-    {
-     "type": "Project",
-     "formats": [
-      "arn:${Partition}:evidently:${Region}:${Account}:project/${ProjectName}"
-     ]
-    }
-   ]
-  },
-  "evidently:getsegment": {
-   "resources": [
-    {
-     "type": "Segment",
-     "formats": [
-      "arn:${Partition}:evidently:${Region}:${Account}:segment/${SegmentName}"
-     ]
-    }
-   ]
-  },
-  "evidently:tagresource": {
-   "resources": [
-    {
-     "type": "Experiment",
-     "formats": [
-      "arn:${Partition}:evidently:${Region}:${Account}:project/${ProjectName}/experiment/${ExperimentName}"
-     ]
-    },
-    {
-     "type": "Feature",
-     "formats": [
-      "arn:${Partition}:evidently:${Region}:${Account}:project/${ProjectName}/feature/${FeatureName}"
-     ]
-    },
-    {
-     "type": "Launch",
-     "formats": [
-      "arn:${Partition}:evidently:${Region}:${Account}:project/${ProjectName}/launch/${LaunchName}"
-     ]
-    },
-    {
-     "type": "Project",
-     "formats": [
-      "arn:${Partition}:evidently:${Region}:${Account}:project/${ProjectName}"
-     ]
-    },
-    {
-     "type": "Segment",
-     "formats": [
-      "arn:${Partition}:evidently:${Region}:${Account}:segment/${SegmentName}"
-     ]
-    }
-   ],
-   "condition_keys": [
-    "aws:RequestTag/${TagKey}",
-    "aws:TagKeys"
    ]
   },
   "finspace:createkxcluster": {
@@ -29626,6 +29908,12 @@
      ]
     },
     {
+     "type": "Failover-Slate-Configuration",
+     "formats": [
+      "arn:${Partition}:ivs:${Region}:${Account}:failover-slate-configuration/${ResourceId}"
+     ]
+    },
+    {
      "type": "Ingest-Configuration",
      "formats": [
       "arn:${Partition}:ivs:${Region}:${Account}:ingest-configuration/${ResourceId}"
@@ -29703,6 +29991,12 @@
      "type": "Encoder-Configuration",
      "formats": [
       "arn:${Partition}:ivs:${Region}:${Account}:encoder-configuration/${ResourceId}"
+     ]
+    },
+    {
+     "type": "Failover-Slate-Configuration",
+     "formats": [
+      "arn:${Partition}:ivs:${Region}:${Account}:failover-slate-configuration/${ResourceId}"
      ]
     },
     {
@@ -29892,6 +30186,12 @@
      "formats": [
       "arn:${Partition}:kafka:${Region}:${Account}:cluster/${ClusterName}/${Uuid}"
      ]
+    },
+    {
+     "type": "configuration",
+     "formats": [
+      "arn:${Partition}:kafka:${Region}:${Account}:configuration/${ConfigurationName}/${Uuid}"
+     ]
     }
    ],
    "condition_keys": [
@@ -29905,6 +30205,12 @@
      "type": "cluster",
      "formats": [
       "arn:${Partition}:kafka:${Region}:${Account}:cluster/${ClusterName}/${Uuid}"
+     ]
+    },
+    {
+     "type": "configuration",
+     "formats": [
+      "arn:${Partition}:kafka:${Region}:${Account}:configuration/${ConfigurationName}/${Uuid}"
      ]
     }
    ],
@@ -30980,7 +31286,11 @@
    ]
   },
   "kms:listaliases": {
-   "resources": []
+   "resources": [],
+   "condition_keys": [
+    "kms:CallerAccount",
+    "kms:ViaService"
+   ]
   },
   "kms:listgrants": {
    "resources": [
@@ -31403,6 +31713,12 @@
      "formats": [
       "arn:${Partition}:lambda:${Region}:${Account}:function:${FunctionName}"
      ]
+    },
+    {
+     "type": "webFunction",
+     "formats": [
+      "arn:${Partition}:lambda:${Region}:${Account}:web-function/${FunctionName}"
+     ]
     }
    ]
   },
@@ -31466,6 +31782,12 @@
      "type": "networkConnector",
      "formats": [
       "arn:${Partition}:lambda:${Region}:${Account}:network-connector:${NetworkConnectorId}"
+     ]
+    },
+    {
+     "type": "webFunction",
+     "formats": [
+      "arn:${Partition}:lambda:${Region}:${Account}:web-function/${FunctionName}"
      ]
     }
    ]
@@ -31553,6 +31875,12 @@
      "formats": [
       "arn:${Partition}:lambda:${Region}:${Account}:function:${FunctionName}"
      ]
+    },
+    {
+     "type": "webFunction",
+     "formats": [
+      "arn:${Partition}:lambda:${Region}:${Account}:web-function/${FunctionName}"
+     ]
     }
    ],
    "condition_keys": [
@@ -31615,6 +31943,12 @@
      "type": "networkConnector",
      "formats": [
       "arn:${Partition}:lambda:${Region}:${Account}:network-connector:${NetworkConnectorId}"
+     ]
+    },
+    {
+     "type": "webFunction",
+     "formats": [
+      "arn:${Partition}:lambda:${Region}:${Account}:web-function/${FunctionName}"
      ]
     }
    ],
@@ -34757,6 +35091,12 @@
      "formats": [
       "arn:${Partition}:network-firewall:${Region}:${Account}:firewall-policy/${Name}"
      ]
+    },
+    {
+     "type": "FirewallPolicyV2",
+     "formats": [
+      "arn:${Partition}:network-firewall:${Region}:${Account}:firewall-policy-v2/${Name}"
+     ]
     }
    ],
    "condition_keys": [
@@ -34798,6 +35138,18 @@
   },
   "network-firewall:createrulegroup": {
    "resources": [
+    {
+     "type": "FirewallRuleGroup",
+     "formats": [
+      "arn:${Partition}:network-firewall:${Region}:${Account}:firewall-rulegroup/${Name}"
+     ]
+    },
+    {
+     "type": "IpsRuleGroup",
+     "formats": [
+      "arn:${Partition}:network-firewall:${Region}:${Account}:ips-rulegroup/${Name}"
+     ]
+    },
     {
      "type": "StatefulRuleGroup",
      "formats": [
@@ -34923,6 +35275,24 @@
      ]
     },
     {
+     "type": "FirewallPolicyV2",
+     "formats": [
+      "arn:${Partition}:network-firewall:${Region}:${Account}:firewall-policy-v2/${Name}"
+     ]
+    },
+    {
+     "type": "FirewallRuleGroup",
+     "formats": [
+      "arn:${Partition}:network-firewall:${Region}:${Account}:firewall-rulegroup/${Name}"
+     ]
+    },
+    {
+     "type": "IpsRuleGroup",
+     "formats": [
+      "arn:${Partition}:network-firewall:${Region}:${Account}:ips-rulegroup/${Name}"
+     ]
+    },
+    {
      "type": "StatefulRuleGroup",
      "formats": [
       "arn:${Partition}:network-firewall:${Region}:${Account}:stateful-rulegroup/${Name}"
@@ -34938,6 +35308,18 @@
   },
   "network-firewall:describerulegroup": {
    "resources": [
+    {
+     "type": "FirewallRuleGroup",
+     "formats": [
+      "arn:${Partition}:network-firewall:${Region}:${Account}:firewall-rulegroup/${Name}"
+     ]
+    },
+    {
+     "type": "IpsRuleGroup",
+     "formats": [
+      "arn:${Partition}:network-firewall:${Region}:${Account}:ips-rulegroup/${Name}"
+     ]
+    },
     {
      "type": "StatefulRuleGroup",
      "formats": [
@@ -34987,6 +35369,24 @@
      ]
     },
     {
+     "type": "FirewallPolicyV2",
+     "formats": [
+      "arn:${Partition}:network-firewall:${Region}:${Account}:firewall-policy-v2/${Name}"
+     ]
+    },
+    {
+     "type": "FirewallRuleGroup",
+     "formats": [
+      "arn:${Partition}:network-firewall:${Region}:${Account}:firewall-rulegroup/${Name}"
+     ]
+    },
+    {
+     "type": "IpsRuleGroup",
+     "formats": [
+      "arn:${Partition}:network-firewall:${Region}:${Account}:ips-rulegroup/${Name}"
+     ]
+    },
+    {
      "type": "StatefulRuleGroup",
      "formats": [
       "arn:${Partition}:network-firewall:${Region}:${Account}:stateful-rulegroup/${Name}"
@@ -35018,6 +35418,24 @@
      "type": "FirewallPolicy",
      "formats": [
       "arn:${Partition}:network-firewall:${Region}:${Account}:firewall-policy/${Name}"
+     ]
+    },
+    {
+     "type": "FirewallPolicyV2",
+     "formats": [
+      "arn:${Partition}:network-firewall:${Region}:${Account}:firewall-policy-v2/${Name}"
+     ]
+    },
+    {
+     "type": "FirewallRuleGroup",
+     "formats": [
+      "arn:${Partition}:network-firewall:${Region}:${Account}:firewall-rulegroup/${Name}"
+     ]
+    },
+    {
+     "type": "IpsRuleGroup",
+     "formats": [
+      "arn:${Partition}:network-firewall:${Region}:${Account}:ips-rulegroup/${Name}"
      ]
     },
     {
@@ -36227,6 +36645,12 @@
   "observabilityadmin:listtagsforresource": {
    "resources": [
     {
+     "type": "dataset-integration",
+     "formats": [
+      "arn:${Partition}:observabilityadmin:${Region}:${Account}:dataset-integration/${DatasetIntegrationIdentifier}"
+     ]
+    },
+    {
      "type": "organization-centralization-rule",
      "formats": [
       "arn:${Partition}:observabilityadmin:${Region}:${Account}:organization-centralization-rule/${CentralizationRuleName}"
@@ -36275,6 +36699,12 @@
   },
   "observabilityadmin:tagresource": {
    "resources": [
+    {
+     "type": "dataset-integration",
+     "formats": [
+      "arn:${Partition}:observabilityadmin:${Region}:${Account}:dataset-integration/${DatasetIntegrationIdentifier}"
+     ]
+    },
     {
      "type": "organization-centralization-rule",
      "formats": [
@@ -38563,6 +38993,12 @@
      ]
     },
     {
+     "type": "db-capacity-reservation",
+     "formats": [
+      "arn:${Partition}:rds:${Region}:${Account}:db-capacity-reservation:${DBCapacityReservationIdentifier}"
+     ]
+    },
+    {
      "type": "deployment",
      "formats": [
       "arn:${Partition}:rds:${Region}:${Account}:deployment:${BlueGreenDeploymentIdentifier}"
@@ -38837,6 +39273,12 @@
      ]
     },
     {
+     "type": "db-capacity-reservation",
+     "formats": [
+      "arn:${Partition}:rds:${Region}:${Account}:db-capacity-reservation:${DBCapacityReservationIdentifier}"
+     ]
+    },
+    {
      "type": "og",
      "formats": [
       "arn:${Partition}:rds:${Region}:${Account}:og:${OptionGroupName}"
@@ -38882,6 +39324,12 @@
      "type": "db",
      "formats": [
       "arn:${Partition}:rds:${Region}:${Account}:db:${DbInstanceName}"
+     ]
+    },
+    {
+     "type": "db-capacity-reservation",
+     "formats": [
+      "arn:${Partition}:rds:${Region}:${Account}:db-capacity-reservation:${DBCapacityReservationIdentifier}"
      ]
     },
     {
@@ -39437,6 +39885,12 @@
      ]
     },
     {
+     "type": "db-capacity-reservation",
+     "formats": [
+      "arn:${Partition}:rds:${Region}:${Account}:db-capacity-reservation:${DBCapacityReservationIdentifier}"
+     ]
+    },
+    {
      "type": "es",
      "formats": [
       "arn:${Partition}:rds:${Region}:${Account}:es:${SubscriptionName}"
@@ -39591,6 +40045,12 @@
      "type": "db",
      "formats": [
       "arn:${Partition}:rds:${Region}:${Account}:db:${DbInstanceName}"
+     ]
+    },
+    {
+     "type": "db-capacity-reservation",
+     "formats": [
+      "arn:${Partition}:rds:${Region}:${Account}:db-capacity-reservation:${DBCapacityReservationIdentifier}"
      ]
     },
     {
@@ -39865,6 +40325,12 @@
      ]
     },
     {
+     "type": "db-capacity-reservation",
+     "formats": [
+      "arn:${Partition}:rds:${Region}:${Account}:db-capacity-reservation:${DBCapacityReservationIdentifier}"
+     ]
+    },
+    {
      "type": "og",
      "formats": [
       "arn:${Partition}:rds:${Region}:${Account}:og:${OptionGroupName}"
@@ -39904,6 +40370,12 @@
      "type": "db",
      "formats": [
       "arn:${Partition}:rds:${Region}:${Account}:db:${DbInstanceName}"
+     ]
+    },
+    {
+     "type": "db-capacity-reservation",
+     "formats": [
+      "arn:${Partition}:rds:${Region}:${Account}:db-capacity-reservation:${DBCapacityReservationIdentifier}"
      ]
     },
     {
@@ -39951,6 +40423,12 @@
      "type": "db",
      "formats": [
       "arn:${Partition}:rds:${Region}:${Account}:db:${DbInstanceName}"
+     ]
+    },
+    {
+     "type": "db-capacity-reservation",
+     "formats": [
+      "arn:${Partition}:rds:${Region}:${Account}:db-capacity-reservation:${DBCapacityReservationIdentifier}"
      ]
     },
     {
@@ -40003,6 +40481,12 @@
      "type": "db",
      "formats": [
       "arn:${Partition}:rds:${Region}:${Account}:db:${DbInstanceName}"
+     ]
+    },
+    {
+     "type": "db-capacity-reservation",
+     "formats": [
+      "arn:${Partition}:rds:${Region}:${Account}:db-capacity-reservation:${DBCapacityReservationIdentifier}"
      ]
     }
    ]
@@ -45414,6 +45898,27 @@
     }
    ]
   },
+  "sagemaker:createinferencecomponent": {
+   "resources": [
+    {
+     "type": "endpoint",
+     "formats": [
+      "arn:${Partition}:sagemaker:${Region}:${Account}:endpoint/${EndpointName}"
+     ]
+    },
+    {
+     "type": "inference-component",
+     "formats": [
+      "arn:${Partition}:sagemaker:${Region}:${Account}:inference-component/${InferenceComponentName}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:TagKeys",
+    "sagemaker:ModelArn"
+   ]
+  },
   "sagemaker:createlabelingjob": {
    "resources": [
     {
@@ -45878,6 +46383,16 @@
      "type": "image-version",
      "formats": [
       "arn:${Partition}:sagemaker:${Region}:${Account}:image-version/${ImageName}/${Version}"
+     ]
+    }
+   ]
+  },
+  "sagemaker:describeinferencecomponent": {
+   "resources": [
+    {
+     "type": "inference-component",
+     "formats": [
+      "arn:${Partition}:sagemaker:${Region}:${Account}:inference-component/${InferenceComponentName}"
      ]
     }
    ]
@@ -50117,24 +50632,6 @@
      "formats": [
       "arn:${Partition}:ssm:${Region}:${Account}:association/${AssociationId}"
      ]
-    },
-    {
-     "type": "document",
-     "formats": [
-      "arn:${Partition}:ssm:${Region}:${Account}:document/${DocumentName}"
-     ]
-    },
-    {
-     "type": "instance",
-     "formats": [
-      "arn:${Partition}:ec2:${Region}:${Account}:instance/${InstanceId}"
-     ]
-    },
-    {
-     "type": "managed-instance",
-     "formats": [
-      "arn:${Partition}:ssm:${Region}:${Account}:managed-instance/${InstanceId}"
-     ]
     }
    ],
    "condition_keys": [
@@ -52940,9 +53437,7 @@
     }
    ],
    "condition_keys": [
-    "aws:ResourceTag/${TagKey}",
-    "vpc-lattice:ServiceArn",
-    "vpc-lattice:ServiceNetworkArn"
+    "aws:ResourceTag/${TagKey}"
    ]
   },
   "vpc-lattice:getservicenetworkvpcassociation": {
