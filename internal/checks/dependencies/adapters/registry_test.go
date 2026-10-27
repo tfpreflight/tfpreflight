@@ -120,7 +120,11 @@ func TestRegistrySafetyAndDeduplication(t *testing.T) {
 	if got, _ := r.Exists(expired, l, dependencies.Scope{}, "vpc-two"); got != dependencies.Unknown {
 		t.Fatal(got)
 	}
-	if got, _ := New("6.70.0", config).Exists(context.Background(), l, dependencies.Scope{}, "vpc-two"); got != dependencies.Unknown {
+	newer, err := packs.NewerThanCovered()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got, _ := New(newer, config).Exists(context.Background(), l, dependencies.Scope{}, "vpc-two"); got != dependencies.Unknown {
 		t.Fatal(got)
 	}
 	l.NotFoundCodes = []string{"UnauthorizedOperation"}

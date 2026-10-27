@@ -5,6 +5,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/tfpreflight/tfpreflight/internal/packs"
 	"github.com/tfpreflight/tfpreflight/rules"
 	"github.com/tfpreflight/tfpreflight/rules/model"
 )
@@ -96,7 +97,11 @@ func TestInferredQuotaRuleNeverBlocksApply(t *testing.T) {
 // release can change which service a resource calls and therefore which quota
 // it consumes.
 func TestQuotaRulesDoNotFallBackAcrossVersions(t *testing.T) {
-	for _, version := range []string{"6.16.0", "6.70.0", ""} {
+	newer, err := packs.NewerThanCovered()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, version := range []string{"6.16.0", newer, ""} {
 		rules, loaded, err := LoadQuotaRules(version)
 		if err != nil {
 			t.Fatalf("%s: %v", version, err)

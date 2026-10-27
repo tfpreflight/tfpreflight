@@ -158,7 +158,11 @@ func TestResourceTypeRemovedFromThePackIsUncovered(t *testing.T) {
 // release can change which API a resource calls, and therefore what a duplicate
 // identity means.
 func TestConflictPackRejectsOtherProviderVersions(t *testing.T) {
-	for _, version := range []string{"6.16.0", "6.70.0", "7.0.0", ""} {
+	newer, err := packs.NewerThanCovered()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, version := range []string{"6.16.0", newer, "7.0.0", ""} {
 		rules, err := loadConflictRules(version)
 		if err != nil {
 			t.Fatalf("%s: %v", version, err)

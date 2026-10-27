@@ -19,6 +19,7 @@ import (
 
 	sdk "github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/tfpreflight/tfpreflight/internal/checks/dependencies/adapters"
+	"github.com/tfpreflight/tfpreflight/internal/packs"
 	"github.com/tfpreflight/tfpreflight/rules/model"
 )
 
@@ -172,8 +173,12 @@ func TestDependencyRuntimeGuardsBeforeInspection(t *testing.T) {
 			}
 		})
 	}
+	newer, err := packs.NewerThanCovered()
+	if err != nil {
+		t.Fatal(err)
+	}
 	spy := &dependencySpy{}
-	_, coverage, err := DependencyRuntime(context.Background(), depJSON(t, dependencyDocument(t)), "6.70.0", sdk.Config{}, "arn:aws:iam::123456789012:user/inspector", spy)
+	_, coverage, err := DependencyRuntime(context.Background(), depJSON(t, dependencyDocument(t)), newer, sdk.Config{}, "arn:aws:iam::123456789012:user/inspector", spy)
 	if err != nil || spy.calls != 0 || coverage["aws_subnet.test"] != dependencies.CoverageUnsupported {
 		t.Fatalf("version fallback: %v %v", err, coverage)
 	}
