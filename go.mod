@@ -27,7 +27,7 @@ require (
 	github.com/spf13/pflag v1.0.10
 	github.com/zclconf/go-cty v1.19.0
 	go.yaml.in/yaml/v3 v3.0.5
-	golang.org/x/mod v0.41.0
+	golang.org/x/mod v0.42.0
 )
 
 require (
@@ -51,5 +51,5 @@ require (
 	github.com/mitchellh/go-wordwrap v1.0.1 // indirect
 	golang.org/x/sync v0.23.0 // indirect
 	golang.org/x/text v0.31.0 // indirect
-	golang.org/x/tools v0.50.0 // indirect
+	golang.org/x/tools v0.51.0 // indirect
 )
