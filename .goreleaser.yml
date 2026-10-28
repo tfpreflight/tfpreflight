@@ -83,6 +83,13 @@ brews:
     test: |
       system "#{bin}/tfpreflight", "version"
 
+# The changelog runs from the previous release tag. The pack bundles and the
+# installer have tags of their own that are not releases of the binary.
+git:
+  ignore_tags:
+    - "packs-*"
+    - installer
+
 changelog:
   use: git
   sort: asc
