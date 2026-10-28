@@ -4,6 +4,8 @@
 
 ## The default output
 
+Example: AWS, the only provider tfpreflight supports today.
+
 ```
 tfpreflight · AWS provider 6.64.0 · us-east-1 · 6 resources
 
@@ -23,7 +25,7 @@ WARN  aws_s3_bucket_public_access_block.logs
   Checked 4 of 6 resources fully. Details: tfpreflight check --details
 ```
 
-- **The header** names the AWS provider version, the region tfpreflight checked (`region unknown` if it couldn't work one out), and how many AWS resources the plan changes.
+- **The header** names the provider and its version, the region tfpreflight checked (`region unknown` if it couldn't work one out), and how many of that provider's resources the plan changes.
 - **Each entry** is `FAIL` or `WARN`, the resource's address, one sentence saying what's wrong, and one line saying what to do: `Fix:` when the fix is clear, `Check:` when you need to confirm something first.
 - **The result line** sums it up (see below). "Checked N of M resources fully" counts resources where every check that applies to them finished. A resource with even one check that couldn't finish doesn't count. A check with nothing to check doesn't stop it counting: a dependency check that found no rule for the resource, or a quota check for a resource type tfpreflight knows no quota for. So "fully" means every check tfpreflight has a rule for finished, not that no quota or dependency could exist.
 
@@ -45,35 +47,37 @@ Minor notes (informational findings) aren't listed. `--all` shows them, together
 | `✗ N problems will likely make apply fail.` | At least one blocking problem. Fix it before you apply. Warnings, if any, are counted on the same line. |
 | `! N warnings to check. Nothing found that is sure to make apply fail.` | Only warnings. Read them before you apply. |
 | `✓ No problems found. Checked N of M resources fully.` | Nothing was found. If some resources couldn't be fully checked, a second line says how many. |
-| `! AWS checks did not run: <reason>.` | tfpreflight only read your plan, for example because there are no AWS credentials or the region is unknown. The next line says what to do. |
-| `! AWS checks failed: <reason>.` | tfpreflight reached AWS, but AWS refused or failed every question, usually because the role is missing read permissions. |
+| `! AWS checks did not run: <reason>.` | tfpreflight only read your plan, for example because there are no cloud credentials or the region is unknown. The next line says what to do. |
+| `! AWS checks failed: <reason>.` | tfpreflight reached your cloud provider, but it refused or failed every question, usually because the identity is missing read permissions. |
 | `! Nothing was checked in AWS.` | Only checks that read the plan finished. |
 | `! Nothing could be checked.` | No check finished for any resource. |
 
 If your `--fail-on` or `--fail-on-partial` setting is what makes the run exit `1`, a last line says so, for example `Exits 1 because --fail-on warning is set.`
 
-If your AWS provider version has no rules of its own, a line under the header says which rules were used and that results are warnings only, for example `Rules for 6.69.1 are newest; results are warnings only. Run: tfpreflight update`.
+The three lines that name AWS read that way because AWS is the only provider today.
+
+If your provider version has no rules of its own, a line under the header says which rules were used and that results are warnings only, for example `Rules for 6.69.1 are newest; results are warnings only. Run: tfpreflight update`.
 
 ## The full output (`--details`)
 
-`tfpreflight check --details` prints the full report: the provider and policy lines, the region and both identities (the one that inspects AWS and the one whose permissions are checked), every finding with what Terraform is doing, the problem, what it means and the fix, a **Not checked** list, coverage counts per check, and a last line starting `Preflight:`:
+`tfpreflight check --details` prints the full report: the provider and policy lines, the region and both identities (the one that inspects your cloud account and the one whose permissions are checked), every finding with what Terraform is doing, the problem, what it means and the fix, a **Not checked** list, coverage counts per check, and a last line starting `Preflight:`:
 
 | Last line | Meaning |
 |---|---|
 | `Preflight: FAILED` | At least one blocking problem. Fix it before you apply. |
 | `Preflight: FAILED (<reason>)` | Your `--fail-on` or `--fail-on-partial` setting made a warning or incomplete check fail the run. |
 | `Preflight: PASSED (PARTIAL)` | Nothing was found, but some checks couldn't finish. Look at **Not checked**. |
-| `Preflight: PARTIAL - AWS checks did not run: <reason>` | tfpreflight only read your plan. It couldn't talk to AWS, usually because of missing credentials or an unknown region. |
-| `Preflight: PARTIAL - AWS checks failed: <reason>` | tfpreflight reached AWS, but AWS refused or failed every question, usually because the role is missing read permissions. |
+| `Preflight: PARTIAL - AWS checks did not run: <reason>` | tfpreflight only read your plan. It couldn't talk to your cloud provider, usually because of missing credentials or an unknown region. |
+| `Preflight: PARTIAL - AWS checks failed: <reason>` | tfpreflight reached your cloud provider, but it refused or failed every question, usually because the identity is missing read permissions. |
 | `Preflight: PARTIAL - nothing was verified` | No check completed for any resource. |
-| `Preflight: PARTIAL - nothing was checked in AWS` | Only checks that read the plan completed. AWS did not answer any check. |
+| `Preflight: PARTIAL - nothing was checked in AWS` | Only checks that read the plan completed. Your cloud provider did not answer any check. |
 | `Preflight: COMPLETE` | Every applicable check completed and nothing met your failure rule. |
 
 Under it are two count lines: how many findings of each kind, and how many resources were fully checked, partly checked, or not covered. "Fully checked" means the same as in the default output. The JSON output has the same verdict and counts.
 
 ## The version label
 
-The full output's first lines name your AWS provider version and one of these labels:
+The full output's first lines name your provider version and one of these labels:
 
 | Label | Meaning |
 |---|---|

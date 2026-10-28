@@ -4,8 +4,8 @@
 
 ## Before you start
 
-1. **Create a read-only AWS role** for tfpreflight. See [aws-permissions.md](aws-permissions.md).
-2. **Let your CI log into that role with OIDC.** OIDC is a short-lived login your CI system gets automatically, so you never store AWS keys as CI secrets.
+1. **Create a read-only role** for tfpreflight in your cloud account. For AWS, see [providers/aws/permissions.md](providers/aws/permissions.md).
+2. **Let your CI log into that role with OIDC.** OIDC is a short-lived login your CI system gets automatically, so you never store long-lived cloud keys as CI secrets.
 3. **Add this file** next to your Terraform files:
 
    ```yaml
@@ -15,7 +15,9 @@
 
    Why: without it, a job with expired credentials or missing permissions would check nothing and still pass. With it, the job fails when checks can't finish.
 
-## GitHub Actions
+The two examples below are for AWS, the only provider tfpreflight supports today. Only the login step is AWS-specific; the tfpreflight steps are plain commands.
+
+## GitHub Actions (example: AWS)
 
 Replace the role ARN with your tfpreflight role. In AWS, set the role's trust policy so only this repository (and the branches you choose) can log in.
 
@@ -51,7 +53,7 @@ jobs:
 
 For production, pin each `uses:` action to a commit SHA instead of a version tag.
 
-## GitLab CI
+## GitLab CI (example: AWS)
 
 Set the CI variable `TFPREFLIGHT_ROLE_ARN` to your tfpreflight role. In AWS, set the role's trust policy to accept GitLab's OIDC login, limited to your project and the branches or tags you choose.
 
@@ -87,4 +89,4 @@ preflight:
 - **Don't add `|| true`** after the check command. Its exit code is what should pass or fail the job.
 - **Keep the JSON report private.** It can contain resource names and IDs, so limit who can see your CI artifacts and how long they're kept.
 
-`--principal` is optional. It names the role that will run the apply, if that's different from the one tfpreflight logs in as.
+`--principal` is optional. It names the identity that will run the apply, if that's different from the one tfpreflight logs in as. For AWS, it's a role ARN.
