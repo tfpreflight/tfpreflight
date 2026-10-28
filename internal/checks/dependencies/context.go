@@ -46,7 +46,10 @@ type ProviderContext struct {
 	Profile           string
 	ProfileKind       string
 	ProfileReferences []string
-	AllowedAccounts   []string
+	// AllowedAccounts is set when allowed_account_ids is a constant list.
+	// AllowedAccountsReferences is what it references otherwise.
+	AllowedAccounts           []string
+	AllowedAccountsReferences []string
 	// AssumeRole is the role the provider assumes, if any.
 	AssumeRole *AssumeRole
 	// Reason is set when the provider configuration rules out inspecting with
@@ -62,6 +65,9 @@ type AssumeRole struct {
 	RoleARNReferences []string
 	// ExternalID is a literal external ID, if one is set.
 	ExternalID string
+	// ExternalIDReferences is what it references otherwise, such as
+	// var.external_id.
+	ExternalIDReferences []string
 	// Unresolved is why tfpreflight cannot assume the role as the provider
 	// would.
 	Unresolved string
@@ -99,10 +105,12 @@ func assumeRole(raw json.RawMessage) *AssumeRole {
 		role.Unresolved = "the provider's assume_role.role_arn is an expression tfpreflight cannot evaluate"
 	}
 	if _, ok := block["external_id"]; ok {
-		if value, _, ok := literal("external_id"); ok {
+		if value, references, ok := literal("external_id"); ok {
 			role.ExternalID = value
+		} else if len(references) > 0 {
+			role.ExternalIDReferences = references
 		} else {
-			role.Unresolved = "the provider's assume_role.external_id is not a literal"
+			role.Unresolved = "the provider's assume_role.external_id is an expression tfpreflight cannot evaluate"
 		}
 	}
 	for _, name := range []string{"policy", "policy_arns"} {
@@ -137,7 +145,13 @@ func providerContext(doc planDocument) ProviderContext {
 	if raw, ok := p.Expressions["allowed_account_ids"]; ok {
 		var known bool
 		provider.AllowedAccounts, known = allowedAccounts(raw)
-		if !known {
+		var e expression
+		_ = json.Unmarshal(raw, &e)
+		switch {
+		case known:
+		case len(e.References) > 0:
+			provider.AllowedAccountsReferences = e.References
+		default:
 			provider.Reason = "provider account restriction is unresolved"
 			return provider
 		}

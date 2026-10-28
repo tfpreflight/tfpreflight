@@ -40,7 +40,7 @@ const howToPassPrincipal = "permissions were not checked; pass --principal <ARN 
 // providerRole is the role the provider assumes, resolved like the region: a
 // literal, or exactly var.<name> with the value the plan recorded. When it
 // cannot be named, role is empty and reason says why.
-func providerRole(provider dependencies.ProviderContext, variable func() (string, bool, error)) (role, source, reason string) {
+func providerRole(provider dependencies.ProviderContext, variable func() (string, bool, error), local func() (string, string, bool, error)) (role, source, reason string) {
 	assume := provider.AssumeRole
 	if assume == nil {
 		return "", "", ""
@@ -52,6 +52,13 @@ func providerRole(provider dependencies.ProviderContext, variable func() (string
 		return assume.RoleARN, IdentityFromAssumeRole, ""
 	}
 	const subject = "the provider's assume_role.role_arn"
+	if name, single := singleLocal(assume.RoleARNReferences); single {
+		value, source, reason := valueFromLocal(subject, name, local)
+		if reason != "" {
+			return "", "", reason
+		}
+		return value, IdentityFromAssumeRole + " (" + source + ")", ""
+	}
 	name, value, problem, _ := directVariable(assume.RoleARNReferences, variable, provider.Variables)
 	switch problem {
 	case variableComputed:
@@ -75,7 +82,7 @@ func applyIdentity(ctx context.Context, sources contextSources, config sdk.Confi
 		return withApplyIdentity(identity, principal, IdentityFromFlag, "")
 	}
 	if provider.AssumeRole != nil {
-		role, source, reason := providerRole(provider, sources.AssumeRoleVariable)
+		role, source, reason := providerRole(provider, sources.AssumeRoleVariable, sources.AssumeRoleLocal)
 		if role == "" {
 			identity.ApplyIdentityNote = "the provider assumes a role tfpreflight cannot name: " + reason + "; " + howToPassPrincipal
 			return identity

@@ -77,10 +77,18 @@ type contextSources struct {
 	// ProfileVariable and ProfileLocal do the same for the provider's profile.
 	ProfileVariable func() (string, bool, error)
 	ProfileLocal    func() (name, value string, ok bool, err error)
-	// AssumeRoleVariable does the same for assume_role.role_arn.
+	// AssumeRoleVariable and AssumeRoleLocal do the same for
+	// assume_role.role_arn, and ExternalIDVariable and ExternalIDLocal for
+	// assume_role.external_id.
 	AssumeRoleVariable func() (string, bool, error)
-	RoleARN            func(context.Context, sdk.Config, string) (string, error)
-	AssumeRole         func(ctx context.Context, config sdk.Config, role, externalID string) (sdk.Config, error)
+	AssumeRoleLocal    func() (name, value string, ok bool, err error)
+	ExternalIDVariable func() (string, bool, error)
+	ExternalIDLocal    func() (name, value string, ok bool, err error)
+	// AllowedAccountsList reads how the provider block writes
+	// allowed_account_ids; see plan.ProviderStringList.
+	AllowedAccountsList func() (items []plan.StringListItem, wholeVar string, ok bool, err error)
+	RoleARN             func(context.Context, sdk.Config, string) (string, error)
+	AssumeRole          func(ctx context.Context, config sdk.Config, role, externalID string) (sdk.Config, error)
 }
 
 func productionContextSources() contextSources {
@@ -117,6 +125,18 @@ func productionContextSources() contextSources {
 		AssumeRoleVariable: func() (string, bool, error) {
 			return plan.AssumeRoleVariable(".")
 		},
+		AssumeRoleLocal: func() (string, string, bool, error) {
+			return plan.ProviderLocal(".", "assume_role", "role_arn")
+		},
+		ExternalIDVariable: func() (string, bool, error) {
+			return plan.ProviderVariable(".", "assume_role", "external_id")
+		},
+		ExternalIDLocal: func() (string, string, bool, error) {
+			return plan.ProviderLocal(".", "assume_role", "external_id")
+		},
+		AllowedAccountsList: func() ([]plan.StringListItem, string, bool, error) {
+			return plan.ProviderStringList(".", "", "allowed_account_ids")
+		},
 		RoleARN:    roleARN,
 		AssumeRole: assumeRole,
 	}
@@ -141,7 +161,7 @@ func resolveRunContext(ctx context.Context, sources contextSources, planJSON []b
 	// The inspection credentials come from the profile the provider block
 	// names, as Terraform's do: no other profile can be shown to be the same
 	// account. Without one, they come from the environment.
-	inputs := scopeInputs{Provider: provider, ProfileVariable: sources.ProfileVariable, ProfileLocal: sources.ProfileLocal}
+	inputs := scopeInputs{Provider: provider, ProfileVariable: sources.ProfileVariable, ProfileLocal: sources.ProfileLocal, AllowedAccountsList: sources.AllowedAccountsList}
 	profile, profileSource, _ := resolveProfile(inputs)
 	config, err := sources.LoadConfig(ctx, profile)
 	if err != nil {
@@ -163,7 +183,7 @@ func resolveRunContext(ctx context.Context, sources contextSources, planJSON []b
 	run := RunContext{Identity: applyIdentity(ctx, sources, config, inspection, principal, provider), Profile: profile, ProfileSource: profileSource}
 	// The account is the role's when the provider assumes one.
 	accountIdentity := inspection
-	role, _, roleReason := providerRole(provider, sources.AssumeRoleVariable)
+	role, _, roleReason := providerRole(provider, sources.AssumeRoleVariable, sources.AssumeRoleLocal)
 	if role != "" {
 		accountIdentity = role
 	}
@@ -188,7 +208,12 @@ func resolveRunContext(ctx context.Context, sources contextSources, planJSON []b
 	case sources.AssumeRole == nil:
 		run.InspectionUnavailable = "assuming the provider's role " + role + " is unavailable"
 	default:
-		assumed, err := sources.AssumeRole(ctx, config, role, provider.AssumeRole.ExternalID)
+		externalID, reason := providerExternalID(provider, sources.ExternalIDVariable, sources.ExternalIDLocal)
+		if reason != "" {
+			run.InspectionUnavailable = "the provider assumes a role tfpreflight cannot assume: " + reason
+			break
+		}
+		assumed, err := sources.AssumeRole(ctx, config, role, externalID)
 		if err != nil {
 			run.InspectionUnavailable = "could not assume the provider's role " + role + ": " + err.Error()
 		} else {
@@ -251,6 +276,9 @@ type scopeInputs struct {
 	// profile is unproven.
 	ProfileVariable func() (string, bool, error)
 	ProfileLocal    func() (name, value string, ok bool, err error)
+	// AllowedAccountsList may be nil, and then an allowed_account_ids that
+	// references a variable or a local is unproven.
+	AllowedAccountsList func() (items []plan.StringListItem, wholeVar string, ok bool, err error)
 	// EnvironmentRegion is the region the SDK resolved from AWS_REGION,
 	// AWS_DEFAULT_REGION or the profile: where the provider looks too.
 	EnvironmentRegion string
@@ -280,6 +308,14 @@ func resolveScope(in scopeInputs) scope {
 	var regionReason string
 	resolved.Region, resolved.RegionSource, regionReason = resolveRegion(in)
 	profile, _, profileReason := resolveProfile(in)
+	// The accounts the provider allows are decided here too. One that cannot be
+	// resolved is the provider context's own reason, which comes after the
+	// account checks.
+	accounts, accountsReason := resolveAllowedAccounts(in)
+	in.Provider.AllowedAccounts = accounts
+	if in.Provider.Reason == "" {
+		in.Provider.Reason = accountsReason
+	}
 	if identity, err := arn.Parse(in.InspectionIdentity); err == nil {
 		resolved.Account = identity.AccountID
 		resolved.Partition = identity.Partition

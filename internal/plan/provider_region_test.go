@@ -3,6 +3,7 @@ package plan
 import (
 	"os"
 	"path/filepath"
+	"reflect"
 	"testing"
 )
 
@@ -98,6 +99,56 @@ func TestRegionLocalAcceptsOnlyAPlainString(t *testing.T) {
 			_, got, ok, err := RegionLocal(dir)
 			if (err != nil) != tc.failure || ok != tc.ok || got != tc.want {
 				t.Fatalf("RegionLocal = %q, %v, %v; want %q, %v, failure %v", got, ok, err, tc.want, tc.ok, tc.failure)
+			}
+		})
+	}
+}
+
+func TestProviderLocalReadsAnyArgument(t *testing.T) {
+	dir := t.TempDir()
+	source := "provider \"aws\" {\n  profile = local.profile\n  assume_role {\n    external_id = local.external\n  }\n}\nlocals {\n  profile  = \"dev\"\n  external = \"ext-1\"\n}\n"
+	if err := os.WriteFile(filepath.Join(dir, "main.tf"), []byte(source), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	for _, tc := range []struct{ block, attribute, name, value string }{
+		{"", "profile", "profile", "dev"},
+		{"assume_role", "external_id", "external", "ext-1"},
+	} {
+		name, value, ok, err := ProviderLocal(dir, tc.block, tc.attribute)
+		if err != nil || !ok || name != tc.name || value != tc.value {
+			t.Errorf("ProviderLocal(%q, %q) = %q, %q, %v, %v; want %q, %q", tc.block, tc.attribute, name, value, ok, err, tc.name, tc.value)
+		}
+	}
+}
+
+func TestProviderStringListReadsOnlyWhatItCanName(t *testing.T) {
+	for name, tc := range map[string]struct {
+		source   string
+		items    []StringListItem
+		wholeVar string
+		ok       bool
+	}{
+		"literals":                      {source: `allowed_account_ids = ["111111111111", "222222222222"]`, items: []StringListItem{{Value: "111111111111"}, {Value: "222222222222"}}, ok: true},
+		"a variable":                    {source: `allowed_account_ids = [var.account]`, items: []StringListItem{{Var: "account"}}, ok: true},
+		"literal and variable":          {source: `allowed_account_ids = ["111111111111", var.account]`, items: []StringListItem{{Value: "111111111111"}, {Var: "account"}}, ok: true},
+		"a list variable":               {source: `allowed_account_ids = var.accounts`, wholeVar: "accounts", ok: true},
+		"a local string":                {source: "allowed_account_ids = [local.account]\n}\nlocals {\n  account = \"333333333333\"", items: []StringListItem{{Value: "333333333333"}}, ok: true},
+		"a local list":                  {source: "allowed_account_ids = local.accounts\n}\nlocals {\n  accounts = [\"444444444444\", \"555555555555\"]", items: []StringListItem{{Value: "444444444444"}, {Value: "555555555555"}}, ok: true},
+		"a local list of variables":     {source: "allowed_account_ids = local.accounts\n}\nlocals {\n  accounts = [var.account]"},
+		"a local built from a variable": {source: "allowed_account_ids = [local.account]\n}\nlocals {\n  account = var.account"},
+		"a function":                    {source: `allowed_account_ids = concat(var.a, var.b)`},
+		"an attribute":                  {source: `allowed_account_ids = [var.accounts.prod]`},
+		"an interpolation":              {source: `allowed_account_ids = ["${var.account}"]`},
+		"not set":                       {source: ``},
+	} {
+		t.Run(name, func(t *testing.T) {
+			dir := t.TempDir()
+			if err := os.WriteFile(filepath.Join(dir, "main.tf"), []byte("provider \"aws\" {\n  "+tc.source+"\n}\n"), 0o600); err != nil {
+				t.Fatal(err)
+			}
+			items, wholeVar, ok, err := ProviderStringList(dir, "", "allowed_account_ids")
+			if err != nil || ok != tc.ok || wholeVar != tc.wholeVar || !reflect.DeepEqual(items, tc.items) {
+				t.Fatalf("ProviderStringList = %+v, %q, %v, %v; want %+v, %q, %v", items, wholeVar, ok, err, tc.items, tc.wholeVar, tc.ok)
 			}
 		})
 	}
