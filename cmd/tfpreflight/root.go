@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
@@ -19,7 +20,9 @@ var Version = "dev"
 var Commit = "unknown"
 
 func newRootCommand() *cobra.Command {
-	return rootWithServices(check.Production())
+	root := rootWithServices(check.Production())
+	useName(root, invokedName(os.Args[0]))
+	return root
 }
 
 func rootWithServices(deps check.Dependencies) *cobra.Command {
