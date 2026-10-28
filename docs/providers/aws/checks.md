@@ -10,7 +10,7 @@ tfpreflight has rules for 61 AWS provider versions, from 5.98.0 to 6.70.0, with 
 
 ## Credentials and calls
 
-tfpreflight uses your normal AWS login, the same one the AWS CLI uses: environment variables, a profile, SSO, or a role from your CI system. If the provider block names a profile, as plain text, a variable or a local, it uses that profile's credentials instead, as Terraform does. It makes only these calls:
+tfpreflight uses your normal AWS login, the same one the AWS CLI uses. It loads credentials with the AWS SDK's default chain: environment variables, shared config and credentials files, SSO profiles (after `aws sso login`), `credential_process`, profiles that assume a role, and web identity logins as CI systems use them. Anything else that chain accepts works too. If the provider block names a profile, as plain text, a variable or a local, it uses that profile's credentials instead, as Terraform does. It makes only these calls:
 
 - **Read calls** (Describe, Get, List and similar) to check names, dependencies and quotas.
 - **The IAM policy simulator**, to ask whether the identity that will run the apply is allowed to make each call.

@@ -7,6 +7,8 @@ General limits that apply to any provider are in [limitations.md](../../limitati
 | Situation | What happens | What you can do |
 |---|---|---|
 | **No AWS credentials** | It only reads your plan. AWS checks don't run. | Log in to AWS first, or run it in CI with a role. See [ci.md](../../ci.md). |
+| **The profile you chose has no usable credentials** (`AWS_PROFILE`, or the provider block's `profile`), for example an SSO login that has expired | AWS checks don't run. The result names the profile and says why, in the AWS SDK's words. | For SSO, run `aws sso login --profile <name>` and run tfpreflight again. Otherwise fix what the reason says. |
+| **The profile you chose isn't in your AWS config** | AWS checks don't run. The result names the profile. | Define it in your AWS config (`~/.aws/config`), or correct `AWS_PROFILE`. |
 | **The role can't read your account** | AWS refuses the questions. Those checks are marked *not checked*. | Give the role the [read-only policy](permissions.md). |
 | **Resources in a second region or account** (a provider `alias` like `aws.west`, or a module with its own `provider "aws"` block) | Those resources aren't checked against AWS. tfpreflight checks one account and region per run: your main AWS provider. | Run a separate check for that account and region. |
 | **The region is calculated** (with a function, a condition, or a local that depends on other values) | AWS checks don't run, because tfpreflight doesn't know where to look. | Write the region as plain text, a root variable, or a plain local, or set `AWS_REGION`. |
