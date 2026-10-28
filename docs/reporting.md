@@ -15,7 +15,7 @@ tfpreflight check --plan=tfplan --report=tfpreflight-report.json
 
 It also prints the whole report on screen. **Read it before you share it.** The file is saved so only you can read it.
 
-**What's in it:** the tfpreflight version, your AWS provider version, the rules version, and the findings, with private details removed.
+**What's in it:** the tfpreflight version, your provider version, the rules version, and the findings, with private details removed.
 
 **What's taken out:** plan values, account IDs, ARNs, resource names, region and account details, file paths, free-text messages, and raw error messages. Resource names become labels like `resource-001`, so we can still match findings to each other without seeing your real names.
 
@@ -31,4 +31,4 @@ tfpreflight check --plan=tfplan \
 
 This version **keeps** account IDs, ARNs, resource names and paths. Read it before you share it.
 
-Neither report ever includes your plan file or your AWS credentials.
+Neither report ever includes your plan file or your cloud credentials.

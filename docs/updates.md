@@ -1,6 +1,6 @@
 # Updating the rules
 
-> **In short:** tfpreflight's rules know specific AWS provider versions. When AWS releases a new provider version, run `tfpreflight update` to get rules for it. You don't need to reinstall tfpreflight.
+> **In short:** tfpreflight's rules know specific provider versions. When a new provider version comes out, run `tfpreflight update` to get rules for it. You don't need to reinstall tfpreflight.
 
 ## Update
 
@@ -8,7 +8,7 @@
 tfpreflight update
 ```
 
-You'll see something like:
+You'll see something like this (example: AWS, the only provider today):
 
 ```text
 rules updated to 2026-10-27.1, covering AWS provider 5.98.0 to 6.70.0 (61 versions)

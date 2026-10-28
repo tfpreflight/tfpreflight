@@ -1,10 +1,10 @@
-# The AWS permissions tfpreflight needs
+# AWS: the permissions tfpreflight needs
 
 > **In short:** tfpreflight needs an AWS role that can **read** your account. We give you a ready-made policy. Create a role, attach the policy, and you're done. Nothing in it can change your infrastructure.
 
 ## Set it up in 3 steps
 
-1. **Create a role just for tfpreflight**, for example `tfpreflight-reader`. In CI, let your CI system log into it with a short-lived login (OIDC) instead of storing AWS keys. See [ci.md](ci.md).
+1. **Create a role just for tfpreflight**, for example `tfpreflight-reader`. In CI, let your CI system log into it with a short-lived login (OIDC) instead of storing AWS keys. See [ci.md](../../ci.md).
 2. **Attach the policy.** Copy [tfpreflight-iam-policy.json](tfpreflight-iam-policy.json) and add it to the role as an **inline** policy.
    - Why inline? The policy is about 9,600 characters. Inline policies allow up to 10,240 characters. Managed policies only allow 6,144, so it doesn't fit in one. If your company requires managed policies, split it into two.
 3. **Only if your AWS provider uses `assume_role`:** add the extra statement below.
