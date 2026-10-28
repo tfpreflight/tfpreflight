@@ -72,12 +72,23 @@ brews:
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     directory: Formula
+    # Without this, the tap commits as GoReleaser's own bot.
+    commit_author:
+      name: tfpreflight release
+      email: release@tfpreflight.dev
     homepage: https://github.com/tfpreflight/tfpreflight
     description: Check Terraform plans for predictable AWS apply failures
     install: |
       bin.install "tfpreflight"
     test: |
       system "#{bin}/tfpreflight", "version"
+
+# The changelog runs from the previous release tag. The pack bundles and the
+# installer have tags of their own that are not releases of the binary.
+git:
+  ignore_tags:
+    - "packs-*"
+    - installer
 
 changelog:
   use: git
