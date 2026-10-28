@@ -79,6 +79,9 @@ func TestInstallerChoosesTheNewestVersionTag(t *testing.T) {
 	for _, c := range []installCase{
 		{name: "installer release listed first", releases: pretty, installed: true, stdout: "Installed tfpreflight " + installVersion},
 		{name: "compact JSON", releases: compact, installed: true, stdout: "Installed tfpreflight " + installVersion},
+		// The layout the release workflows make: the pack and installer
+		// releases are pre-releases and the v* release is the latest.
+		{name: "pack and installer pre-releases listed first", releases: `[{"tag_name":"packs-2026-10-28.1","prerelease":true},{"tag_name":"installer","prerelease":true},{"tag_name":"packs-index","prerelease":true},{"tag_name":"v` + installVersion + `","prerelease":false}]`, installed: true, stdout: "Installed tfpreflight " + installVersion},
 		{name: "no version tag", releases: `[{"tag_name":"installer"},{"tag_name":"nightly"}]`, stderr: "could not determine the latest release tag; set TFPREFLIGHT_VERSION"},
 		{name: "empty list", releases: `[]`, stderr: "could not determine the latest release tag"},
 	} {
