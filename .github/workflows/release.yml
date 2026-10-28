@@ -50,13 +50,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
-      # The installer lives on a release of its own. It is never marked
-      # latest, and install.sh picks only v* tags, so it is never installed.
+      # The installer lives on a release of its own: a pre-release, so GitHub
+      # never takes it as latest. install.sh picks only v* tags, so it is never
+      # installed.
       - name: Publish stable installer asset
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if ! gh release view installer; then
-            gh release create installer --title "tfpreflight installer" --notes "Stable asset for get.tfpreflight.dev." --latest=false
+            gh release create installer --title "tfpreflight installer" --notes "Stable asset for get.tfpreflight.dev." --prerelease --latest=false
           fi
           gh release upload installer install.sh --clobber

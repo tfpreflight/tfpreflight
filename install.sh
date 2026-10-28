@@ -89,8 +89,9 @@ newest_version_tag() {
 tag=${TFPREFLIGHT_VERSION:-}
 if [ -z "$tag" ]; then
   release_json="$work_dir/releases.json"
-  # The first public releases are betas. GitHub's /releases/latest endpoint
-  # excludes prereleases, while the releases list includes them.
+  # The release list, not /releases/latest: the choice then never depends on
+  # which release GitHub marks latest, and the pack and installer releases in
+  # the list are skipped by their tags.
   download "${TFPREFLIGHT_RELEASES_URL:-https://api.github.com/repos/$repository/releases?per_page=100}" "$release_json"
   tag=$(newest_version_tag "$release_json" || true)
   [ -n "$tag" ] || fail "could not determine the latest release tag; set TFPREFLIGHT_VERSION"

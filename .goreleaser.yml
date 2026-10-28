@@ -98,5 +98,8 @@ changelog:
       - '^docs:'
       - '^test:'
 
+# Every v* tag, betas included, is a normal release and the repository's latest.
+# The pack and installer releases are pre-releases, so they never take Latest.
 release:
-  prerelease: auto
+  prerelease: "false"
+  make_latest: true
