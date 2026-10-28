@@ -59,7 +59,7 @@ func contextChanges() []model.PlannedChange {
 // the SDK region instead of the run context would report the wrong one.
 func contextSourcesFor(identity string) contextSources {
 	return contextSources{
-		LoadConfig: func(context.Context) (sdk.Config, error) { return sdk.Config{Region: "us-east-1"}, nil },
+		LoadConfig: func(context.Context, string) (sdk.Config, error) { return sdk.Config{Region: "us-east-1"}, nil },
 		CallerIdentity: func(context.Context, sdk.Config) (string, error) {
 			if identity == "" {
 				return "", errors.New("no credentials")
@@ -214,7 +214,7 @@ func TestDependencyScopeIsTheRunContext(t *testing.T) {
 		"resolved":               {contextPlan("eu-west-1"), inspector},
 		"region from a variable": {contextPlan(""), inspector},
 		"no inspection identity": {contextPlan("eu-west-1"), ""},
-		"profile differs": {[]byte(strings.Replace(string(contextPlan("eu-west-1")),
+		"profile named by the provider": {[]byte(strings.Replace(string(contextPlan("eu-west-1")),
 			`"region":{"constant_value":"eu-west-1"}`, `"region":{"constant_value":"eu-west-1"},"profile":{"constant_value":"prod"}`, 1)), inspector},
 		"account not allowed": {[]byte(strings.Replace(string(contextPlan("eu-west-1")),
 			`"region":{"constant_value":"eu-west-1"}`, `"region":{"constant_value":"eu-west-1"},"allowed_account_ids":{"constant_value":["999999999999"]}`, 1)), inspector},
@@ -358,7 +358,7 @@ func TestRegionResolvesLikeTerraform(t *testing.T) {
 				t.Fatal(err)
 			}
 			sources := contextSourcesFor(inspector)
-			sources.LoadConfig = func(context.Context) (sdk.Config, error) { return sdk.Config{Region: tc.environment}, nil }
+			sources.LoadConfig = func(context.Context, string) (sdk.Config, error) { return sdk.Config{Region: tc.environment}, nil }
 			sources.RegionVariable = func() (string, bool, error) { return plan.RegionVariable(dir) }
 			sources.RegionLocal = func() (string, string, bool, error) { return plan.RegionLocal(dir) }
 			run := resolveRunContext(context.Background(), sources, contextPlanRegion(tc.region), "")

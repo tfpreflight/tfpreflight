@@ -2,6 +2,11 @@
 
 All notable changes to tfpreflight are recorded here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 0.1.0-beta.2 (unreleased)
+
+- Fixed: a provider block with `profile = var.aws_profile` (or a local) no longer makes tfpreflight skip every AWS check. The profile is read the way the region is, and the AWS checks use that profile's credentials, as Terraform does.
+- The same variable and local forms now work for `assume_role`'s `role_arn` and `external_id` and for `allowed_account_ids`.
+
 ## 0.1.0-beta.1 (2026-10-28)
 
 First public beta. AWS is the first supported provider.

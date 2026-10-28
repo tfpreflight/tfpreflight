@@ -22,7 +22,13 @@ func DependencyRuntime(ctx context.Context, data []byte, version string, config 
 	if err != nil {
 		return nil, nil, err
 	}
-	decided := resolveScope(scopeInputs{Provider: plan.DefaultContext, InspectionIdentity: inspectionIdentity, Profile: inspectionProfile(), EnvironmentRegion: config.Region})
+	// As in a run, the credentials come from the provider's profile when it
+	// names a literal one; the caller's config stands for them.
+	profile := inspectionProfile()
+	if plan.DefaultContext.Profile != "" {
+		profile = plan.DefaultContext.Profile
+	}
+	decided := resolveScope(scopeInputs{Provider: plan.DefaultContext, InspectionIdentity: inspectionIdentity, Profile: profile, EnvironmentRegion: config.Region})
 	outcome, err := dependencyRuntime(ctx, plan, version, config, decided, resolver)
 	return outcome.Results, outcome.Coverage, err
 }

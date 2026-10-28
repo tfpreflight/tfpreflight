@@ -220,6 +220,9 @@ func debugLines(run RunContext, providerVersion string, generatedLoaded bool, ru
 	debug := []string{fmt.Sprintf("AWS provider version: %s", providerVersion), fmt.Sprintf("Rules for this provider version loaded: %t", generatedLoaded)}
 	if run.Resolved() {
 		debug = append(debug, fmt.Sprintf("AWS context: account %s, region %s (from %s)", run.Account, run.Region, run.RegionSource))
+		if run.Profile != "" {
+			debug = append(debug, fmt.Sprintf("AWS profile: %s (from %s)", run.Profile, run.ProfileSource))
+		}
 	} else {
 		debug = append(debug, "AWS context unresolved: "+run.Unresolved)
 	}
