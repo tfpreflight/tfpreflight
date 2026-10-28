@@ -18,6 +18,20 @@ const (
 	RegionOther = "other"
 )
 
+// How the plan records a string argument of the provider block, other than the
+// region, which has its own constants above.
+const (
+	// ArgumentAbsent means the provider block does not set the argument.
+	ArgumentAbsent = "absent"
+	// ArgumentLiteral is a value Terraform evaluated without any input.
+	ArgumentLiteral = "literal"
+	// ArgumentReferences means the expression reads other values; see
+	// RegionReferences.
+	ArgumentReferences = "references"
+	// ArgumentOther is an expression with neither a value nor references.
+	ArgumentOther = "other"
+)
+
 // ProviderContext is what the plan proves about the default provider's scope. It
 // describes the region without deciding it: that needs the environment and the
 // provider block's source, which the AWS context resolver holds.
@@ -27,9 +41,12 @@ type ProviderContext struct {
 	RegionKind       string
 	RegionReferences []string
 	// Variables are the root module input values the plan recorded.
-	Variables       map[string]any
-	Profile         string
-	AllowedAccounts []string
+	Variables map[string]any
+	// Profile is set only when ProfileKind is ArgumentLiteral.
+	Profile           string
+	ProfileKind       string
+	ProfileReferences []string
+	AllowedAccounts   []string
 	// AssumeRole is the role the provider assumes, if any.
 	AssumeRole *AssumeRole
 	// Reason is set when the provider configuration rules out inspecting with
@@ -116,14 +133,7 @@ func providerContext(doc planDocument) ProviderContext {
 		provider.AssumeRole = assumeRole(raw)
 	}
 	provider.RegionKind, provider.Region, provider.RegionReferences = providerRegion(p.Expressions)
-	if raw, ok := p.Expressions["profile"]; ok {
-		v, known := constantExpression(raw)
-		provider.Profile, _ = v.(string)
-		if !known || provider.Profile == "" {
-			provider.Reason = "provider profile is unresolved"
-			return provider
-		}
-	}
+	provider.ProfileKind, provider.Profile, provider.ProfileReferences = stringArgument(p.Expressions, "profile")
 	if raw, ok := p.Expressions["allowed_account_ids"]; ok {
 		var known bool
 		provider.AllowedAccounts, known = allowedAccounts(raw)
@@ -160,6 +170,26 @@ func constantExpression(raw json.RawMessage) (any, bool) {
 		return e.ConstantValue, true
 	}
 	return nil, false
+}
+
+// stringArgument reads a string argument of the provider block the way
+// providerRegion reads the region: described, not decided.
+func stringArgument(expressions map[string]json.RawMessage, name string) (kind, value string, references []string) {
+	raw, ok := expressions[name]
+	if !ok {
+		return ArgumentAbsent, "", nil
+	}
+	var e expression
+	_ = json.Unmarshal(raw, &e)
+	v, known := constantExpression(raw)
+	switch literal, _ := v.(string); {
+	case known && literal != "":
+		return ArgumentLiteral, literal, nil
+	case len(e.References) > 0:
+		return ArgumentReferences, "", e.References
+	default:
+		return ArgumentOther, "", nil
+	}
 }
 
 func providerRegion(expressions map[string]json.RawMessage) (kind, region string, references []string) {

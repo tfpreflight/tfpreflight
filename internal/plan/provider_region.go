@@ -42,7 +42,13 @@ func ProviderVariable(dir, block, attributeName string) (name string, ok bool, e
 // defined once, in this directory, as a plain string. ok is false for anything
 // else: a local built from variables, functions or other locals is not read.
 func RegionLocal(dir string) (name, value string, ok bool, err error) {
-	expression, found, err := providerExpression(dir, "", "region")
+	return ProviderLocal(dir, "", "region")
+}
+
+// ProviderLocal is RegionLocal for any string argument of the default AWS
+// provider block, or of its nested block when block is set.
+func ProviderLocal(dir, block, attributeName string) (name, value string, ok bool, err error) {
+	expression, found, err := providerExpression(dir, block, attributeName)
 	if err != nil || !found {
 		return "", "", false, err
 	}
