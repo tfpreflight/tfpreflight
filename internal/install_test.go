@@ -28,6 +28,11 @@ type installCase struct {
 	// releases, when set, is the release list the installer chooses a
 	// version from; otherwise TFPREFLIGHT_VERSION pins it.
 	releases string
+	// otherTfp puts a different tfp program on PATH before the install.
+	otherTfp bool
+	// shortcut is what the install directory must hold as tfp afterwards:
+	// "link" for a link to tfpreflight, "none" for nothing, "" to not check.
+	shortcut string
 }
 
 // The installer trusts the checksum file only after cosign verifies its
@@ -47,6 +52,21 @@ func TestInstallerVerifiesTheSignedChecksums(t *testing.T) {
 		{name: "bundle missing", cosign: "verifies", release: removeFile("tfpreflight_9.9.9_checksums.txt.sigstore.json"), stderr: "could not download tfpreflight_9.9.9_checksums.txt.sigstore.json"},
 		{name: "archive altered", cosign: "verifies", release: appendTo(archive), stderr: "checksum verification failed for " + archive},
 		{name: "unknown option", args: []string{"--verify"}, stderr: "unknown option: --verify"},
+	} {
+		t.Run(c.name, func(t *testing.T) { runInstaller(t, c, archive) })
+	}
+}
+
+// The installer adds tfp as a link to tfpreflight, unless another tfp is
+// already on PATH: then it leaves that one alone and says so.
+func TestInstallerAddsTheTfpShortcut(t *testing.T) {
+	if runtime.GOOS != "darwin" && runtime.GOOS != "linux" {
+		t.Skip("install.sh supports macOS and Linux")
+	}
+	archive := "tfpreflight_" + installVersion + "_" + runtime.GOOS + "_" + runtime.GOARCH + ".tar.gz"
+	for _, c := range []installCase{
+		{name: "no tfp on PATH", installed: true, shortcut: "link", stdout: "Also available as tfp."},
+		{name: "another tfp on PATH", otherTfp: true, installed: true, shortcut: "none", stdout: "Skipped the tfp shortcut: "},
 	} {
 		t.Run(c.name, func(t *testing.T) { runInstaller(t, c, archive) })
 	}
@@ -99,6 +119,11 @@ func runInstaller(t *testing.T, c installCase, archive string) {
 	}
 	cosignArgs := filepath.Join(dir, "cosign-args")
 	writeFakeCosign(t, bin, c.cosign, cosignArgs)
+	if c.otherTfp {
+		if err := os.WriteFile(filepath.Join(bin, "tfp"), []byte("#!/bin/sh\necho another tfp\n"), 0o755); err != nil {
+			t.Fatal(err)
+		}
+	}
 	installer, err := filepath.Abs(filepath.Join(repoRoot, "install.sh"))
 	if err != nil {
 		t.Fatal(err)
@@ -128,6 +153,22 @@ func runInstaller(t *testing.T, c installCase, archive string) {
 		t.Fatalf("stdout %q, stderr %q; want %q and %q", stdout.String(), stderr.String(), c.stdout, c.stderr)
 	}
 	assertCosignIdentity(t, c.cosign, cosignArgs)
+	assertShortcut(t, c.shortcut, filepath.Join(target, "tfp"))
+}
+
+// assertShortcut checks the tfp the installer left in the install directory.
+func assertShortcut(t *testing.T, want, path string) {
+	t.Helper()
+	switch want {
+	case "link":
+		if link, err := os.Readlink(path); err != nil || link != "tfpreflight" {
+			t.Fatalf("tfp is %q (%v), want a link to tfpreflight", link, err)
+		}
+	case "none":
+		if _, err := os.Lstat(path); err == nil {
+			t.Fatalf("tfp was created although another tfp is on PATH")
+		}
+	}
 }
 
 // assertCosignIdentity checks cosign was asked to verify against the release
