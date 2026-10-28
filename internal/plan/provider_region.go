@@ -42,7 +42,13 @@ func ProviderVariable(dir, block, attributeName string) (name string, ok bool, e
 // defined once, in this directory, as a plain string. ok is false for anything
 // else: a local built from variables, functions or other locals is not read.
 func RegionLocal(dir string) (name, value string, ok bool, err error) {
-	expression, found, err := providerExpression(dir, "", "region")
+	return ProviderLocal(dir, "", "region")
+}
+
+// ProviderLocal is RegionLocal for any string argument of the default AWS
+// provider block, or of its nested block when block is set.
+func ProviderLocal(dir, block, attributeName string) (name, value string, ok bool, err error) {
+	expression, found, err := providerExpression(dir, block, attributeName)
 	if err != nil || !found {
 		return "", "", false, err
 	}
@@ -56,6 +62,85 @@ func RegionLocal(dir string) (name, value string, ok bool, err error) {
 	}
 	value, ok = plainString(definitions[0])
 	return name, value, ok, nil
+}
+
+// StringListItem is one element of a list the provider block writes out.
+type StringListItem struct {
+	// Value is a string literal, or a local that is a plain string.
+	Value string
+	// Var is the root variable the element is exactly, when Value is empty.
+	Var string
+}
+
+// ProviderStringList reads a list-of-strings argument of the default AWS
+// provider block, or of its nested block when block is set, from the source.
+// The list may be written out, each element a string literal, exactly
+// var.<name> or exactly a local that is a plain string; or be exactly
+// var.<name>, a list variable, named by wholeVar; or be exactly a local that is
+// a list written out with literals only. ok is false for anything else,
+// including a block that cannot be found or read.
+func ProviderStringList(dir, block, attributeName string) (items []StringListItem, wholeVar string, ok bool, err error) {
+	expression, found, err := providerExpression(dir, block, attributeName)
+	if err != nil || !found {
+		return nil, "", false, err
+	}
+	if name, isVariable, _ := traversalName(expression, "var"); isVariable {
+		return nil, name, true, nil
+	}
+	local := func(name string) (string, bool) {
+		definitions, err := localDefinitions(dir, name)
+		if err != nil || len(definitions) != 1 {
+			return "", false
+		}
+		return plainString(definitions[0])
+	}
+	if name, isLocal, _ := traversalName(expression, "local"); isLocal {
+		definitions, err := localDefinitions(dir, name)
+		if err != nil || len(definitions) != 1 {
+			return nil, "", false, err
+		}
+		items, ok = listItems(definitions[0], nil)
+		return items, "", ok, nil
+	}
+	items, ok = listItems(expression, local)
+	return items, "", ok, nil
+}
+
+// listItems reads a list written out as [a, b]. local resolves an element that
+// is a local, and is nil where locals are not allowed.
+func listItems(expression hcl.Expression, local func(name string) (string, bool)) ([]StringListItem, bool) {
+	list, isList := expression.(*hclsyntax.TupleConsExpr)
+	if !isList {
+		return nil, false
+	}
+	items := make([]StringListItem, 0, len(list.Exprs))
+	for _, element := range list.Exprs {
+		item, ok := listItem(element, local)
+		if !ok {
+			return nil, false
+		}
+		items = append(items, item)
+	}
+	return items, true
+}
+
+// listItem reads one element: a string literal, or, where local is set, exactly
+// var.<name> or a local that is a plain string.
+func listItem(element hcl.Expression, local func(name string) (string, bool)) (StringListItem, bool) {
+	if value, isString := plainString(element); isString {
+		return StringListItem{Value: value}, true
+	}
+	if local == nil {
+		return StringListItem{}, false
+	}
+	if name, isVariable, _ := traversalName(element, "var"); isVariable {
+		return StringListItem{Var: name}, true
+	}
+	if name, isLocal, _ := traversalName(element, "local"); isLocal {
+		value, found := local(name)
+		return StringListItem{Value: value}, found
+	}
+	return StringListItem{}, false
 }
 
 // providerExpression is the one expression the default AWS provider block sets

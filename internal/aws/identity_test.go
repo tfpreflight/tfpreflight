@@ -20,7 +20,7 @@ func (f fakeSTSClient) GetCallerIdentity(context.Context, *sts.GetCallerIdentity
 
 func TestDiscoverAWSContextUsesExplicitPrincipal(t *testing.T) {
 	sources := contextSources{
-		LoadConfig: func(context.Context) (sdk.Config, error) { return sdk.Config{}, nil },
+		LoadConfig: func(context.Context, string) (sdk.Config, error) { return sdk.Config{}, nil },
 		CallerIdentity: func(ctx context.Context, _ sdk.Config) (string, error) {
 			return callerIdentity(ctx, fakeSTSClient{arn: "arn:aws:iam::123:user/inspector"})
 		},
