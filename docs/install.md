@@ -59,17 +59,22 @@ curl -fsSL https://get.tfpreflight.dev/install.sh | TFPREFLIGHT_VERSION=v0.1.0-b
    - the archive for your system
    - `tfpreflight_<version>_checksums.txt`
    - `tfpreflight_<version>_checksums.txt.sigstore.json`
-2. Check the signature (optional, needs cosign):
-
-   ```sh
-   cosign verify-blob \
-     --certificate-identity-regexp '^https://github.com/tfpreflight/tfpreflight/.github/workflows/release.yml@refs/tags/v' \
-     --certificate-oidc-issuer https://token.actions.githubusercontent.com \
-     --bundle tfpreflight_<version>_checksums.txt.sigstore.json \
-     tfpreflight_<version>_checksums.txt
-   ```
-
+2. Check the signature (optional, needs cosign). See [Verify the signature yourself](#verify-the-signature-yourself) below.
 3. Check the archive wasn't changed:
    - Mac: `shasum -a 256 -c --ignore-missing tfpreflight_<version>_checksums.txt`
    - Linux: `sha256sum -c --ignore-missing tfpreflight_<version>_checksums.txt`
 4. Unzip it and move `tfpreflight` (or `tfpreflight.exe` on Windows) into a folder on your `PATH`.
+
+## Verify the signature yourself
+
+Every release's checksum file is signed by this project's release workflow. With [cosign](https://docs.sigstore.dev/cosign/system_config/installation/) installed, run this in the folder with the two files:
+
+```sh
+cosign verify-blob \
+  --certificate-identity-regexp '^https://github.com/tfpreflight/tfpreflight/.github/workflows/release.yml@refs/tags/v' \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --bundle tfpreflight_<version>_checksums.txt.sigstore.json \
+  tfpreflight_<version>_checksums.txt
+```
+
+It prints `Verified OK` when the signature is good. Then check your archive against the checksum file, as in step 3 above.
