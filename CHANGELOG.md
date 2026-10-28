@@ -2,6 +2,10 @@
 
 All notable changes to tfpreflight are recorded here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 0.1.0-beta.2 (unreleased)
+
+- Also available as `tfp`, a short name for `tfpreflight`: Homebrew and the install script add it as a link, e.g. `tfp check`.
+
 ## 0.1.0-beta.1 (2026-10-28)
 
 First public beta. AWS is the first supported provider.
