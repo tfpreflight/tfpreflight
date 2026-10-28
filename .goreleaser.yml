@@ -78,10 +78,13 @@ brews:
       email: release@tfpreflight.dev
     homepage: https://github.com/tfpreflight/tfpreflight
     description: Check Terraform plans for predictable AWS apply failures
+    # tfp is a short name for the same binary: a link, not a second copy.
     install: |
       bin.install "tfpreflight"
+      bin.install_symlink bin/"tfpreflight" => "tfp"
     test: |
       system "#{bin}/tfpreflight", "version"
+      system "#{bin}/tfp", "version"
 
 # The changelog runs from the previous release tag. The pack bundles and the
 # installer have tags of their own that are not releases of the binary.

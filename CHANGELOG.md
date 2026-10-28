@@ -4,6 +4,7 @@ All notable changes to tfpreflight are recorded here. Versions follow [Semantic 
 
 ## 0.1.0-beta.2 (unreleased)
 
+- Also available as `tfp`, a short name for `tfpreflight`: Homebrew and the install script add it as a link, e.g. `tfp check`.
 - Fixed: a provider block with `profile = var.aws_profile` (or a local) no longer makes tfpreflight skip every AWS check. The profile is read the way the region is, and the AWS checks use that profile's credentials, as Terraform does.
 - The same variable and local forms now work for `assume_role`'s `role_arn` and `external_id` and for `allowed_account_ids`.
 - Fixed: when the profile you chose (`AWS_PROFILE`, or the provider block's `profile`) gives no credentials, the result now says why, in the AWS SDK's words, instead of "no AWS credentials found". An SSO login that has expired or was never done is named with the command that fixes it (`aws sso login --profile <name>`), and a profile that is not in your AWS config is named. Credentials are loaded by the AWS SDK's default chain, as before: SSO, `credential_process`, assume-role and web identity profiles all work, and tests now cover each.

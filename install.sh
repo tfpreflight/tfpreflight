@@ -161,11 +161,25 @@ mkdir -p "$install_dir" || fail "cannot create $install_dir; choose a writable d
 [ -w "$install_dir" ] || fail "$install_dir is not writable; choose another directory or rerun the command yourself with the privileges you intend"
 install -m 0755 "$work_dir/tfpreflight" "$install_dir/tfpreflight"
 
+# tfp is a short name for the same program: a link, not a second copy. It is
+# made only when it would not hide or replace another tfp.
+shortcut="$install_dir/tfp"
+other_tfp=$(command -v tfp 2>/dev/null || true)
+if [ -n "$other_tfp" ] && [ "$other_tfp" != "$shortcut" ]; then
+  shortcut_note="Skipped the tfp shortcut: $other_tfp is already on PATH."
+elif { [ -e "$shortcut" ] || [ -L "$shortcut" ]; } && [ "$(readlink "$shortcut" 2>/dev/null)" != tfpreflight ]; then
+  shortcut_note="Skipped the tfp shortcut: $shortcut already exists."
+else
+  ln -sf tfpreflight "$shortcut"
+  shortcut_note="Also available as tfp."
+fi
+
 if [ "$signature_checked" = true ]; then
   printf 'Installed tfpreflight %s to %s/tfpreflight (signature and checksum verified)\n' "$version" "$install_dir"
 else
   printf 'Installed tfpreflight %s to %s/tfpreflight (checksum verified; signature not checked)\n' "$version" "$install_dir"
 fi
+printf '%s\n' "$shortcut_note"
 case ":$PATH:" in
   *":$install_dir:"*) ;;
   *) printf 'Add %s to PATH before running tfpreflight.\n' "$install_dir" ;;

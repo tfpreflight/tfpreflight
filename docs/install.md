@@ -9,6 +9,8 @@
 > curl -fsSL https://get.tfpreflight.dev/install.sh | sh
 > ```
 
+Also available as `tfp`, e.g. `tfp check`.
+
 ## Homebrew
 
 ```sh
