@@ -45,16 +45,7 @@ const (
 // a bare variable, or a local set to a plain string. The external ID reaches
 // the AssumeRole call, and is never printed.
 func TestAssumeRoleSettingsFromVariablesAndLocals(t *testing.T) {
-	inspector := "arn:aws:iam::123456789012:user/inspector"
-	for name, tc := range map[string]struct {
-		providerBlock  string
-		assumeRole     string // the assume_role block's expressions in the plan
-		variables      string
-		wantRole       string
-		wantSource     string
-		wantExternalID string
-		wantGap        string // part of why inspection is unavailable
-	}{
+	for name, tc := range map[string]assumeCase{
 		"role from a local": {
 			providerBlock: "assume_role {\n    role_arn = local.role\n  }\n}\nlocals {\n  role = \"" + deployRole + "\"",
 			assumeRole:    `{"role_arn":{"references":["local.role"]}}`, variables: plainVariables,
@@ -100,24 +91,43 @@ func TestAssumeRoleSettingsFromVariablesAndLocals(t *testing.T) {
 	} {
 		t.Run(name, func(t *testing.T) {
 			var calls []assumeCall
-			sources := withProviderSource(t, identitySources(inspector, func(string) error { return nil }, &calls), tc.providerBlock)
+			sources := withProviderSource(t, identitySources("arn:aws:iam::123456789012:user/inspector", func(string) error { return nil }, &calls), tc.providerBlock)
 			run := resolveRunContext(context.Background(), sources, planWith(`,"assume_role":[`+tc.assumeRole+`]`, tc.variables), "")
-			if tc.wantRole != "" && (!run.Identity.ApplyIdentityKnown || run.Identity.ApplyIdentity != tc.wantRole || run.Identity.ApplyIdentitySource != tc.wantSource) {
-				t.Errorf("apply identity %q from %q (known %v), want %q from %q", run.Identity.ApplyIdentity, run.Identity.ApplyIdentitySource, run.Identity.ApplyIdentityKnown, tc.wantRole, tc.wantSource)
-			}
-			if tc.wantGap != "" {
-				if !strings.Contains(run.InspectionUnavailable, tc.wantGap) || len(calls) != 0 {
-					t.Errorf("inspection unavailable %q (assume calls %+v), want it to say %q", run.InspectionUnavailable, calls, tc.wantGap)
-				}
-			} else if !run.Inspects() || len(calls) != 1 || calls[0].role != deployRole || calls[0].externalID != tc.wantExternalID {
-				t.Errorf("inspection unavailable %q, assume calls %+v; want one call for %s with external ID %q", run.InspectionUnavailable, calls, deployRole, tc.wantExternalID)
-			}
-			for _, shown := range []string{run.Unresolved, run.InspectionUnavailable, run.Identity.ApplyIdentityNote} {
-				if strings.Contains(shown, secretExternal) {
-					t.Errorf("the external ID appears in %q", shown)
-				}
-			}
+			assertAssumeRun(t, tc, run, calls)
 		})
+	}
+}
+
+// assumeCase is one way of writing the provider's assume_role block, and what
+// the run should make of it.
+type assumeCase struct {
+	providerBlock  string
+	assumeRole     string // the assume_role block's expressions in the plan
+	variables      string
+	wantRole       string
+	wantSource     string
+	wantExternalID string
+	wantGap        string // part of why inspection is unavailable
+}
+
+func assertAssumeRun(t *testing.T, tc assumeCase, run RunContext, calls []assumeCall) {
+	t.Helper()
+	identity := run.Identity
+	if tc.wantRole != "" && (!identity.ApplyIdentityKnown || identity.ApplyIdentity != tc.wantRole || identity.ApplyIdentitySource != tc.wantSource) {
+		t.Errorf("apply identity %q from %q (known %v), want %q from %q", identity.ApplyIdentity, identity.ApplyIdentitySource, identity.ApplyIdentityKnown, tc.wantRole, tc.wantSource)
+	}
+	switch {
+	case tc.wantGap != "":
+		if !strings.Contains(run.InspectionUnavailable, tc.wantGap) || len(calls) != 0 {
+			t.Errorf("inspection unavailable %q (assume calls %+v), want it to say %q", run.InspectionUnavailable, calls, tc.wantGap)
+		}
+	case !run.Inspects() || len(calls) != 1 || calls[0].role != deployRole || calls[0].externalID != tc.wantExternalID:
+		t.Errorf("inspection unavailable %q, assume calls %+v; want one call for %s with external ID %q", run.InspectionUnavailable, calls, deployRole, tc.wantExternalID)
+	}
+	for _, shown := range []string{run.Unresolved, run.InspectionUnavailable, identity.ApplyIdentityNote} {
+		if strings.Contains(shown, secretExternal) {
+			t.Errorf("the external ID appears in %q", shown)
+		}
 	}
 }
 

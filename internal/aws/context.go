@@ -165,20 +165,11 @@ func resolveRunContext(ctx context.Context, sources contextSources, planJSON []b
 	profile, profileSource, _ := resolveProfile(inputs)
 	config, err := sources.LoadConfig(ctx, profile)
 	if err != nil {
-		unresolved := "AWS configuration unavailable"
-		if profile != "" {
-			unresolved = "AWS profile " + strconv.Quote(profile) + " (from " + profileSource + ") could not be loaded: " + err.Error()
-		}
-		run := RunContext{Identity: applyIdentity(ctx, sources, config, "", principal, dependencies.ProviderContext{}), Unresolved: unresolved}
-		run.Identity.Unresolved = run.Unresolved
-		return run
+		return unresolvedRunContext(applyIdentity(ctx, sources, config, "", principal, dependencies.ProviderContext{}), configFailure(profile, profileSource, err))
 	}
 	inspection, identityErr, credentialsErr := inspectionIdentity(ctx, sources, config)
 	if parseErr != nil {
-		run := RunContext{Identity: applyIdentity(ctx, sources, config, inspection, principal, dependencies.ProviderContext{})}
-		run.Unresolved = "plan provider configuration unavailable"
-		run.Identity.Unresolved = run.Unresolved
-		return run
+		return unresolvedRunContext(applyIdentity(ctx, sources, config, inspection, principal, dependencies.ProviderContext{}), "plan provider configuration unavailable")
 	}
 	run := RunContext{Identity: applyIdentity(ctx, sources, config, inspection, principal, provider), Profile: profile, ProfileSource: profileSource}
 	// The account is the role's when the provider assumes one.
@@ -188,44 +179,70 @@ func resolveRunContext(ctx context.Context, sources contextSources, planJSON []b
 		accountIdentity = role
 	}
 	inputs.InspectionIdentity, inputs.IdentityError, inputs.NoCredentials = accountIdentity, identityErr, credentialsErr != nil
-	inputs.Profile, inputs.ProfileFrom = sources.Profile(), ""
-	if profile != "" {
-		inputs.Profile, inputs.ProfileFrom = profile, profileSource
-	}
+	inputs.Profile, inputs.ProfileFrom = inspectionProfileOf(sources, profile, profileSource)
 	inputs.EnvironmentRegion, inputs.RegionVariable, inputs.RegionLocal = config.Region, sources.RegionVariable, sources.RegionLocal
 	scope := resolveScope(inputs)
 	run.Region, run.RegionSource, run.Account, run.Partition, run.Unresolved = scope.Region, scope.RegionSource, scope.Account, scope.Partition, scope.Reason
 	run.Identity.Region, run.Identity.RegionSource, run.Identity.Unresolved = scope.Region, scope.RegionSource, scope.Reason
 	config.Region = run.Region
 	run.Config = config
-	// The inspection checks assume the provider's role, to look where it
-	// applies. A role that cannot be named or assumed leaves them partial; it
-	// never fails the run.
-	switch {
-	case provider.AssumeRole == nil || !run.Resolved():
-	case role == "":
-		run.InspectionUnavailable = "the provider assumes a role tfpreflight cannot name: " + roleReason
-	case sources.AssumeRole == nil:
-		run.InspectionUnavailable = "assuming the provider's role " + role + " is unavailable"
-	default:
-		externalID, reason := providerExternalID(provider, sources.ExternalIDVariable, sources.ExternalIDLocal)
-		if reason != "" {
-			run.InspectionUnavailable = "the provider assumes a role tfpreflight cannot assume: " + reason
-			break
-		}
-		assumed, err := sources.AssumeRole(ctx, config, role, externalID)
-		if err != nil {
-			run.InspectionUnavailable = "could not assume the provider's role " + role + ": " + err.Error()
-		} else {
-			run.Config = assumed
-			run.Identity.AssumedRole = role
-		}
-	}
+	run.assumeProviderRole(ctx, sources, provider, role, roleReason)
 	run.Identity.InspectionUnavailable = run.InspectionUnavailable
 	if credentialsErr != nil {
 		run.noteMissingCredentials(credentialsErr)
 	}
 	return run
+}
+
+// unresolvedRunContext is a run that cannot name where it inspects.
+func unresolvedRunContext(identity model.AWSContext, reason string) RunContext {
+	run := RunContext{Identity: identity, Unresolved: reason}
+	run.Identity.Unresolved = reason
+	return run
+}
+
+// configFailure is why the SDK configuration could not be loaded, naming the
+// provider's profile when that is what it was loaded from.
+func configFailure(profile, profileSource string, err error) string {
+	if profile == "" {
+		return "AWS configuration unavailable"
+	}
+	return "AWS profile " + strconv.Quote(profile) + " (from " + profileSource + ") could not be loaded: " + err.Error()
+}
+
+// inspectionProfileOf is the profile the inspection credentials come from and,
+// when the provider block named it, where that was decided.
+func inspectionProfileOf(sources contextSources, profile, profileSource string) (name, from string) {
+	if profile != "" {
+		return profile, profileSource
+	}
+	return sources.Profile(), ""
+}
+
+// assumeProviderRole makes the inspection checks look as the role the provider
+// assumes, to look where it applies. A role that cannot be named or assumed
+// leaves them partial; it never fails the run.
+func (c *RunContext) assumeProviderRole(ctx context.Context, sources contextSources, provider dependencies.ProviderContext, role, roleReason string) {
+	switch {
+	case provider.AssumeRole == nil || !c.Resolved():
+	case role == "":
+		c.InspectionUnavailable = "the provider assumes a role tfpreflight cannot name: " + roleReason
+	case sources.AssumeRole == nil:
+		c.InspectionUnavailable = "assuming the provider's role " + role + " is unavailable"
+	default:
+		externalID, reason := providerExternalID(provider, sources.ExternalIDVariable, sources.ExternalIDLocal)
+		if reason != "" {
+			c.InspectionUnavailable = "the provider assumes a role tfpreflight cannot assume: " + reason
+			return
+		}
+		assumed, err := sources.AssumeRole(ctx, c.Config, role, externalID)
+		if err != nil {
+			c.InspectionUnavailable = "could not assume the provider's role " + role + ": " + err.Error()
+			return
+		}
+		c.Config = assumed
+		c.Identity.AssumedRole = role
+	}
 }
 
 // inspectionIdentity asks STS who the inspection credentials are. The STS error

@@ -115,25 +115,32 @@ func listItems(expression hcl.Expression, local func(name string) (string, bool)
 	}
 	items := make([]StringListItem, 0, len(list.Exprs))
 	for _, element := range list.Exprs {
-		if value, isString := plainString(element); isString {
-			items = append(items, StringListItem{Value: value})
-			continue
+		item, ok := listItem(element, local)
+		if !ok {
+			return nil, false
 		}
-		if local != nil {
-			if name, isLocal, _ := traversalName(element, "local"); isLocal {
-				if value, found := local(name); found {
-					items = append(items, StringListItem{Value: value})
-					continue
-				}
-			}
-			if name, isVariable, _ := traversalName(element, "var"); isVariable {
-				items = append(items, StringListItem{Var: name})
-				continue
-			}
-		}
-		return nil, false
+		items = append(items, item)
 	}
 	return items, true
+}
+
+// listItem reads one element: a string literal, or, where local is set, exactly
+// var.<name> or a local that is a plain string.
+func listItem(element hcl.Expression, local func(name string) (string, bool)) (StringListItem, bool) {
+	if value, isString := plainString(element); isString {
+		return StringListItem{Value: value}, true
+	}
+	if local == nil {
+		return StringListItem{}, false
+	}
+	if name, isVariable, _ := traversalName(element, "var"); isVariable {
+		return StringListItem{Var: name}, true
+	}
+	if name, isLocal, _ := traversalName(element, "local"); isLocal {
+		value, found := local(name)
+		return StringListItem{Value: value}, found
+	}
+	return StringListItem{}, false
 }
 
 // providerExpression is the one expression the default AWS provider block sets

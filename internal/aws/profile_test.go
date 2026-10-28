@@ -38,17 +38,8 @@ const onlyPlain = "; only a literal, a bare variable, or a local set to a plain 
 // configuration is loaded from it, so the inspection credentials are the ones
 // Terraform applies with.
 func TestProviderProfileLoadsTheConfig(t *testing.T) {
-	inspector := "arn:aws:iam::" + contextTestAccount + ":user/inspector"
 	const recorded = `"region":{"value":"eu-west-1"},"aws_profile":{"value":"example"}`
-	for name, tc := range map[string]struct {
-		providerBlock string // the provider block's attributes, in main.tf
-		profile       string // the profile expression in the plan
-		variables     string
-		wantLoaded    string // the profile the SDK configuration was loaded with
-		wantProfile   string
-		wantSource    string
-		wantReason    string
-	}{
+	for name, tc := range map[string]profileCase{
 		"no profile": {
 			providerBlock: ``, wantLoaded: "",
 		},
@@ -100,36 +91,60 @@ func TestProviderProfileLoadsTheConfig(t *testing.T) {
 		},
 	} {
 		t.Run(name, func(t *testing.T) {
-			dir := t.TempDir()
-			source := "provider \"aws\" {\n  region = \"eu-west-1\"\n  " + tc.providerBlock + "\n}\n"
-			if err := os.WriteFile(filepath.Join(dir, "main.tf"), []byte(source), 0o600); err != nil {
-				t.Fatal(err)
-			}
-			loaded := "not loaded"
-			sources := contextSourcesFor(inspector)
-			sources.LoadConfig = func(_ context.Context, profile string) (sdk.Config, error) {
-				loaded = profile
-				return sdk.Config{Region: "us-east-1"}, nil
-			}
-			sources.ProfileVariable = func() (string, bool, error) { return plan.ProviderVariable(dir, "", "profile") }
-			sources.ProfileLocal = func() (string, string, bool, error) { return plan.ProviderLocal(dir, "", "profile") }
-			run := resolveRunContext(context.Background(), sources, profilePlan(tc.profile, tc.variables), "")
-			if run.Unresolved != tc.wantReason {
-				t.Fatalf("unresolved %q, want %q", run.Unresolved, tc.wantReason)
-			}
-			if loaded != tc.wantLoaded {
-				t.Errorf("the SDK configuration was loaded with profile %q, want %q", loaded, tc.wantLoaded)
-			}
-			if tc.wantReason != "" {
-				return
-			}
-			if run.Profile != tc.wantProfile || run.ProfileSource != tc.wantSource {
-				t.Errorf("profile %q from %q, want %q from %q", run.Profile, run.ProfileSource, tc.wantProfile, tc.wantSource)
-			}
-			if run.Region != "eu-west-1" || run.Account != contextTestAccount {
-				t.Errorf("scope region %q account %q", run.Region, run.Account)
-			}
+			run, loaded := runWithProfile(t, tc)
+			assertProfileRun(t, tc, run, loaded)
 		})
+	}
+}
+
+// profileCase is one way of writing the provider's profile, and what the run
+// should make of it.
+type profileCase struct {
+	providerBlock string // the provider block's attributes, in main.tf
+	profile       string // the profile expression in the plan
+	variables     string
+	wantLoaded    string // the profile the SDK configuration was loaded with
+	wantProfile   string
+	wantSource    string
+	wantReason    string
+}
+
+// runWithProfile resolves a run for the case, and says which profile the SDK
+// configuration was loaded with.
+func runWithProfile(t *testing.T, tc profileCase) (run RunContext, loaded string) {
+	t.Helper()
+	dir := t.TempDir()
+	source := "provider \"aws\" {\n  region = \"eu-west-1\"\n  " + tc.providerBlock + "\n}\n"
+	if err := os.WriteFile(filepath.Join(dir, "main.tf"), []byte(source), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	loaded = "not loaded"
+	sources := contextSourcesFor("arn:aws:iam::" + contextTestAccount + ":user/inspector")
+	sources.LoadConfig = func(_ context.Context, profile string) (sdk.Config, error) {
+		loaded = profile
+		return sdk.Config{Region: "us-east-1"}, nil
+	}
+	sources.ProfileVariable = func() (string, bool, error) { return plan.ProviderVariable(dir, "", "profile") }
+	sources.ProfileLocal = func() (string, string, bool, error) { return plan.ProviderLocal(dir, "", "profile") }
+	return resolveRunContext(context.Background(), sources, profilePlan(tc.profile, tc.variables), ""), loaded
+}
+
+func assertProfileRun(t *testing.T, tc profileCase, run RunContext, loaded string) {
+	t.Helper()
+	if run.Unresolved != tc.wantReason {
+		t.Fatalf("unresolved %q, want %q", run.Unresolved, tc.wantReason)
+	}
+	if loaded != tc.wantLoaded {
+		t.Errorf("the SDK configuration was loaded with profile %q, want %q", loaded, tc.wantLoaded)
+	}
+	if tc.wantReason != "" {
+		return
+	}
+	if run.Profile != tc.wantProfile || run.ProfileSource != tc.wantSource {
+		t.Errorf("profile %q from %q, want %q from %q", run.Profile, run.ProfileSource, tc.wantProfile, tc.wantSource)
+	}
+	if run.Region != "eu-west-1" || run.Account != contextTestAccount {
+		t.Errorf("scope region %q account %q", run.Region, run.Account)
 	}
 }
 
