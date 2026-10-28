@@ -2,7 +2,7 @@
 
 All notable changes to tfpreflight are recorded here. Versions follow [Semantic Versioning](https://semver.org/).
 
-## 0.1.0-beta.1 (unreleased)
+## 0.1.0-beta.1 (2026-10-28)
 
 First public beta. AWS is the first supported provider.
 
