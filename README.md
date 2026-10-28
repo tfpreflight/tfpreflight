@@ -39,6 +39,8 @@ curl -fsSL https://get.tfpreflight.dev/install.sh | sh
 curl -fsSL https://get.tfpreflight.dev/install.sh | sh -s -- --require-signature
 ```
 
+Also available as `tfp`, e.g. `tfp check`.
+
 Other options, such as a fixed version or a custom install folder, are in [docs/install.md](docs/install.md).
 
 ## Quick start
