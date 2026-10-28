@@ -1,0 +1,12 @@
+# An AWS config as `aws configure sso` writes it: a profile that signs in
+# through an SSO session. Nothing in it is a real account or start URL.
+[profile dev-sso]
+sso_session = acme
+sso_account_id = 123456789012
+sso_role_name = ReadOnly
+region = eu-west-1
+
+[sso-session acme]
+sso_start_url = https://acme.awsapps.com/start
+sso_region = eu-west-1
+sso_registration_scopes = sso:account:access

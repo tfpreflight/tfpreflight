@@ -68,6 +68,9 @@ type contextSources struct {
 	Credentials    func(context.Context, sdk.Config) error
 	CallerIdentity func(context.Context, sdk.Config) (string, error)
 	Profile        func() string
+	// EnvProfile is the profile AWS_PROFILE or AWS_DEFAULT_PROFILE selects, with
+	// the variable's name, or "" when neither is set. It may be nil.
+	EnvProfile func() (name, variable string)
 	// RegionVariable reports whether the provider block's region is exactly
 	// var.<name>; see plan.RegionVariable.
 	RegionVariable func() (string, bool, error)
@@ -109,7 +112,8 @@ func productionContextSources() contextSources {
 		CallerIdentity: func(ctx context.Context, config sdk.Config) (string, error) {
 			return callerIdentity(ctx, sts.NewFromConfig(config))
 		},
-		Profile: inspectionProfile,
+		Profile:    inspectionProfile,
+		EnvProfile: envProfile,
 		RegionVariable: func() (string, bool, error) {
 			return plan.RegionVariable(".")
 		},
@@ -145,14 +149,21 @@ func productionContextSources() contextSources {
 // inspectionProfile is the shared-config profile the inspection credentials come
 // from.
 func inspectionProfile() string {
-	profile := os.Getenv("AWS_PROFILE")
-	if profile == "" {
-		profile = os.Getenv("AWS_DEFAULT_PROFILE")
+	if profile, _ := envProfile(); profile != "" {
+		return profile
 	}
-	if profile == "" {
-		profile = "default"
+	return "default"
+}
+
+// envProfile is the profile the environment selects, and the variable that
+// does, or "" when it selects none.
+func envProfile() (name, variable string) {
+	for _, variable := range []string{"AWS_PROFILE", "AWS_DEFAULT_PROFILE"} {
+		if name := os.Getenv(variable); name != "" {
+			return name, variable
+		}
 	}
-	return profile
+	return "", ""
 }
 
 func resolveRunContext(ctx context.Context, sources contextSources, planJSON []byte, principal string) RunContext {
@@ -163,9 +174,10 @@ func resolveRunContext(ctx context.Context, sources contextSources, planJSON []b
 	// account. Without one, they come from the environment.
 	inputs := scopeInputs{Provider: provider, ProfileVariable: sources.ProfileVariable, ProfileLocal: sources.ProfileLocal, AllowedAccountsList: sources.AllowedAccountsList}
 	profile, profileSource, _ := resolveProfile(inputs)
+	selected, selectedFrom := selectedProfile(sources, profile, profileSource)
 	config, err := sources.LoadConfig(ctx, profile)
 	if err != nil {
-		return unresolvedRunContext(applyIdentity(ctx, sources, config, "", principal, dependencies.ProviderContext{}), configFailure(profile, profileSource, err))
+		return unresolvedRunContext(applyIdentity(ctx, sources, config, "", principal, dependencies.ProviderContext{}), configFailure(selected, selectedFrom, err))
 	}
 	inspection, identityErr, credentialsErr := inspectionIdentity(ctx, sources, config)
 	if parseErr != nil {
@@ -179,7 +191,13 @@ func resolveRunContext(ctx context.Context, sources contextSources, planJSON []b
 		accountIdentity = role
 	}
 	inputs.InspectionIdentity, inputs.IdentityError, inputs.NoCredentials = accountIdentity, identityErr, credentialsErr != nil
-	inputs.Profile, inputs.ProfileFrom = inspectionProfileOf(sources, profile, profileSource)
+	inputs.Profile = profile
+	if profile == "" {
+		inputs.Profile = sources.Profile()
+	}
+	if credentialsErr != nil {
+		inputs.CredentialsProblem = credentialsProblem(selected, selectedFrom, credentialsErr)
+	}
 	inputs.EnvironmentRegion, inputs.RegionVariable, inputs.RegionLocal = config.Region, sources.RegionVariable, sources.RegionLocal
 	scope := resolveScope(inputs)
 	run.Region, run.RegionSource, run.Account, run.Partition, run.Unresolved = scope.Region, scope.RegionSource, scope.Account, scope.Partition, scope.Reason
@@ -201,23 +219,63 @@ func unresolvedRunContext(identity model.AWSContext, reason string) RunContext {
 	return run
 }
 
-// configFailure is why the SDK configuration could not be loaded, naming the
-// provider's profile when that is what it was loaded from.
-func configFailure(profile, profileSource string, err error) string {
-	if profile == "" {
-		return "AWS configuration unavailable"
-	}
-	return "AWS profile " + strconv.Quote(profile) + " (from " + profileSource + ") could not be loaded: " + err.Error()
-}
-
-// inspectionProfileOf is the profile the inspection credentials come from and,
-// when the provider block named it, where that was decided.
-func inspectionProfileOf(sources contextSources, profile, profileSource string) (name, from string) {
+// selectedProfile is the profile the user chose on purpose, and where: the one
+// the provider block names, else the one AWS_PROFILE selects. It is empty when
+// the credentials come from the SDK's default chain with nothing chosen.
+func selectedProfile(sources contextSources, profile, profileSource string) (name, from string) {
 	if profile != "" {
 		return profile, profileSource
 	}
-	return sources.Profile(), ""
+	if sources.EnvProfile != nil {
+		return sources.EnvProfile()
+	}
+	return "", ""
 }
+
+// configFailure is why the SDK configuration could not be loaded, naming the
+// profile that was chosen when there is one. The SDK's own words are kept: they
+// say what is wrong with the AWS config.
+func configFailure(selected, selectedFrom string, err error) string {
+	if selected == "" {
+		return "AWS configuration unavailable: " + err.Error()
+	}
+	return "AWS profile " + strconv.Quote(selected) + " (from " + selectedFrom + ") could not be loaded: " + err.Error()
+}
+
+// ssoLoginNeeded are the SDK's words for an SSO login that is missing, expired
+// or unreadable, as opposed to one that failed for another reason, such as the
+// portal being unreachable.
+var ssoLoginNeeded = []string{
+	"the SSO session has expired or is invalid",
+	"cached SSO token is expired, or not present",
+	"failed to read cached SSO token file",
+	"failed to parse cached SSO token file",
+}
+
+// credentialsProblem is why a profile that was chosen on purpose gave no
+// credentials, in the SDK's words, with the command that fixes an SSO login.
+// It is empty when no profile was chosen: then nothing was configured, and "no
+// AWS credentials found" is the whole story.
+func credentialsProblem(selected, selectedFrom string, err error) string {
+	if selected == "" {
+		return ""
+	}
+	subject := "AWS profile " + strconv.Quote(selected) + " (from " + selectedFrom + ") has no usable credentials: "
+	reason := strings.TrimPrefix(err.Error(), "failed to refresh cached credentials, ")
+	for _, phrase := range ssoLoginNeeded {
+		if strings.Contains(reason, phrase) {
+			return subject + "the SSO login has expired or was never done; run: aws sso login --profile " + selected
+		}
+	}
+	if runes := []rune(reason); len(runes) > maxCredentialsReason {
+		reason = string(runes[:maxCredentialsReason]) + "…"
+	}
+	return subject + reason
+}
+
+// maxCredentialsReason keeps the SDK's wording from burying the result line;
+// --debug has all of it.
+const maxCredentialsReason = 240
 
 // assumeProviderRole makes the inspection checks look as the role the provider
 // assumes, to look where it applies. A role that cannot be named or assumed
@@ -284,11 +342,12 @@ type scopeInputs struct {
 	// NoCredentials is set when there were no credentials to ask STS with.
 	NoCredentials bool
 	// Profile is the shared-config profile the inspection credentials come
-	// from, and ProfileFrom where that was decided when the provider block named
-	// it: "provider block", "var.<name>" or "local.<name>". ProfileFrom is empty
-	// when the credentials come from the environment.
-	Profile     string
-	ProfileFrom string
+	// from.
+	Profile string
+	// CredentialsProblem is why NoCredentials, worded for a profile that was
+	// selected on purpose; it is empty when none was, and then the reason is the
+	// plain "no AWS credentials found".
+	CredentialsProblem string
 	// ProfileVariable and ProfileLocal may be nil, and then a variable or local
 	// profile is unproven.
 	ProfileVariable func() (string, bool, error)
@@ -351,8 +410,8 @@ func scopeReason(in scopeInputs, account, regionReason, profile, profileReason s
 	switch {
 	case profileReason != "":
 		return profileReason
-	case in.NoCredentials && in.ProfileFrom != "":
-		return "no AWS credentials found for profile " + strconv.Quote(in.Profile) + " (from " + in.ProfileFrom + ")"
+	case in.NoCredentials && in.CredentialsProblem != "":
+		return in.CredentialsProblem
 	case in.NoCredentials:
 		return "no AWS credentials found"
 	case len(provider.AllowedAccounts) > 0 && !slices.Contains(provider.AllowedAccounts, account):

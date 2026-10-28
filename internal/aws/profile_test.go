@@ -182,7 +182,7 @@ func TestProviderProfileFailuresNameTheProfile(t *testing.T) {
 		sources := named(contextSourcesFor(""))
 		sources.Credentials = func(context.Context, sdk.Config) error { return errors.New("no credentials") }
 		run := resolveRunContext(context.Background(), sources, plan, "")
-		const want = `no AWS credentials found for profile "example" (from var.aws_profile)`
+		const want = `AWS profile "example" (from var.aws_profile) has no usable credentials: no credentials`
 		if run.Unresolved != want {
 			t.Fatalf("unresolved %q, want %q", run.Unresolved, want)
 		}
