@@ -534,6 +534,16 @@
     "aws:TagKeys"
    ]
   },
+  "aidevops:createasset": {
+   "resources": [
+    {
+     "type": "agentspace",
+     "formats": [
+      "arn:${Partition}:aidevops:${Region}:${Account}:agentspace/${AgentSpaceId}"
+     ]
+    }
+   ]
+  },
   "aidevops:getagentspace": {
    "resources": [
     {
@@ -545,6 +555,20 @@
    ],
    "condition_keys": [
     "aws:ResourceTag/${TagKey}"
+   ]
+  },
+  "aidevops:getasset": {
+   "resources": [
+    {
+     "type": "agentspace",
+     "formats": [
+      "arn:${Partition}:aidevops:${Region}:${Account}:agentspace/${AgentSpaceId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aidevops:SourceAgentSpaceArn",
+    "aidevops:TargetAgentSpaceArn"
    ]
   },
   "aidevops:tagresource": {
@@ -8721,6 +8745,15 @@
   "cloudwatch:createdomain": {
    "resources": []
   },
+  "cloudwatch:createdomainfororganization": {
+   "resources": []
+  },
+  "cloudwatch:createomnidashboard": {
+   "resources": [],
+   "condition_keys": [
+    "cloudwatch:HasAccessGrant"
+   ]
+  },
   "cloudwatch:createresourcemetricsconfiguration": {
    "resources": [],
    "condition_keys": [
@@ -8828,6 +8861,16 @@
     "cloudwatch:HasAccessGrant"
    ]
   },
+  "cloudwatch:getdomainfororganization": {
+   "resources": [
+    {
+     "type": "organization-domain",
+     "formats": [
+      "arn:${Partition}:cloudwatch:${Region}:${Account}:organization-domain/${DomainId}"
+     ]
+    }
+   ]
+  },
   "cloudwatch:getmetricstream": {
    "resources": [
     {
@@ -8836,6 +8879,19 @@
       "arn:${Partition}:cloudwatch:${Region}:${Account}:metric-stream/${MetricStreamName}"
      ]
     }
+   ]
+  },
+  "cloudwatch:getomnidashboard": {
+   "resources": [
+    {
+     "type": "omni-dashboard",
+     "formats": [
+      "arn:${Partition}:cloudwatch:${Region}:${Account}:omni-dashboard/${DashboardId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "cloudwatch:HasAccessGrant"
    ]
   },
   "cloudwatch:getotelenrichment": {
@@ -19988,6 +20044,31 @@
     "ec2:Region"
    ]
   },
+  "ec2:modifyinstanceplacement": {
+   "resources": [
+    {
+     "type": "dedicated-host",
+     "formats": [
+      "arn:${Partition}:ec2:${Region}:${Account}:dedicated-host/${DedicatedHostId}"
+     ]
+    },
+    {
+     "type": "instance",
+     "formats": [
+      "arn:${Partition}:ec2:${Region}:${Account}:instance/${InstanceId}"
+     ]
+    },
+    {
+     "type": "placement-group",
+     "formats": [
+      "arn:${Partition}:ec2:${Region}:${Account}:placement-group/${PlacementGroupName}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "ec2:Region"
+   ]
+  },
   "ec2:modifyipamresourcediscovery": {
    "resources": [
     {
@@ -29950,6 +30031,10 @@
      ]
     },
     {
+     "type": "Stage-Logging-Configuration",
+     "formats": null
+    },
+    {
      "type": "Storage-Configuration",
      "formats": [
       "arn:${Partition}:ivs:${Region}:${Account}:storage-configuration/${ResourceId}"
@@ -30034,6 +30119,10 @@
      "formats": [
       "arn:${Partition}:ivs:${Region}:${Account}:stage/${ResourceId}"
      ]
+    },
+    {
+     "type": "Stage-Logging-Configuration",
+     "formats": null
     },
     {
      "type": "Storage-Configuration",
@@ -36521,6 +36610,20 @@
     "observabilityadmin:CentralizationSourceRegions"
    ]
   },
+  "observabilityadmin:createdatasetintegration": {
+   "resources": [
+    {
+     "type": "dataset-integration",
+     "formats": [
+      "arn:${Partition}:observabilityadmin:${Region}:${Account}:dataset-integration/${DatasetIntegrationIdentifier}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:TagKeys"
+   ]
+  },
   "observabilityadmin:creates3tableintegration": {
    "resources": [
     {
@@ -36591,6 +36694,16 @@
    ],
    "condition_keys": [
     "observabilityadmin:CentralizationRuleName"
+   ]
+  },
+  "observabilityadmin:getdatasetintegration": {
+   "resources": [
+    {
+     "type": "dataset-integration",
+     "formats": [
+      "arn:${Partition}:observabilityadmin:${Region}:${Account}:dataset-integration/${DatasetIntegrationIdentifier}"
+     ]
+    }
    ]
   },
   "observabilityadmin:gets3tableintegration": {
