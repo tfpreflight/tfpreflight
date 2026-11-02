@@ -95,14 +95,17 @@ func TestInferredQuotaRuleNeverBlocksApply(t *testing.T) {
 
 // Quota knowledge is version-exact for the same reason permissions are: a
 // release can change which service a resource calls and therefore which quota
-// it consumes. 4.67.0 is before the first supported release, so no backfill of
-// the gap ever covers it.
+// it consumes.
 func TestQuotaRulesDoNotFallBackAcrossVersions(t *testing.T) {
 	newer, err := packs.NewerThanCovered()
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, version := range []string{"4.67.0", newer, ""} {
+	older, err := packs.OlderThanCovered()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, version := range []string{older, newer, ""} {
 		rules, loaded, err := LoadQuotaRules(version)
 		if err != nil {
 			t.Fatalf("%s: %v", version, err)

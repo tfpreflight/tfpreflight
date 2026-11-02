@@ -51,3 +51,25 @@ func TestNewerThanCoveredIsBeyondEveryPack(t *testing.T) {
 		t.Fatalf("%s: loaded=%v err=%v, want not covered", newer, loaded, err)
 	}
 }
+
+// The release before the oldest covered one is older than every pack, and is
+// not covered itself.
+func TestOlderThanCoveredIsBelowEveryPack(t *testing.T) {
+	t.Parallel()
+	older, err := OlderThanCovered()
+	if err != nil {
+		t.Fatal(err)
+	}
+	versions, err := AWS()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, version := range versions {
+		if rules.CompareVersions(older, version) >= 0 {
+			t.Fatalf("%s is not older than covered version %s", older, version)
+		}
+	}
+	if _, loaded, err := LoadRuntimePack(older); err != nil || loaded {
+		t.Fatalf("%s: loaded=%v err=%v, want not covered", older, loaded, err)
+	}
+}

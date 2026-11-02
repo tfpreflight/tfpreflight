@@ -47,3 +47,32 @@ func NewerThanCovered() (string, error) {
 	}
 	return parts[0] + "." + strconv.Itoa(minor+1) + ".0", nil
 }
+
+// OlderThanCovered returns a provider release older than every version the
+// active pack set covers, and not a real release: the last minor of the major
+// before the oldest one. Tests use it for "a release these packs do not
+// cover" at the old end, which stays true when packs for older releases are
+// added, because it moves down with the oldest covered version.
+func OlderThanCovered() (string, error) {
+	versions, err := AWS()
+	if err != nil {
+		return "", err
+	}
+	if len(versions) == 0 {
+		return "", errors.New("the active pack set covers no AWS provider version")
+	}
+	oldest := versions[0]
+	for _, version := range versions[1:] {
+		if rules.CompareVersions(version, oldest) < 0 {
+			oldest = version
+		}
+	}
+	major, err := strconv.Atoi(strings.Split(oldest, ".")[0])
+	if err != nil {
+		return "", fmt.Errorf("covered version %q: %w", oldest, err)
+	}
+	if major < 1 {
+		return "", fmt.Errorf("covered version %q has no major before it", oldest)
+	}
+	return strconv.Itoa(major-1) + ".999.0", nil
+}
