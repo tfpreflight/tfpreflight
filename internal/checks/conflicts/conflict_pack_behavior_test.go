@@ -162,7 +162,11 @@ func TestConflictPackRejectsOtherProviderVersions(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, version := range []string{"6.16.0", newer, "7.0.0", ""} {
+	older, err := packs.OlderThanCovered()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, version := range []string{older, newer, "7.0.0", ""} {
 		rules, err := loadConflictRules(version)
 		if err != nil {
 			t.Fatalf("%s: %v", version, err)

@@ -101,7 +101,11 @@ func TestQuotaRulesDoNotFallBackAcrossVersions(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, version := range []string{"6.16.0", newer, ""} {
+	older, err := packs.OlderThanCovered()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, version := range []string{older, newer, ""} {
 		rules, loaded, err := LoadQuotaRules(version)
 		if err != nil {
 			t.Fatalf("%s: %v", version, err)
