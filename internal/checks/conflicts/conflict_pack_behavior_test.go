@@ -156,13 +156,14 @@ func TestResourceTypeRemovedFromThePackIsUncovered(t *testing.T) {
 
 // Conflict knowledge is version-exact for the same reason permissions are: a
 // release can change which API a resource calls, and therefore what a duplicate
-// identity means.
+// identity means. 4.67.0 is before the first supported release, so no backfill
+// of the gap ever covers it.
 func TestConflictPackRejectsOtherProviderVersions(t *testing.T) {
 	newer, err := packs.NewerThanCovered()
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, version := range []string{"6.16.0", newer, "7.0.0", ""} {
+	for _, version := range []string{"4.67.0", newer, "7.0.0", ""} {
 		rules, err := loadConflictRules(version)
 		if err != nil {
 			t.Fatalf("%s: %v", version, err)

@@ -76,7 +76,9 @@ func TestUpdateWithoutAnIndexSaysWhatToSet(t *testing.T) {
 func TestVersionNamesThePacksInUse(t *testing.T) {
 	dir := cliProject(t, "clean")
 	code, out, _ := cliProcess(t, dir, "clean", "version")
-	for _, want := range []string{"Rules: built in\n", "AWS provider rules: ", "no rules between 5.100.0 and 6.17.0\n"} {
+	// Which versions have no rules changes as the packs fill in; the gap
+	// lines are tested on made-up lists in version_test.go.
+	for _, want := range []string{"Rules: built in\n", "AWS provider rules: "} {
 		if code != 0 || !strings.Contains(out, want) {
 			t.Fatalf("version output lacks %q:\n%s", want, out)
 		}
