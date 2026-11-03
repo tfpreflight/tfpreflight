@@ -152,7 +152,7 @@ func TestGeneratedCorpusInvariants(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(rules) != 1595 {
+	if len(rules) != 1592 {
 		t.Fatalf("compiler corpus changed: %d", len(rules))
 	}
 	assertEmbeddedRulesArePacks(t)
@@ -222,7 +222,7 @@ func readAdaptersReport(t *testing.T) adaptersReport {
 // no adapter is orphaned.
 func assertTuplesClassified(t *testing.T, report adaptersReport, registry map[string]lookupFunc, used map[string]bool) {
 	t.Helper()
-	if len(report.Tuples) != 264 || len(used) != 264 {
+	if len(report.Tuples) != 263 || len(used) != 263 {
 		t.Fatal("tuple corpus changed")
 	}
 	seen := map[string]bool{}
@@ -237,11 +237,24 @@ func assertTuplesClassified(t *testing.T, report adaptersReport, registry map[st
 		}
 	}
 	for k := range registry {
-		if !used[k] {
+		if !used[k] && k != withdrawnLeftover {
 			t.Fatalf("orphan %s", k)
 		}
 	}
+	// The allowance is for this one adapter only, and only while it is left
+	// over. When the full rebuild drops it, this fails so that the allowance
+	// is removed with it.
+	if registry[withdrawnLeftover] == nil || used[withdrawnLeftover] {
+		t.Fatalf("%s is no longer a leftover adapter: remove withdrawnLeftover from this test", withdrawnLeftover)
+	}
 }
+
+// withdrawnLeftover is the one lookup whose only rule, the evidently launch
+// segment rule, was withdrawn from every provider version (build repository,
+// withdrawn-rules.json). Its adapter is still in the generated code and its
+// entry still in the lookup specs. Nothing uses either. Remove at full
+// rebuild: the rebuild generates neither.
+const withdrawnLeftover = "evidently/GetSegment/Segment"
 
 // assertSDKPins checks go.mod selects every pinned SDK module at its pin,
 // unreplaced, and the pin manifest agrees.

@@ -1,6 +1,6 @@
 {
  "note": "Runtime contract fixture for 6.64.0: each tuple's lookup and state, and how many rules the runtime can run.",
- "runtime_capable": 1584,
+ "runtime_capable": 1581,
  "tuples": [
   {
    "lookup": {
@@ -927,14 +927,6 @@
     "service": "evidently",
     "operation": "GetProject",
     "field": "Project"
-   },
-   "state": "generated"
-  },
-  {
-   "lookup": {
-    "service": "evidently",
-    "operation": "GetSegment",
-    "field": "Segment"
    },
    "state": "generated"
   },
