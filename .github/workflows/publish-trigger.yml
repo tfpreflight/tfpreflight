@@ -1,0 +1,32 @@
+name: Publish packs after a merge
+# When packs change on main, ask the build repository to sign and publish them
+# now. Its "Publish merged packs" workflow also runs on a schedule, which stays
+# as the backup: GitHub starts scheduled runs late or not at all.
+#
+# It starts nothing but that one workflow and reads no code of this repository.
+# It needs a token that can run workflows in tfpreflight-build (a fine-grained
+# token for that repository alone, with Actions: write) stored here as the
+# secret TFPREFLIGHT_BUILD_DISPATCH_TOKEN. Without the secret it says so and
+# does nothing, and the schedule publishes as before.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packs/**"
+permissions:
+  contents: read
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ secrets.TFPREFLIGHT_BUILD_DISPATCH_TOKEN }}
+    steps:
+      - name: Start the publish workflow
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::notice::TFPREFLIGHT_BUILD_DISPATCH_TOKEN is not set; the scheduled publish will pick these packs up."
+            exit 0
+          fi
+          gh workflow run publish-packs.yml --repo tfpreflight/tfpreflight-build --ref main
+          echo "Asked tfpreflight-build to publish the packs merged at $GITHUB_SHA." >> "$GITHUB_STEP_SUMMARY"
