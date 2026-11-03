@@ -29950,6 +29950,10 @@
      ]
     },
     {
+     "type": "Stage-Logging-Configuration",
+     "formats": null
+    },
+    {
      "type": "Storage-Configuration",
      "formats": [
       "arn:${Partition}:ivs:${Region}:${Account}:storage-configuration/${ResourceId}"
@@ -30034,6 +30038,10 @@
      "formats": [
       "arn:${Partition}:ivs:${Region}:${Account}:stage/${ResourceId}"
      ]
+    },
+    {
+     "type": "Stage-Logging-Configuration",
+     "formats": null
     },
     {
      "type": "Storage-Configuration",
