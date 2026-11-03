@@ -50453,6 +50453,16 @@
     }
    ]
   },
+  "ssm-quicksetup:listtagsforresource": {
+   "resources": [
+    {
+     "type": "configuration-manager",
+     "formats": [
+      "arn:${Partition}:ssm-quicksetup:${Region}:${Account}:configuration-manager/${ConfigurationManagerId}"
+     ]
+    }
+   ]
+  },
   "ssm-quicksetup:tagresource": {
    "resources": [
     {
