@@ -2,18 +2,18 @@
   "schema_version": 2,
   "provider": "aws",
   "files": {
-    "aws/conflict/aws.json": "0f1f18bda803eac04adc0d1ec01a727e655c027dcf8d092335ab197d21d5f429",
-    "aws/conflict/generated-aws.json": "dc5dd595f53e453a4b968f7d2efcb9ff2fb65a46591976dd5ab63d58bd7a44ff",
-    "aws/dependency/enforcement.json": "eb4b83a983af97058f241d79bada00d97969881ddcf4b339f28543c49b8f8c79",
-    "aws/dependency/rules.json": "b719626bd116e5e8f167cda39e7889e245944ad2742b655df783aeee0907b9d3",
-    "aws/generated/aws.json": "af0181ee27eeb3ee15b4a3a5dd876af4b6c7b77a4e05b3d04c454de263f9190e",
-    "aws/generated/quota-aws.json": "3d3ef8e199bdd70f9421647ad5c5b523167fb919ae14fc2851b8df68371437e1",
-    "aws/generated/quota-counter-aws.json": "2ec589700e91e6947f841de6be9d69f53ec5f48805187ccf70ad8df34203c921",
-    "aws/generated/verified-aws.json": "77593259190574bf6f7c59d74d891721107a5bc665ae9d20e2c6d189595bb3eb",
-    "aws/iam/actions.json": "94cfb9e129a516172987e683efe1900651bcbae32011deccb776977ce7b3805f",
+    "aws/conflict/aws.json": "d7e291451389ce654eabb931972ffc872e69681871c3c3cc818d5320f5a1683d",
+    "aws/conflict/generated-aws.json": "a2cf7d267b0a4b761185cf60d927ddf3c9adbba266b18f8e799862fef7cb0817",
+    "aws/dependency/enforcement.json": "76ba319428533320caaaf9fb4236e8b837c42bc6615bb9eb93791d3cef8e6e69",
+    "aws/dependency/rules.json": "9413f568a245eefba6daf209d21dbbb76110a3931089bd46fba9fce204477f96",
+    "aws/generated/aws.json": "14336c2d412bd45425445b2e054a17d68ec0f22f7b0318821e1c3045c897e298",
+    "aws/generated/quota-aws.json": "9d82bd8b05755467e93525bb2613ab686723450116d04d416eb10cac0c48e0f3",
+    "aws/generated/quota-counter-aws.json": "85f59751f7d710623b4a8f7f911238b1bca19a39c7cd6f3a66070199d94c3faa",
+    "aws/generated/verified-aws.json": "790fb589583b37672e26e601286f6845198ebe587f50fe3a112e243d03ac3791",
+    "aws/iam/actions.json": "5eea78734c219c545639c420a23ced63eecfede261a345db46299edc76866d9e",
     "aws/knowledge/v1.json": "7760076dd3bd5b5dc643a6fa4d118f79480051c03387bdc54efd2a06be65a0ff",
-    "aws/lookup/conflict-specs.json": "62ce5857e84f8f7a5b664ad3baacd3e0c66f51d5732bf719a3d555adbebffc96",
-    "aws/lookup/specs.json": "25f506470651562753437a04a3629c097062b9a60b14ec410fdc43cb4a9be651"
+    "aws/lookup/conflict-specs.json": "a7361e9927c6ebbbd60eea18ef7b321ba4f1fb486a29f62694b6a937c92450b3",
+    "aws/lookup/specs.json": "fa92628ae02882030ea62bace9b9d9bb6d1f2eb63f42ee8ab9445d1043ad4f3f"
   },
   "versions": [
     "5.98.0",
@@ -93,6 +93,7 @@
     "6.68.0",
     "6.69.0",
     "6.69.1",
-    "6.70.0"
+    "6.70.0",
+    "6.71.0"
   ]
 }

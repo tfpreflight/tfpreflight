@@ -74,6 +74,7 @@ aws/conflict/aws.json 6.69.0  06342f1c4e364a7363dd9629ca4d88047d0ca7dcdddda35880
 aws/conflict/aws.json 6.69.1  adb021388c3ab9efdc98d04a1d9ee33243dc7ae3a91c7602d8d7ace2ba26b2ab
 aws/conflict/aws.json 6.7.0  412e712df15b34b0decba96b7cd9dd0fe86a5d7aea33b29dd1396da3acce8c8f
 aws/conflict/aws.json 6.70.0  17e66f0a55af57b402d3028d288fbb9547f404fec8a0b011ac2c6f0350426bdd
+aws/conflict/aws.json 6.71.0  8d4bc26061dc3a31aac4ca3023e75a12171d05b5e82f78b462f6c74390af2ca4
 aws/conflict/aws.json 6.8.0  f7a06a60c6cb862b4dede66478175695a2d1d857546c999b4a4b7f9d571817f3
 aws/conflict/aws.json 6.9.0  f8242509f58374e71c4adb2886368ce0520085dc660b631af2f83f6ab18c2f74
 aws/conflict/generated-aws.json 5.100.0  f98211fee496c5bc5169f6db6f3f50f0e4118ef53b780c74bd9845559320026c
@@ -152,6 +153,7 @@ aws/conflict/generated-aws.json 6.69.0  b5fb4c662eed963a87a770ade301491a6c9eb925
 aws/conflict/generated-aws.json 6.69.1  d8ae5c36e131ca2b84a3c36140dc96ada45b026f2d86b990bec2fcd5f644bbda
 aws/conflict/generated-aws.json 6.7.0  d67e6e164ddac4452f1ab52dcbdd8f9607970f35441b55552123bc2c3f26f7ea
 aws/conflict/generated-aws.json 6.70.0  36ed908caaffce2b44a06059dfbf6a5fd22aca19c5a79111c2c236be22583b90
+aws/conflict/generated-aws.json 6.71.0  173dadcb0d9f4fa119bfd1ddc44527472131f217d797652b14859d94be5439b6
 aws/conflict/generated-aws.json 6.8.0  14d4f32dc4a2861af9671a5cc10a09d827d3ef34dfc932d7887fcdf63fa5e802
 aws/conflict/generated-aws.json 6.9.0  85de2c825dee2693db70a6905ec534f8540b58336caba634affd5accb44f99c3
 aws/dependency/enforcement.json 5.100.0  8e1eb81b5518748ea5193ef5af5d6f0cd179a29077a761b6ba5aa5b8574824f7
@@ -230,6 +232,7 @@ aws/dependency/enforcement.json 6.69.0  c0827df4b3170741bf603e2dfd8f91457e22de71
 aws/dependency/enforcement.json 6.69.1  01f0fd6d11c20a285d1a821fe035ee625513b7c3d5968021b81db0625b7ee179
 aws/dependency/enforcement.json 6.7.0  42b8f2be738c5dde4777833d7336da5e0e95426dd221ba99cade322ed14bc7da
 aws/dependency/enforcement.json 6.70.0  99b6eb230d6a784a127490ff0dc8b561f7b93d217c131dd68cb89259afe9071a
+aws/dependency/enforcement.json 6.71.0  600f234024a1940cbb30cc954a9e1f8f0b098ae0f289b02c6c609863b429a408
 aws/dependency/enforcement.json 6.8.0  6832666eb821649db7546c5da2473e9b421aeccab1dbf732551edf015f2ce6a1
 aws/dependency/enforcement.json 6.9.0  564b2363426e87af1887c6e9e448c8290c189fb11e1ef2eb0f94d03107199516
 aws/dependency/rules.json 5.100.0  8c8637a55d3afc68e548e4416a16f817c5d54917de3d9ad1759adc010bf7ca0b
@@ -308,6 +311,7 @@ aws/dependency/rules.json 6.69.0  a1b9dabf4ed20765671a20a80e3bffa89af17839e7d54a
 aws/dependency/rules.json 6.69.1  948ce2ca511bc805bed309f7cfcf84d8bffb875cf38a204a8c62646ef88152d5
 aws/dependency/rules.json 6.7.0  2e659b04760d5d98b1187ee94d3ba58ef9179c99ad732deddc8488aeb46db000
 aws/dependency/rules.json 6.70.0  f7dd30dc66cb29f0d5e5ad084bd26fee97edde2637ba4034da3978876f4776a9
+aws/dependency/rules.json 6.71.0  801d2a68fd350a746e8e2dbd304dffc2342ad63028ef135372dd03565e1903ef
 aws/dependency/rules.json 6.8.0  a528cbfac0aca0910ba6d24405c5fbf1cad4b1e7d3599788335dfad065ef9829
 aws/dependency/rules.json 6.9.0  7ca815a8fb00542b86d2fe8704a12fda7aef09b5ca53a83ad1f1e682bdc17bf7
 aws/generated/aws.json 5.100.0  4bf38d9eff62fc81d820337de0f2d20a52dff43a0ee7b4c42e47b10d9448042f
@@ -386,6 +390,7 @@ aws/generated/aws.json 6.69.0  c2db208ecc50c3e29e563ee16a4c0d43850e73389c825aea3
 aws/generated/aws.json 6.69.1  b11a822ea40c705e89d53da67accab71024ef6ee7d1b3757c72c70f2ff263423
 aws/generated/aws.json 6.7.0  db9d68f7be840eba31a6c2fe6c55c81034bf7aa3c38991c11c5c4bb4cfe3c7cc
 aws/generated/aws.json 6.70.0  3747c975ea11cef6a9b585e623fdd85a79223b0490e1c57ded14cb972c7a6ffd
+aws/generated/aws.json 6.71.0  a8a8ec740249256db3c9cd7cffdf8c0d07837f2e4407943b6fd9883494a2a651
 aws/generated/aws.json 6.8.0  3b210622ea28e5c887ce4671308c0d6365b51510fce3037ec6dd8e04da4b9e1e
 aws/generated/aws.json 6.9.0  97fea58941074d329a45dfa011be6bee5818baa7f83d6ef53d3c27c9734dc0c8
 aws/generated/quota-aws.json 5.100.0  1d19463e836b61e1e778b446d59dc305dba605662601c429fa528525f0b7b5d4
@@ -464,6 +469,7 @@ aws/generated/quota-aws.json 6.69.0  164e1f6410dc674be371fba3dfa9b042597dc00d532
 aws/generated/quota-aws.json 6.69.1  c4b67ed5c66e61cf64e586dfcabc32d0df3aaefd50794df5f4f79788e754ad24
 aws/generated/quota-aws.json 6.7.0  a7b05c74f07547dc865c90c909a2006cc16d40ee2578c12c086aa905db56df22
 aws/generated/quota-aws.json 6.70.0  2e14aee3a9bd0ee54566165a3054658b2b0eeeba2dee7a0dccb5c9df0a44b0c4
+aws/generated/quota-aws.json 6.71.0  f5770f4a438d0f7a77653955f0ecdab8981b933f4fec961c0a3d5a82d013bc5d
 aws/generated/quota-aws.json 6.8.0  6ec8038e23db460c0ba4feadda3f02ba4e1aa93deb6b682495a163cba6a5e924
 aws/generated/quota-aws.json 6.9.0  c16484982bb42a6e1dfb7ef19225bbc25ef85810b18aa85a4a5123fbce215a73
 aws/generated/quota-counter-aws.json 5.100.0  7b283b13c071654980598545c5221870abda7a3e1562c77ade46a03b7991dbae
@@ -542,6 +548,7 @@ aws/generated/quota-counter-aws.json 6.69.0  7fbe6005d304431bd0a5f2da99c3822eca1
 aws/generated/quota-counter-aws.json 6.69.1  15eebb8491af4a288f1e7c0b266404fd5c6ce0319174658c66c95402932c5433
 aws/generated/quota-counter-aws.json 6.7.0  7863e0f78e6d8c2a6707a17c723099eda1b51dd9c279d1a1014eeabfe05fecec
 aws/generated/quota-counter-aws.json 6.70.0  99178d744b2838d167d57dff79f7877314db45f760071f299d32f8972ecd0839
+aws/generated/quota-counter-aws.json 6.71.0  fe111c1cf98cee4c5402f25d62479352894edf8b3f3ffa6b40144780c674a0f1
 aws/generated/quota-counter-aws.json 6.8.0  504bcee48868f5961d0d37ddcdb4f30f5bb1180aeff0a33aecccae46165ff4dd
 aws/generated/quota-counter-aws.json 6.9.0  1244529585b0d4cb94dc2dbb35d1f96ea2f6ba3ed08dbc3d14338b85f162a1db
 aws/generated/verified-aws.json 5.100.0  32a3413c4514c3a643aecbba42e70d11cc1aed851752c1de6f853903389170cb
@@ -620,6 +627,7 @@ aws/generated/verified-aws.json 6.69.0  72575489afd96cf6b54b4f698185e345f5567945
 aws/generated/verified-aws.json 6.69.1  b2ea58115fb0e11cc0ac82bd85049f4108e0774e575f1a9e1c79bd791d7eecf4
 aws/generated/verified-aws.json 6.7.0  c6f153834ddcf31fed0ee1bf00cc517273c026b24c1c4d46d09cda136f1260e9
 aws/generated/verified-aws.json 6.70.0  99808a856276499eba6d2a451c687f0d2ebe5aa8064be3d24b5f8b33cd484344
+aws/generated/verified-aws.json 6.71.0  7abc5e14dfd4799dd5eefa41ccf6efbfe4f74b78d826942c8a9885f0c43cad1d
 aws/generated/verified-aws.json 6.8.0  37e000a69ffc30682b6c9ad328e1a937786c8c5ac7fb4dbb0d5166d6cad47019
 aws/generated/verified-aws.json 6.9.0  551161b64dedfc22b7fe3fff87ebeb530432721435f954cdfb9a66043d68d083
 aws/lookup/conflict-specs.json 5.100.0  237b815264e009282fa9e37c9da4e01f2495d938cede28da7fbd774676bc6681
@@ -698,6 +706,7 @@ aws/lookup/conflict-specs.json 6.69.0  2a42e9dad12061ee52ab4cd9d1baecb64e053368e
 aws/lookup/conflict-specs.json 6.69.1  2a42e9dad12061ee52ab4cd9d1baecb64e053368e3f7d3def945775736863f42
 aws/lookup/conflict-specs.json 6.7.0  7a0613b3d99ce685bd229718185db4921f94a61e87def2632308c8e4ac64f985
 aws/lookup/conflict-specs.json 6.70.0  2a42e9dad12061ee52ab4cd9d1baecb64e053368e3f7d3def945775736863f42
+aws/lookup/conflict-specs.json 6.71.0  2a42e9dad12061ee52ab4cd9d1baecb64e053368e3f7d3def945775736863f42
 aws/lookup/conflict-specs.json 6.8.0  7a0613b3d99ce685bd229718185db4921f94a61e87def2632308c8e4ac64f985
 aws/lookup/conflict-specs.json 6.9.0  7a0613b3d99ce685bd229718185db4921f94a61e87def2632308c8e4ac64f985
 aws/lookup/specs.json 5.100.0  dfefbd81b5289a9f2ed4a541dc4e00f9c1d0d33d5acd41eb79c8e66cc1229e5e
@@ -776,5 +785,6 @@ aws/lookup/specs.json 6.69.0  3090fc9e10ce21f9699b008b5d9425548f20fa7cad3e4cc64f
 aws/lookup/specs.json 6.69.1  2f57a3b4f43ddeba5d5b8826d3c50e0b6a258a105e31693f9b4400cfe17f31cf
 aws/lookup/specs.json 6.7.0  6a12f2dd954eec1a37e246f1ebe8ac3c5623c0bfb37d4f3c6a19403b49987a00
 aws/lookup/specs.json 6.70.0  5ff4c6a1c6d75f1583d33070c8ada6ce549e2fa3b68a000e9ba3067368263e7b
+aws/lookup/specs.json 6.71.0  554a527b6f7e4be7b95b04c1f0aaa0c54abd2441a1756dd779d60a1331cf0201
 aws/lookup/specs.json 6.8.0  6a12f2dd954eec1a37e246f1ebe8ac3c5623c0bfb37d4f3c6a19403b49987a00
 aws/lookup/specs.json 6.9.0  6a12f2dd954eec1a37e246f1ebe8ac3c5623c0bfb37d4f3c6a19403b49987a00
