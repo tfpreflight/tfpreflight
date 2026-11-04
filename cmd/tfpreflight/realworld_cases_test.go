@@ -118,19 +118,32 @@ func TestSecurityGroupRuleWithAMissingPeerIsReportedHonestly(t *testing.T) {
 	if packsKnowThePeerRule(t) {
 		assertPeerWarning(t, summary, document, asked())
 	} else {
-		if got.Checked != 0 || got.Unsupported != 1 || got.Warnings != 0 {
-			t.Errorf("summary = %+v, want the one resource unsupported and nothing checked or warned about", got)
-		}
-		for _, line := range []string{
-			"Resources: 0 checked, 0 partial, 0 not covered, 1 unsupported",
-			"Dependencies:                    0 checked, 0 partial, 1 no additional rule discovered, 0 unsupported",
-		} {
-			if !strings.Contains(details, line) {
-				t.Errorf("--details lacks %q:\n%s", line, details)
-			}
+		assertNoRuleYet(t, details, got)
+	}
+	checkGolden(t, details, document)
+}
+
+// assertNoRuleYet is the result while the packs have no rule for the resource:
+// it is unsupported, and nothing was checked or warned about.
+func assertNoRuleYet(t *testing.T, details string, got report.Summary) {
+	t.Helper()
+	if got.Checked != 0 || got.Unsupported != 1 || got.Warnings != 0 {
+		t.Errorf("summary = %+v, want the one resource unsupported and nothing checked or warned about", got)
+	}
+	for _, line := range []string{
+		"Resources: 0 checked, 0 partial, 0 not covered, 1 unsupported",
+		"Dependencies:                    0 checked, 0 partial, 1 no additional rule discovered, 0 unsupported",
+	} {
+		if !strings.Contains(details, line) {
+			t.Errorf("--details lacks %q:\n%s", line, details)
 		}
 	}
+}
 
+// checkGolden compares the result with result.golden, or rewrites it.
+func checkGolden(t *testing.T, details string, document report.Document) {
+	t.Helper()
+	got := document.Summary
 	record := fmt.Sprintf("checked %d\nunsupported %d\nwarnings %d\nblocking %d\nverdict %s\n", got.Checked, got.Unsupported, got.Warnings, got.Blocking, got.Verdict)
 	for _, finding := range document.Findings {
 		record += fmt.Sprintf("finding %s %s blocking=%v\n", finding.ID, finding.Severity, finding.Blocking)
