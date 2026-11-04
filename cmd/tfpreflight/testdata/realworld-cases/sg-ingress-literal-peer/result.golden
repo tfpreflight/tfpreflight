@@ -1,0 +1,6 @@
+checked 0
+unsupported 1
+warnings 0
+verdict PARTIAL - nothing was verified
+Dependencies:                    0 checked, 0 partial, 1 no additional rule discovered, 0 unsupported
+Resources: 0 checked, 0 partial, 0 not covered, 1 unsupported
