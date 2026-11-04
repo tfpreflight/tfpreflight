@@ -1,9 +1,19 @@
 package main
 
 import (
+	"flag"
+	"fmt"
+	"os"
 	"strings"
 	"testing"
 )
+
+// updateGolden rewrites the recorded result of the security group case. The
+// nightly packs build passes it, so a pack update carries the new record for
+// review. The checks that nothing blocks do not depend on it.
+var updateGolden = flag.Bool("update-golden", false, "rewrite the recorded result of the security group case")
+
+const securityGroupGolden = "result.golden"
 
 // A security group rule whose referenced_security_group_id names a group that
 // does not exist fails at apply with InvalidGroup.NotFound. With provider
@@ -13,10 +23,11 @@ import (
 // then has no permission, dependency, conflict or quota rule for it.
 //
 // The result must say so. It may not call this plan checked, and it may not
-// stay quiet about it. This test pins what is reported today. When the packs
-// gain a rule for the resource it fails on purpose: change it to expect the
-// warning for referenced_security_group_id, and keep the plan.
-func TestKnownGapSecurityGroupRuleWithAMissingPeerIsReportedUnsupported(t *testing.T) {
+// stay quiet about it. The counts are recorded in result.golden, so a pack
+// update that gains a rule for the resource shows the new result in its pull
+// request. Whatever the packs hold, this plan may never block, and a result
+// with nothing checked must be PARTIAL.
+func TestSecurityGroupRuleWithAMissingPeerIsReportedHonestly(t *testing.T) {
 	t.Chdir("testdata/realworld-cases/sg-ingress-literal-peer")
 	isolateAWS(t, true)
 	t.Setenv("AWS_ENDPOINT_URL_STS", fakeSTS(t))
@@ -26,21 +37,31 @@ func TestKnownGapSecurityGroupRuleWithAMissingPeerIsReportedUnsupported(t *testi
 		t.Fatalf("provider version = %q, want 6.70.0 from the lock file", document.Provider.Version)
 	}
 	got := document.Summary
-	if got.Checked != 0 || got.Unsupported != 1 || got.Blocking != 0 || got.Warnings != 0 {
-		t.Fatalf("summary = %+v, want the one resource unsupported and nothing checked, blocking or warned about", got)
+	if got.Blocking != 0 {
+		t.Fatalf("summary = %+v: the plan must never block", got)
 	}
-	if !strings.HasPrefix(got.Verdict, "PARTIAL - nothing was verified") {
-		t.Errorf("verdict = %q, want PARTIAL - nothing was verified", got.Verdict)
-	}
-	if !strings.Contains(summary, "! Nothing could be checked.") {
-		t.Errorf("the default output does not say nothing could be checked:\n%s", summary)
-	}
-	for _, line := range []string{
-		"Resources: 0 checked, 0 partial, 0 not covered, 1 unsupported",
-		"Dependencies:                    0 checked, 0 partial, 1 no additional rule discovered, 0 unsupported",
-	} {
-		if !strings.Contains(details, line) {
-			t.Errorf("--details lacks %q:\n%s", line, details)
+	if got.Checked == 0 {
+		if !strings.HasPrefix(got.Verdict, "PARTIAL") {
+			t.Errorf("verdict = %q, want PARTIAL when nothing was checked", got.Verdict)
 		}
+		if !strings.Contains(summary, "! Nothing could be checked.") {
+			t.Errorf("the default output does not say nothing could be checked:\n%s", summary)
+		}
+	}
+
+	record := fmt.Sprintf("checked %d\nunsupported %d\nwarnings %d\nverdict %s\n", got.Checked, got.Unsupported, got.Warnings, got.Verdict)
+	for _, line := range strings.Split(details, "\n") {
+		if strings.HasPrefix(line, "Resources:") || strings.HasPrefix(line, "Dependencies:") {
+			record += line + "\n"
+		}
+	}
+	if *updateGolden {
+		if err := os.WriteFile(securityGroupGolden, []byte(record), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	want, err := os.ReadFile(securityGroupGolden)
+	if err != nil || string(want) != record {
+		t.Fatalf("the result changed from %s (run go test ./cmd/tfpreflight -run TestSecurityGroupRuleWithAMissingPeer -update-golden):\n%s\nrecorded:\n%s\n%v", securityGroupGolden, record, string(want), err)
 	}
 }
