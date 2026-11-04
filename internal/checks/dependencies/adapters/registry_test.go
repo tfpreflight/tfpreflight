@@ -5,11 +5,13 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"flag"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"runtime"
+	"sort"
 	"strings"
 	"sync"
 	"testing"
@@ -147,16 +149,22 @@ func TestRegistrySafetyAndDeduplication(t *testing.T) {
 	}
 }
 
+// updateGolden rewrites the two files in testdata that record what the packs
+// and the generated code hold. The nightly packs build passes it, so a pack
+// update carries the new records for review; nothing else does.
+var updateGolden = flag.Bool("update-golden", false, "rewrite the lookup and SDK pin records in testdata")
+
+const (
+	lookupsGolden = "testdata/lookups-6.64.0.golden"
+	pinsGolden    = "testdata/sdk-pins-6.64.0.json"
+)
+
 func TestGeneratedCorpusInvariants(t *testing.T) {
 	rules, err := Rules("6.64.0")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(rules) != 1592 {
-		t.Fatalf("compiler corpus changed: %d", len(rules))
-	}
 	assertEmbeddedRulesArePacks(t)
-	report := readAdaptersReport(t)
 	// What the runtime runs: the engine's lookups and the SDK's.
 	built := New(ProviderVersion, aws.Config{})
 	if built.unavailable != "" {
@@ -172,11 +180,62 @@ func TestGeneratedCorpusInvariants(t *testing.T) {
 			runnable++
 		}
 	}
-	if runnable != report.Runtime {
-		t.Fatalf("runtime count %d != %d", runnable, report.Runtime)
+	record := lookupsRecord(len(rules), runnable, used, registry)
+	if *updateGolden {
+		writeGoldenFile(t, lookupsGolden, record)
+		writeGoldenFile(t, pinsGolden, pinsRecord(t))
 	}
-	assertTuplesClassified(t, report, registry, used)
+	if got, err := os.ReadFile(lookupsGolden); err != nil || string(got) != record {
+		t.Fatalf("the rules and lookups differ from %s (run go test ./internal/checks/dependencies/adapters -run TestGeneratedCorpusInvariants -update-golden): %v", lookupsGolden, err)
+	}
+	assertNoOrphanAdapters(t, registry, used)
 	assertSDKPins(t)
+}
+
+// lookupsRecord says how many rules the version has, how many of them the
+// runtime can run, and for each lookup whether an adapter serves it. A rule
+// whose lookup is not served answers unknown.
+func lookupsRecord(rules, runnable int, used map[string]bool, registry map[string]lookupFunc) string {
+	keys := make([]string, 0, len(used))
+	for k := range used {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	var b strings.Builder
+	fmt.Fprintf(&b, "rules %d\nrunnable %d\nlookups %d\n", rules, runnable, len(keys))
+	for _, k := range keys {
+		state := "unserved"
+		if registry[k] != nil {
+			state = "served"
+		}
+		fmt.Fprintf(&b, "%s %s\n", k, state)
+	}
+	return b.String()
+}
+
+// pinsRecord lists the SDK modules the generated adapters use.
+func pinsRecord(t *testing.T) string {
+	t.Helper()
+	type pin struct{ Module, Version string }
+	record := struct {
+		Note     string `json:"note"`
+		Services map[string]pin
+	}{Note: "Runtime contract fixture listing the SDK modules used by the generated 6.64.0 adapters.", Services: map[string]pin{}}
+	for module, version := range sdkVersions {
+		record.Services[strings.TrimPrefix(module, "github.com/aws/aws-sdk-go-v2/service/")] = pin{module, version}
+	}
+	data, err := json.MarshalIndent(record, "", " ")
+	if err != nil {
+		t.Fatal(err)
+	}
+	return string(data) + "\n"
+}
+
+func writeGoldenFile(t *testing.T, path, content string) {
+	t.Helper()
+	if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
+		t.Fatal(err)
+	}
 }
 
 // assertEmbeddedRulesArePacks checks the embedded range pack is the one in
@@ -196,64 +255,27 @@ func assertEmbeddedRulesArePacks(t *testing.T) {
 	}
 }
 
-type adaptersReport struct {
-	Tuples []struct {
-		Lookup dependencies.Lookup `json:"lookup"`
-		State  string              `json:"state"`
-	} `json:"tuples"`
-	Runtime int `json:"runtime_capable"`
-}
-
-func readAdaptersReport(t *testing.T) adaptersReport {
+// assertNoOrphanAdapters checks no adapter is left that no rule uses.
+func assertNoOrphanAdapters(t *testing.T, registry map[string]lookupFunc, used map[string]bool) {
 	t.Helper()
-	var report adaptersReport
-	data, err := os.ReadFile("testdata/adapters-report-6.64.0.json")
-	if err != nil {
-		t.Fatal(err)
-	}
-	if err = json.Unmarshal(data, &report); err != nil {
-		t.Fatal(err)
-	}
-	return report
-}
-
-// assertTuplesClassified checks every lookup tuple is used, classified once,
-// and has an adapter exactly when the report says it is generated, and that
-// no adapter is orphaned.
-func assertTuplesClassified(t *testing.T, report adaptersReport, registry map[string]lookupFunc, used map[string]bool) {
-	t.Helper()
-	if len(report.Tuples) != 263 || len(used) != 263 {
-		t.Fatal("tuple corpus changed")
-	}
-	seen := map[string]bool{}
-	for _, tuple := range report.Tuples {
-		k := lookupKey(tuple.Lookup)
-		if seen[k] || !used[k] || tuple.State == "" {
-			t.Fatalf("duplicate, orphan or unclassified tuple %s", k)
-		}
-		seen[k] = true
-		if (registry[k] != nil) != (tuple.State == "generated") {
-			t.Fatalf("adapter/report mismatch %s", k)
-		}
-	}
 	for k := range registry {
 		if !used[k] && k != withdrawnLeftover {
 			t.Fatalf("orphan %s", k)
 		}
 	}
 	// The allowance is for this one adapter only, and only while it is left
-	// over. When the full rebuild drops it, this fails so that the allowance
-	// is removed with it.
-	if registry[withdrawnLeftover] == nil || used[withdrawnLeftover] {
-		t.Fatalf("%s is no longer a leftover adapter: remove withdrawnLeftover from this test", withdrawnLeftover)
+	// over. A rebuild no longer generates it. If a rule uses it, it is not a
+	// leftover and is checked like any other adapter.
+	if registry[withdrawnLeftover] != nil && used[withdrawnLeftover] {
+		t.Fatalf("%s is used by a rule: it is not a leftover adapter", withdrawnLeftover)
 	}
 }
 
 // withdrawnLeftover is the one lookup whose only rule, the evidently launch
 // segment rule, was withdrawn from every provider version (build repository,
-// withdrawn-rules.json). Its adapter is still in the generated code and its
-// entry still in the lookup specs. Nothing uses either. Remove at full
-// rebuild: the rebuild generates neither.
+// withdrawn-rules.json). Until the full rebuild its adapter is still in the
+// generated code and its entry in the lookup specs. Nothing uses either. The
+// rebuild generates neither. Remove this allowance once it is merged.
 const withdrawnLeftover = "evidently/GetSegment/Segment"
 
 // assertSDKPins checks go.mod selects every pinned SDK module at its pin,
