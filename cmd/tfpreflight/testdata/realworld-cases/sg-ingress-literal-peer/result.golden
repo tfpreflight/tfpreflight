@@ -1,6 +1,8 @@
 checked 0
 unsupported 1
 warnings 0
+blocking 0
 verdict PARTIAL - nothing was verified
+finding universal.unknown-values info blocking=false
 Dependencies:                    0 checked, 0 partial, 1 no additional rule discovered, 0 unsupported
 Resources: 0 checked, 0 partial, 0 not covered, 1 unsupported
