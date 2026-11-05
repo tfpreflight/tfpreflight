@@ -555,9 +555,26 @@ func missingFinding(address string, rule ExistenceRule, identifier string, decis
 		Explanation: explanation,
 		Remediation: fmt.Sprintf("Correct %s, or create the %s before applying.", rule.Attribute, model.ResourceName(rule.TargetResource)),
 		Notes:       []string{decision.Reason},
-		Brief:       fmt.Sprintf("%s refers to %s %s, which does not exist.", rule.Attribute, model.ResourceName(rule.TargetResource), identifier),
+		Brief:       missingBrief(rule, identifier, decision.Blocking),
 		Next:        fmt.Sprintf("Fix: correct %s, or create the %s first.", rule.Attribute, model.ResourceName(rule.TargetResource)),
 	}
+}
+
+// missingBrief is the one sentence the default output shows for a reference
+// whose target AWS could not find. Blocking is only for a create path AWS was
+// observed to reject, so it states what is known. Otherwise it says what AWS
+// answered and the one case in which apply could still succeed: the lookup sees
+// this account and region only.
+func missingBrief(rule ExistenceRule, identifier string, blocking bool) string {
+	target := model.ResourceName(rule.TargetResource)
+	if blocking {
+		return fmt.Sprintf("%s refers to %s %s, which does not exist.", rule.Attribute, target, identifier)
+	}
+	elsewhere := "another account"
+	if rule.TargetResource == "aws_security_group" {
+		elsewhere = "a peered VPC or another account"
+	}
+	return fmt.Sprintf("AWS can't find %s %s in this account and region; unless it is in %s, apply will fail.", target, identifier, elsewhere)
 }
 
 func orderingFinding(address string, rule ExistenceRule, detail string) *model.Finding {

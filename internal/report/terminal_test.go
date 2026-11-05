@@ -391,3 +391,30 @@ func TestQuotaLineCountsNoQuotaRule(t *testing.T) {
 		t.Errorf("resources not all fully checked:\n%s", out.String())
 	}
 }
+
+// A warning changes how a passed run reads, so it never looks as clean as a run
+// with none. Nothing verified and a blocking finding keep their own verdicts.
+func TestWarningsChangeThePassedVerdict(t *testing.T) {
+	partial := model.ResourceCoverage{Resource: "aws_subnet.a", Trust: "generated", Permissions: model.CheckPartialSimulationUnavailable, Conflicts: model.CheckNotApplicable, Quota: model.CheckNotApplicable, Dependencies: model.CheckChecked}
+	answered := model.Coverage{Resources: []model.ResourceCoverage{partial}, AWSAnswers: 1}
+	warning := model.Finding{ID: "aws.dependency-missing", Resource: "aws_subnet.a", Severity: model.SeverityWarning, Confidence: model.ConfidenceMedium}
+	info := model.Finding{ID: "universal.unknown-values", Resource: "aws_subnet.a", Severity: model.SeverityInfo, Confidence: model.ConfidenceMedium}
+	blocking := model.Finding{ID: "aws.dependency-missing", Resource: "aws_subnet.a", Severity: model.SeverityError, Confidence: model.ConfidenceHigh}
+	nothing := model.Coverage{Resources: []model.ResourceCoverage{{Resource: "aws_subnet.a", Trust: "generated", Permissions: model.CheckPartialAWSContext, Conflicts: model.CheckNotApplicable, Quota: model.CheckNotApplicable, Dependencies: model.CheckNoDependencyRule}}}
+	for name, tc := range map[string]struct {
+		findings []model.Finding
+		coverage model.Coverage
+		want     string
+	}{
+		"a warning":                  {[]model.Finding{warning}, answered, "PASSED WITH WARNINGS (PARTIAL)"},
+		"only a note":                {[]model.Finding{info}, answered, "PASSED (PARTIAL)"},
+		"a blocking finding":         {[]model.Finding{blocking, warning}, answered, "FAILED"},
+		"a warning, nothing checked": {[]model.Finding{warning}, nothing, "PARTIAL - nothing was verified"},
+	} {
+		t.Run(name, func(t *testing.T) {
+			if got := Normalize(Input{Findings: tc.findings, Coverage: tc.coverage}).Document(nil).Summary.Verdict; got != tc.want {
+				t.Fatalf("verdict = %q, want %q", got, tc.want)
+			}
+		})
+	}
+}

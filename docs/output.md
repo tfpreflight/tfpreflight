@@ -46,6 +46,7 @@ Minor notes (informational findings) aren't listed. `--all` shows them, together
 |---|---|
 | `✗ N problems will likely make apply fail.` | At least one blocking problem. Fix it before you apply. Warnings, if any, are counted on the same line. |
 | `! N warnings to check. Nothing found that is sure to make apply fail.` | Only warnings. Read them before you apply. |
+| `! N warnings to check, and apply will probably fail. Not blocking: tfpreflight has not confirmed that AWS rejects this create.` | AWS answered that something your plan refers to does not exist, but nothing has been verified well enough to block. The warning above says what AWS said and when it could still be wrong, for example a security group in a peered VPC or another account. |
 | `✓ No problems found. Checked N of M resources fully.` | Nothing was found. If some resources couldn't be fully checked, a second line says how many. |
 | `! AWS checks did not run: <reason>.` | tfpreflight only read your plan, for example because there are no cloud credentials or the region is unknown. The next line says what to do. |
 | `! AWS checks failed: <reason>.` | tfpreflight reached your cloud provider, but it refused or failed every question, usually because the identity is missing read permissions. |
@@ -67,6 +68,7 @@ If your provider version has no rules of its own, a line under the header says w
 | `Preflight: FAILED` | At least one blocking problem. Fix it before you apply. |
 | `Preflight: FAILED (<reason>)` | Your `--fail-on` or `--fail-on-partial` setting made a warning or incomplete check fail the run. |
 | `Preflight: PASSED (PARTIAL)` | Nothing was found, but some checks couldn't finish. Look at **Not checked**. |
+| `Preflight: PASSED WITH WARNINGS (PARTIAL)` | Nothing blocks, but there are warnings and some checks couldn't finish. Read the warnings before you apply. |
 | `Preflight: PARTIAL - AWS checks did not run: <reason>` | tfpreflight only read your plan. It couldn't talk to your cloud provider, usually because of missing credentials or an unknown region. |
 | `Preflight: PARTIAL - AWS checks failed: <reason>` | tfpreflight reached your cloud provider, but it refused or failed every question, usually because the identity is missing read permissions. |
 | `Preflight: PARTIAL - nothing was verified` | No check completed for any resource. |

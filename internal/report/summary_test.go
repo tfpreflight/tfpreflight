@@ -75,6 +75,17 @@ func TestSummaryGolden(t *testing.T) {
 			ProviderVersion: "6.64.0", Selection: covered, Coverage: sixResources(0),
 			AWSContext: model.AWSContext{Unresolved: "no AWS credentials found"},
 		},
+		// AWS answered that a referenced resource does not exist, but nothing
+		// verified blocks it: a warning that must not read as a clean plan.
+		"missing-reference": {
+			ProviderVersion: "6.70.0", Selection: ProviderSelection{Mode: "COVERED", RulesVersion: "6.70.0"}, AWSContext: model.AWSContext{Region: "eu-west-1", RegionSource: "provider block"},
+			Coverage: model.Coverage{Resources: []model.ResourceCoverage{{Resource: "aws_vpc_security_group_ingress_rule.db", Permissions: model.CheckPartialAWSContext, Conflicts: model.CheckNotApplicable, Quota: model.CheckNoQuotaRule, Dependencies: model.CheckChecked}}, AWSAnswers: 1},
+			Findings: []model.Finding{{
+				ID: "aws.dependency-missing", Resource: "aws_vpc_security_group_ingress_rule.db", Severity: model.SeverityWarning, Confidence: model.ConfidenceMedium,
+				Brief: "AWS can't find security group sg-0123456789abcdef0 in this account and region; unless it is in a peered VPC or another account, apply will fail.",
+				Next:  "Fix: correct referenced_security_group_id, or create the security group first.",
+			}},
+		},
 		"newer-rules": {
 			ProviderVersion: "6.70.0", Selection: ProviderSelection{Mode: "NEWER", RulesVersion: "6.69.1"}, AWSContext: usEast1, Coverage: sixResources(6),
 			Findings: []model.Finding{func() model.Finding { f := bucketTaken; f.Severity = model.SeverityWarning; return f }()},

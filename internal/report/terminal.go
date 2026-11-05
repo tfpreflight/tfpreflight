@@ -290,6 +290,9 @@ func (r Report) Verdict() string {
 		return "PARTIAL - nothing was checked in AWS"
 	}
 	if r.Summary.Partial > 0 || r.Summary.NotCovered > 0 || r.Summary.Unsupported > 0 {
+		if r.Summary.Warnings > 0 {
+			return "PASSED WITH WARNINGS (PARTIAL)"
+		}
 		return "PASSED (PARTIAL)"
 	}
 	return "COMPLETE"

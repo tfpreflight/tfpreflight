@@ -1,0 +1,8 @@
+tfpreflight · AWS provider 6.70.0 · eu-west-1 · 1 resource
+
+WARN  aws_vpc_security_group_ingress_rule.db
+      AWS can't find security group sg-0123456789abcdef0 in this account and region; unless it is in a peered VPC or another account, apply will fail.
+      Fix: correct referenced_security_group_id, or create the security group first.
+
+! 1 warning to check, and apply will probably fail. Not blocking: tfpreflight has not confirmed that AWS rejects this create.
+  Checked 0 of 1 resource fully. Details: tfpreflight check --details
