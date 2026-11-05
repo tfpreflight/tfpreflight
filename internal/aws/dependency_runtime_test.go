@@ -74,10 +74,10 @@ func TestDependencyRuntimeThroughTypedSDK(t *testing.T) {
 	}{
 		{"exists", `<DescribeVpcsResponse><vpcSet><item><vpcId>vpc-0123456789abcdef0</vpcId></item></vpcSet></DescribeVpcsResponse>`, 200, model.CheckChecked, 0, false, false},
 		{"missing", `<Response><Errors><Error><Code>InvalidVpcID.NotFound</Code></Error></Errors></Response>`, 400, model.CheckChecked, 1, false, true},
-		{"denied", `<Response><Errors><Error><Code>UnauthorizedOperation</Code></Error></Errors></Response>`, 403, model.CheckPartialDependency, 0, false, false},
-		{"throttled", `<Response><Errors><Error><Code>RequestLimitExceeded</Code></Error></Errors></Response>`, 400, model.CheckPartialDependency, 0, false, false},
-		{"network", ``, 0, model.CheckPartialDependency, 0, true, false},
-		{"empty", `<DescribeVpcsResponse/>`, 200, model.CheckPartialDependency, 0, false, false},
+		{"denied", `<Response><Errors><Error><Code>UnauthorizedOperation</Code></Error></Errors></Response>`, 403, model.CheckPartialDependency, 1, false, false},
+		{"throttled", `<Response><Errors><Error><Code>RequestLimitExceeded</Code></Error></Errors></Response>`, 400, model.CheckPartialDependency, 1, false, false},
+		{"network", ``, 0, model.CheckPartialDependency, 1, true, false},
+		{"empty", `<DescribeVpcsResponse/>`, 200, model.CheckPartialDependency, 1, false, false},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			calls := 0
@@ -93,7 +93,22 @@ func TestDependencyRuntimeThroughTypedSDK(t *testing.T) {
 				t.Fatalf("calls=%d coverage=%s findings=%v debug=%v", calls, result.Coverage.Resources[0].Dependencies, result.Findings, result.Debug)
 			}
 			assertBlocksOnlyWhenMissing(t, result.Findings, tc.blocks)
+			if tc.coverage == model.CheckPartialDependency {
+				assertNotCheckedNote(t, result.Findings[0], "vpc_id")
+			}
 		})
+	}
+}
+
+// assertNotCheckedNote: a partial check is named in the Not checked list, with
+// its attribute and a reason, and it is information only.
+func assertNotCheckedNote(t *testing.T, f model.Finding, attribute string) {
+	t.Helper()
+	if f.ID != "aws.dependency-coverage-incomplete" || f.Severity != model.SeverityInfo || len(f.Gaps) != 1 {
+		t.Fatalf("not a single coverage note: %+v", f)
+	}
+	if !strings.HasPrefix(f.Gaps[0].Summary, attribute+": ") || f.Gaps[0].Why == "" {
+		t.Fatalf("the note does not name %s and say why: %+v", attribute, f.Gaps)
 	}
 }
 
@@ -205,12 +220,22 @@ func TestDependencyRuntimeUnavailableAdapterIsPartial(t *testing.T) {
 			t.Fatalf("unavailable adapter became a violation: %+v", r)
 		}
 	}
+	// A lookup this tfpreflight cannot run is listed under Not checked, and the
+	// reason tells the user to install the newest release.
+	gaps := dependencies.CoverageGaps(results)
+	if len(gaps) != 1 || len(gaps[0].Gaps) != 1 {
+		t.Fatalf("want one coverage note with one gap, got %+v", gaps)
+	}
+	gap := gaps[0].Gaps[0]
+	if !strings.HasPrefix(gap.Summary, "vpc_id: ") || !strings.Contains(gap.Summary, "ec2/DescribeVpcs/VpcIds") || !strings.Contains(gap.Why, "Install the newest tfpreflight release") {
+		t.Fatalf("the note does not name the attribute and the lookup, or does not say to upgrade: %+v", gap)
+	}
 }
 
 type unavailableResolver struct{}
 
 func (unavailableResolver) Exists(context.Context, dependencies.Lookup, dependencies.Scope, string) (dependencies.Existence, string) {
-	return dependencies.Unknown, "typed lookup adapter unavailable: ec2/DescribeVpcs/VpcIds"
+	return dependencies.Unknown, dependencies.ReasonNoLookupCode + "ec2/DescribeVpcs/VpcIds"
 }
 
 func TestDependencyModuleGraphPreserved(t *testing.T) {

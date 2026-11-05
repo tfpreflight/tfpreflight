@@ -61,7 +61,7 @@ If your provider version has no rules of its own, a line under the header says w
 
 ## The full output (`--details`)
 
-`tfpreflight check --details` prints the full report: the provider and policy lines, the region and both identities (the one that inspects your cloud account and the one whose permissions are checked), every finding with what Terraform is doing, the problem, what it means and the fix, a **Not checked** list, coverage counts per check, and a last line starting `Preflight:`:
+`tfpreflight check --details` prints the full report: the provider and policy lines, the region and both identities (the one that inspects your cloud account and the one whose permissions are checked), every finding with what Terraform is doing, the problem, what it means and the fix, a **Not checked** list (every permission, quota or reference check that could not finish, with the reason), coverage counts per check, and a last line starting `Preflight:`:
 
 | Last line | Meaning |
 |---|---|
