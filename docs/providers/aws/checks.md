@@ -6,7 +6,7 @@ The four kinds of check are explained for any provider in [checks.md](../../chec
 
 ## Versions
 
-tfpreflight has rules for 61 AWS provider versions, from 5.98.0 to 6.70.0, with no rules between 5.100.0 and 6.17.0. On those versions it can block. On any other version it uses the closest rules it has, and only warns. `tfpreflight version` lists them, and `tfpreflight update` downloads rules for newer versions.
+tfpreflight has rules for 79 AWS provider versions, from 5.98.0 to 6.71.0, with no rules between 6.0.0 and 6.2.0. On those versions it can block. On any other version it uses the closest rules it has, and only warns. `tfpreflight version` lists them, and `tfpreflight update` downloads rules for newer versions.
 
 ## Credentials and calls
 
