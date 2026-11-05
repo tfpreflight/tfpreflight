@@ -11,6 +11,8 @@ All notable changes to tfpreflight are recorded here. Versions follow [Semantic 
 
 - Fixed: a reference check that could not finish (counted as `partial` under Dependencies) was only a number. It is now listed under **Not checked** in `--details` with the argument and the reason. When the reason is that this tfpreflight cannot run the rule's lookup, it says to install the newest release. These notes are information only: they never warn and never block.
 - Fixed: a reference such as `referenced_security_group_id = "sg-0123456789abcdef0"` was counted as a partial check and nothing was said about it, because AWS answers a lookup for that ID with `InvalidGroupId.Malformed`, not "not found". An EC2 `*.Malformed` answer to the ID the lookup sent is now a warning: "AWS says sg-0123456789abcdef0 is not a valid security group ID; apply will fail." It never blocks. `--debug` now names the argument on each dependency line.
+- Fixed: when AWS says a referenced resource does not exist but tfpreflight has not confirmed that the create fails, the warning now says what AWS answered and when it could still be wrong: "AWS can't find security group sg-0123456789abcdef0 in this account and region; unless it is in a peered VPC or another account, apply will fail." The result line reads `! 1 warning to check, and apply will probably fail. Not blocking: tfpreflight has not confirmed that AWS rejects this create.` The verdict is `PASSED WITH WARNINGS (PARTIAL)` when a passed run has warnings.
+- Rules now cover 79 AWS provider versions, 5.98.0 to 6.71.0, with no rules between 6.0.0 and 6.2.0.
 
 ## 0.1.0-beta.1 (2026-10-28)
 
