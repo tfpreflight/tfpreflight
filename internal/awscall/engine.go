@@ -28,10 +28,13 @@ import (
 // Result is what a lookup established about one identifier.
 type Result string
 
-// Only Exists and NotFound are definite answers.
+// Exists, NotFound and Malformed are definite answers.
 const (
 	Exists   Result = "EXISTS"
 	NotFound Result = "NOT_FOUND"
+	// Malformed means AWS rejected the identifier itself as not a valid ID, so
+	// no object can have it. It is not a not-found answer: AWS did not look.
+	Malformed Result = "MALFORMED"
 	// Unknown is every other answer. It is never read as absence.
 	Unknown Result = "UNKNOWN"
 )
@@ -363,7 +366,18 @@ func (e *Engine) finish(ctx context.Context, c *client, attempt outcome, hasSkew
 	if isType(spec, code) {
 		return Answer{Result: NotFound, Reason: "authoritative not-found: modelled " + spec.NotFound.Type}
 	}
+	if MalformedID(spec.Service, code) {
+		return Answer{Result: Malformed, Reason: "AWS says the identifier is malformed: " + code, Failure: failure}
+	}
 	return unknown("AWS inspection error: " + code)
+}
+
+// MalformedID reports whether code is how an EC2 call says that an identifier
+// it was given is not a valid ID, such as InvalidGroupId.Malformed. Only EC2
+// uses this form for the identifier a lookup sends; other services' validation
+// codes also cover other arguments, so they stay unanswered.
+func MalformedID(service, code string) bool {
+	return service == "ec2" && strings.HasPrefix(code, "Invalid") && strings.HasSuffix(code, ".Malformed")
 }
 
 func nopRelease(error) error { return nil }

@@ -140,6 +140,16 @@ func applyDependencyRuntime(ctx context.Context, checked *Result, data []byte, v
 	applyDependencyResults(checked, dependencyOutcome{Results: results, Coverage: coverage}, err)
 }
 
+// debugLine is one dependency result for --debug. It names the argument the
+// rule is about, so a partial result says which of a resource's references it
+// is.
+func debugLine(r dependencies.Result) string {
+	if r.Attribute == "" {
+		return fmt.Sprintf("%s: dependency %s: %s", r.Address, r.Verdict, r.Reason)
+	}
+	return fmt.Sprintf("%s: dependency %s on %s: %s", r.Address, r.Verdict, r.Attribute, r.Reason)
+}
+
 func applyDependencyResults(checked *Result, outcome dependencyOutcome, err error) {
 	results, coverage := outcome.Results, outcome.Coverage
 	checked.Coverage.AWSAnswers += outcome.Answered
@@ -157,7 +167,7 @@ func applyDependencyResults(checked *Result, outcome dependencyOutcome, err erro
 		if r.Finding != nil {
 			checked.Findings = append(checked.Findings, *r.Finding)
 		}
-		checked.Debug = append(checked.Debug, fmt.Sprintf("%s: dependency %s: %s", r.Address, r.Verdict, r.Reason))
+		checked.Debug = append(checked.Debug, debugLine(r))
 	}
 	checked.Findings = append(checked.Findings, dependencies.CoverageGaps(results)...)
 	for i := range checked.Coverage.Resources {

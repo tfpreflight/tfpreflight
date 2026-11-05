@@ -325,6 +325,8 @@ func (e Engine) inspectTarget(ctx context.Context, plan Plan, change PlannedValu
 		return outcome, false
 	case NotFound:
 		return e.missing(plan, change, rule, identifier, why, outcome), true
+	case Malformed:
+		return malformed(change, rule, identifier, outcome), true
 	default:
 		decided := outcome.partial("the target could not be inspected: " + why)
 		decided.Cause = CauseNoAnswer
@@ -356,6 +358,27 @@ func (e Engine) missing(plan Plan, change PlannedValues, rule ExistenceRule, ide
 		ScopeResolved: true,
 	})
 	outcome.Finding = missingFinding(change.Address, rule, identifier, decision)
+	return outcome
+}
+
+// malformed is the result when AWS says the identifier is not a valid ID. The
+// create would be refused too, but no sandbox run has shown what AWS answers
+// to the create for such an ID, so this is a warning whatever the enforcement
+// claims say.
+func malformed(change PlannedValues, rule ExistenceRule, identifier string, outcome Result) Result {
+	outcome.Verdict, outcome.Reason = VerdictViolation, fmt.Sprintf("AWS says %s is not a valid %s ID", identifier, model.ResourceName(rule.TargetResource))
+	target := model.ResourceName(rule.TargetResource)
+	outcome.Finding = &model.Finding{
+		ID: "aws.dependency-missing", Provider: "aws", Resource: change.Address, Category: "dependency",
+		Severity: model.SeverityWarning, Confidence: model.ConfidenceMedium,
+		Title:       "Referenced ID is not valid",
+		Operation:   "Create " + model.WithArticle(model.ResourceName(rule.Resource)),
+		Problem:     fmt.Sprintf("%s refers to %s %s, which AWS says is not a valid ID.", rule.Attribute, model.WithArticle(target), identifier),
+		Explanation: "AWS rejected this value as malformed when asked about it, so no " + target + " can have it. The create will be refused too, but tfpreflight has not verified AWS's answer to this create, so it is reported without blocking.",
+		Remediation: fmt.Sprintf("Correct %s to the ID of a real %s.", rule.Attribute, target),
+		Brief:       fmt.Sprintf("AWS says %s is not a valid %s ID; apply will fail.", identifier, target),
+		Next:        fmt.Sprintf("Fix: correct %s.", rule.Attribute),
+	}
 	return outcome
 }
 

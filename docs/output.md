@@ -46,7 +46,7 @@ Minor notes (informational findings) aren't listed. `--all` shows them, together
 |---|---|
 | `✗ N problems will likely make apply fail.` | At least one blocking problem. Fix it before you apply. Warnings, if any, are counted on the same line. |
 | `! N warnings to check. Nothing found that is sure to make apply fail.` | Only warnings. Read them before you apply. |
-| `! N warnings to check, and apply will probably fail. Not blocking: tfpreflight has not confirmed that AWS rejects this create.` | AWS answered that something your plan refers to does not exist, but nothing has been verified well enough to block. The warning above says what AWS said and when it could still be wrong, for example a security group in a peered VPC or another account. |
+| `! N warnings to check, and apply will probably fail. Not blocking: tfpreflight has not confirmed that AWS rejects this create.` | AWS answered that something your plan refers to does not exist, or that its ID is not a valid ID, but nothing has been verified well enough to block. The warning above says what AWS said and when it could still be wrong: a missing security group may be in a peered VPC or another account. An ID AWS calls not valid can be in no account. |
 | `✓ No problems found. Checked N of M resources fully.` | Nothing was found. If some resources couldn't be fully checked, a second line says how many. |
 | `! AWS checks did not run: <reason>.` | tfpreflight only read your plan, for example because there are no cloud credentials or the region is unknown. The next line says what to do. |
 | `! AWS checks failed: <reason>.` | tfpreflight reached your cloud provider, but it refused or failed every question, usually because the identity is missing read permissions. |

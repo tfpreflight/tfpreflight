@@ -10,6 +10,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"strings"
 	"sync"
 	"testing"
@@ -74,6 +75,7 @@ func TestDependencyRuntimeThroughTypedSDK(t *testing.T) {
 	}{
 		{"exists", `<DescribeVpcsResponse><vpcSet><item><vpcId>vpc-0123456789abcdef0</vpcId></item></vpcSet></DescribeVpcsResponse>`, 200, model.CheckChecked, 0, false, false},
 		{"missing", `<Response><Errors><Error><Code>InvalidVpcID.NotFound</Code></Error></Errors></Response>`, 400, model.CheckChecked, 1, false, true},
+		{"malformed", `<Response><Errors><Error><Code>InvalidVpcID.Malformed</Code></Error></Errors></Response>`, 400, model.CheckChecked, 1, false, false},
 		{"denied", `<Response><Errors><Error><Code>UnauthorizedOperation</Code></Error></Errors></Response>`, 403, model.CheckPartialDependency, 1, false, false},
 		{"throttled", `<Response><Errors><Error><Code>RequestLimitExceeded</Code></Error></Errors></Response>`, 400, model.CheckPartialDependency, 1, false, false},
 		{"network", ``, 0, model.CheckPartialDependency, 1, true, false},
@@ -95,6 +97,14 @@ func TestDependencyRuntimeThroughTypedSDK(t *testing.T) {
 			assertBlocksOnlyWhenMissing(t, result.Findings, tc.blocks)
 			if tc.coverage == model.CheckPartialDependency {
 				assertNotCheckedNote(t, result.Findings[0], "vpc_id")
+				if !slices.ContainsFunc(result.Debug, func(line string) bool {
+					return strings.Contains(line, "aws_subnet.test: dependency partial on vpc_id: ")
+				}) {
+					t.Errorf("the debug lines do not name the argument: %v", result.Debug)
+				}
+			}
+			if tc.name == "malformed" && (result.Findings[0].Severity != model.SeverityWarning || !strings.Contains(result.Findings[0].Brief, "is not a valid VPC ID")) {
+				t.Errorf("a malformed VPC ID must be a warning saying so: %+v", result.Findings[0])
 			}
 		})
 	}

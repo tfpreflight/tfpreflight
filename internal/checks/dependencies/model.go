@@ -58,6 +58,9 @@ type Existence string
 const (
 	Exists   Existence = "exists"
 	NotFound Existence = "not_found"
+	// Malformed is AWS saying the identifier is not a valid ID, so no object
+	// can have it. It is not a not-found answer, and it never blocks.
+	Malformed Existence = "malformed"
 	// Unknown is every other answer, such as AccessDenied, throttling, an
 	// unsupported lookup, or a response that did not clearly say. It is never
 	// read as absence.

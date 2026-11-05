@@ -10,6 +10,7 @@ All notable changes to tfpreflight are recorded here. Versions follow [Semantic 
 - Fixed: when the profile you chose (`AWS_PROFILE`, or the provider block's `profile`) gives no credentials, the result now says why, in the AWS SDK's words, instead of "no AWS credentials found". An SSO login that has expired or was never done is named with the command that fixes it (`aws sso login --profile <name>`), and a profile that is not in your AWS config is named. Credentials are loaded by the AWS SDK's default chain, as before: SSO, `credential_process`, assume-role and web identity profiles all work, and tests now cover each.
 
 - Fixed: a reference check that could not finish (counted as `partial` under Dependencies) was only a number. It is now listed under **Not checked** in `--details` with the argument and the reason. When the reason is that this tfpreflight cannot run the rule's lookup, it says to install the newest release. These notes are information only: they never warn and never block.
+- Fixed: a reference such as `referenced_security_group_id = "sg-0123456789abcdef0"` was counted as a partial check and nothing was said about it, because AWS answers a lookup for that ID with `InvalidGroupId.Malformed`, not "not found". An EC2 `*.Malformed` answer to the ID the lookup sent is now a warning: "AWS says sg-0123456789abcdef0 is not a valid security group ID; apply will fail." It never blocks. `--debug` now names the argument on each dependency line.
 
 ## 0.1.0-beta.1 (2026-10-28)
 
