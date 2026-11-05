@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -101,6 +102,12 @@ func TestSummaryGolden(t *testing.T) {
 			if got.String() != string(want) {
 				t.Errorf("default output differs from testdata/summary/%s.txt\ngot:\n%s\nwant:\n%s", name, got.String(), want)
 			}
+			// Color adds codes and changes no word.
+			var colored bytes.Buffer
+			Render(&colored, Normalize(input), Options{Color: true})
+			if stripped := escapeCodes.ReplaceAllString(colored.String(), ""); stripped != string(want) {
+				t.Errorf("colored output without its codes differs from testdata/summary/%s.txt\ngot:\n%s", name, stripped)
+			}
 		})
 	}
 }
@@ -149,5 +156,44 @@ func TestSummarySaysWhyPolicyFails(t *testing.T) {
 		if !strings.HasSuffix(out.String(), want) {
 			t.Errorf("%+v: output does not end %q:\n%s", policy, want, out.String())
 		}
+	}
+}
+
+var escapeCodes = regexp.MustCompile("\x1b\\[[0-9;]*m")
+
+// A blocking finding is red, a warning yellow, the result line red, a clean
+// result green, and addresses are bold. Plain output has no codes.
+func TestSummaryColors(t *testing.T) {
+	taken := model.Finding{
+		Resource: "aws_s3_bucket.logs", Severity: model.SeverityError, Confidence: model.ConfidenceHigh,
+		Brief: `Bucket name "acme-logs" is already taken.`, Next: "Fix: use a different name.",
+	}
+	blocking := Normalize(Input{ProviderVersion: "6.64.0", AWSContext: usEast1, Coverage: sixResources(6), Findings: []model.Finding{taken}})
+	var out bytes.Buffer
+	Render(&out, blocking, Options{Color: true})
+	for _, want := range []string{
+		"\x1b[31mFAIL\x1b[0m  \x1b[1m" + taken.Resource + "\x1b[0m",
+		"\x1b[31m✗ 1 problem will likely make apply fail.",
+	} {
+		if !strings.Contains(out.String(), want) {
+			t.Errorf("colored output lacks %q:\n%q", want, out.String())
+		}
+	}
+	warning := taken
+	warning.Severity = model.SeverityWarning
+	out.Reset()
+	Render(&out, Normalize(Input{ProviderVersion: "6.64.0", AWSContext: usEast1, Coverage: sixResources(6), Findings: []model.Finding{warning}}), Options{Color: true})
+	if !strings.Contains(out.String(), "\x1b[33mWARN\x1b[0m") || !strings.Contains(out.String(), "\x1b[33m! 1 warning to check") {
+		t.Errorf("a warning is not yellow:\n%q", out.String())
+	}
+	out.Reset()
+	Render(&out, Normalize(Input{ProviderVersion: "6.64.0", AWSContext: usEast1, Coverage: sixResources(6)}), Options{Color: true})
+	if !strings.Contains(out.String(), "\x1b[32m✓ No problems found.") {
+		t.Errorf("a clean result is not green:\n%q", out.String())
+	}
+	out.Reset()
+	Render(&out, blocking, Options{})
+	if escapeCodes.MatchString(out.String()) {
+		t.Errorf("plain output has escape codes:\n%q", out.String())
 	}
 }
