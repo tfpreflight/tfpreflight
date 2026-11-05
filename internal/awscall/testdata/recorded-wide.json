@@ -1535,7 +1535,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidCapacityReservationId.Malformed\u003c/Code\u003e\u003cMessage\u003eCapacity Reservation ID '!!not a valid identifier!!' is malformed\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e5d1beb2a-37c6-422d-a21d-b383c5d3ae08\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -1546,7 +1546,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidCapacityReservationId.Malformed\u003c/Code\u003e\u003cMessage\u003eCapacity Reservation ID 'cr-0123456789abcdef0' is malformed\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003eb3797156-c9a1-4736-a82e-ff519675de76\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -1645,7 +1645,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidAMIID.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid id: \"!!not a valid identifier!!\" (expecting \"ami-...\")\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e58a18ecf-f801-4e0a-aacd-99b6f922683b\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -1656,7 +1656,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidAMIID.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid id: \"ami-0123456789abcdef0\"\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003eb06e45fa-50c2-450f-8414-93c36a7389e6\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -1667,7 +1667,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidInstanceID.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid id: \"!!not a valid identifier!!\"\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e9777cd36-18e6-4173-a02c-a74968d62adb\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -1678,7 +1678,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidInstanceID.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid id: \"i-0123456789abcdef0\"\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e20bea955-c576-4a86-939a-7a386cc10fa7\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -1711,7 +1711,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidIpamPoolId.Malformed\u003c/Code\u003e\u003cMessage\u003eThe specified IPAM pool ID is not valid. Specify an IPAM pool ID in the form ipam-pool-xxxxxxxxxxxxxxxxx.\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003ee094d15d-b9e4-483c-b382-b86ec3399831\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -1733,7 +1733,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidIpamResourceDiscoveryId.Malformed\u003c/Code\u003e\u003cMessage\u003eThe specified IPAM resource discovery ID is not valid. Specify an IPAM resource discovery ID in the form ipam-res-disco-xxxxxxxxxxxxxxxxx.\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003eb833c5b0-9050-4ed4-940e-c9104b98f5f7\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -1755,7 +1755,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidIpamId.Malformed\u003c/Code\u003e\u003cMessage\u003eThe specified IPAM Id is not valid. Specify an IPAM Id in the form ipam-xxxxxxxxxxxxxxxxx.\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e4ae4a3f9-cd24-4bf4-aaea-e904f67c234c\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -1821,7 +1821,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidLaunchTemplateId.Malformed\u003c/Code\u003e\u003cMessage\u003eThe following launch template ids are malformed: !!not a valid identifier!!\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e48f7417e-fcc7-4f82-9f60-5a87f45efd6e\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -1832,7 +1832,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidLaunchTemplateId.Malformed\u003c/Code\u003e\u003cMessage\u003eThe following launch template ids are malformed: lt-0123456789abcdef0\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003ec0fbc843-6459-43fc-ac03-e261e447900e\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -1843,7 +1843,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidPrefixListId.Malformed\u003c/Code\u003e\u003cMessage\u003eThe specified prefix list ID is not valid. Specify a prefix list ID in the form pl-xxxxxxxxxxxxxxxxx.\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e600d88bb-25b0-48df-9a94-a502b4af6dab\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -1931,7 +1931,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidNetworkInterfaceId.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid id: \"!!not a valid identifier!!\" (expecting \"eni-...\")\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e22981c1c-2da3-459f-82c9-a096a3bba787\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -1986,7 +1986,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidSecondarySubnetId.Malformed\u003c/Code\u003e\u003cMessage\u003eThe secondary-subnet ID '!!not a valid identifier!!' is malformed\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e7e8f3bb1-4346-4980-9f81-810427c00f37\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -2008,7 +2008,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidSecondarySubnetId.Malformed\u003c/Code\u003e\u003cMessage\u003eThe secondary-subnet ID 'subnet-0123456789abcdef0' is malformed\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e41520c8b-b5d9-4b79-9702-7f1b16bdc0eb\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -2019,7 +2019,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidGroupId.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid id: \"!!not a valid identifier!!\" (expecting \"sg-...\")\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003eb18cecaf-db43-4c67-be6b-ad94b691f0b1\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -2030,7 +2030,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidGroupId.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid id: \"sg-0123456789abcdef0\"\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e7aa0810c-cdf1-4bda-b206-a70d186533cb\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -2052,7 +2052,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidSnapshotID.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid id: \"snap-0123456789abcdef0\"\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e92ff4781-5160-49af-99d5-1a88fb095982\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -2107,7 +2107,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidTransitGatewayConnectPeerID.Malformed\u003c/Code\u003e\u003cMessage\u003eTransit Gateway Connect Peer Id !!not a valid identifier!! is malformed.\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e654dfbf8-70ad-4487-b267-0bddae71eb4a\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -2129,7 +2129,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidTransitGatewayAttachmentID.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid Transit Gateway Attachment id.\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e4ccc8af8-e539-402f-a089-bcd67016a1b9\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -2151,7 +2151,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidTransitGatewayMulticastDomainId.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid Transit Gateway Multicast Domain id !!not a valid identifier!!.\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e0f90f582-bd8f-4946-999b-ccf8d56325a1\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -2162,7 +2162,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidTransitGatewayMulticastDomainId.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid Transit Gateway Multicast Domain id !!not a valid identifier!!.\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003ecbebe7f9-1390-4d4a-86f2-b8fcfa0de752\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -2195,7 +2195,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidTransitGatewayPolicyTableId.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid Transit Gateway Policy Table id !!not a valid identifier!!.\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e7ed4c253-e65c-4e5d-b432-e7654b454268\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -2217,7 +2217,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidRouteTableId.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid Transit Gateway Route Table id !!not a valid identifier!!.\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e6ba4e8dd-63d1-4dca-b8dd-9ed6ccaeea8e\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -2239,7 +2239,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidTransitGatewayID.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid Transit Gateway id !!not a valid identifier!!.\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e29deb7ec-5ed2-4045-992d-5096f8e63a61\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -2349,7 +2349,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidVpcEndpointServiceId.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid Id: '!!not a valid identifier!!' (expecting 'vpce-svc-...; the Id may only contain lowercase alphanumeric characters and two dashes')\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e00a09141-be30-4fdb-87dd-76ec4bc422cf\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -2360,7 +2360,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidVpcEndpointServiceId.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid Id: '!!not a valid identifier!!' (expecting 'vpce-svc-...; the Id may only contain lowercase alphanumeric characters and two dashes')\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e5aae2617-e215-42fe-a10b-1280d1fadfc9\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },
@@ -2393,7 +2393,7 @@
     },
     {
       "body": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003cResponse\u003e\u003cErrors\u003e\u003cError\u003e\u003cCode\u003eInvalidVpcEndpointId.Malformed\u003c/Code\u003e\u003cMessage\u003eInvalid Id: '!!not a valid identifier!!' (expecting 'vpce-...; the Id may only contain lowercase alphanumeric characters and a single dash')\u003c/Message\u003e\u003c/Error\u003e\u003c/Errors\u003e\u003cRequestID\u003e2fece8f3-eaba-48fc-812a-955a96b38c1c\u003c/RequestID\u003e\u003c/Response\u003e",
-      "expected": "UNKNOWN",
+      "expected": "MALFORMED",
       "headers": {
         "Content-Type": "text/xml;charset=UTF-8"
       },

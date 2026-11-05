@@ -497,3 +497,40 @@ func (r *unorderedResolver) Prefetch(_ context.Context, requests []LookupRequest
 	}
 	group.Wait()
 }
+
+// AWS saying an ID is malformed is a warning that never blocks, even where a
+// verified claim makes a not-found answer for the same rule block: AWS was never
+// observed answering the create for a malformed ID.
+func TestMalformedIdentifierWarnsAndNeverBlocks(t *testing.T) {
+	rule := subnetRule()
+	rule.CreateService, rule.CreateOperation, rule.Member = "ec2", "CreateSubnet", "VpcId"
+	rule.CreateProvenance = "sdkv2_request_literal"
+	rule.Key = ReferenceKey{Kind: KeyID, Normalization: NormalizationNone}
+	enforcement := pack(t, claim(rule, EnforcementMatched, StateSupported))
+	resolver := &fakeResolver{answers: map[string]Existence{"vpc-gone": NotFound, "vpc-bad": Malformed}}
+	engine := Engine{Existence: []ExistenceRule{rule}, Resolver: resolver, Enforcement: enforcement, ProviderVersion: "6.64.0"}
+
+	gone := only(t, mustEvaluate(t, engine, "vpc-gone"))
+	if gone.Finding == nil || gone.Finding.Severity != "error" {
+		t.Fatalf("control: with this claim a missing VPC should block, got %+v", gone.Finding)
+	}
+	bad := only(t, mustEvaluate(t, engine, "vpc-bad"))
+	if bad.Verdict != VerdictViolation || bad.Finding == nil {
+		t.Fatalf("result = %+v", bad)
+	}
+	if bad.Finding.Severity != "warning" || bad.Finding.Confidence != "medium" {
+		t.Errorf("a malformed ID must warn and not block: %s/%s", bad.Finding.Severity, bad.Finding.Confidence)
+	}
+	if want := "AWS says vpc-bad is not a valid VPC ID; apply will fail."; bad.Finding.Brief != want {
+		t.Errorf("brief = %q, want %q", bad.Finding.Brief, want)
+	}
+	if strings.Contains(bad.Finding.Brief, "peered") || strings.Contains(bad.Finding.Brief, "another account") {
+		t.Errorf("a malformed ID cannot be in another account, but the brief says so: %q", bad.Finding.Brief)
+	}
+}
+
+func mustEvaluate(t *testing.T, engine Engine, id string) []Result {
+	t.Helper()
+	results, _ := engine.Evaluate(context.Background(), subnetPlan(OriginLiteral, id, nil))
+	return results
+}

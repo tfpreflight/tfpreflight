@@ -90,6 +90,8 @@ func engineLookups(version string, config aws.Config, rules []dependencies.Exist
 				return dependencies.Exists, reason
 			case awscall.NotFound:
 				return dependencies.NotFound, reason
+			case awscall.Malformed:
+				return dependencies.Malformed, reason
 			}
 			return dependencies.Unknown, reason
 		}

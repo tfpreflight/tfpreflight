@@ -293,6 +293,9 @@ func lookupError(err error, l dependencies.Lookup) (dependencies.Existence, stri
 		if l.NotFoundType != "" && (code == l.NotFoundType || errorTypeName(api) == l.NotFoundType) {
 			return dependencies.NotFound, "authoritative not-found: modelled " + l.NotFoundType
 		}
+		if awscall.MalformedID(l.Service, code) {
+			return dependencies.Malformed, "AWS says the identifier is malformed: " + code
+		}
 		return dependencies.Unknown, "AWS inspection error: " + code
 	}
 	// Raw transport errors may contain request data, so they are not shown.

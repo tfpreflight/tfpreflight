@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"regexp"
 	"sort"
 	"strings"
 	"sync"
@@ -25,13 +26,33 @@ var updateGolden = flag.Bool("update-golden", false, "rewrite the recorded resul
 const securityGroupGolden = "result.golden"
 
 const (
-	missingPeer = "sg-0123456789abcdef0" // referenced_security_group_id in plan.json
-	ownGroup    = "sg-0fedcba9876543210" // security_group_id in plan.json
+	// malformedPeer is referenced_security_group_id in plan.json. Real AWS
+	// answers DescribeSecurityGroups for exactly this ID with
+	// InvalidGroupId.Malformed (recorded in internal/awscall/testdata/
+	// recorded-wide.json), although AuthorizeSecurityGroupIngress says
+	// InvalidGroup.NotFound for it.
+	malformedPeer = "sg-0123456789abcdef0"
+	ownGroup      = "sg-0fedcba9876543210" // security_group_id in plan.json
+	// absentPeer is a group ID that has the shape of a real one and does not
+	// exist, so AWS answers InvalidGroup.NotFound.
+	absentPeer = "sg-0a1b2c3d4e5f60718"
 )
 
-// fakeEC2 answers DescribeSecurityGroups: the groups named in missing do not
-// exist, any other group does. It records every group it is asked about, and
-// refuses any other call.
+var wellFormedGroupID = regexp.MustCompile(`^sg-([0-9a-f]{8}|[0-9a-f]{17})$`)
+
+// malformedGroupID is whether AWS's DescribeSecurityGroups refuses id as not a
+// group ID. Only malformedPeer is known from a real call; the rest is the
+// documented shape of a group ID.
+func malformedGroupID(id string) bool {
+	return id == malformedPeer || !wellFormedGroup(id)
+}
+
+func wellFormedGroup(id string) bool { return wellFormedGroupID.MatchString(id) }
+
+// fakeEC2 answers DescribeSecurityGroups as AWS does: a malformed ID gets
+// InvalidGroupId.Malformed, the groups named in missing get
+// InvalidGroup.NotFound, and any other group exists. It records every group it
+// is asked about, and refuses any other call.
 func fakeEC2(t *testing.T, missing ...string) (url string, asked func() []string) {
 	t.Helper()
 	var mu sync.Mutex
@@ -46,6 +67,11 @@ func fakeEC2(t *testing.T, missing ...string) (url string, asked func() []string
 		groups = append(groups, id)
 		mu.Unlock()
 		w.Header().Set("Content-Type", "text/xml")
+		if malformedGroupID(id) {
+			w.WriteHeader(http.StatusBadRequest)
+			_, _ = io.WriteString(w, `<Response><Errors><Error><Code>InvalidGroupId.Malformed</Code><Message>Invalid id: "`+id+`" (expecting "sg-...")</Message></Error></Errors><RequestID>1</RequestID></Response>`)
+			return
+		}
 		for _, gone := range missing {
 			if id == gone {
 				w.WriteHeader(http.StatusBadRequest)
@@ -95,7 +121,7 @@ func TestSecurityGroupRuleWithAMissingPeerIsReportedHonestly(t *testing.T) {
 	t.Chdir("testdata/realworld-cases/sg-ingress-literal-peer")
 	isolateAWS(t, true)
 	t.Setenv("AWS_ENDPOINT_URL_STS", fakeSTS(t))
-	ec2URL, asked := fakeEC2(t, missingPeer)
+	ec2URL, asked := fakeEC2(t)
 	t.Setenv("AWS_ENDPOINT_URL_EC2", ec2URL)
 	summary, details, document := runRealWorldCheck(t)
 
@@ -116,7 +142,13 @@ func TestSecurityGroupRuleWithAMissingPeerIsReportedHonestly(t *testing.T) {
 	assertNothingCheckedNeverPasses(t, summary, document)
 
 	if packsKnowThePeerRule(t) {
-		assertPeerWarning(t, summary, document, asked())
+		assertPeerWarning(t, summary, document, asked(), peerCase{
+			id: malformedPeer, title: "Referenced ID is not valid",
+			wording: "AWS says " + malformedPeer + " is not a valid security group ID; apply will fail.",
+		})
+		if strings.Contains(summary, "peered VPC") {
+			t.Errorf("a malformed ID is in no account, but the output mentions a peered VPC:\n%s", summary)
+		}
 	} else {
 		assertNoRuleYet(t, details, got)
 	}
@@ -164,10 +196,14 @@ func checkGolden(t *testing.T, details string, document report.Document) {
 	}
 }
 
+// peerCase is what a run says about the referenced group: the ID, the
+// finding's title and the sentence the default output shows.
+type peerCase struct{ id, title, wording string }
+
 // assertPeerWarning checks the result when the packs carry the rule and AWS
-// says the referenced group does not exist: one warning, on the referenced
-// group, that does not block.
-func assertPeerWarning(t *testing.T, summary string, document report.Document, groups []string) {
+// says the referenced group does not exist or is not a valid ID: one warning,
+// on the referenced group, that does not block.
+func assertPeerWarning(t *testing.T, summary string, document report.Document, groups []string, c peerCase) {
 	t.Helper()
 	got := document.Summary
 	if got.Blocking != 0 || got.Warnings != 1 {
@@ -185,12 +221,12 @@ func assertPeerWarning(t *testing.T, summary string, document report.Document, g
 	if len(found) != 1 {
 		t.Fatalf("findings = %+v, want one aws.dependency-missing", document.Findings)
 	}
-	assertPeerFinding(t, found[0])
-	assertPeerLookup(t, groups)
-	assertPeerWording(t, summary)
+	assertPeerFinding(t, found[0], c)
+	assertPeerLookup(t, groups, c.id)
+	assertPeerWording(t, summary, c)
 }
 
-func assertPeerFinding(t *testing.T, finding report.Finding) {
+func assertPeerFinding(t *testing.T, finding report.Finding, c peerCase) {
 	t.Helper()
 	if finding.Resource != "aws_vpc_security_group_ingress_rule.database_from_shared_services" {
 		t.Errorf("warning is on %q", finding.Resource)
@@ -198,35 +234,35 @@ func assertPeerFinding(t *testing.T, finding report.Finding) {
 	if finding.Severity != model.SeverityWarning || finding.Blocking {
 		t.Errorf("finding = %+v, want a warning that does not block", finding)
 	}
-	if finding.Message != "Referenced resource does not exist" {
+	if finding.Message != c.title {
 		t.Errorf("warning title = %q", finding.Message)
 	}
-	if !strings.Contains(finding.Reason, "referenced_security_group_id") || !strings.Contains(finding.Reason, missingPeer) {
-		t.Errorf("warning does not name referenced_security_group_id and %s: %q", missingPeer, finding.Reason)
+	if !strings.Contains(finding.Reason, "referenced_security_group_id") || !strings.Contains(finding.Reason, c.id) {
+		t.Errorf("warning does not name referenced_security_group_id and %s: %q", c.id, finding.Reason)
 	}
 	if strings.Contains(finding.Reason, ownGroup) {
 		t.Errorf("warning names the rule's own group, which exists: %q", finding.Reason)
 	}
 }
 
-// assertPeerLookup checks AWS was asked about the missing group.
-func assertPeerLookup(t *testing.T, groups []string) {
+// assertPeerLookup checks AWS was asked about the referenced group.
+func assertPeerLookup(t *testing.T, groups []string, want string) {
 	t.Helper()
 	sort.Strings(groups)
 	for _, id := range groups {
-		if id == missingPeer {
+		if id == want {
 			return
 		}
 	}
-	t.Errorf("AWS was not asked about %s, only %v", missingPeer, groups)
+	t.Errorf("AWS was not asked about %s, only %v", want, groups)
 }
 
 // assertPeerWording checks the short output says what AWS answered and when it
 // could still be wrong, and does not read as a clean plan.
-func assertPeerWording(t *testing.T, summary string) {
+func assertPeerWording(t *testing.T, summary string, c peerCase) {
 	t.Helper()
 	for _, want := range []string{
-		"AWS can't find security group " + missingPeer + " in this account and region; unless it is in a peered VPC or another account, apply will fail.",
+		c.wording,
 		"1 warning to check, and apply will probably fail. Not blocking: tfpreflight has not confirmed that AWS rejects this create.",
 	} {
 		if !strings.Contains(summary, want) {
