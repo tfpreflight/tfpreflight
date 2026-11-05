@@ -2,6 +2,10 @@
 
 All notable changes to tfpreflight are recorded here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 0.1.0-beta.3 (unreleased)
+
+- The default output is colored in a terminal: `FAIL` and the failing result line red, `WARN` and warning result lines yellow, a clean result green, resource addresses bold. It stays plain when piped, with `NO_COLOR` set, with `TERM=dumb`, on Windows, with `--details` and with `--format=json`.
+
 ## 0.1.0-beta.2 (2026-11-05)
 
 - Also available as `tfp`, a short name for `tfpreflight`: Homebrew and the install script add it as a link, e.g. `tfp check`.

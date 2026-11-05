@@ -14,17 +14,20 @@ import (
 )
 
 // Options controls the text output. Details asks for the full output; All
-// adds informational findings to it, so it implies Details.
+// adds informational findings to it, so it implies Details. Color colors the
+// short summary only; the caller decides it, for example from whether the
+// output is a terminal.
 type Options struct {
 	All     bool
 	Details bool
+	Color   bool
 }
 
 // Render writes the text report: the short summary, or with Details or All the
 // full output.
 func Render(out io.Writer, report Report, options Options) {
 	if !options.Details && !options.All {
-		renderSummary(out, report)
+		renderSummary(out, report, styler{on: options.Color})
 		return
 	}
 	renderDetails(out, report, options)

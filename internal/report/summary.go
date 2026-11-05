@@ -17,7 +17,7 @@ const detailsHint = "Details: tfpreflight check --details"
 // blocking finding and warning in three lines, and the result in one or two
 // lines. Informational findings, identities and coverage are in --details, and
 // the result line says when anything could not be checked.
-func renderSummary(out io.Writer, report Report) {
+func renderSummary(out io.Writer, report Report, style styler) {
 	fmt.Fprintln(out, header(report))
 	if line := rulesLine(report.Selection); line != "" {
 		fmt.Fprintln(out, line)
@@ -28,7 +28,7 @@ func renderSummary(out io.Writer, report Report) {
 			if summaryLabel(finding) != wanted {
 				continue
 			}
-			fmt.Fprintf(out, "\n%s  %s\n", wanted, summaryAddress(finding))
+			fmt.Fprintf(out, "\n%s  %s\n", style.label(wanted), style.address(summaryAddress(finding)))
 			fmt.Fprintf(out, "      %s\n", withoutARNs(summaryBrief(finding)))
 			if finding.Next != "" {
 				fmt.Fprintf(out, "      %s\n", withoutARNs(finding.Next))
@@ -37,7 +37,7 @@ func renderSummary(out io.Writer, report Report) {
 	}
 	fmt.Fprintln(out)
 	for _, line := range resultLines(report) {
-		fmt.Fprintln(out, line)
+		fmt.Fprintln(out, style.result(line))
 	}
 }
 

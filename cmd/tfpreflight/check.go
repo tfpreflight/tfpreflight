@@ -143,7 +143,7 @@ func renderCheck(out, diagnostics io.Writer, outcome checkOutcome, options check
 			return fmt.Errorf("write JSON report: %w", err)
 		}
 	} else if outcome.ToolError == nil {
-		report.Render(out, outcome.Report, report.Options{All: options.All, Details: options.Details})
+		report.Render(out, outcome.Report, report.Options{All: options.All, Details: options.Details, Color: useColor(out)})
 	}
 	if options.ReportPath != "" {
 		if err := writeSupportBundle(diagnostics, outcome, options); err != nil {
