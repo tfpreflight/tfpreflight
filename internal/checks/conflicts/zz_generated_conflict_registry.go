@@ -6,6 +6,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/applicationinsights"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
+	"github.com/aws/aws-sdk-go-v2/service/lakeformation"
 	"github.com/aws/aws-sdk-go-v2/service/timestreamwrite"
 	"github.com/aws/aws-sdk-go-v2/service/transcribe"
 )
@@ -14,6 +15,7 @@ import (
 func RegisterGenerated(registry *Registry, config aws.Config) {
 	registry.Register(generatedApplicationinsightsAdapters(applicationinsights.NewFromConfig(config))...)
 	registry.Register(generatedDynamodbAdapters(dynamodb.NewFromConfig(config))...)
+	registry.Register(generatedLakeformationAdapters(lakeformation.NewFromConfig(config))...)
 	registry.Register(generatedTimestreamwriteAdapters(timestreamwrite.NewFromConfig(config))...)
 	registry.Register(generatedTranscribeAdapters(transcribe.NewFromConfig(config))...)
 }

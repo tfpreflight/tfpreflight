@@ -3,17 +3,17 @@
   "provider": "aws",
   "files": {
     "aws/conflict/aws.json": "d7e291451389ce654eabb931972ffc872e69681871c3c3cc818d5320f5a1683d",
-    "aws/conflict/generated-aws.json": "a2cf7d267b0a4b761185cf60d927ddf3c9adbba266b18f8e799862fef7cb0817",
+    "aws/conflict/generated-aws.json": "1629e16c40dd139b5bd2c88008c711b93a0dbc86bd033ae11a6cdc06cfb5522a",
     "aws/dependency/enforcement.json": "76ba319428533320caaaf9fb4236e8b837c42bc6615bb9eb93791d3cef8e6e69",
-    "aws/dependency/rules.json": "9413f568a245eefba6daf209d21dbbb76110a3931089bd46fba9fce204477f96",
-    "aws/generated/aws.json": "14336c2d412bd45425445b2e054a17d68ec0f22f7b0318821e1c3045c897e298",
+    "aws/dependency/rules.json": "e9d9b96e638d0b8e22460c0a9e78915036178c9bb26e2fb4d84f76510a5675a8",
+    "aws/generated/aws.json": "e5ecb3443ad88adc419ad0b3cc95e272409625082d0127f988d40036debae34d",
     "aws/generated/quota-aws.json": "9d82bd8b05755467e93525bb2613ab686723450116d04d416eb10cac0c48e0f3",
     "aws/generated/quota-counter-aws.json": "85f59751f7d710623b4a8f7f911238b1bca19a39c7cd6f3a66070199d94c3faa",
-    "aws/generated/verified-aws.json": "790fb589583b37672e26e601286f6845198ebe587f50fe3a112e243d03ac3791",
-    "aws/iam/actions.json": "5eea78734c219c545639c420a23ced63eecfede261a345db46299edc76866d9e",
+    "aws/generated/verified-aws.json": "d6d18c2e6f8f67ce6ca52b2d1460ea174104dd5555198f22bfd2e75f44e58656",
+    "aws/iam/actions.json": "422d598cf3bfc228216206a8869210773302cb982985f40b35c456a010da95d1",
     "aws/knowledge/v1.json": "7760076dd3bd5b5dc643a6fa4d118f79480051c03387bdc54efd2a06be65a0ff",
-    "aws/lookup/conflict-specs.json": "a7361e9927c6ebbbd60eea18ef7b321ba4f1fb486a29f62694b6a937c92450b3",
-    "aws/lookup/specs.json": "fa92628ae02882030ea62bace9b9d9bb6d1f2eb63f42ee8ab9445d1043ad4f3f"
+    "aws/lookup/conflict-specs.json": "65fdff0e71e05d4b231421e4ea3c37082434f0883ef05848ed7043f3701c1dff",
+    "aws/lookup/specs.json": "781e17a77f4c34616590557b634f338d0a9f3a5e053265bd1d70fb1fadbb37d6"
   },
   "versions": [
     "5.98.0",

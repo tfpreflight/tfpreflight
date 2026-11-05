@@ -15,13 +15,9 @@ import (
 // Absence is proven by the modelled GlobalTableNotFoundException error; any other failure is unknown.
 type DynamodbDescribeGlobalTable struct{ Client *dynamodb.Client }
 
-// Service returns the AWS service used by this adapter.
-func (DynamodbDescribeGlobalTable) Service() string { return "dynamodb" }
-
-// Supports reports whether op is the operation handled by this adapter.
+func (DynamodbDescribeGlobalTable) Service() string         { return "dynamodb" }
 func (DynamodbDescribeGlobalTable) Supports(op string) bool { return op == "DescribeGlobalTable" }
 
-// Lookup checks whether the requested DynamoDB global table exists.
 func (a DynamodbDescribeGlobalTable) Lookup(ctx context.Context, request LookupRequest) (Outcome, error) {
 	_, err := a.Client.DescribeGlobalTable(ctx, &dynamodb.DescribeGlobalTableInput{GlobalTableName: aws.String(request.Identity)})
 	if err == nil {

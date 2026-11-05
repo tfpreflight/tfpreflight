@@ -15,13 +15,9 @@ import (
 // Absence is proven by the modelled NotFoundException error; any other failure is unknown.
 type TranscribeDescribeLanguageModel struct{ Client *transcribe.Client }
 
-// Service returns the AWS service used by this adapter.
-func (TranscribeDescribeLanguageModel) Service() string { return "transcribe" }
-
-// Supports reports whether op is the operation handled by this adapter.
+func (TranscribeDescribeLanguageModel) Service() string         { return "transcribe" }
 func (TranscribeDescribeLanguageModel) Supports(op string) bool { return op == "DescribeLanguageModel" }
 
-// Lookup checks whether the requested Transcribe language model exists.
 func (a TranscribeDescribeLanguageModel) Lookup(ctx context.Context, request LookupRequest) (Outcome, error) {
 	_, err := a.Client.DescribeLanguageModel(ctx, &transcribe.DescribeLanguageModelInput{ModelName: aws.String(request.Identity)})
 	if err == nil {
@@ -38,13 +34,9 @@ func (a TranscribeDescribeLanguageModel) Lookup(ctx context.Context, request Loo
 // Absence is proven by the modelled NotFoundException error; any other failure is unknown.
 type TranscribeGetMedicalVocabulary struct{ Client *transcribe.Client }
 
-// Service returns the AWS service used by this adapter.
-func (TranscribeGetMedicalVocabulary) Service() string { return "transcribe" }
-
-// Supports reports whether op is the operation handled by this adapter.
+func (TranscribeGetMedicalVocabulary) Service() string         { return "transcribe" }
 func (TranscribeGetMedicalVocabulary) Supports(op string) bool { return op == "GetMedicalVocabulary" }
 
-// Lookup checks whether the requested Transcribe medical vocabulary exists.
 func (a TranscribeGetMedicalVocabulary) Lookup(ctx context.Context, request LookupRequest) (Outcome, error) {
 	_, err := a.Client.GetMedicalVocabulary(ctx, &transcribe.GetMedicalVocabularyInput{VocabularyName: aws.String(request.Identity)})
 	if err == nil {
@@ -61,13 +53,9 @@ func (a TranscribeGetMedicalVocabulary) Lookup(ctx context.Context, request Look
 // Absence is proven by the modelled NotFoundException error; any other failure is unknown.
 type TranscribeGetVocabulary struct{ Client *transcribe.Client }
 
-// Service returns the AWS service used by this adapter.
-func (TranscribeGetVocabulary) Service() string { return "transcribe" }
-
-// Supports reports whether op is the operation handled by this adapter.
+func (TranscribeGetVocabulary) Service() string         { return "transcribe" }
 func (TranscribeGetVocabulary) Supports(op string) bool { return op == "GetVocabulary" }
 
-// Lookup checks whether the requested Transcribe vocabulary exists.
 func (a TranscribeGetVocabulary) Lookup(ctx context.Context, request LookupRequest) (Outcome, error) {
 	_, err := a.Client.GetVocabulary(ctx, &transcribe.GetVocabularyInput{VocabularyName: aws.String(request.Identity)})
 	if err == nil {
@@ -84,13 +72,9 @@ func (a TranscribeGetVocabulary) Lookup(ctx context.Context, request LookupReque
 // Absence is proven by the modelled NotFoundException error; any other failure is unknown.
 type TranscribeGetVocabularyFilter struct{ Client *transcribe.Client }
 
-// Service returns the AWS service used by this adapter.
-func (TranscribeGetVocabularyFilter) Service() string { return "transcribe" }
-
-// Supports reports whether op is the operation handled by this adapter.
+func (TranscribeGetVocabularyFilter) Service() string         { return "transcribe" }
 func (TranscribeGetVocabularyFilter) Supports(op string) bool { return op == "GetVocabularyFilter" }
 
-// Lookup checks whether the requested Transcribe vocabulary filter exists.
 func (a TranscribeGetVocabularyFilter) Lookup(ctx context.Context, request LookupRequest) (Outcome, error) {
 	_, err := a.Client.GetVocabularyFilter(ctx, &transcribe.GetVocabularyFilterInput{VocabularyFilterName: aws.String(request.Identity)})
 	if err == nil {

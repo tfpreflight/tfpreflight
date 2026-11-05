@@ -9,13 +9,9 @@ import (
 	"github.com/tfpreflight/tfpreflight/internal/checks/quotas"
 )
 
-// Ec2DescribeCustomerGateways counts EC2 customer gateways.
 type Ec2DescribeCustomerGateways struct{ client *ec2.Client }
 
-// Adapter returns the AWS operation used by this counter.
 func (Ec2DescribeCustomerGateways) Adapter() string { return "ec2:DescribeCustomerGateways" }
-
-// Count returns the number of customer gateways visible to the client.
 func (a Ec2DescribeCustomerGateways) Count(ctx context.Context, _ quotas.UsageContext) quotas.Measurement {
 	output, err := a.client.DescribeCustomerGateways(ctx, &ec2.DescribeCustomerGatewaysInput{})
 	if err != nil {
@@ -24,13 +20,9 @@ func (a Ec2DescribeCustomerGateways) Count(ctx context.Context, _ quotas.UsageCo
 	return quotas.Known(float64(len(output.CustomerGateways)))
 }
 
-// Ec2DescribeVpnConcentrators counts EC2 VPN concentrators.
 type Ec2DescribeVpnConcentrators struct{ client *ec2.Client }
 
-// Adapter returns the AWS operation used by this counter.
 func (Ec2DescribeVpnConcentrators) Adapter() string { return "ec2:DescribeVpnConcentrators" }
-
-// Count returns the number of VPN concentrators visible to the client.
 func (a Ec2DescribeVpnConcentrators) Count(ctx context.Context, _ quotas.UsageContext) quotas.Measurement {
 	paginator := ec2.NewDescribeVpnConcentratorsPaginator(a.client, &ec2.DescribeVpnConcentratorsInput{})
 	total := 0
@@ -44,13 +36,9 @@ func (a Ec2DescribeVpnConcentrators) Count(ctx context.Context, _ quotas.UsageCo
 	return quotas.Known(float64(total))
 }
 
-// Ec2DescribeVpnConnections counts EC2 VPN connections.
 type Ec2DescribeVpnConnections struct{ client *ec2.Client }
 
-// Adapter returns the AWS operation used by this counter.
 func (Ec2DescribeVpnConnections) Adapter() string { return "ec2:DescribeVpnConnections" }
-
-// Count returns the number of VPN connections visible to the client.
 func (a Ec2DescribeVpnConnections) Count(ctx context.Context, _ quotas.UsageContext) quotas.Measurement {
 	output, err := a.client.DescribeVpnConnections(ctx, &ec2.DescribeVpnConnectionsInput{})
 	if err != nil {

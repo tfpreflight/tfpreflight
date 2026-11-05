@@ -1,8 +1,10 @@
 checked 0
-unsupported 1
-warnings 0
+unsupported 0
+warnings 1
 blocking 0
-verdict PARTIAL - nothing was verified
+verdict PASSED WITH WARNINGS (PARTIAL)
+finding aws.dependency-missing warning blocking=false
+finding aws.permission-simulation-unavailable info blocking=false
 finding universal.unknown-values info blocking=false
-Dependencies:                    0 checked, 0 partial, 1 no additional rule discovered, 0 unsupported
-Resources: 0 checked, 0 partial, 0 not covered, 1 unsupported
+Dependencies:                    1 checked, 0 partial, 0 no additional rule discovered, 0 unsupported
+Resources: 0 checked, 1 partial, 0 not covered, 0 unsupported

@@ -11,7 +11,6 @@ import (
 	"github.com/tfpreflight/tfpreflight/internal/checks/dependencies"
 )
 
-// ProviderVersion is the AWS provider version used to generate these adapters.
 const ProviderVersion = "6.64.0"
 
 func generatedRegistry(config aws.Config) map[string]lookupFunc {
