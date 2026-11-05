@@ -11,7 +11,7 @@ tfpreflight update
 You'll see something like this (example: AWS, the only provider today):
 
 ```text
-rules updated to 2026-10-27.1, covering AWS provider 5.98.0 to 6.70.0 (61 versions)
+rules updated to 2026-11-05.1, covering AWS provider 5.98.0 to 6.71.0 (79 versions)
 ```
 
 It exits `0` when you have the newest rules, and `2` if it couldn't download them. If it fails, your current rules stay as they are.
