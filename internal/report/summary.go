@@ -148,6 +148,9 @@ func resultLines(report Report) []string {
 		lines = append(lines, "! Nothing was checked in AWS."+warnings, "  Only the plan was checked. "+detailsHint)
 	case verdict == "PARTIAL - nothing was verified":
 		lines = append(lines, "! Nothing could be checked."+warnings, "  "+detailsHint)
+	case summary.Warnings > 0 && hasMissingReference(report):
+		lines = append(lines, "! "+pluralize(summary.Warnings, "warning", "warnings")+" to check, and apply will probably fail. Not blocking: tfpreflight has not confirmed that AWS rejects this create.",
+			"  "+checkedLine(report)+" "+detailsHint)
 	case summary.Warnings > 0:
 		lines = append(lines, "! "+pluralize(summary.Warnings, "warning", "warnings")+" to check. Nothing found that is sure to make apply fail.",
 			"  "+checkedLine(report)+" "+detailsHint)
@@ -164,6 +167,18 @@ func resultLines(report Report) []string {
 		lines = append(lines, "  Exits 1 because --fail-on-partial is set.")
 	}
 	return lines
+}
+
+// hasMissingReference reports whether a warning says AWS could not find a
+// resource this plan refers to. The plan then does not read as clean: apply
+// will probably fail, though nothing here is verified enough to block.
+func hasMissingReference(report Report) bool {
+	for _, finding := range report.Findings {
+		if finding.ID == "aws.dependency-missing" && finding.Severity == model.SeverityWarning {
+			return true
+		}
+	}
+	return false
 }
 
 // checkedLine counts the resources every applicable check covered.

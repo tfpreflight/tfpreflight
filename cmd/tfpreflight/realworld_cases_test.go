@@ -173,6 +173,9 @@ func assertPeerWarning(t *testing.T, summary string, document report.Document, g
 	if got.Blocking != 0 || got.Warnings != 1 {
 		t.Errorf("summary = %+v, want exactly one warning and nothing blocking", got)
 	}
+	if got.Verdict != "PASSED WITH WARNINGS (PARTIAL)" {
+		t.Errorf("verdict = %q, want PASSED WITH WARNINGS (PARTIAL)", got.Verdict)
+	}
 	var found []report.Finding
 	for _, finding := range document.Findings {
 		if finding.ID == "aws.dependency-missing" {
@@ -182,7 +185,13 @@ func assertPeerWarning(t *testing.T, summary string, document report.Document, g
 	if len(found) != 1 {
 		t.Fatalf("findings = %+v, want one aws.dependency-missing", document.Findings)
 	}
-	finding := found[0]
+	assertPeerFinding(t, found[0])
+	assertPeerLookup(t, groups)
+	assertPeerWording(t, summary)
+}
+
+func assertPeerFinding(t *testing.T, finding report.Finding) {
+	t.Helper()
 	if finding.Resource != "aws_vpc_security_group_ingress_rule.database_from_shared_services" {
 		t.Errorf("warning is on %q", finding.Resource)
 	}
@@ -198,19 +207,31 @@ func assertPeerWarning(t *testing.T, summary string, document report.Document, g
 	if strings.Contains(finding.Reason, ownGroup) {
 		t.Errorf("warning names the rule's own group, which exists: %q", finding.Reason)
 	}
+}
+
+// assertPeerLookup checks AWS was asked about the missing group.
+func assertPeerLookup(t *testing.T, groups []string) {
+	t.Helper()
 	sort.Strings(groups)
-	if len(groups) == 0 || groups[0] == "" {
-		t.Errorf("AWS was never asked about a group: %v", groups)
-	}
-	found2 := false
 	for _, id := range groups {
-		found2 = found2 || id == missingPeer
+		if id == missingPeer {
+			return
+		}
 	}
-	if !found2 {
-		t.Errorf("AWS was not asked about %s, only %v", missingPeer, groups)
-	}
-	if !strings.Contains(summary, "warning") {
-		t.Errorf("the default output does not mention the warning:\n%s", summary)
+	t.Errorf("AWS was not asked about %s, only %v", missingPeer, groups)
+}
+
+// assertPeerWording checks the short output says what AWS answered and when it
+// could still be wrong, and does not read as a clean plan.
+func assertPeerWording(t *testing.T, summary string) {
+	t.Helper()
+	for _, want := range []string{
+		"AWS can't find security group " + missingPeer + " in this account and region; unless it is in a peered VPC or another account, apply will fail.",
+		"1 warning to check, and apply will probably fail. Not blocking: tfpreflight has not confirmed that AWS rejects this create.",
+	} {
+		if !strings.Contains(summary, want) {
+			t.Errorf("the default output lacks %q:\n%s", want, summary)
+		}
 	}
 }
 
