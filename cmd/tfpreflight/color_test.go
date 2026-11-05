@@ -37,7 +37,7 @@ func TestUseColorIsOffForBuffersAndFiles(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer file.Close()
+	t.Cleanup(func() { _ = file.Close() })
 	if useColor(file) {
 		t.Error("a regular file must not be colored")
 	}
@@ -49,7 +49,7 @@ func TestUseColorIsOffForDevNull(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer file.Close()
+	t.Cleanup(func() { _ = file.Close() })
 	if useColor(file) {
 		t.Error("/dev/null must not be colored")
 	}
