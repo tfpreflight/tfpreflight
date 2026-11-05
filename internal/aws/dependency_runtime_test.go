@@ -95,18 +95,26 @@ func TestDependencyRuntimeThroughTypedSDK(t *testing.T) {
 				t.Fatalf("calls=%d coverage=%s findings=%v debug=%v", calls, result.Coverage.Resources[0].Dependencies, result.Findings, result.Debug)
 			}
 			assertBlocksOnlyWhenMissing(t, result.Findings, tc.blocks)
-			if tc.coverage == model.CheckPartialDependency {
-				assertNotCheckedNote(t, result.Findings[0], "vpc_id")
-				if !slices.ContainsFunc(result.Debug, func(line string) bool {
-					return strings.Contains(line, "aws_subnet.test: dependency partial on vpc_id: ")
-				}) {
-					t.Errorf("the debug lines do not name the argument: %v", result.Debug)
-				}
-			}
-			if tc.name == "malformed" && (result.Findings[0].Severity != model.SeverityWarning || !strings.Contains(result.Findings[0].Brief, "is not a valid VPC ID")) {
-				t.Errorf("a malformed VPC ID must be a warning saying so: %+v", result.Findings[0])
-			}
+			assertAnswerReporting(t, tc.name, tc.coverage, result)
 		})
+	}
+}
+
+// assertAnswerReporting checks how a run reports an answer that is not a plain
+// yes or no: a partial check is named under Not checked and in the debug lines,
+// and a malformed ID is a warning that says so.
+func assertAnswerReporting(t *testing.T, name string, coverage model.CheckStatus, result Result) {
+	t.Helper()
+	if coverage == model.CheckPartialDependency {
+		assertNotCheckedNote(t, result.Findings[0], "vpc_id")
+		if !slices.ContainsFunc(result.Debug, func(line string) bool {
+			return strings.Contains(line, "aws_subnet.test: dependency partial on vpc_id: ")
+		}) {
+			t.Errorf("the debug lines do not name the argument: %v", result.Debug)
+		}
+	}
+	if name == "malformed" && (result.Findings[0].Severity != model.SeverityWarning || !strings.Contains(result.Findings[0].Brief, "is not a valid VPC ID")) {
+		t.Errorf("a malformed VPC ID must be a warning saying so: %+v", result.Findings[0])
 	}
 }
 
