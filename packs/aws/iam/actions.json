@@ -774,6 +774,12 @@
     "aws:TagKeys"
    ]
   },
+  "aoss:batchgetcollection": {
+   "resources": [],
+   "condition_keys": [
+    "aoss:collection"
+   ]
+  },
   "aoss:batchgetcollectiongroup": {
    "resources": [],
    "condition_keys": [
@@ -783,11 +789,22 @@
   "aoss:batchgetlifecyclepolicy": {
    "resources": []
   },
+  "aoss:batchgetvpcendpoint": {
+   "resources": []
+  },
   "aoss:createaccesspolicy": {
    "resources": [],
    "condition_keys": [
     "aoss:collection",
     "aoss:index"
+   ]
+  },
+  "aoss:createcollection": {
+   "resources": [],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:ResourceTag/${TagKey}",
+    "aws:TagKeys"
    ]
   },
   "aoss:createcollectiongroup": {
@@ -811,6 +828,9 @@
    "condition_keys": [
     "aoss:collection"
    ]
+  },
+  "aoss:createvpcendpoint": {
+   "resources": []
   },
   "aoss:getaccesspolicy": {
    "resources": [],
@@ -4112,11 +4132,157 @@
     "aws:ResourceTag/${TagKey}"
    ]
   },
+  "arc-region-switch:createplan": {
+   "resources": [
+    {
+     "type": "plan",
+     "formats": [
+      "arn:${Partition}:arc-region-switch::${Account}:plan/${ResourceId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:TagKeys"
+   ]
+  },
+  "arc-region-switch:getplan": {
+   "resources": [
+    {
+     "type": "plan",
+     "formats": [
+      "arn:${Partition}:arc-region-switch::${Account}:plan/${ResourceId}"
+     ]
+    }
+   ]
+  },
+  "arc-region-switch:listroute53healthchecks": {
+   "resources": [
+    {
+     "type": "plan",
+     "formats": [
+      "arn:${Partition}:arc-region-switch::${Account}:plan/${ResourceId}"
+     ]
+    }
+   ]
+  },
+  "arc-region-switch:listtagsforresource": {
+   "resources": [
+    {
+     "type": "plan",
+     "formats": [
+      "arn:${Partition}:arc-region-switch::${Account}:plan/${ResourceId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:ResourceTag/${TagKey}"
+   ]
+  },
+  "arc-region-switch:tagresource": {
+   "resources": [
+    {
+     "type": "plan",
+     "formats": [
+      "arn:${Partition}:arc-region-switch::${Account}:plan/${ResourceId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:ResourceTag/${TagKey}",
+    "aws:TagKeys"
+   ]
+  },
+  "arc-zonal-shift:createpracticerunconfiguration": {
+   "resources": [
+    {
+     "type": "ALB",
+     "formats": [
+      "arn:${Partition}:elasticloadbalancing:${Region}:${Account}:loadbalancer/app/${LoadBalancerName}/${LoadBalancerId}"
+     ]
+    },
+    {
+     "type": "NLB",
+     "formats": [
+      "arn:${Partition}:elasticloadbalancing:${Region}:${Account}:loadbalancer/net/${LoadBalancerName}/${LoadBalancerId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "arc-zonal-shift:ResourceIdentifier",
+    "aws:ResourceTag/${TagKey}",
+    "elasticloadbalancing:ResourceTag/${TagKey}"
+   ]
+  },
+  "arc-zonal-shift:deletepracticerunconfiguration": {
+   "resources": [
+    {
+     "type": "ALB",
+     "formats": [
+      "arn:${Partition}:elasticloadbalancing:${Region}:${Account}:loadbalancer/app/${LoadBalancerName}/${LoadBalancerId}"
+     ]
+    },
+    {
+     "type": "NLB",
+     "formats": [
+      "arn:${Partition}:elasticloadbalancing:${Region}:${Account}:loadbalancer/net/${LoadBalancerName}/${LoadBalancerId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "arc-zonal-shift:ResourceIdentifier",
+    "aws:ResourceTag/${TagKey}",
+    "elasticloadbalancing:ResourceTag/${TagKey}"
+   ]
+  },
   "arc-zonal-shift:getautoshiftobservernotificationstatus": {
    "resources": []
   },
+  "arc-zonal-shift:getmanagedresource": {
+   "resources": [
+    {
+     "type": "ALB",
+     "formats": [
+      "arn:${Partition}:elasticloadbalancing:${Region}:${Account}:loadbalancer/app/${LoadBalancerName}/${LoadBalancerId}"
+     ]
+    },
+    {
+     "type": "NLB",
+     "formats": [
+      "arn:${Partition}:elasticloadbalancing:${Region}:${Account}:loadbalancer/net/${LoadBalancerName}/${LoadBalancerId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "arc-zonal-shift:ResourceIdentifier",
+    "aws:ResourceTag/${TagKey}",
+    "elasticloadbalancing:ResourceTag/${TagKey}"
+   ]
+  },
   "arc-zonal-shift:updateautoshiftobservernotificationstatus": {
    "resources": []
+  },
+  "arc-zonal-shift:updatezonalautoshiftconfiguration": {
+   "resources": [
+    {
+     "type": "ALB",
+     "formats": [
+      "arn:${Partition}:elasticloadbalancing:${Region}:${Account}:loadbalancer/app/${LoadBalancerName}/${LoadBalancerId}"
+     ]
+    },
+    {
+     "type": "NLB",
+     "formats": [
+      "arn:${Partition}:elasticloadbalancing:${Region}:${Account}:loadbalancer/net/${LoadBalancerName}/${LoadBalancerId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "arc-zonal-shift:ResourceIdentifier",
+    "aws:ResourceTag/${TagKey}",
+    "elasticloadbalancing:ResourceTag/${TagKey}"
+   ]
   },
   "athena:createcapacityreservation": {
    "resources": [
@@ -4403,6 +4569,9 @@
     "aws:TagKeys"
    ]
   },
+  "auditmanager:getaccountstatus": {
+   "resources": []
+  },
   "auditmanager:getassessment": {
    "resources": [
     {
@@ -4433,10 +4602,35 @@
     }
    ]
   },
+  "auditmanager:getdelegations": {
+   "resources": []
+  },
   "auditmanager:getorganizationadminaccount": {
    "resources": []
   },
   "auditmanager:listassessmentframeworksharerequests": {
+   "resources": []
+  },
+  "auditmanager:listassessmentreports": {
+   "resources": []
+  },
+  "auditmanager:listtagsforresource": {
+   "resources": [
+    {
+     "type": "assessment",
+     "formats": [
+      "arn:${Partition}:auditmanager:${Region}:${Account}:assessment/${AssessmentId}"
+     ]
+    },
+    {
+     "type": "control",
+     "formats": [
+      "arn:${Partition}:auditmanager:${Region}:${Account}:control/${ControlId}"
+     ]
+    }
+   ]
+  },
+  "auditmanager:registeraccount": {
    "resources": []
   },
   "auditmanager:registerorganizationadminaccount": {
@@ -5095,6 +5289,38 @@
     "aws:TagKeys"
    ]
   },
+  "batch:createjobqueue": {
+   "resources": [
+    {
+     "type": "compute-environment",
+     "formats": [
+      "arn:${Partition}:batch:${Region}:${Account}:compute-environment/${ComputeEnvironmentName}"
+     ]
+    },
+    {
+     "type": "job-queue",
+     "formats": [
+      "arn:${Partition}:batch:${Region}:${Account}:job-queue/${JobQueueName}"
+     ]
+    },
+    {
+     "type": "scheduling-policy",
+     "formats": [
+      "arn:${Partition}:batch:${Region}:${Account}:scheduling-policy/${SchedulingPolicyName}"
+     ]
+    },
+    {
+     "type": "service-environment",
+     "formats": [
+      "arn:${Partition}:batch:${Region}:${Account}:service-environment/${ServiceEnvironmentName}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:TagKeys"
+   ]
+  },
   "batch:createschedulingpolicy": {
    "resources": [
     {
@@ -5113,6 +5339,9 @@
    "resources": []
   },
   "batch:describejobdefinitions": {
+   "resources": []
+  },
+  "batch:describejobqueues": {
    "resources": []
   },
   "batch:describeschedulingpolicies": {
@@ -5470,6 +5699,16 @@
    "condition_keys": [
     "aws:RequestTag/${TagKey}",
     "aws:TagKeys"
+   ]
+  },
+  "bedrock-agentcore:deleteharness": {
+   "resources": [
+    {
+     "type": "harness",
+     "formats": [
+      "arn:${Partition}:bedrock-agentcore:${Region}:${Account}:harness/${HarnessId}"
+     ]
+    }
    ]
   },
   "bedrock-agentcore:getagentruntime": {
@@ -5986,6 +6225,16 @@
     "aws:TagKeys"
    ]
   },
+  "bedrock-agentcore:updatememory": {
+   "resources": [
+    {
+     "type": "memory",
+     "formats": [
+      "arn:${Partition}:bedrock-agentcore:${Region}:${Account}:memory/${MemoryId}"
+     ]
+    }
+   ]
+  },
   "bedrock:associateagentcollaborator": {
    "resources": [
     {
@@ -6396,6 +6645,9 @@
     }
    ]
   },
+  "bedrock:getmodelinvocationloggingconfiguration": {
+   "resources": []
+  },
   "bedrock:getprompt": {
    "resources": [
     {
@@ -6631,6 +6883,12 @@
     }
    ]
   },
+  "bedrock:putenforcedguardrailconfiguration": {
+   "resources": []
+  },
+  "bedrock:putmodelinvocationloggingconfiguration": {
+   "resources": []
+  },
   "bedrock:putusecaseformodelaccess": {
    "resources": []
   },
@@ -6831,6 +7089,74 @@
    ],
    "condition_keys": [
     "aws:RequestTag/${TagKey}",
+    "aws:TagKeys"
+   ]
+  },
+  "billing:createbillingview": {
+   "resources": [
+    {
+     "type": "billingview",
+     "formats": [
+      "arn:${Partition}:billing::${Account}:billingview/${ResourceId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:TagKeys"
+   ]
+  },
+  "billing:getbillingview": {
+   "resources": [
+    {
+     "type": "billingview",
+     "formats": [
+      "arn:${Partition}:billing::${Account}:billingview/${ResourceId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:ResourceTag/${TagKey}"
+   ]
+  },
+  "billing:listsourceviewsforbillingview": {
+   "resources": [
+    {
+     "type": "billingview",
+     "formats": [
+      "arn:${Partition}:billing::${Account}:billingview/${ResourceId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:ResourceTag/${TagKey}"
+   ]
+  },
+  "billing:listtagsforresource": {
+   "resources": [
+    {
+     "type": "billingview",
+     "formats": [
+      "arn:${Partition}:billing::${Account}:billingview/${ResourceId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:ResourceTag/${TagKey}"
+   ]
+  },
+  "billing:tagresource": {
+   "resources": [
+    {
+     "type": "billingview",
+     "formats": [
+      "arn:${Partition}:billing::${Account}:billingview/${ResourceId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:ResourceTag/${TagKey}",
     "aws:TagKeys"
    ]
   },
@@ -7890,7 +8216,27 @@
     }
    ]
   },
+  "cloudfront-keyvaluestore:listkeys": {
+   "resources": [
+    {
+     "type": "key-value-store",
+     "formats": [
+      "arn:${Partition}:cloudfront::${Account}:key-value-store/${ResourceId}"
+     ]
+    }
+   ]
+  },
   "cloudfront-keyvaluestore:putkey": {
+   "resources": [
+    {
+     "type": "key-value-store",
+     "formats": [
+      "arn:${Partition}:cloudfront::${Account}:key-value-store/${ResourceId}"
+     ]
+    }
+   ]
+  },
+  "cloudfront-keyvaluestore:updatekeys": {
    "resources": [
     {
      "type": "key-value-store",
@@ -12031,6 +12377,13 @@
     "aws:TagKeys"
    ]
   },
+  "controltower:enablebaseline": {
+   "resources": [],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:TagKeys"
+   ]
+  },
   "controltower:enablecontrol": {
    "resources": [
     {
@@ -12047,6 +12400,16 @@
   },
   "controltower:getcontroloperation": {
    "resources": []
+  },
+  "controltower:getenabledbaseline": {
+   "resources": [
+    {
+     "type": "EnabledBaseline",
+     "formats": [
+      "arn:${Partition}:controltower:${Region}:${Account}:enabledbaseline/${EnabledBaselineId}"
+     ]
+    }
+   ]
   },
   "controltower:getenabledcontrol": {
    "resources": [
@@ -14723,10 +15086,30 @@
     }
    ]
   },
+  "ds:listiproutes": {
+   "resources": [
+    {
+     "type": "directory",
+     "formats": [
+      "arn:${Partition}:ds:${Region}:${Account}:directory/${DirectoryId}"
+     ]
+    }
+   ]
+  },
   "ds:listlogsubscriptions": {
    "resources": []
   },
   "ds:listtagsforresource": {
+   "resources": [
+    {
+     "type": "directory",
+     "formats": [
+      "arn:${Partition}:ds:${Region}:${Account}:directory/${DirectoryId}"
+     ]
+    }
+   ]
+  },
+  "ds:removeiproutes": {
    "resources": [
     {
      "type": "directory",
@@ -17876,6 +18259,25 @@
     "ec2:Region"
    ]
   },
+  "ec2:createvpcencryptioncontrol": {
+   "resources": [
+    {
+     "type": "vpc",
+     "formats": [
+      "arn:${Partition}:ec2:${Region}:${Account}:vpc/${VpcId}"
+     ]
+    },
+    {
+     "type": "vpc-encryption-control",
+     "formats": [
+      "arn:${Partition}:ec2:${Region}:${Account}:vpc-encryption-control/${VpcEncryptionControlId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "ec2:Region"
+   ]
+  },
   "ec2:createvpcendpoint": {
    "resources": [
     {
@@ -19300,6 +19702,12 @@
     "ec2:Region"
    ]
   },
+  "ec2:describevpcencryptioncontrols": {
+   "resources": [],
+   "condition_keys": [
+    "ec2:Region"
+   ]
+  },
   "ec2:describevpcendpointconnectionnotifications": {
    "resources": [],
    "condition_keys": [
@@ -20251,6 +20659,19 @@
   },
   "ec2:modifyvpcblockpublicaccessoptions": {
    "resources": [],
+   "condition_keys": [
+    "ec2:Region"
+   ]
+  },
+  "ec2:modifyvpcencryptioncontrol": {
+   "resources": [
+    {
+     "type": "vpc-encryption-control",
+     "formats": [
+      "arn:${Partition}:ec2:${Region}:${Account}:vpc-encryption-control/${VpcEncryptionControlId}"
+     ]
+    }
+   ],
    "condition_keys": [
     "ec2:Region"
    ]
@@ -25118,6 +25539,16 @@
     "aws:TagKeys"
    ]
   },
+  "fis:createtargetaccountconfiguration": {
+   "resources": [
+    {
+     "type": "experiment-template",
+     "formats": [
+      "arn:${Partition}:fis:${Region}:${Account}:experiment-template/${Id}"
+     ]
+    }
+   ]
+  },
   "fis:getexperimenttemplate": {
    "resources": [
     {
@@ -25129,6 +25560,36 @@
    ],
    "condition_keys": [
     "aws:ResourceTag/${TagKey}"
+   ]
+  },
+  "fis:getsafetylever": {
+   "resources": [
+    {
+     "type": "safety-lever",
+     "formats": [
+      "arn:${Partition}:fis:${Region}:${Account}:safety-lever/${Id}"
+     ]
+    }
+   ]
+  },
+  "fis:gettargetaccountconfiguration": {
+   "resources": [
+    {
+     "type": "experiment-template",
+     "formats": [
+      "arn:${Partition}:fis:${Region}:${Account}:experiment-template/${Id}"
+     ]
+    }
+   ]
+  },
+  "fis:updatesafetyleverstate": {
+   "resources": [
+    {
+     "type": "safety-lever",
+     "formats": [
+      "arn:${Partition}:fis:${Region}:${Account}:safety-lever/${Id}"
+     ]
+    }
    ]
   },
   "fms:associateadminaccount": {
@@ -26834,6 +27295,34 @@
     }
    ]
   },
+  "glue:getresourcepolicy": {
+   "resources": [
+    {
+     "type": "catalog",
+     "formats": [
+      "arn:${Partition}:glue:${Region}:${Account}:catalog/${CatalogName}"
+     ]
+    },
+    {
+     "type": "database",
+     "formats": [
+      "arn:${Partition}:glue:${Region}:${Account}:database/${DatabaseName}"
+     ]
+    },
+    {
+     "type": "rootcatalog",
+     "formats": [
+      "arn:${Partition}:glue:${Region}:${Account}:catalog"
+     ]
+    },
+    {
+     "type": "table",
+     "formats": [
+      "arn:${Partition}:glue:${Region}:${Account}:table/${DatabaseName}/${TableName}"
+     ]
+    }
+   ]
+  },
   "glue:getschema": {
    "resources": [
     {
@@ -27056,6 +27545,34 @@
      "type": "rootcatalog",
      "formats": [
       "arn:${Partition}:glue:${Region}:${Account}:catalog"
+     ]
+    }
+   ]
+  },
+  "glue:putresourcepolicy": {
+   "resources": [
+    {
+     "type": "catalog",
+     "formats": [
+      "arn:${Partition}:glue:${Region}:${Account}:catalog/${CatalogName}"
+     ]
+    },
+    {
+     "type": "database",
+     "formats": [
+      "arn:${Partition}:glue:${Region}:${Account}:database/${DatabaseName}"
+     ]
+    },
+    {
+     "type": "rootcatalog",
+     "formats": [
+      "arn:${Partition}:glue:${Region}:${Account}:catalog"
+     ]
+    },
+    {
+     "type": "table",
+     "formats": [
+      "arn:${Partition}:glue:${Region}:${Account}:table/${DatabaseName}/${TableName}"
      ]
     }
    ]
@@ -27862,6 +28379,16 @@
     "aws:TagKeys"
    ]
   },
+  "iam:deletegrouppolicy": {
+   "resources": [
+    {
+     "type": "group",
+     "formats": [
+      "arn:${Partition}:iam::${Account}:group/${GroupNameWithPath}"
+     ]
+    }
+   ]
+  },
   "iam:deleterole": {
    "resources": [
     {
@@ -27888,12 +28415,52 @@
     "iam:PermissionsBoundary"
    ]
   },
+  "iam:deleteuserpolicy": {
+   "resources": [
+    {
+     "type": "user",
+     "formats": [
+      "arn:${Partition}:iam::${Account}:user/${UserNameWithPath}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "iam:PermissionsBoundary"
+   ]
+  },
+  "iam:detachgrouppolicy": {
+   "resources": [
+    {
+     "type": "group",
+     "formats": [
+      "arn:${Partition}:iam::${Account}:group/${GroupNameWithPath}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "iam:PolicyARN"
+   ]
+  },
   "iam:detachrolepolicy": {
    "resources": [
     {
      "type": "role",
      "formats": [
       "arn:${Partition}:iam::${Account}:role/${RoleNameWithPath}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "iam:PermissionsBoundary",
+    "iam:PolicyARN"
+   ]
+  },
+  "iam:detachuserpolicy": {
+   "resources": [
+    {
+     "type": "user",
+     "formats": [
+      "arn:${Partition}:iam::${Account}:user/${UserNameWithPath}"
      ]
     }
    ],
@@ -28123,6 +28690,16 @@
     }
    ]
   },
+  "iam:listgrouppolicies": {
+   "resources": [
+    {
+     "type": "group",
+     "formats": [
+      "arn:${Partition}:iam::${Account}:group/${GroupNameWithPath}"
+     ]
+    }
+   ]
+  },
   "iam:listgroupsforuser": {
    "resources": [
     {
@@ -28167,6 +28744,16 @@
    ]
   },
   "iam:listsigningcertificates": {
+   "resources": [
+    {
+     "type": "user",
+     "formats": [
+      "arn:${Partition}:iam::${Account}:user/${UserNameWithPath}"
+     ]
+    }
+   ]
+  },
+  "iam:listuserpolicies": {
    "resources": [
     {
      "type": "user",
@@ -31462,6 +32049,9 @@
   "lakeformation:createdatacellsfilter": {
    "resources": []
   },
+  "lakeformation:createlakeformationidentitycenterconfiguration": {
+   "resources": []
+  },
   "lakeformation:createlakeformationoptin": {
    "resources": []
   },
@@ -31469,6 +32059,9 @@
    "resources": []
   },
   "lakeformation:createlftagexpression": {
+   "resources": []
+  },
+  "lakeformation:describelakeformationidentitycenterconfiguration": {
    "resources": []
   },
   "lakeformation:describeresource": {
@@ -31539,6 +32132,22 @@
       "arn:${Partition}:lambda:${Region}:${Account}:function:${FunctionName}"
      ]
     }
+   ]
+  },
+  "lambda:createcapacityprovider": {
+   "resources": [
+    {
+     "type": "capacityProvider",
+     "formats": [
+      "arn:${Partition}:lambda:${Region}:${Account}:capacity-provider:${CapacityProviderName}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:TagKeys",
+    "lambda:SecurityGroupIds",
+    "lambda:SubnetIds"
    ]
   },
   "lambda:createcodesigningconfig": {
@@ -31618,6 +32227,16 @@
      "type": "function",
      "formats": [
       "arn:${Partition}:lambda:${Region}:${Account}:function:${FunctionName}"
+     ]
+    }
+   ]
+  },
+  "lambda:getcapacityprovider": {
+   "resources": [
+    {
+     "type": "capacityProvider",
+     "formats": [
+      "arn:${Partition}:lambda:${Region}:${Account}:capacity-provider:${CapacityProviderName}"
      ]
     }
    ]
@@ -33879,6 +34498,16 @@
     "aws:TagKeys"
    ]
   },
+  "medialive:createmultiplexprogram": {
+   "resources": [
+    {
+     "type": "multiplex",
+     "formats": [
+      "arn:${Partition}:medialive:${Region}:${Account}:multiplex:${MultiplexId}"
+     ]
+    }
+   ]
+  },
   "medialive:createtags": {
    "resources": [
     {
@@ -34008,6 +34637,16 @@
    ]
   },
   "medialive:describemultiplex": {
+   "resources": [
+    {
+     "type": "multiplex",
+     "formats": [
+      "arn:${Partition}:medialive:${Region}:${Account}:multiplex:${MultiplexId}"
+     ]
+    }
+   ]
+  },
+  "medialive:describemultiplexprogram": {
    "resources": [
     {
      "type": "multiplex",
@@ -35091,7 +35730,35 @@
     "neptune-graph:PublicConnectivity"
    ]
   },
+  "neptune-graph:createprivategraphendpoint": {
+   "resources": [
+    {
+     "type": "graph",
+     "formats": [
+      "arn:${Partition}:neptune-graph:${Region}:${Account}:graph/${ResourceId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:ResourceTag/${TagKey}",
+    "aws:TagKeys"
+   ]
+  },
   "neptune-graph:getgraph": {
+   "resources": [
+    {
+     "type": "graph",
+     "formats": [
+      "arn:${Partition}:neptune-graph:${Region}:${Account}:graph/${ResourceId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:ResourceTag/${TagKey}"
+   ]
+  },
+  "neptune-graph:getprivategraphendpoint": {
    "resources": [
     {
      "type": "graph",
@@ -36854,6 +37521,332 @@
     "aws:TagKeys"
    ]
   },
+  "odb:associateiamroletoresource": {
+   "resources": [
+    {
+     "type": "cloud-autonomous-vm-cluster",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:cloud-autonomous-vm-cluster/${CloudAutonomousVmClusterId}"
+     ]
+    },
+    {
+     "type": "cloud-vm-cluster",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:cloud-vm-cluster/${CloudVmClusterId}"
+     ]
+    }
+   ]
+  },
+  "odb:createautonomousdatabase": {
+   "resources": [
+    {
+     "type": "odb-network",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:odb-network/${OdbNetworkId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:TagKeys"
+   ]
+  },
+  "odb:createcloudautonomousvmcluster": {
+   "resources": [
+    {
+     "type": "cloud-exadata-infrastructure",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:cloud-exadata-infrastructure/${CloudExadataInfrastructureId}"
+     ]
+    },
+    {
+     "type": "odb-network",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:odb-network/${OdbNetworkId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:TagKeys"
+   ]
+  },
+  "odb:createcloudexadatainfrastructure": {
+   "resources": [],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:TagKeys"
+   ]
+  },
+  "odb:createcloudvmcluster": {
+   "resources": [
+    {
+     "type": "cloud-exadata-infrastructure",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:cloud-exadata-infrastructure/${CloudExadataInfrastructureId}"
+     ]
+    },
+    {
+     "type": "exascale-db-storage-vault",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:exascale-db-storage-vault/${ExascaleDbStorageVaultId}"
+     ]
+    },
+    {
+     "type": "odb-network",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:odb-network/${OdbNetworkId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:TagKeys"
+   ]
+  },
+  "odb:createodbnetwork": {
+   "resources": [],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:TagKeys"
+   ]
+  },
+  "odb:createodbpeeringconnection": {
+   "resources": [
+    {
+     "type": "odb-network",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:odb-network/${OdbNetworkId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:TagKeys"
+   ]
+  },
+  "odb:getautonomousdatabase": {
+   "resources": [
+    {
+     "type": "autonomous-database",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:autonomous-database/${AutonomousDatabaseId}"
+     ]
+    }
+   ]
+  },
+  "odb:getcloudautonomousvmcluster": {
+   "resources": [
+    {
+     "type": "cloud-autonomous-vm-cluster",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:cloud-autonomous-vm-cluster/${CloudAutonomousVmClusterId}"
+     ]
+    }
+   ]
+  },
+  "odb:getcloudexadatainfrastructure": {
+   "resources": [
+    {
+     "type": "cloud-exadata-infrastructure",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:cloud-exadata-infrastructure/${CloudExadataInfrastructureId}"
+     ]
+    }
+   ]
+  },
+  "odb:getcloudvmcluster": {
+   "resources": [
+    {
+     "type": "cloud-vm-cluster",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:cloud-vm-cluster/${CloudVmClusterId}"
+     ]
+    }
+   ]
+  },
+  "odb:getocionboardingstatus": {
+   "resources": []
+  },
+  "odb:getodbnetwork": {
+   "resources": [
+    {
+     "type": "odb-network",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:odb-network/${OdbNetworkId}"
+     ]
+    }
+   ]
+  },
+  "odb:getodbpeeringconnection": {
+   "resources": [
+    {
+     "type": "odb-peering-connection",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:odb-peering-connection/${OdbPeeringConnectionId}"
+     ]
+    }
+   ]
+  },
+  "odb:initializeservice": {
+   "resources": []
+  },
+  "odb:listtagsforresource": {
+   "resources": [
+    {
+     "type": "autonomous-database",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:autonomous-database/${AutonomousDatabaseId}"
+     ]
+    },
+    {
+     "type": "autonomous-database-backup",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:autonomous-database-backup/${AutonomousDatabaseBackupId}"
+     ]
+    },
+    {
+     "type": "cloud-autonomous-vm-cluster",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:cloud-autonomous-vm-cluster/${CloudAutonomousVmClusterId}"
+     ]
+    },
+    {
+     "type": "cloud-exadata-infrastructure",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:cloud-exadata-infrastructure/${CloudExadataInfrastructureId}"
+     ]
+    },
+    {
+     "type": "cloud-vm-cluster",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:cloud-vm-cluster/${CloudVmClusterId}"
+     ]
+    },
+    {
+     "type": "db-node",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:db-node/${DbNodeId}"
+     ]
+    },
+    {
+     "type": "exadb-vm-cluster",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:exadb-vm-cluster/${ExadbVmClusterId}"
+     ]
+    },
+    {
+     "type": "exascale-db-storage-vault",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:exascale-db-storage-vault/${ExascaleDbStorageVaultId}"
+     ]
+    },
+    {
+     "type": "odb-network",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:odb-network/${OdbNetworkId}"
+     ]
+    },
+    {
+     "type": "odb-peering-connection",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:odb-peering-connection/${OdbPeeringConnectionId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:ResourceTag/${TagKey}"
+   ]
+  },
+  "odb:tagresource": {
+   "resources": [
+    {
+     "type": "autonomous-database",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:autonomous-database/${AutonomousDatabaseId}"
+     ]
+    },
+    {
+     "type": "autonomous-database-backup",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:autonomous-database-backup/${AutonomousDatabaseBackupId}"
+     ]
+    },
+    {
+     "type": "cloud-autonomous-vm-cluster",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:cloud-autonomous-vm-cluster/${CloudAutonomousVmClusterId}"
+     ]
+    },
+    {
+     "type": "cloud-exadata-infrastructure",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:cloud-exadata-infrastructure/${CloudExadataInfrastructureId}"
+     ]
+    },
+    {
+     "type": "cloud-vm-cluster",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:cloud-vm-cluster/${CloudVmClusterId}"
+     ]
+    },
+    {
+     "type": "db-node",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:db-node/${DbNodeId}"
+     ]
+    },
+    {
+     "type": "exadb-vm-cluster",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:exadb-vm-cluster/${ExadbVmClusterId}"
+     ]
+    },
+    {
+     "type": "exascale-db-storage-vault",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:exascale-db-storage-vault/${ExascaleDbStorageVaultId}"
+     ]
+    },
+    {
+     "type": "odb-network",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:odb-network/${OdbNetworkId}"
+     ]
+    },
+    {
+     "type": "odb-peering-connection",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:odb-peering-connection/${OdbPeeringConnectionId}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:ResourceTag/${TagKey}",
+    "aws:TagKeys"
+   ]
+  },
+  "odb:updateautonomousdatabase": {
+   "resources": [
+    {
+     "type": "autonomous-database",
+     "formats": [
+      "arn:${Partition}:odb:${Region}:${Account}:autonomous-database/${AutonomousDatabaseId}"
+     ]
+    }
+   ]
+  },
+  "opsworks:attachelasticloadbalancer": {
+   "resources": [
+    {
+     "type": "stack",
+     "formats": [
+      "arn:${Partition}:opsworks:${Region}:${Account}:stack/${StackId}/"
+     ]
+    }
+   ]
+  },
   "opsworks:createapp": {
    "resources": [
     {
@@ -36865,6 +37858,16 @@
    ]
   },
   "opsworks:createinstance": {
+   "resources": [
+    {
+     "type": "stack",
+     "formats": [
+      "arn:${Partition}:opsworks:${Region}:${Account}:stack/${StackId}/"
+     ]
+    }
+   ]
+  },
+  "opsworks:createlayer": {
    "resources": [
     {
      "type": "stack",
@@ -36890,7 +37893,37 @@
     }
    ]
   },
+  "opsworks:describeelasticloadbalancers": {
+   "resources": [
+    {
+     "type": "stack",
+     "formats": [
+      "arn:${Partition}:opsworks:${Region}:${Account}:stack/${StackId}/"
+     ]
+    }
+   ]
+  },
   "opsworks:describeinstances": {
+   "resources": [
+    {
+     "type": "stack",
+     "formats": [
+      "arn:${Partition}:opsworks:${Region}:${Account}:stack/${StackId}/"
+     ]
+    }
+   ]
+  },
+  "opsworks:describelayers": {
+   "resources": [
+    {
+     "type": "stack",
+     "formats": [
+      "arn:${Partition}:opsworks:${Region}:${Account}:stack/${StackId}/"
+     ]
+    }
+   ]
+  },
+  "opsworks:describeloadbasedautoscaling": {
    "resources": [
     {
      "type": "stack",
@@ -36943,7 +37976,27 @@
     }
    ]
   },
+  "opsworks:registerecscluster": {
+   "resources": [
+    {
+     "type": "stack",
+     "formats": [
+      "arn:${Partition}:opsworks:${Region}:${Account}:stack/${StackId}/"
+     ]
+    }
+   ]
+  },
   "opsworks:registerrdsdbinstance": {
+   "resources": [
+    {
+     "type": "stack",
+     "formats": [
+      "arn:${Partition}:opsworks:${Region}:${Account}:stack/${StackId}/"
+     ]
+    }
+   ]
+  },
+  "opsworks:setloadbasedautoscaling": {
    "resources": [
     {
      "type": "stack",
@@ -38899,6 +39952,26 @@
     "ram:RequestedAllowsExternalPrincipals",
     "ram:RequestedResourceType",
     "ram:ResourceArn",
+    "ram:RetainSharingOnAccountLeaveOrganization"
+   ]
+  },
+  "ram:disassociateresourceshare": {
+   "resources": [
+    {
+     "type": "resource-share",
+     "formats": [
+      "arn:${Partition}:ram:${Region}:${Account}:resource-share/${ResourcePath}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:ResourceTag/${TagKey}",
+    "ram:AllowsExternalPrincipals",
+    "ram:Principal",
+    "ram:RequestedResourceType",
+    "ram:ResourceArn",
+    "ram:ResourceShareName",
+    "ram:ResourceTag/${TagKey}",
     "ram:RetainSharingOnAccountLeaveOrganization"
    ]
   },
@@ -43673,6 +44746,24 @@
     "s3:x-amz-content-sha256"
    ]
   },
+  "s3:getbucketabac": {
+   "resources": [
+    {
+     "type": "bucket",
+     "formats": [
+      "arn:${Partition}:s3:::${BucketName}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "s3:ResourceAccount",
+    "s3:TlsVersion",
+    "s3:authType",
+    "s3:signatureAge",
+    "s3:signatureversion",
+    "s3:x-amz-content-sha256"
+   ]
+  },
   "s3:getbucketacl": {
    "resources": [
     {
@@ -44294,6 +45385,24 @@
    ]
   },
   "s3:putanalyticsconfiguration": {
+   "resources": [
+    {
+     "type": "bucket",
+     "formats": [
+      "arn:${Partition}:s3:::${BucketName}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "s3:ResourceAccount",
+    "s3:TlsVersion",
+    "s3:authType",
+    "s3:signatureAge",
+    "s3:signatureversion",
+    "s3:x-amz-content-sha256"
+   ]
+  },
+  "s3:putbucketabac": {
    "resources": [
     {
      "type": "bucket",
@@ -46256,6 +47365,47 @@
     "aws:TagKeys"
    ]
   },
+  "sagemaker:createtrainingjob": {
+   "resources": [
+    {
+     "type": "reserved-capacity",
+     "formats": [
+      "arn:${Partition}:sagemaker:${Region}:${Account}:reserved-capacity/${RandomString}"
+     ]
+    },
+    {
+     "type": "training-job",
+     "formats": [
+      "arn:${Partition}:sagemaker:${Region}:${Account}:training-job/${TrainingJobName}"
+     ]
+    },
+    {
+     "type": "training-plan",
+     "formats": [
+      "arn:${Partition}:sagemaker:${Region}:${Account}:training-plan/${TrainingPlanName}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:TagKeys",
+    "sagemaker:DirectGatedModelAccess",
+    "sagemaker:EnableRemoteDebug",
+    "sagemaker:FileSystemAccessMode",
+    "sagemaker:FileSystemDirectoryPath",
+    "sagemaker:FileSystemId",
+    "sagemaker:FileSystemType",
+    "sagemaker:InstanceTypes",
+    "sagemaker:InterContainerTrafficEncryption",
+    "sagemaker:KeepAlivePeriod",
+    "sagemaker:MaxRuntimeInSeconds",
+    "sagemaker:NetworkIsolation",
+    "sagemaker:OutputKmsKeyArn",
+    "sagemaker:VolumeKmsKeyArn",
+    "sagemaker:VpcSecurityGroupIds",
+    "sagemaker:VpcSubnets"
+   ]
+  },
   "sagemaker:createuserprofile": {
    "resources": [
     {
@@ -46649,6 +47799,16 @@
      "type": "studio-lifecycle-config",
      "formats": [
       "arn:${Partition}:sagemaker:${Region}:${Account}:studio-lifecycle-config/${StudioLifecycleConfigName}"
+     ]
+    }
+   ]
+  },
+  "sagemaker:describetrainingjob": {
+   "resources": [
+    {
+     "type": "training-job",
+     "formats": [
+      "arn:${Partition}:sagemaker:${Region}:${Account}:training-job/${TrainingJobName}"
      ]
     }
    ]
@@ -48581,6 +49741,12 @@
     "aws:TagKeys"
    ]
   },
+  "servicequotas:associateservicequotatemplate": {
+   "resources": []
+  },
+  "servicequotas:getassociationforservicequotatemplate": {
+   "resources": []
+  },
   "servicequotas:getautomanagementconfiguration": {
    "resources": []
   },
@@ -50315,6 +51481,16 @@
     }
    ]
   },
+  "sqs:setqueueattributes": {
+   "resources": [
+    {
+     "type": "queue",
+     "formats": [
+      "arn:${Partition}:sqs:${Region}:${Account}:${QueueName}"
+     ]
+    }
+   ]
+  },
   "sqs:tagqueue": {
    "resources": [
     {
@@ -51363,6 +52539,38 @@
      "type": "TrustedTokenIssuer",
      "formats": [
       "arn:${Partition}:sso::${AccountId}:trustedTokenIssuer/${InstanceId}/${TrustedTokenIssuerId}"
+     ]
+    }
+   ]
+  },
+  "sso:detachcustomermanagedpolicyreferencefrompermissionset": {
+   "resources": [
+    {
+     "type": "Instance",
+     "formats": [
+      "arn:${Partition}:sso:::instance/${InstanceId}"
+     ]
+    },
+    {
+     "type": "PermissionSet",
+     "formats": [
+      "arn:${Partition}:sso:::permissionSet/${InstanceId}/${PermissionSetId}"
+     ]
+    }
+   ]
+  },
+  "sso:detachmanagedpolicyfrompermissionset": {
+   "resources": [
+    {
+     "type": "Instance",
+     "formats": [
+      "arn:${Partition}:sso:::instance/${InstanceId}"
+     ]
+    },
+    {
+     "type": "PermissionSet",
+     "formats": [
+      "arn:${Partition}:sso:::permissionSet/${InstanceId}/${PermissionSetId}"
      ]
     }
    ]
@@ -55057,6 +56265,43 @@
     "aws:TagKeys"
    ]
   },
+  "wafv2:updatewebacl": {
+   "resources": [
+    {
+     "type": "ipset",
+     "formats": [
+      "arn:${Partition}:wafv2:${Region}:${Account}:${Scope}/ipset/${Name}/${Id}"
+     ]
+    },
+    {
+     "type": "managedruleset",
+     "formats": [
+      "arn:${Partition}:wafv2:${Region}:${Account}:${Scope}/managedruleset/${Name}/${Id}"
+     ]
+    },
+    {
+     "type": "regexpatternset",
+     "formats": [
+      "arn:${Partition}:wafv2:${Region}:${Account}:${Scope}/regexpatternset/${Name}/${Id}"
+     ]
+    },
+    {
+     "type": "rulegroup",
+     "formats": [
+      "arn:${Partition}:wafv2:${Region}:${Account}:${Scope}/rulegroup/${Name}/${Id}"
+     ]
+    },
+    {
+     "type": "webacl",
+     "formats": [
+      "arn:${Partition}:wafv2:${Region}:${Account}:${Scope}/webacl/${Name}/${Id}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "aws:ResourceTag/${TagKey}"
+   ]
+  },
   "worklink:associatewebsitecertificateauthority": {
    "resources": [
     {
@@ -55241,6 +56486,16 @@
     }
    ]
   },
+  "workmail:listmaildomains": {
+   "resources": [
+    {
+     "type": "organization",
+     "formats": [
+      "arn:${Partition}:workmail:${Region}:${Account}:organization/${ResourceId}"
+     ]
+    }
+   ]
+  },
   "workmail:listtagsforresource": {
    "resources": [
     {
@@ -55287,6 +56542,16 @@
    "condition_keys": [
     "aws:RequestTag/${TagKey}",
     "aws:TagKeys"
+   ]
+  },
+  "workmail:updatedefaultmaildomain": {
+   "resources": [
+    {
+     "type": "organization",
+     "formats": [
+      "arn:${Partition}:workmail:${Region}:${Account}:organization/${ResourceId}"
+     ]
+    }
    ]
   },
   "workmail:updateuser": {
@@ -55753,6 +57018,28 @@
     }
    ]
   },
+  "workspaces:createworkspacespool": {
+   "resources": [
+    {
+     "type": "directoryid",
+     "formats": [
+      "arn:${Partition}:workspaces:${Region}:${Account}:directory/${DirectoryId}"
+     ]
+    },
+    {
+     "type": "workspacebundle",
+     "formats": [
+      "arn:${Partition}:workspaces:${Region}:${Account}:workspacebundle/${BundleId}"
+     ]
+    },
+    {
+     "type": "workspacespool",
+     "formats": [
+      "arn:${Partition}:workspaces:${Region}:${Account}:workspacespool/${PoolId}"
+     ]
+    }
+   ]
+  },
   "workspaces:describeconnectionaliases": {
    "resources": []
   },
@@ -55773,6 +57060,9 @@
    "resources": []
   },
   "workspaces:describeworkspaces": {
+   "resources": []
+  },
+  "workspaces:describeworkspacespools": {
    "resources": []
   },
   "workspaces:modifycertificatebasedauthproperties": {

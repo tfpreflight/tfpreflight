@@ -9,15 +9,11 @@ import (
 	"github.com/tfpreflight/tfpreflight/internal/checks/quotas"
 )
 
-// AutoscalingDescribeLaunchConfigurations counts Auto Scaling launch configurations.
 type AutoscalingDescribeLaunchConfigurations struct{ client *autoscaling.Client }
 
-// Adapter returns the AWS operation used by this counter.
 func (AutoscalingDescribeLaunchConfigurations) Adapter() string {
 	return "autoscaling:DescribeLaunchConfigurations"
 }
-
-// Count returns the number of launch configurations visible to the client.
 func (a AutoscalingDescribeLaunchConfigurations) Count(ctx context.Context, _ quotas.UsageContext) quotas.Measurement {
 	paginator := autoscaling.NewDescribeLaunchConfigurationsPaginator(a.client, &autoscaling.DescribeLaunchConfigurationsInput{})
 	total := 0

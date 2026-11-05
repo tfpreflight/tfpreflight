@@ -1,8 +1,9 @@
-rules 1592
-runnable 1581
-lookups 263
+rules 1680
+runnable 1669
+lookups 275
 acm/DescribeCertificate/CertificateArn served
 acmpca/DescribeCertificateAuthority/CertificateAuthorityArn served
+amp/DescribeScraper/ScraperId served
 amp/DescribeWorkspace/WorkspaceId served
 amplify/GetApp/AppId served
 apigateway/GetClientCertificate/ClientCertificateId served
@@ -26,10 +27,12 @@ auditmanager/GetControl/ControlId served
 backup/DescribeBackupVault/BackupVaultName served
 backup/GetBackupPlan/BackupPlanId served
 bedrockagent/GetAgent/AgentId served
+bedrockagent/GetKnowledgeBase/KnowledgeBaseId served
 chimesdkvoice/GetSipMediaApplication/SipMediaApplicationId served
 chimesdkvoice/GetVoiceConnector/VoiceConnectorId served
 cloud9/DescribeEnvironments/EnvironmentIds served
 cloudformation/DescribeStackSet/StackSetName served
+cloudfront/DescribeFunction/Name served
 cloudfront/GetCachePolicy/Id served
 cloudfront/GetContinuousDeploymentPolicy/Id served
 cloudfront/GetDistribution/Id served
@@ -39,11 +42,13 @@ cloudfront/GetOriginRequestPolicy/Id served
 cloudfront/GetPublicKey/Id served
 cloudfront/GetRealtimeLogConfig/ARN served
 cloudfront/GetResponseHeadersPolicy/Id served
+cloudfront/GetTrustStore/Identifier served
 cloudfront/GetVpcOrigin/Id served
 codecommit/GetApprovalRuleTemplate/ApprovalRuleTemplateName served
 codecommit/GetRepository/RepositoryName served
 codeconnections/GetHost/HostArn served
 codedeploy/GetApplication/ApplicationName served
+codepipeline/GetPipeline/Name served
 codestarconnections/GetHost/HostArn served
 cognitoidentity/DescribeIdentityPool/IdentityPoolId served
 cognitoidentityprovider/DescribeUserPool/UserPoolId served
@@ -119,6 +124,7 @@ eventbridge/DescribeEventBus/Name served
 evidently/GetProject/Project served
 finspace/GetKxEnvironment/EnvironmentId served
 firehose/DescribeDeliveryStream/DeliveryStreamName served
+fis/GetExperimentTemplate/Id served
 fms/GetResourceSet/Identifier served
 fsx/DescribeBackups/BackupIds served
 fsx/DescribeFileSystems/FileSystemIds served
@@ -163,6 +169,7 @@ kinesis/DescribeStreamSummary/StreamName served
 kinesisanalyticsv2/DescribeApplication/ApplicationName served
 kinesisvideo/DescribeStream/StreamARN served
 kms/DescribeKey/KeyId served
+lambda/GetCapacityProvider/CapacityProviderName served
 lambda/GetCodeSigningConfig/CodeSigningConfigArn served
 lambda/GetFunction/FunctionName served
 lexmodelsv2/DescribeBot/BotId served
@@ -180,8 +187,10 @@ mailmanager/GetRuleSet/RuleSetId served
 mailmanager/GetTrafficPolicy/TrafficPolicyId served
 medialive/DescribeInput/InputId served
 medialive/DescribeInputSecurityGroup/InputSecurityGroupId served
+medialive/DescribeMultiplex/MultiplexId served
 mediastore/DescribeContainer/ContainerName served
 memorydb/DescribeACLs/ACLName served
+memorydb/DescribeClusters/ClusterName served
 memorydb/DescribeSnapshots/SnapshotName served
 memorydb/DescribeSubnetGroups/SubnetGroupName served
 memorydb/DescribeUsers/UserName served
@@ -199,6 +208,8 @@ networkmanager/GetCoreNetwork/CoreNetworkId served
 networkmanager/GetTransitGatewayPeering/PeeringId served
 notifications/GetNotificationConfiguration/Arn served
 oam/GetSink/Identifier served
+odb/GetCloudExadataInfrastructure/CloudExadataInfrastructureId served
+odb/GetOdbNetwork/OdbNetworkId served
 opensearch/DescribeDomain/DomainName served
 organizations/DescribeOrganizationalUnit/OrganizationalUnitId served
 organizations/DescribePolicy/PolicyId served
@@ -245,6 +256,7 @@ servicecatalog/DescribeProductAsAdmin/Id served
 servicecatalog/DescribeTagOption/Id served
 servicecatalogappregistry/GetApplication/Application served
 servicecatalogappregistry/GetAttributeGroup/AttributeGroup served
+servicediscovery/GetNamespace/Id served
 servicediscovery/GetService/Id served
 ses/DescribeConfigurationSet/ConfigurationSetName served
 shield/DescribeProtection/ProtectionId served

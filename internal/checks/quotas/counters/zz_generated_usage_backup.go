@@ -9,13 +9,9 @@ import (
 	"github.com/tfpreflight/tfpreflight/internal/checks/quotas"
 )
 
-// BackupListBackupPlans counts AWS Backup plans.
 type BackupListBackupPlans struct{ client *backup.Client }
 
-// Adapter returns the AWS operation used by this counter.
 func (BackupListBackupPlans) Adapter() string { return "backup:ListBackupPlans" }
-
-// Count returns the number of backup plans visible to the client.
 func (a BackupListBackupPlans) Count(ctx context.Context, _ quotas.UsageContext) quotas.Measurement {
 	paginator := backup.NewListBackupPlansPaginator(a.client, &backup.ListBackupPlansInput{})
 	total := 0
@@ -29,13 +25,9 @@ func (a BackupListBackupPlans) Count(ctx context.Context, _ quotas.UsageContext)
 	return quotas.Known(float64(total))
 }
 
-// BackupListBackupVaults counts AWS Backup vaults.
 type BackupListBackupVaults struct{ client *backup.Client }
 
-// Adapter returns the AWS operation used by this counter.
 func (BackupListBackupVaults) Adapter() string { return "backup:ListBackupVaults" }
-
-// Count returns the number of backup vaults visible to the client.
 func (a BackupListBackupVaults) Count(ctx context.Context, _ quotas.UsageContext) quotas.Measurement {
 	paginator := backup.NewListBackupVaultsPaginator(a.client, &backup.ListBackupVaultsInput{})
 	total := 0

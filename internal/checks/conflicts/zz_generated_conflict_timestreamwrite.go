@@ -15,13 +15,9 @@ import (
 // Absence is proven by the modelled ResourceNotFoundException error; any other failure is unknown.
 type TimestreamwriteDescribeDatabase struct{ Client *timestreamwrite.Client }
 
-// Service returns the AWS service used by this adapter.
-func (TimestreamwriteDescribeDatabase) Service() string { return "timestreamwrite" }
-
-// Supports reports whether op is the operation handled by this adapter.
+func (TimestreamwriteDescribeDatabase) Service() string         { return "timestreamwrite" }
 func (TimestreamwriteDescribeDatabase) Supports(op string) bool { return op == "DescribeDatabase" }
 
-// Lookup checks whether the requested Timestream database exists.
 func (a TimestreamwriteDescribeDatabase) Lookup(ctx context.Context, request LookupRequest) (Outcome, error) {
 	_, err := a.Client.DescribeDatabase(ctx, &timestreamwrite.DescribeDatabaseInput{DatabaseName: aws.String(request.Identity)})
 	if err == nil {

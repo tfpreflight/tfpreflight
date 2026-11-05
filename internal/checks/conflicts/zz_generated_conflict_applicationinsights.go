@@ -15,15 +15,11 @@ import (
 // Absence is proven by the modelled ResourceNotFoundException error; any other failure is unknown.
 type ApplicationinsightsDescribeApplication struct{ Client *applicationinsights.Client }
 
-// Service returns the AWS service used by this adapter.
 func (ApplicationinsightsDescribeApplication) Service() string { return "applicationinsights" }
-
-// Supports reports whether op is the operation handled by this adapter.
 func (ApplicationinsightsDescribeApplication) Supports(op string) bool {
 	return op == "DescribeApplication"
 }
 
-// Lookup checks whether the requested Application Insights application exists.
 func (a ApplicationinsightsDescribeApplication) Lookup(ctx context.Context, request LookupRequest) (Outcome, error) {
 	_, err := a.Client.DescribeApplication(ctx, &applicationinsights.DescribeApplicationInput{ResourceGroupName: aws.String(request.Identity)})
 	if err == nil {
