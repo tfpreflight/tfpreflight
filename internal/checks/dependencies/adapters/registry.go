@@ -175,12 +175,15 @@ func (r *Registry) Exists(ctx context.Context, l dependencies.Lookup, scope depe
 	if r.unavailable != "" {
 		return dependencies.Unknown, r.unavailable
 	}
-	if id == "" || !r.approved[semantics(l)] {
-		return dependencies.Unknown, "unregistered identifier or lookup semantics"
+	if id == "" {
+		return dependencies.Unknown, "the identifier is empty"
+	}
+	if !r.approved[semantics(l)] {
+		return dependencies.Unknown, dependencies.ReasonLookupNotApproved
 	}
 	fn := r.lookups[lookupKey(l)]
 	if fn == nil {
-		return dependencies.Unknown, "typed lookup adapter unavailable: " + lookupKey(l)
+		return dependencies.Unknown, dependencies.ReasonNoLookupCode + lookupKey(l)
 	}
 	key := scope.Key() + "\x00" + semantics(l) + "\x00" + id
 

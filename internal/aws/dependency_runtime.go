@@ -149,6 +149,7 @@ func applyDependencyResults(checked *Result, outcome dependencyOutcome, err erro
 		checked.Debug = append(checked.Debug, "Dependency plan parsing unavailable")
 		for i := range checked.Coverage.Resources {
 			checked.Coverage.Resources[i].Dependencies = model.CheckPartialDependency
+			checked.Findings = append(checked.Findings, dependencies.UnreadGap(checked.Coverage.Resources[i].Resource))
 		}
 		return
 	}
@@ -158,6 +159,7 @@ func applyDependencyResults(checked *Result, outcome dependencyOutcome, err erro
 		}
 		checked.Debug = append(checked.Debug, fmt.Sprintf("%s: dependency %s: %s", r.Address, r.Verdict, r.Reason))
 	}
+	checked.Findings = append(checked.Findings, dependencies.CoverageGaps(results)...)
 	for i := range checked.Coverage.Resources {
 		resource := &checked.Coverage.Resources[i]
 		switch coverage[resource.Resource] {

@@ -152,7 +152,7 @@ func dependencyCoverage(results []Result) string {
 }
 
 func (e Engine) existence(ctx context.Context, plan Plan, change PlannedValues, rule ExistenceRule) Result {
-	outcome := Result{Address: change.Address, Family: FamilyExistence}
+	outcome := Result{Address: change.Address, Family: FamilyExistence, Attribute: rule.Attribute}
 	reference, recorded := plan.References[change.Address][rule.Attribute]
 	if !recorded {
 		return unrecorded(plan, change, rule, outcome)
@@ -326,13 +326,20 @@ func (e Engine) inspectTarget(ctx context.Context, plan Plan, change PlannedValu
 	case NotFound:
 		return e.missing(plan, change, rule, identifier, why, outcome), true
 	default:
-		return outcome.partial("the target could not be inspected: " + why), true
+		decided := outcome.partial("the target could not be inspected: " + why)
+		decided.Cause = CauseNoAnswer
+		if why == ReasonLookupNotApproved || strings.HasPrefix(why, ReasonNoLookupCode) {
+			decided.Cause = CauseNoLookup
+		}
+		return decided, true
 	}
 }
 
 func (e Engine) missing(plan Plan, change PlannedValues, rule ExistenceRule, identifier, why string, outcome Result) Result {
 	if !rule.Lookup.ProvesAbsence() {
-		return outcome.partial("the lookup cannot prove absence: " + why)
+		decided := outcome.partial("the lookup cannot prove absence: " + why)
+		decided.Cause = CauseNoAnswer
+		return decided
 	}
 	// Rule out a create of the same identifier that no reference orders first.
 	switch createdByValue(plan, rule, identifier) {

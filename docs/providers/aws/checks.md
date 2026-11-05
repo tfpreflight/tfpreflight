@@ -26,6 +26,7 @@ For every step in your plan, tfpreflight asks the IAM policy simulator: *"Is the
 - A policy that **explicitly denies** a step is different: no other policy can allow it. It blocks when AWS had everything it needed to decide and the provider always makes that call. Otherwise it's a warning that says why.
 - Some AWS resources, like S3 buckets and KMS keys, carry their own access rules (resource-based policies). The simulator doesn't read those. So when one of them *might* allow the step, you get a warning instead of a block.
 - Calls whose IAM permission tfpreflight doesn't know are listed under **Not checked** in `--details`.
+- So are references it could not check: a value that is unknown until apply, a lookup AWS would not answer (access denied, a timeout), or a lookup this tfpreflight cannot run. Each line names the argument and says why. If your tfpreflight cannot run the lookup, install the newest release.
 
 ## 2. Names already taken
 

@@ -74,12 +74,40 @@ const (
 	VerdictNotApplicable   = "not_applicable"
 )
 
+// Why a partial result could not be decided, when the engine knows. An empty
+// cause means the plan did not hold enough to decide.
+const (
+	// CauseNoLookup means this tfpreflight has no code to run the rule's
+	// lookup.
+	CauseNoLookup = "no_lookup"
+	// CauseNoAnswer means the lookup ran or was tried, and got no answer that
+	// proves the target present or absent.
+	CauseNoAnswer = "no_answer"
+)
+
+// Reasons a resolver gives when this tfpreflight cannot run a rule's lookup at
+// all. They are not about AWS's answer, so a newer tfpreflight may run the
+// rule.
+const (
+	// ReasonLookupNotApproved is the reason when the rule's lookup meaning is
+	// not one this tfpreflight knows.
+	ReasonLookupNotApproved = "unregistered identifier or lookup semantics"
+	// ReasonNoLookupCode starts the reason when no code serves the lookup; the
+	// lookup's name follows.
+	ReasonNoLookupCode = "typed lookup adapter unavailable: "
+)
+
 // Result is one rule applied to one planned change.
 type Result struct {
 	Address string
 	Family  string
-	Verdict string
-	Reason  string
+	// Attribute is the configuration argument the rule is about, when the
+	// rule has one.
+	Attribute string
+	Verdict   string
+	Reason    string
+	// Cause is why a partial result could not be decided; see CauseNoLookup.
+	Cause   string
 	Finding *model.Finding
 }
 
