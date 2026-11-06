@@ -2,6 +2,10 @@
 
 All notable changes to tfpreflight are recorded here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 0.1.0-beta.5 (2026-11-06)
+
+- Fixed: a plan that creates a security group (or any of 14 other types whose ids AWS assigns) no longer hides a missing one named by a literal id. Before, a rule such as `referenced_security_group_id = "sg-..."` in a plan that also created a security group was counted as a partial check and nothing was said in the short output. It now warns, as it does in a plan with no security group: "AWS can't find security group sg-... in this account and region; unless it is in a peered VPC or another account, apply will fail." It never blocks. The types are security group, transit gateway, directory, EBS snapshot, network interface, instance, EFS file system, Prometheus workspace, Transfer server, VPC endpoint service, SageMaker domain, traffic mirror filter, SSM maintenance window, Service Catalog tag option and IPAM resource discovery.
+
 ## 0.1.0-beta.4 (2026-11-06)
 
 - Fixed: the colors announced in beta.3 did not appear, in any terminal. beta.3 printed plain text because the check could not see that its output was a terminal. They now show, and a test runs the built program on a pseudo-terminal under both of its names, `tfpreflight` and `tfp`. An empty `NO_COLOR` no longer matters: only a non-empty value turns color off, as no-color.org says.
