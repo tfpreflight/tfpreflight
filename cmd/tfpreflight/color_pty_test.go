@@ -69,7 +69,7 @@ func runBuilt(t *testing.T, bin, name string, onTerminal bool, env []string, arg
 		if err != nil {
 			t.Fatal(err)
 		}
-		defer master.Close()
+		defer func() { _ = master.Close() }()
 		_, _ = io.Copy(&output, master) // ends with an error when the program exits
 		_ = command.Wait()
 	} else {
