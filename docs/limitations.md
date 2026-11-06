@@ -8,7 +8,7 @@ Limits that come from a specific provider are on that provider's page. For AWS (
 |---|---|---|
 | **No cloud credentials** | It only reads your plan. The cloud checks don't run. | Log in to your cloud provider first, or run it in CI with a role. See [ci.md](ci.md). |
 | **The identity can't read your account** | Your cloud provider refuses the questions. Those checks are marked *not checked*. | Give it the read-only permissions for your provider. For AWS: [providers/aws/permissions.md](providers/aws/permissions.md). |
-| **Resources from a provider tfpreflight doesn't support yet** | They aren't checked against your cloud, and aren't counted in "Checked N of M resources". Destroy and replace warnings still cover them. | See [providers/README.md](providers/README.md), or [open an issue](https://github.com/tfpreflight/tfpreflight/issues/new/choose) to ask for that provider. |
+| **Resources from a provider tfpreflight doesn't support yet** | They aren't checked against your cloud, and aren't counted in the resource counts of the result. Destroy and replace warnings still cover them. | See [providers/README.md](providers/README.md), or [open an issue](https://github.com/tfpreflight/tfpreflight/issues/new/choose) to ask for that provider. |
 | **Values Terraform only knows during the apply** (like an ID the provider generates) | That rule is skipped, or marked *not checked*. | Nothing. This is normal. |
 | **Your provider version has no exact rules** | Problems show as warnings only. Nothing blocks. | Run `tfpreflight update`. |
 | **Terragrunt** | tfpreflight doesn't find Terragrunt projects by itself. | Save a plan with Terragrunt, then run `tfpreflight check --plan=<file>` in the Terraform folder. |

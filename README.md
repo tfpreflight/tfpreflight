@@ -75,15 +75,15 @@ FAIL  aws_s3_bucket.logs
       Fix: use a different name, or import the existing bucket.
 
 ✗ 1 problem will likely make apply fail.
-  Checked 2 of 2 resources fully. Details: tfpreflight check --details
+  Details: tfpreflight check --details
 ```
 
 What each part means:
 
 - **The header** names your provider and its version, the region tfpreflight checked, and how many of that provider's resources the plan changes. If tfpreflight has no rules made for exactly your provider version, a line under it says so, and problems are only warnings.
 - **Each problem** is `FAIL` (blocking) or `WARN` (a likely problem), the resource's address, one sentence saying what's wrong, and one `Fix:` or `Check:` line saying what to do.
-- **The result line** says how many problems will likely make the apply fail, then how many resources were fully checked: every check that applies to them finished. The exit code here is 1.
-- If the cloud checks couldn't run, or your cloud provider answered none of them, the result line starts with `!` and says why. If nothing was found but some resources couldn't be fully checked, a second line says how many.
+- **The result line** says how many problems will likely make the apply fail. Under it, when it applies, a line says how many resources had a check that could not finish, and how many were only checked for permissions because tfpreflight has no other checks for them yet. The exit code here is 1.
+- If the cloud checks couldn't run, or your cloud provider answered none of them, the result line starts with `!` and says why. A clean result reads `✓ No problems found in the checks tfpreflight ran.` It never means everything was checked: the lines under it say what was not.
 
 The default output never shows account IDs or full ARNs. Add `--details` for the full report: the region and identities tfpreflight used, each finding's full explanation, what was not checked, and coverage per check. `--all` adds minor notes to that. `--format=json` gives the same result as JSON. [docs/output.md](docs/output.md) explains every line.
 
@@ -99,7 +99,7 @@ A clean result means tfpreflight found no problem in what it checked. It doesn't
 
 ## What it checks
 
-- **Permissions:** whether the identity that runs the apply is allowed to make each call your plan needs, where tfpreflight knows which permission the call takes. Calls it doesn't know are listed under "Not checked" in `--details`; the default output doesn't count those resources as fully checked.
+- **Permissions:** whether the identity that runs the apply is allowed to make each call your plan needs, where tfpreflight knows which permission the call takes. Calls it doesn't know are listed under "Not checked" in `--details`; the default output counts those resources as having a check that could not finish.
 - **Names already taken:** resources whose name must be unique, like S3 buckets and IAM roles on AWS.
 - **Missing things your plan depends on:** for example a subnet that points at a network ID that doesn't exist.
 - **Limits:** a short list of cloud quotas. On AWS: EC2 vCPUs for one instance type family, and per-region counts such as VPCs.

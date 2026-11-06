@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"regexp"
+	"slices"
 	"strings"
 
 	"github.com/tfpreflight/tfpreflight/rules/model"
@@ -136,8 +137,7 @@ func resultLines(report Report) []string {
 	switch verdict := summary.Verdict; {
 	case summary.Blocking > 0:
 		lines = append(lines,
-			"✗ "+pluralize(summary.Blocking, "problem", "problems")+" will likely make apply fail."+warnings,
-			"  "+checkedLine(report)+" "+detailsHint)
+			append([]string{"✗ " + pluralize(summary.Blocking, "problem", "problems") + " will likely make apply fail." + warnings}, coverageLines(report)...)...)
 	case report.AWSContext.Unresolved != "":
 		reason, advice := notRun(report.AWSContext.Unresolved)
 		lines = append(lines, "! AWS checks did not run: "+reason+"."+warnings, "  Only the plan was checked. "+advice)
@@ -149,15 +149,19 @@ func resultLines(report Report) []string {
 	case verdict == "PARTIAL - nothing was verified":
 		lines = append(lines, "! Nothing could be checked."+warnings, "  "+detailsHint)
 	case summary.Warnings > 0 && hasMissingReference(report):
-		lines = append(lines, "! "+pluralize(summary.Warnings, "warning", "warnings")+" to check, and apply will probably fail. Not blocking: tfpreflight has not confirmed that AWS rejects this create.",
-			"  "+checkedLine(report)+" "+detailsHint)
+		lines = append(lines, "! "+pluralize(summary.Warnings, "warning", "warnings")+" to check, and apply will probably fail. Not blocking: tfpreflight has not confirmed that AWS rejects this create.")
+		lines = append(lines, coverageLines(report)...)
 	case summary.Warnings > 0:
-		lines = append(lines, "! "+pluralize(summary.Warnings, "warning", "warnings")+" to check. Nothing found that is sure to make apply fail.",
-			"  "+checkedLine(report)+" "+detailsHint)
+		lines = append(lines, "! "+pluralize(summary.Warnings, "warning", "warnings")+" to check. Nothing found that is sure to make apply fail.")
+		lines = append(lines, coverageLines(report)...)
 	default:
-		lines = append(lines, "✓ No problems found. "+checkedLine(report))
-		if unchecked := len(report.Coverage.Resources) - summary.Checked; unchecked > 0 {
-			lines = append(lines, fmt.Sprintf("  %d could not be fully checked. %s", unchecked, detailsHint))
+		if len(report.Coverage.Resources) == 0 {
+			lines = append(lines, "✓ No problems found. No AWS resources to check.")
+			break
+		}
+		lines = append(lines, "✓ No problems found in the checks tfpreflight ran.")
+		if gaps := gapLines(report); len(gaps) > 0 {
+			lines = append(lines, withHint(gaps)...)
 		}
 	}
 	switch _, classification := report.Failure(); classification {
@@ -181,13 +185,57 @@ func hasMissingReference(report Report) bool {
 	return false
 }
 
-// checkedLine counts the resources every applicable check covered.
-func checkedLine(report Report) string {
-	total := len(report.Coverage.Resources)
-	if total == 0 {
-		return "No AWS resources to check."
+// coverageLines say what the checks did not cover, and point to --details.
+// A clean result never implies that everything was checked: some resources
+// have no rule for a name, a reference or a quota, and some checks could not
+// finish.
+func coverageLines(report Report) []string {
+	if len(report.Coverage.Resources) == 0 {
+		return []string{"  No AWS resources to check. " + detailsHint}
 	}
-	return fmt.Sprintf("Checked %d of %s fully.", report.Summary.Checked, pluralize(total, "resource", "resources"))
+	if gaps := gapLines(report); len(gaps) > 0 {
+		return withHint(gaps)
+	}
+	return []string{"  " + detailsHint}
+}
+
+// gapLines count the resources a clean result does not vouch for.
+func gapLines(report Report) []string {
+	total := len(report.Coverage.Resources)
+	var lines []string
+	if unfinished := total - report.Summary.Checked; unfinished > 0 {
+		lines = append(lines, fmt.Sprintf("  %d of %s had a check that could not finish.", unfinished, pluralize(total, "resource", "resources")))
+	}
+	if only := permissionsOnly(report.Coverage); only > 0 {
+		verb, pronoun := "were", "them"
+		if only == 1 {
+			verb, pronoun = "was", "it"
+		}
+		lines = append(lines, fmt.Sprintf("  %d of %s %s only checked for permissions; tfpreflight has no other checks for %s yet.", only, pluralize(total, "resource", "resources"), verb, pronoun))
+	}
+	return lines
+}
+
+// withHint adds the pointer to --details to the last line.
+func withHint(lines []string) []string {
+	out := slices.Clone(lines)
+	out[len(out)-1] += " " + detailsHint
+	return out
+}
+
+// permissionsOnly counts the resources whose permissions were checked and for
+// which tfpreflight has no check of any other kind: no name conflict rule, no
+// reference rule and no quota. A clean result says nothing about their names,
+// references or limits.
+func permissionsOnly(coverage model.Coverage) int {
+	count := 0
+	for _, resource := range coverage.Resources {
+		if resource.Permissions == model.CheckChecked && resource.Conflicts == model.CheckNotApplicable &&
+			resource.Quota == model.CheckNoQuotaRule && resource.Dependencies == model.CheckNoDependencyRule {
+			count++
+		}
+	}
+	return count
 }
 
 // notRun shortens why the AWS checks did not run and says what to do about

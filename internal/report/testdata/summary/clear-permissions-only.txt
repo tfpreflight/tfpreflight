@@ -1,0 +1,4 @@
+tfpreflight · AWS provider 6.64.0 · us-east-1 · 1 resource
+
+✓ No problems found in the checks tfpreflight ran.
+  1 of 1 resource was only checked for permissions; tfpreflight has no other checks for it yet. Details: tfpreflight check --details

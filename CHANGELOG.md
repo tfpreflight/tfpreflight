@@ -2,6 +2,11 @@
 
 All notable changes to tfpreflight are recorded here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 0.1.0-beta.6 (2026-11-06)
+
+- Fixed: a clean result no longer says "Checked N of M resources fully", which read as everything being checked. It now says `✓ No problems found in the checks tfpreflight ran.` Under it, when they apply, one line counts the resources that had a check that could not finish, and one counts the resources that were only checked for permissions because tfpreflight has no other checks for them yet. A real apply of an instance in a subnet that does not exist (nothing connects `aws_instance.subnet_id` to a subnet yet) got "No problems found. Checked 1 of 1 resource fully." The same lines replace the old count under a failure or a warning. The JSON counts and the verdict values are unchanged.
+- Docs: `docs/providers/aws/limitations.md` now lists what is not checked yet: the `subnet_id` of an `aws_instance`, a CloudWatch log group name that is already taken, and a security group name that is already taken in the same VPC.
+
 ## 0.1.0-beta.5 (2026-11-06)
 
 - Fixed: a plan that creates a security group (or any of 14 other types whose ids AWS assigns) no longer hides a missing one named by a literal id. Before, a rule such as `referenced_security_group_id = "sg-..."` in a plan that also created a security group was counted as a partial check and nothing was said in the short output. It now warns, as it does in a plan with no security group: "AWS can't find security group sg-... in this account and region; unless it is in a peered VPC or another account, apply will fail." It never blocks. The types are security group, transit gateway, directory, EBS snapshot, network interface, instance, EFS file system, Prometheus workspace, Transfer server, VPC endpoint service, SageMaker domain, traffic mirror filter, SSM maintenance window, Service Catalog tag option and IPAM resource discovery.

@@ -13,4 +13,4 @@ WARN  aws_s3_bucket_public_access_block.logs
       Check: this rule comes from the provider's source and is not yet verified against AWS.
 
 ✗ 2 problems will likely make apply fail. 1 warning.
-  Checked 4 of 6 resources fully. Details: tfpreflight check --details
+  2 of 6 resources had a check that could not finish. Details: tfpreflight check --details
