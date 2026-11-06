@@ -111,6 +111,10 @@ func (w *resultWriter) Write(p []byte) (int, error) {
 	return n, err
 }
 
+// Unwrap returns the writer underneath, so a caller can tell whether it is a
+// terminal.
+func (w *resultWriter) Unwrap() io.Writer { return w.Writer }
+
 // jsonRequested reports whether args ask for JSON. A run whose flags did not
 // parse still owes a JSON caller a JSON error, and cobra stops parsing at the
 // first bad flag.
