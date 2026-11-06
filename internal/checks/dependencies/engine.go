@@ -531,7 +531,8 @@ const (
 )
 
 func createdByValue(plan Plan, rule ExistenceRule, identifier string) valueCreation {
-	if rule.TargetIdentity == IdentityServerGenerated {
+	identity := targetIdentity(rule)
+	if identity == IdentityServerGenerated {
 		return notCreatedByValue
 	}
 	undecidable := false
@@ -539,11 +540,11 @@ func createdByValue(plan Plan, rule ExistenceRule, identifier string) valueCreat
 		if change.ResourceType != rule.TargetResource || !hasAction(change.Actions, "create") {
 			continue
 		}
-		if rule.TargetIdentity == IdentityUnknown || rule.TargetIdentity == "" {
+		if identity == IdentityUnknown || identity == "" {
 			undecidable = true
 			continue
 		}
-		if value, ok := change.After[rule.TargetIdentity].(string); ok {
+		if value, ok := change.After[identity].(string); ok {
 			if value == identifier {
 				return createdByValueMatch
 			}
