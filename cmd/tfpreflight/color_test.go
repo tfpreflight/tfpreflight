@@ -16,12 +16,12 @@ func TestColorAllowed(t *testing.T) {
 		env      map[string]string
 		want     bool
 	}{
-		"terminal":              {true, nil, true},
-		"pipe or file":          {false, nil, false},
-		"NO_COLOR set":          {true, map[string]string{"NO_COLOR": "1"}, false},
-		"dumb terminal":         {true, map[string]string{"TERM": "dumb"}, false},
-		"xterm":                 {true, map[string]string{"TERM": "xterm-256color"}, true},
-		"empty NO_COLOR is off": {true, map[string]string{"NO_COLOR": ""}, true},
+		"terminal":                  {true, nil, true},
+		"pipe or file":              {false, nil, false},
+		"NO_COLOR set":              {true, map[string]string{"NO_COLOR": "1"}, false},
+		"dumb terminal":             {true, map[string]string{"TERM": "dumb"}, false},
+		"xterm":                     {true, map[string]string{"TERM": "xterm-256color"}, true},
+		"empty NO_COLOR is not set": {true, map[string]string{"NO_COLOR": ""}, true},
 	} {
 		if got := colorAllowed(tc.terminal, env(tc.env)); got != tc.want {
 			t.Errorf("%s: colorAllowed = %v, want %v", name, got, tc.want)

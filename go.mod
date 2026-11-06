@@ -23,6 +23,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/timestreamwrite v1.42.0
 	github.com/aws/aws-sdk-go-v2/service/transcribe v1.64.0
 	github.com/aws/smithy-go v1.28.1
+	github.com/creack/pty v1.1.24
 	github.com/hashicorp/hcl/v2 v2.25.0
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/pflag v1.0.10
