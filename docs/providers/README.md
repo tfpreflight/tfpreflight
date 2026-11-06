@@ -17,4 +17,4 @@ For a supported provider, tfpreflight has **rules for exact provider versions**.
 
 ## Resources from other providers
 
-A plan can mix providers. Resources from a provider tfpreflight doesn't support yet aren't checked against your cloud and aren't counted in "Checked N of M resources". tfpreflight still warns when the plan destroys or replaces them, because that warning comes from the plan alone.
+A plan can mix providers. Resources from a provider tfpreflight doesn't support yet aren't checked against your cloud and aren't counted in the resource counts of the result. tfpreflight still warns when the plan destroys or replaces them, because that warning comes from the plan alone.

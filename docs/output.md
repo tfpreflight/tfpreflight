@@ -22,12 +22,12 @@ WARN  aws_s3_bucket_public_access_block.logs
       Check: this rule comes from the provider's source and is not yet verified against AWS.
 
 ✗ 2 problems will likely make apply fail. 1 warning.
-  Checked 4 of 6 resources fully. Details: tfpreflight check --details
+  2 of 6 resources had a check that could not finish. Details: tfpreflight check --details
 ```
 
 - **The header** names the provider and its version, the region tfpreflight checked (`region unknown` if it couldn't work one out), and how many of that provider's resources the plan changes.
 - **Each entry** is `FAIL` or `WARN`, the resource's address, one sentence saying what's wrong, and one line saying what to do: `Fix:` when the fix is clear, `Check:` when you need to confirm something first.
-- **The result line** sums it up (see below). "Checked N of M resources fully" counts resources where every check that applies to them finished. A resource with even one check that couldn't finish doesn't count. A check with nothing to check doesn't stop it counting: a dependency check that found no rule for the resource, or a quota check for a resource type tfpreflight knows no quota for. So "fully" means every check tfpreflight has a rule for finished, not that no quota or dependency could exist.
+- **The result line** sums it up (see below). Under it, two lines can say what the checks did not cover. "N of M resources had a check that could not finish" counts resources where a check that applies to them did not finish. "N of M resources were only checked for permissions; tfpreflight has no other checks for them yet" counts resources for which tfpreflight has no name, reference or quota rule at all: for them a clean result says nothing about those things. It does not mean they are fine.
 
 **Color.** In a terminal, the default output is colored: `FAIL` and the `✗` result line red, `WARN` and the `!` result line yellow, the `✓` result line green, and resource addresses bold. These are the terminal's own 16 colors, so your terminal theme sets the shades. There is no color when the output is piped or written to a file, when `NO_COLOR` is set to a value that is not empty (see no-color.org; an empty `NO_COLOR` does not turn color off), when `TERM` is `dumb`, on Windows, or with `--format=json`. Color never changes a word, and `--details` is plain.
 
@@ -49,7 +49,7 @@ Minor notes (informational findings) aren't listed. `--all` shows them, together
 | `✗ N problems will likely make apply fail.` | At least one blocking problem. Fix it before you apply. Warnings, if any, are counted on the same line. |
 | `! N warnings to check. Nothing found that is sure to make apply fail.` | Only warnings. Read them before you apply. |
 | `! N warnings to check, and apply will probably fail. Not blocking: tfpreflight has not confirmed that AWS rejects this create.` | AWS answered that something your plan refers to does not exist, or that its ID is not a valid ID, but nothing has been verified well enough to block. The warning above says what AWS said and when it could still be wrong: a missing security group may be in a peered VPC or another account. An ID AWS calls not valid can be in no account. |
-| `✓ No problems found. Checked N of M resources fully.` | Nothing was found. If some resources couldn't be fully checked, a second line says how many. |
+| `✓ No problems found in the checks tfpreflight ran.` | Nothing was found by the checks tfpreflight has rules for. It does not mean everything was checked. The lines under it say how many resources had a check that could not finish, and how many had no name, reference or quota rule. |
 | `! AWS checks did not run: <reason>.` | tfpreflight only read your plan, for example because there are no cloud credentials or the region is unknown. The next line says what to do. |
 | `! AWS checks failed: <reason>.` | tfpreflight reached your cloud provider, but it refused or failed every question, usually because the identity is missing read permissions. |
 | `! Nothing was checked in AWS.` | Only checks that read the plan finished. |
@@ -75,9 +75,9 @@ If your provider version has no rules of its own, a line under the header says w
 | `Preflight: PARTIAL - AWS checks failed: <reason>` | tfpreflight reached your cloud provider, but it refused or failed every question, usually because the identity is missing read permissions. |
 | `Preflight: PARTIAL - nothing was verified` | No check completed for any resource. |
 | `Preflight: PARTIAL - nothing was checked in AWS` | Only checks that read the plan completed. Your cloud provider did not answer any check. |
-| `Preflight: COMPLETE` | Every applicable check completed and nothing met your failure rule. |
+| `Preflight: COMPLETE` | Every check tfpreflight has a rule for completed and nothing met your failure rule. It does not say that a resource has rules for names, references or quotas; the coverage lines show that. |
 
-Under it are two count lines: how many findings of each kind, and how many resources were fully checked, partly checked, or not covered. "Fully checked" means the same as in the default output. The JSON output has the same verdict and counts.
+Under it are two count lines: how many findings of each kind, and how many resources had every check that applies to them finish (`checked`), partly (`partial`), or not covered. "Checked" here means every check tfpreflight has a rule for finished, and a resource with no name, reference or quota rule can be counted as checked. The default output says that in words. The JSON output has the same verdict and counts.
 
 ## The version label
 

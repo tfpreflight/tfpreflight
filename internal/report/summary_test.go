@@ -72,6 +72,18 @@ func TestSummaryGolden(t *testing.T) {
 		},
 		"clear":         {ProviderVersion: "6.64.0", Selection: covered, AWSContext: usEast1, Coverage: sixResources(6)},
 		"clear-partial": {ProviderVersion: "6.64.0", Selection: covered, AWSContext: usEast1, Coverage: sixResources(4)},
+		// An instance in a deleted subnet: its permissions were checked and no rule
+		// covers its name, its references or a quota. This was "Checked 1 of 1
+		// resource fully."
+		"clear-permissions-only-several": {ProviderVersion: "6.64.0", Selection: covered, AWSContext: usEast1, Coverage: model.Coverage{Resources: []model.ResourceCoverage{
+			{Resource: "aws_instance.a", Permissions: model.CheckChecked, Conflicts: model.CheckNotApplicable, Quota: model.CheckNoQuotaRule, Dependencies: model.CheckNoDependencyRule},
+			{Resource: "aws_instance.b", Permissions: model.CheckChecked, Conflicts: model.CheckNotApplicable, Quota: model.CheckNoQuotaRule, Dependencies: model.CheckNoDependencyRule},
+			{Resource: "aws_vpc.v", Permissions: model.CheckChecked, Conflicts: model.CheckNotApplicable, Quota: model.CheckChecked, Dependencies: model.CheckChecked},
+		}}},
+		"clear-permissions-only": {ProviderVersion: "6.64.0", Selection: covered, AWSContext: usEast1, Coverage: model.Coverage{Resources: []model.ResourceCoverage{{
+			Resource: "aws_instance.i", Permissions: model.CheckChecked, Conflicts: model.CheckNotApplicable,
+			Quota: model.CheckNoQuotaRule, Dependencies: model.CheckNoDependencyRule,
+		}}}},
 		"no-aws": {
 			ProviderVersion: "6.64.0", Selection: covered, Coverage: sixResources(0),
 			AWSContext: model.AWSContext{Unresolved: "no AWS credentials found"},
@@ -188,7 +200,7 @@ func TestSummaryColors(t *testing.T) {
 	}
 	out.Reset()
 	Render(&out, Normalize(Input{ProviderVersion: "6.64.0", AWSContext: usEast1, Coverage: sixResources(6)}), Options{Color: true})
-	if !strings.Contains(out.String(), "\x1b[32m✓ No problems found.") {
+	if !strings.Contains(out.String(), "\x1b[32m✓ No problems found in the checks tfpreflight ran.") {
 		t.Errorf("a clean result is not green:\n%q", out.String())
 	}
 	out.Reset()

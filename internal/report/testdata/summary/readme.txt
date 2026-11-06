@@ -5,4 +5,4 @@ FAIL  aws_s3_bucket.logs
       Fix: use a different name, or import the existing bucket.
 
 ✗ 1 problem will likely make apply fail.
-  Checked 2 of 2 resources fully. Details: tfpreflight check --details
+  Details: tfpreflight check --details

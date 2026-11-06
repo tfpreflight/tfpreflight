@@ -6,4 +6,4 @@ WARN  aws_s3_bucket.logs
       Fix: use a different name, or import the existing bucket.
 
 ! 1 warning to check. Nothing found that is sure to make apply fail.
-  Checked 6 of 6 resources fully. Details: tfpreflight check --details
+  Details: tfpreflight check --details

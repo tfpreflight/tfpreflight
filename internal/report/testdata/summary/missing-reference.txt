@@ -5,4 +5,4 @@ WARN  aws_vpc_security_group_ingress_rule.db
       Fix: correct referenced_security_group_id, or create the security group first.
 
 ! 1 warning to check, and apply will probably fail. Not blocking: tfpreflight has not confirmed that AWS rejects this create.
-  Checked 0 of 1 resource fully. Details: tfpreflight check --details
+  1 of 1 resource had a check that could not finish. Details: tfpreflight check --details
