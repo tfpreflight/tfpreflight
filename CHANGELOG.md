@@ -2,9 +2,9 @@
 
 All notable changes to tfpreflight are recorded here. Versions follow [Semantic Versioning](https://semver.org/).
 
-## 0.1.0-beta.4 (unreleased)
+## 0.1.0-beta.4 (2026-11-06)
 
-- Fixed: the colors added in beta.3 never showed, in any terminal. The release printed plain text because the check could not see that its output was a terminal. They now show, and a test runs the built program on a pseudo-terminal under both of its names, `tfpreflight` and `tfp`. An empty `NO_COLOR` no longer matters: only a non-empty value turns color off, as no-color.org says.
+- Fixed: the colors announced in beta.3 did not appear, in any terminal. beta.3 printed plain text because the check could not see that its output was a terminal. They now show, and a test runs the built program on a pseudo-terminal under both of its names, `tfpreflight` and `tfp`. An empty `NO_COLOR` no longer matters: only a non-empty value turns color off, as no-color.org says.
 
 ## 0.1.0-beta.3 (2026-11-05)
 
