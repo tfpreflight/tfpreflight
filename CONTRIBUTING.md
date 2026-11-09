@@ -35,3 +35,14 @@ GOWORK=off go test -race -timeout 20m ./...
 - A check that could not finish is PARTIAL: never a failure, and never "missing".
 - tfpreflight only reads AWS. Lookup specs are held to that in code (`rules/readonly.go`).
 - Pack downloads keep their signature and hash checks, across redirects too.
+
+## Releasing
+
+Merge the release PR first (the one that dates the version in `CHANGELOG.md`). Then, on `main`:
+
+```sh
+scripts/release.sh 0.1.0-beta.7        # dry run: checks only
+scripts/release.sh 0.1.0-beta.7 --go   # tags, pushes, waits, verifies
+```
+
+It refuses unless the release PR is merged, CI on `main` is green, the CHANGELOG has the version with a date, and the tag is new. With `--go` it pushes the annotated tag, prints the link to approve in the `release` environment, waits for the run, and checks that the release is published with its checksum file. Its tests are in `scripts/release_test.sh`.
