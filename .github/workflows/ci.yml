@@ -22,6 +22,8 @@ jobs:
           cache: true
       - run: go vet ./...
       - run: go build ./...
+      # The release script's own tests use a fake gh and a local remote.
+      - run: bash scripts/release_test.sh
       # One run of every test, with the race detector. It includes the CLI
       # process tests and the pack consistency tests; formatting is checked
       # by gofumpt in the lint job.
