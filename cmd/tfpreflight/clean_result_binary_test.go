@@ -55,14 +55,14 @@ func formList(r *http.Request, prefix string) []string {
 	}
 }
 
-// The plan of an instance in a subnet that does not exist: nothing in the
-// packs connects aws_instance.subnet_id to a subnet, so only the instance's
-// permissions are checked, and the real apply fails. The result used to say
-// "✓ No problems found. Checked 1 of 1 resource fully." It must not say
-// that, or anything that reads as everything having been checked.
-func TestBuiltBinaryDoesNotSayFullyCheckedWhenOnlyPermissionsWere(t *testing.T) {
+// builtCheckOutput runs the built program's default check on a saved plan, as
+// an identity that may do everything, with every AWS lookup unreachable. The
+// answers a clean result depends on are then only the ones the packs say it
+// can give without AWS.
+func builtCheckOutput(t *testing.T, fixture string) string {
+	t.Helper()
 	bin := buildBinary(t)
-	copyFixtureWithPeer(t, "testdata/realworld-cases/instance-in-missing-subnet", "unused")
+	copyFixtureWithPeer(t, fixture, "unused")
 	work, err := os.Getwd()
 	if err != nil {
 		t.Fatal(err)
@@ -90,15 +90,42 @@ func TestBuiltBinaryDoesNotSayFullyCheckedWhenOnlyPermissionsWere(t *testing.T) 
 	if err := command.Run(); err != nil {
 		t.Fatalf("exit: %v\nstdout:\n%s\nstderr:\n%s", err, out.String(), diagnostics.String())
 	}
+	return out.String()
+}
+
+// A resource the packs hold only permission rules for (a log stream has
+// no name, reference or quota rule) used to be reported as "Checked 1 of 1
+// resource fully". It must say it was only checked for permissions.
+func TestBuiltBinaryDoesNotSayFullyCheckedWhenOnlyPermissionsWere(t *testing.T) {
+	out := builtCheckOutput(t, "testdata/realworld-cases/log-stream-no-checks")
 	for _, want := range []string{
 		"✓ No problems found in the checks tfpreflight ran.",
 		"1 of 1 resource was only checked for permissions; tfpreflight has no other checks for it yet. Details: tfpreflight check --details",
 	} {
-		if !strings.Contains(out.String(), want) {
-			t.Errorf("output lacks %q:\n%s", want, out.String())
+		if !strings.Contains(out, want) {
+			t.Errorf("output lacks %q:\n%s", want, out)
 		}
 	}
-	if strings.Contains(out.String(), "fully") {
-		t.Errorf("the output says \"fully\":\n%s", out.String())
+	if strings.Contains(out, "fully") {
+		t.Errorf("the output says \"fully\":\n%s", out)
+	}
+}
+
+// The plan of an instance in a subnet that does not exist, with no AWS to ask.
+// Packs before the aws_instance.subnet_id rule have only its permissions to
+// check; packs with it start a subnet lookup that cannot finish here. Either
+// way the result must not read as everything having been checked.
+func TestBuiltBinaryDoesNotSayFullyCheckedForAnInstanceInAMissingSubnet(t *testing.T) {
+	out := builtCheckOutput(t, "testdata/realworld-cases/instance-in-missing-subnet")
+	if !strings.Contains(out, "✓ No problems found in the checks tfpreflight ran.") {
+		t.Errorf("output lacks the clean result line:\n%s", out)
+	}
+	permissionsOnly := "1 of 1 resource was only checked for permissions; tfpreflight has no other checks for it yet."
+	couldNotFinish := "1 of 1 resource had a check that could not finish."
+	if !strings.Contains(out, permissionsOnly) && !strings.Contains(out, couldNotFinish) {
+		t.Errorf("output says neither that the resource was only checked for permissions nor that a check could not finish:\n%s", out)
+	}
+	if strings.Contains(out, "fully") {
+		t.Errorf("the output says \"fully\":\n%s", out)
 	}
 }
