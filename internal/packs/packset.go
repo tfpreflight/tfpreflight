@@ -127,8 +127,8 @@ func readManifest(fsys fs.FS, source string) (Manifest, error) {
 	if err := decoder.Decode(&manifest); err != nil {
 		return Manifest{}, fmt.Errorf("pack set %s: parse manifest: %w", source, err)
 	}
-	if manifest.SchemaVersion != SchemaVersion {
-		return Manifest{}, fmt.Errorf("pack set %s: schema version %d, this tfpreflight reads %d", source, manifest.SchemaVersion, SchemaVersion)
+	if manifest.SchemaVersion < rules.OldestSchemaVersion || manifest.SchemaVersion > SchemaVersion {
+		return Manifest{}, fmt.Errorf("pack set %s: schema version %d, this tfpreflight reads %d to %d", source, manifest.SchemaVersion, rules.OldestSchemaVersion, SchemaVersion)
 	}
 	if manifest.Provider != "aws" {
 		return Manifest{}, fmt.Errorf("pack set %s: provider %q, want aws", source, manifest.Provider)

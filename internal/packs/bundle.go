@@ -264,16 +264,24 @@ func fetchIndex(ctx context.Context, client *http.Client, index string) (rules.I
 }
 
 // chooseBundle picks the first bundle whose pack schema this binary reads, and
-// lists the newer-schema bundles before it.
+// lists the newer-schema bundles before it. That listing is how an older binary
+// meets a bundle it cannot run: it names it and installs the newest one before
+// it that it can.
 func chooseBundle(list rules.Index) (*rules.IndexEntry, []string) {
+	return chooseBundleReading(list, rules.OldestSchemaVersion, rules.SchemaVersion)
+}
+
+// chooseBundleReading is chooseBundle for a binary that reads schemas oldest to
+// newest. The tests use it to show what an earlier release does.
+func chooseBundleReading(list rules.Index, oldest, newest int) (*rules.IndexEntry, []string) {
 	var skipped []string
 	for i := range list.Bundles {
 		entry := &list.Bundles[i]
-		if entry.PackSchemaVersion > rules.SchemaVersion {
+		if entry.PackSchemaVersion > newest {
 			skipped = append(skipped, entry.ID)
 			continue
 		}
-		if entry.PackSchemaVersion == rules.SchemaVersion {
+		if entry.PackSchemaVersion >= oldest {
 			return entry, skipped
 		}
 	}
