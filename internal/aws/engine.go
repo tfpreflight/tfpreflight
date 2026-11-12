@@ -102,7 +102,7 @@ func runChecks(ctx context.Context, checks awsChecks, run RunContext, changes []
 	var findings []model.Finding
 	var resolverCoverage []conflicts.Coverage
 	if run.Inspects() {
-		inspectionFindings, identityCoverage, err := runInspectionChecks(ctx, checks, run, inspected, providerVersion, inspectedRules, quotaRules, quotaRulesLoaded)
+		inspectionFindings, identityCoverage, err := runInspectionChecks(ctx, checks, run, withCreatedHere(inspected, plan), providerVersion, inspectedRules, quotaRules, quotaRulesLoaded)
 		if err != nil {
 			return Result{}, err
 		}

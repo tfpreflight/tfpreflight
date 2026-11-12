@@ -29,6 +29,12 @@ type PlannedChange struct {
 	Before            any
 	After             any
 	AfterUnknown      any
+	// CreatedHere names the attributes whose value comes only from a resource
+	// this same plan creates, such as the vpc_id of a security group in a VPC
+	// the plan also creates. Such a value is unknown before apply, and the
+	// thing it names does not exist yet. It is empty when the plan does not
+	// say, which is not the same as the attribute being unset.
+	CreatedHere map[string]bool
 }
 
 // DefaultAWSProviderKey is the configuration key of the root module's
