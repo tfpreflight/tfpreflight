@@ -216,6 +216,9 @@ func (r *Resolver) checkChange(ctx context.Context, change model.PlannedChange) 
 	if status, reason := semanticsGate(rule); status != "" {
 		return nil, Coverage{change.Address, status, reason}
 	}
+	if reason := inNewScope(change, rule); reason != "" {
+		return nil, Coverage{change.Address, StatusNoConflictPossible, reason}
+	}
 	values, ordered, unknownPart := identityValues(change, rule)
 	if unknownPart != "" {
 		status := StatusIdentityUnknown
@@ -246,6 +249,30 @@ func (r *Resolver) checkChange(ctx context.Context, change model.PlannedChange) 
 		finding := lookupUnavailable(change, rule, ordered[0], err)
 		return &finding, Coverage{change.Address, StatusLookupFailed, lookupErrorText(err)}
 	}
+}
+
+// scopeAttributes are the identity attribute that names the scope of a rule
+// whose name is unique only within it.
+var scopeAttributes = map[string]string{"vpc": "vpc_id"}
+
+// inNewScope says why a name cannot be taken already, when the rule's scope is
+// created by this same plan: a new VPC holds no other group. It returns "" when
+// that is not so. The name "default" is the exception, because every new VPC
+// already has a group of that name.
+func inNewScope(change model.PlannedChange, rule Rule) string {
+	attribute, scoped := scopeAttributes[rule.Scope]
+	if !scoped || !change.CreatedHere[attribute] {
+		return ""
+	}
+	for _, part := range rule.parts() {
+		if part.Attribute == attribute {
+			continue
+		}
+		if value, known := plannedIdentity(change, part.Attribute); known && strings.EqualFold(value, "default") {
+			return ""
+		}
+	}
+	return "the " + strings.TrimSuffix(attribute, "_id") + " is created in this plan, so nothing else is in it yet; no lookup sent"
 }
 
 // semanticsGate returns the coverage status for a rule whose create semantics

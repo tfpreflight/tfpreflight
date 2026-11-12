@@ -97,3 +97,68 @@ func TestAnUnknownSemanticsValueSendsNoLookup(t *testing.T) {
 		t.Fatalf("coverage = %+v", coverage[0])
 	}
 }
+
+func groupInNewVPC(name string) model.PlannedChange {
+	change := createChange("aws_security_group", "aws_security_group.web", map[string]any{"name": name}, map[string]any{"vpc_id": true})
+	change.CreatedHere = map[string]bool{"vpc_id": true}
+	return change
+}
+
+// A group in a VPC this plan creates cannot clash with one that is there: the
+// VPC is new and empty. Nothing is asked and nothing is reported as unchecked.
+func TestSecurityGroupInANewVPCCannotConflict(t *testing.T) {
+	adapter := &fakeAdapter{service: "ec2", operation: "DescribeSecurityGroups", outcome: OutcomeExists}
+	findings, coverage := resolverWith(securityGroupRule(), adapter).Check(context.Background(), []model.PlannedChange{groupInNewVPC("web")})
+	if adapter.calls != 0 || len(findings) != 0 {
+		t.Fatalf("%d lookups, findings %v", adapter.calls, findings)
+	}
+	if coverage[0].Status != StatusNoConflictPossible || coverage[0].Status.CheckStatus() != model.CheckNotApplicable {
+		t.Fatalf("coverage = %+v: a new VPC must not leave a partial line", coverage[0])
+	}
+}
+
+// A generated name is unknown too, and a new VPC is still empty.
+func TestSecurityGroupWithAGeneratedNameInANewVPCCannotConflict(t *testing.T) {
+	change := groupInNewVPC("")
+	change.After = map[string]any{}
+	change.AfterUnknown = map[string]any{"vpc_id": true, "name": true}
+	_, coverage := resolverWith(securityGroupRule(), &fakeAdapter{}).Check(context.Background(), []model.PlannedChange{change})
+	if coverage[0].Status != StatusNoConflictPossible {
+		t.Fatalf("coverage = %+v", coverage[0])
+	}
+}
+
+// Every new VPC already holds a group named default, so that name is the one
+// case a new VPC can clash. It is not looked up (the VPC has no id yet) and is
+// reported as not checked.
+func TestTheDefaultGroupNameInANewVPCIsNotWaved(t *testing.T) {
+	for _, name := range []string{"default", "Default"} {
+		adapter := &fakeAdapter{service: "ec2", operation: "DescribeSecurityGroups", outcome: OutcomeNotFound}
+		_, coverage := resolverWith(securityGroupRule(), adapter).Check(context.Background(), []model.PlannedChange{groupInNewVPC(name)})
+		if adapter.calls != 0 || coverage[0].Status != StatusCompositePartUnknown {
+			t.Errorf("%q: %d lookups, coverage %+v", name, adapter.calls, coverage[0])
+		}
+	}
+}
+
+// Only a scope the plan creates is waved through: an unset vpc_id (the default
+// VPC) stays "not checked".
+func TestSecurityGroupWithoutAMarkedVPCStaysNotChecked(t *testing.T) {
+	change := groupInNewVPC("web")
+	change.CreatedHere = nil
+	_, coverage := resolverWith(securityGroupRule(), &fakeAdapter{}).Check(context.Background(), []model.PlannedChange{change})
+	if coverage[0].Status != StatusCompositePartUnknown {
+		t.Fatalf("coverage = %+v", coverage[0])
+	}
+}
+
+// The new-scope rule is for scoped rules only: a log group is never skipped.
+func TestANewScopeNeverSkipsAnUnscopedRule(t *testing.T) {
+	change := createChange("aws_cloudwatch_log_group", "aws_cloudwatch_log_group.app", map[string]any{"name": "app"}, nil)
+	change.CreatedHere = map[string]bool{"vpc_id": true}
+	adapter := &fakeAdapter{service: "cloudwatchlogs", operation: "DescribeLogGroups", outcome: OutcomeExists}
+	findings, _ := resolverWith(logGroupRule(), adapter).Check(context.Background(), []model.PlannedChange{change})
+	if adapter.calls != 1 || len(findings) != 1 {
+		t.Fatalf("%d lookups, %d findings", adapter.calls, len(findings))
+	}
+}
