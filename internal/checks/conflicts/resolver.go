@@ -29,10 +29,11 @@ const (
 
 // Create semantics, established per resource; see the rules package.
 const (
-	SemanticsDuplicateError = rules.SemanticsDuplicateError
-	SemanticsIdempotent     = rules.SemanticsIdempotent
-	SemanticsUpsert         = rules.SemanticsUpsert
-	SemanticsInconclusive   = rules.SemanticsInconclusive
+	SemanticsDuplicateError       = rules.SemanticsDuplicateError
+	SemanticsDuplicateErrorListed = rules.SemanticsDuplicateErrorListed
+	SemanticsIdempotent           = rules.SemanticsIdempotent
+	SemanticsUpsert               = rules.SemanticsUpsert
+	SemanticsInconclusive         = rules.SemanticsInconclusive
 )
 
 // Trust levels, mirroring the permission model.
@@ -254,7 +255,7 @@ func semanticsGate(rule Rule) (Status, string) {
 	switch rule.CreateSemantics {
 	case SemanticsIdempotent, SemanticsUpsert:
 		return StatusNoConflictPossible, "create semantics are " + rule.CreateSemantics
-	case SemanticsDuplicateError:
+	case SemanticsDuplicateError, SemanticsDuplicateErrorListed:
 		return "", ""
 	default:
 		return StatusSemanticsNotProven, "create semantics are " + orUnknown(rule.CreateSemantics)
