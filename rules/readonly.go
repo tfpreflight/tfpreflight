@@ -154,6 +154,11 @@ func (s Spec) CheckListing() error {
 func (s SpecSet) Check() error {
 	var problems []error
 	for _, spec := range s.Specs {
+		// A spec that needs a capability this version lacks is never sent, and
+		// may use something this version cannot judge, so it is not judged.
+		if spec.Requires != "" && !KnowsCapability(spec.Requires) {
+			continue
+		}
 		if err := spec.CheckReadOnly(); err != nil {
 			problems = append(problems, fmt.Errorf("%s:%s: %w", spec.Service, spec.Operation, err))
 		}
