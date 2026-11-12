@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -200,7 +201,8 @@ func runNameCheck(t *testing.T, binary, packDir string, plan []byte, aws *fakeNa
 	command.Stdout, command.Stderr = &out, &out
 	err := command.Run()
 	code := 0
-	if exit, isExit := err.(*exec.ExitError); isExit {
+	var exit *exec.ExitError
+	if errors.As(err, &exit) {
 		code = exit.ExitCode()
 	} else if err != nil {
 		t.Fatalf("running %s: %v", binary, err)
@@ -227,8 +229,8 @@ func completed(t *testing.T, out string) {
 	}
 }
 
-func logGroupPlan(t *testing.T, name string) []byte {
-	return planFile(t, planResource{Type: "aws_cloudwatch_log_group", Name: "app", After: map[string]any{"name": name}})
+func logGroupPlan(t *testing.T) []byte {
+	return planFile(t, planResource{Type: "aws_cloudwatch_log_group", Name: "app", After: map[string]any{"name": "app"}})
 }
 
 func groupPlan(t *testing.T, name string) []byte {
@@ -248,93 +250,86 @@ func groupInDefaultVPCPlan(t *testing.T, name string) []byte {
 	return planFile(t, planResource{Type: "aws_security_group", Name: "web", After: map[string]any{"name": name}, Unknown: map[string]any{"vpc_id": true}})
 }
 
+// nameCase is one plan, what the fake AWS answers, and what the check must do.
+type nameCase struct {
+	name         string
+	plan         []byte
+	logs, groups string
+	// lookup is the operation that must be asked exactly asked times, with each
+	// string of sent in the request; asked 0 means it must not be asked at all.
+	lookup string
+	asked  int
+	sent   []string
+	// taken says the output must report an existing name; otherwise it must not.
+	taken bool
+	// conflicts is a piece of the "Conflicts:" coverage line.
+	conflicts string
+}
+
+func nameCases(t *testing.T) []nameCase {
+	return []nameCase{
+		{
+			name: "a log group name that is taken", plan: logGroupPlan(t), logs: logGroupsBody("app", "app-prod"),
+			lookup: "DescribeLogGroups", asked: 1, sent: []string{`"logGroupNamePrefix":"app"`}, taken: true, conflicts: "1 checked",
+		},
+		{
+			name: "only a longer name shares the prefix", plan: logGroupPlan(t), logs: logGroupsBody("app-prod", "app2"),
+			lookup: "DescribeLogGroups", asked: 1, conflicts: "1 checked",
+		},
+		{
+			name: "a log group name that is free", plan: logGroupPlan(t), logs: logGroupsBody(),
+			lookup: "DescribeLogGroups", asked: 1, conflicts: "1 checked",
+		},
+		{
+			name: "a security group name taken in its VPC", plan: groupPlan(t, "web"), groups: securityGroupsBody("web"),
+			lookup: "DescribeSecurityGroups", asked: 1, sent: []string{"Filter.1.Name=group-name", "Filter.2.Value.1=" + sgVPC}, taken: true, conflicts: "1 checked",
+		},
+		{
+			name: "a security group name that is free in its VPC", plan: groupPlan(t, "web"), groups: securityGroupsBody(),
+			lookup: "DescribeSecurityGroups", asked: 1, conflicts: "1 checked",
+		},
+		{
+			name: "a group in a VPC this plan creates is not looked up and not unchecked", plan: groupInNewVPCPlan(t, "web"), groups: securityGroupsBody("web"),
+			lookup: "DescribeSecurityGroups", conflicts: "Conflicts: not applicable",
+		},
+		{
+			name: "a group with no VPC given is not looked up and is reported not checked", plan: groupInDefaultVPCPlan(t, "web"), groups: securityGroupsBody("web"),
+			lookup: "DescribeSecurityGroups", conflicts: "1 partial",
+		},
+	}
+}
+
+func (c nameCase) check(t *testing.T, binary, packDir string) {
+	t.Helper()
+	aws := newFakeNameAWS(t, c.logs, c.groups)
+	out, _ := runNameCheck(t, binary, packDir, c.plan, aws)
+	completed(t, out)
+	got := aws.asked(c.lookup)
+	if len(got) != c.asked {
+		t.Errorf("%d lookups, want %d: %v", len(got), c.asked, got)
+	}
+	for _, want := range c.sent {
+		if len(got) > 0 && !strings.Contains(got[0], want) {
+			t.Errorf("the lookup %q lacks %s", got[0], want)
+		}
+	}
+	if reported := strings.Contains(out, "already exists"); reported != c.taken {
+		t.Errorf("reported a taken name = %v, want %v:\n%s", reported, c.taken, out)
+	}
+	if line := conflictsLine(out); !strings.Contains(line, c.conflicts) {
+		t.Errorf("conflicts coverage = %q, want it to contain %q", line, c.conflicts)
+	}
+}
+
 func TestBuiltBinaryChecksTheTwoNameRules(t *testing.T) {
 	packDir, ok := nameRulePacks(t)
 	if !ok {
 		t.Skipf("the built-in packs have no listing name rules yet; set %s to a pack directory that does", nameRulePacksEnv)
 	}
 	binary := filepath.Join(buildBinary(t), "tfpreflight")
-
-	t.Run("a log group name that is taken", func(t *testing.T) {
-		aws := newFakeNameAWS(t, logGroupsBody("app", "app-prod"), "")
-		out, _ := runNameCheck(t, binary, packDir, logGroupPlan(t, "app"), aws)
-		completed(t, out)
-		if !strings.Contains(out, "already exists") || strings.Contains(out, "No findings to show") {
-			t.Errorf("a taken log group name was not reported:\n%s", out)
-		}
-		if got := aws.asked("DescribeLogGroups"); len(got) != 1 || !strings.Contains(got[0], `"logGroupNamePrefix":"app"`) {
-			t.Errorf("lookups = %v", got)
-		}
-		if line := conflictsLine(out); !strings.Contains(line, "1 checked") {
-			t.Errorf("conflicts coverage = %q, want 1 checked", line)
-		}
-	})
-	t.Run("only a longer name shares the prefix", func(t *testing.T) {
-		aws := newFakeNameAWS(t, logGroupsBody("app-prod", "app2"), "")
-		out, _ := runNameCheck(t, binary, packDir, logGroupPlan(t, "app"), aws)
-		completed(t, out)
-		if strings.Contains(out, "already exists") || !strings.Contains(out, "No findings to show") {
-			t.Errorf("app was reported taken because app-prod exists:\n%s", out)
-		}
-		if line := conflictsLine(out); !strings.Contains(line, "1 checked") {
-			t.Errorf("conflicts coverage = %q, want 1 checked", line)
-		}
-	})
-	t.Run("a log group name that is free", func(t *testing.T) {
-		aws := newFakeNameAWS(t, logGroupsBody(), "")
-		out, _ := runNameCheck(t, binary, packDir, logGroupPlan(t, "app"), aws)
-		completed(t, out)
-		if strings.Contains(out, "already exists") || !strings.Contains(out, "No findings to show") {
-			t.Errorf("a free log group name was not clean:\n%s", out)
-		}
-	})
-	t.Run("a security group name taken in its VPC", func(t *testing.T) {
-		aws := newFakeNameAWS(t, "", securityGroupsBody("web"))
-		out, _ := runNameCheck(t, binary, packDir, groupPlan(t, "web"), aws)
-		completed(t, out)
-		if !strings.Contains(out, "already exists") || strings.Contains(out, "No findings to show") {
-			t.Errorf("a taken security group name was not reported:\n%s", out)
-		}
-		got := aws.asked("DescribeSecurityGroups")
-		if len(got) != 1 || !strings.Contains(got[0], "Filter.1.Name=group-name") || !strings.Contains(got[0], "Filter.2.Value.1="+sgVPC) {
-			t.Errorf("lookups = %v: both the name and the VPC must be sent", got)
-		}
-	})
-	t.Run("a security group name that is free in its VPC", func(t *testing.T) {
-		aws := newFakeNameAWS(t, "", securityGroupsBody())
-		out, _ := runNameCheck(t, binary, packDir, groupPlan(t, "web"), aws)
-		completed(t, out)
-		if strings.Contains(out, "already exists") || !strings.Contains(out, "No findings to show") {
-			t.Errorf("a free security group name was not clean:\n%s", out)
-		}
-	})
-	t.Run("a security group in a VPC this plan creates is not looked up and not unchecked", func(t *testing.T) {
-		aws := newFakeNameAWS(t, "", securityGroupsBody("web"))
-		out, _ := runNameCheck(t, binary, packDir, groupInNewVPCPlan(t, "web"), aws)
-		completed(t, out)
-		if got := aws.asked("DescribeSecurityGroups"); len(got) != 0 {
-			t.Errorf("a new VPC was looked up: %v", got)
-		}
-		if strings.Contains(out, "already exists") {
-			t.Errorf("a new VPC was reported as a conflict:\n%s", out)
-		}
-		// Other checks may be partial here (permissions, the VPC's quota); the
-		// name check must not be.
-		if line := conflictsLine(out); line != "Conflicts: not applicable" {
-			t.Errorf("conflicts coverage = %q, want not applicable", line)
-		}
-	})
-	t.Run("a security group with no VPC given is not looked up and says it was not checked", func(t *testing.T) {
-		aws := newFakeNameAWS(t, "", securityGroupsBody("web"))
-		out, _ := runNameCheck(t, binary, packDir, groupInDefaultVPCPlan(t, "web"), aws)
-		completed(t, out)
-		if got := aws.asked("DescribeSecurityGroups"); len(got) != 0 {
-			t.Errorf("a group with no known VPC was looked up: %v", got)
-		}
-		if strings.Contains(out, "already exists") {
-			t.Errorf("reported a conflict it did not check:\n%s", out)
-		}
-	})
+	for _, c := range nameCases(t) {
+		t.Run(c.name, func(t *testing.T) { c.check(t, binary, packDir) })
+	}
 }
 
 // copyPacksAsSchema copies a pack directory and rewrites its manifest's schema
@@ -390,45 +385,24 @@ func TestAnEarlierReleaseNeverRunsTheNameRules(t *testing.T) {
 	if packDir == "" {
 		packDir = filepath.Join("..", "..", "packs")
 	}
-
 	t.Run("it refuses packs of a newer schema", func(t *testing.T) {
 		aws := newFakeNameAWS(t, logGroupsBody("app"), securityGroupsBody("web"))
-		out, code := runNameCheck(t, old, packDir, logGroupPlan(t, "app"), aws)
+		out, code := runNameCheck(t, old, packDir, logGroupPlan(t), aws)
 		if code == 0 || !strings.Contains(out, "schema version") {
 			t.Errorf("exit %d; the earlier release should refuse packs it cannot read:\n%s", code, out)
 		}
-		if len(aws.asked("DescribeLogGroups"))+len(aws.asked("DescribeSecurityGroups")) != 0 {
-			t.Error("it sent a lookup")
+		if len(aws.requests) != 0 {
+			t.Errorf("it sent %v", aws.requests)
 		}
 	})
-
 	asOldSchema := copyPacksAsSchema(t, packDir, 2)
-	for name, c := range map[string]struct {
-		plan    []byte
-		logs    string
-		groups  string
-		lookups string
-	}{
-		"a log group name that is taken":      {logGroupPlan(t, "app"), logGroupsBody("app"), "", "DescribeLogGroups"},
-		"a log group with only a longer name": {logGroupPlan(t, "app"), logGroupsBody("app-prod"), "", "DescribeLogGroups"},
-		"a security group name that is taken": {groupPlan(t, "web"), "", securityGroupsBody("web"), "DescribeSecurityGroups"},
-		"a security group in a new VPC":       {groupInNewVPCPlan(t, "web"), "", securityGroupsBody("web"), "DescribeSecurityGroups"},
-	} {
-		t.Run("given the rules as an old schema: "+name, func(t *testing.T) {
+	for _, c := range nameCases(t) {
+		t.Run("given the rules as an old schema: "+c.name, func(t *testing.T) {
 			aws := newFakeNameAWS(t, c.logs, c.groups)
 			out, code := runNameCheck(t, old, asOldSchema, c.plan, aws)
-			if code != 0 {
-				t.Fatalf("exit %d:\n%s", code, out)
-			}
 			completed(t, out)
-			if got := aws.asked(c.lookups); len(got) != 0 {
-				t.Errorf("the earlier release ran the new lookup: %v", got)
-			}
-			if strings.Contains(out, "already exists") {
-				t.Errorf("the earlier release reported a conflict from the new rules:\n%s", out)
-			}
-			if strings.Contains(out, "panic") || strings.Contains(out, "goroutine") {
-				t.Errorf("the earlier release crashed:\n%s", out)
+			if code != 0 || len(aws.requests) != 0 || strings.Contains(out, "already exists") || strings.Contains(out, "goroutine") {
+				t.Errorf("exit %d, requests %v:\n%s", code, aws.requests, out)
 			}
 			t.Logf("conflicts coverage: %s", conflictsLine(out))
 		})
