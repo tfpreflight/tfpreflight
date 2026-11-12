@@ -6,9 +6,22 @@ import (
 	"strings"
 )
 
-// SchemaVersion is the pack format version. Version 2 holds range packs: one
-// file per pack kind, covering many provider versions.
-const SchemaVersion = 2
+// SchemaVersion is the pack format version, and the one the packs are built
+// in. Version 2 holds range packs: one file per pack kind, covering many
+// provider versions. Version 3 is version 2 plus what beta.7 reads that earlier
+// versions do not: listing lookups, fixed and page inputs, and the create
+// semantics duplicate-error-listed.
+//
+// The number is the gate for older binaries. A binary skips a bundle whose
+// schema is newer than it reads and keeps the newest one it can read, so a
+// bundle with those rules is never seen by a binary that cannot run them. Every
+// release that reads a new pack feature must raise it.
+const SchemaVersion = 3
+
+// OldestSchemaVersion is the oldest pack format this binary still reads.
+// Version 3 differs from 2 only by what a pack may contain, so a version 2
+// bundle, such as one cached before an upgrade, is read as it always was.
+const OldestSchemaVersion = 2
 
 // ManifestPath is where a set's manifest lives.
 const ManifestPath = "aws/manifest.json"

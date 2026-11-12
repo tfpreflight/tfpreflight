@@ -145,8 +145,8 @@ func CheckDescriptor(key ed25519.PublicKey, data []byte, signature string) (Bund
 	if d.PackSchemaVersion > SchemaVersion {
 		return d, fmt.Errorf("pack schema %d, this tfpreflight reads %d: %w", d.PackSchemaVersion, SchemaVersion, ErrNeedsNewerBinary)
 	}
-	if d.PackSchemaVersion < SchemaVersion {
-		return d, fmt.Errorf("pack schema %d is older than %d, which this tfpreflight reads", d.PackSchemaVersion, SchemaVersion)
+	if d.PackSchemaVersion < OldestSchemaVersion {
+		return d, fmt.Errorf("pack schema %d is older than %d, the oldest this tfpreflight reads", d.PackSchemaVersion, OldestSchemaVersion)
 	}
 	return d, nil
 }

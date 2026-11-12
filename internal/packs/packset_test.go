@@ -2,9 +2,12 @@ package packs
 
 import (
 	"encoding/json"
+	"fmt"
 	"strings"
 	"testing"
 	"testing/fstest"
+
+	"github.com/tfpreflight/tfpreflight/rules"
 )
 
 func manifestFor(files map[string]string) string {
@@ -40,13 +43,14 @@ func TestOpenValidatesEveryFile(t *testing.T) {
 		fsys fstest.MapFS
 		want string
 	}{
-		"tampered":      {set(map[string]string{"aws/generated/aws-1.0.0.json": `{"a":2}`, "aws/lookup/specs-1.0.0.json": `{"specs":[]}`}, manifestFor(files)), "manifest says"},
-		"extra file":    {set(map[string]string{"aws/generated/aws-1.0.0.json": `{"a":1}`, "aws/lookup/specs-1.0.0.json": `{"specs":[]}`, "aws/extra.json": `{}`}, manifestFor(files)), "not in the manifest"},
-		"missing file":  {set(map[string]string{"aws/generated/aws-1.0.0.json": `{"a":1}`}, manifestFor(files)), "missing"},
-		"no manifest":   {fstest.MapFS{"aws/x.json": {Data: []byte("{}")}}, "read manifest"},
-		"schema":        {set(files, strings.Replace(manifestFor(files), `"schema_version":2`, `"schema_version":3`, 1)), "schema version 3"},
-		"unknown field": {set(files, strings.Replace(manifestFor(files), `{"schema_version"`, `{"signature":"x","schema_version"`, 1)), "unknown field"},
-		"empty":         {set(nil, manifestFor(nil)), "no files"},
+		"tampered":       {set(map[string]string{"aws/generated/aws-1.0.0.json": `{"a":2}`, "aws/lookup/specs-1.0.0.json": `{"specs":[]}`}, manifestFor(files)), "manifest says"},
+		"extra file":     {set(map[string]string{"aws/generated/aws-1.0.0.json": `{"a":1}`, "aws/lookup/specs-1.0.0.json": `{"specs":[]}`, "aws/extra.json": `{}`}, manifestFor(files)), "not in the manifest"},
+		"missing file":   {set(map[string]string{"aws/generated/aws-1.0.0.json": `{"a":1}`}, manifestFor(files)), "missing"},
+		"no manifest":    {fstest.MapFS{"aws/x.json": {Data: []byte("{}")}}, "read manifest"},
+		"schema too new": {set(files, strings.Replace(manifestFor(files), fmt.Sprintf(`"schema_version":%d`, SchemaVersion), fmt.Sprintf(`"schema_version":%d`, SchemaVersion+1), 1)), fmt.Sprintf("schema version %d", SchemaVersion+1)},
+		"schema too old": {set(files, strings.Replace(manifestFor(files), fmt.Sprintf(`"schema_version":%d`, SchemaVersion), fmt.Sprintf(`"schema_version":%d`, rules.OldestSchemaVersion-1), 1)), fmt.Sprintf("schema version %d", rules.OldestSchemaVersion-1)},
+		"unknown field":  {set(files, strings.Replace(manifestFor(files), `{"schema_version"`, `{"signature":"x","schema_version"`, 1)), "unknown field"},
+		"empty":          {set(nil, manifestFor(nil)), "no files"},
 	} {
 		t.Run(name, func(t *testing.T) {
 			if _, err := Open(tc.fsys, "test"); err == nil || !strings.Contains(err.Error(), tc.want) {
