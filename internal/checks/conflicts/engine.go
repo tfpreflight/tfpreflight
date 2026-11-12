@@ -57,13 +57,19 @@ func (a engineAdapter) Supports(operation string) bool { return operation == a.s
 // Lookup asks the generic AWS call engine to resolve the requested identity.
 func (a engineAdapter) Lookup(ctx context.Context, request LookupRequest) (Outcome, error) {
 	// A single identity is the lookup's one input; a composite one fills each
-	// input member.
+	// input member. Fixed inputs and page tokens are not part of the identity.
 	values := map[string]string{}
-	if len(a.spec.Inputs) == 1 {
-		values[a.spec.Inputs[0].Member] = request.Identity
+	var identity []string
+	for _, input := range a.spec.Inputs {
+		if input.Const == "" && !input.Page {
+			identity = append(identity, input.Member)
+		}
+	}
+	if len(identity) == 1 {
+		values[identity[0]] = request.Identity
 	} else {
-		for _, input := range a.spec.Inputs {
-			values[input.Member] = request.Values[input.Member]
+		for _, member := range identity {
+			values[member] = request.Values[member]
 		}
 	}
 	answer := a.engine.Inspect(ctx, a.spec, "", values)

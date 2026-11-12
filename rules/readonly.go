@@ -129,11 +129,35 @@ func (e Endpoints) checkHosts() error {
 	return nil
 }
 
-// Check holds every spec in the set to CheckReadOnly.
+// CheckListing reports why a spec in the list-exact mode could not answer
+// "free" safely. It checks nothing for the other modes.
+func (s Spec) CheckListing() error {
+	if s.Success.Mode != SuccessListExact {
+		return nil
+	}
+	if len(s.Success.Paths) == 0 || len(s.Success.List) == 0 {
+		return fmt.Errorf("%s needs both the paths to compare and the list that holds them", SuccessListExact)
+	}
+	pages := 0
+	for _, input := range s.Inputs {
+		if input.Page {
+			pages++
+		}
+	}
+	if pages > 1 || (pages == 1) != (len(s.Success.NextToken) > 0) {
+		return errors.New("a listing needs exactly one page input when it names a continuation token, and none when it does not")
+	}
+	return nil
+}
+
+// Check holds every spec in the set to CheckReadOnly and CheckListing.
 func (s SpecSet) Check() error {
 	var problems []error
 	for _, spec := range s.Specs {
 		if err := spec.CheckReadOnly(); err != nil {
+			problems = append(problems, fmt.Errorf("%s:%s: %w", spec.Service, spec.Operation, err))
+		}
+		if err := spec.CheckListing(); err != nil {
 			problems = append(problems, fmt.Errorf("%s:%s: %w", spec.Service, spec.Operation, err))
 		}
 	}

@@ -39,6 +39,16 @@ const (
 	SuccessSingular = "singular_success"
 	// SuccessEchoOrSingular accepts either.
 	SuccessEchoOrSingular = "identity_echo_or_singular_success"
+	// SuccessListExact is for a lookup that lists the objects matching a
+	// filter. The identifier exists when one listed object has exactly that
+	// identifier in Paths. A complete listing with no such object proves the
+	// identifier is free, which is how this mode differs from the others: there
+	// an empty success proves nothing. The listing is complete only when the
+	// response holds the list named in List and no continuation token.
+	//
+	// A binary that does not know this mode reads it as SuccessEcho: it still
+	// answers "exists" for an exact match, and never answers "free".
+	SuccessListExact = "list_exact_match"
 )
 
 // Spec is everything the generic engine in internal/awscall needs to send one
@@ -109,6 +119,16 @@ type Input struct {
 	Location string `json:"location"`
 	// Name is the wire name: the URI label, query key, header, or body key.
 	Name string `json:"name"`
+	// Const is a fixed value the lookup always sends, such as the name of a
+	// filter. Member then only labels the input and is never filled from the
+	// plan. An older binary does not know Const and would send the member
+	// empty, so a rule whose lookup needs it carries create semantics the older
+	// binary refuses; see SemanticsDuplicateErrorListed.
+	Const string `json:"const,omitempty"`
+	// Page marks the input that carries the continuation token of a listing.
+	// It is left out of the first request, and filled from the response's
+	// Success.NextToken on the next.
+	Page bool `json:"page,omitempty"`
 	// List sends the identifier as a one-element list.
 	List bool `json:"list,omitempty"`
 	// ListMember is the query-protocol list item key: "member" encodes
@@ -143,6 +163,12 @@ type Success struct {
 	// identifier. Lists are traversed implicitly; XML list wrappers such as
 	// "item" or "member" are steps of their own.
 	Paths [][]string `json:"paths,omitempty"`
+	// List leads from the response root to the list that holds the matches.
+	// SuccessListExact needs the list to be there, even when empty: a response
+	// without it is not a listing and proves nothing.
+	List [][]string `json:"list,omitempty"`
+	// NextToken leads to the continuation token. A token means more pages.
+	NextToken []string `json:"next_token,omitempty"`
 }
 
 // SpecSet is a lookup spec pack.

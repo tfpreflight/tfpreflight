@@ -52,6 +52,14 @@ func placeInputs(spec Spec, values map[string]string) (*requestParts, error) {
 	}
 	for _, input := range spec.Inputs {
 		v := values[input.Member]
+		if input.Const != "" {
+			v = input.Const
+		}
+		// The first request of a listing has no continuation token, and an
+		// empty one would be refused.
+		if input.Page && v == "" {
+			continue
+		}
 		switch spec.Protocol {
 		case rules.AWSJSON10, rules.AWSJSON11, rules.RPCv2CBOR:
 			parts.fields[input.Name] = value(input, v)
@@ -377,6 +385,64 @@ func children(node any, step string) []any {
 		return out
 	}
 	return nil
+}
+
+// present reports whether the path leads to something in the tree, even an
+// empty list. matches cannot say so: an empty list has nothing to compare.
+func present(tree any, path []string) bool {
+	nodes := []any{tree}
+	for _, step := range path {
+		var next []any
+		for _, node := range nodes {
+			next = append(next, reached(node, step)...)
+		}
+		if len(next) == 0 {
+			return false
+		}
+		nodes = next
+	}
+	return len(path) > 0
+}
+
+// reached is children, except that a list stays one node, so an empty list
+// still counts as reached.
+func reached(node any, step string) []any {
+	if v, ok := node.(map[string]any); ok {
+		child, found := v[step]
+		if !found || child == nil {
+			return nil
+		}
+		return []any{child}
+	}
+	return children(node, step)
+}
+
+// textAt reads the text the path leads to, or "" when it leads to none.
+func textAt(tree any, path []string) string {
+	if len(path) == 0 {
+		return ""
+	}
+	nodes := []any{tree}
+	for _, step := range path {
+		var next []any
+		for _, node := range nodes {
+			next = append(next, children(node, step)...)
+		}
+		nodes = next
+	}
+	for _, node := range nodes {
+		switch v := node.(type) {
+		case string:
+			if strings.TrimSpace(v) != "" {
+				return v
+			}
+		case *element:
+			if len(v.Children) == 0 && strings.TrimSpace(v.Text) != "" {
+				return strings.TrimSpace(v.Text)
+			}
+		}
+	}
+	return ""
 }
 
 func isString(value any) bool {

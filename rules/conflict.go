@@ -30,6 +30,13 @@ const (
 	// SemanticsDuplicateError means AWS rejects a create whose identity is
 	// already taken. Only this justifies a conflict finding.
 	SemanticsDuplicateError = "duplicate-error"
+	// SemanticsDuplicateErrorListed is SemanticsDuplicateError for a rule whose
+	// lookup lists objects and reads the listing for an exact match (see
+	// SuccessListExact), or needs filters this version added. A tfpreflight
+	// from before this value reports the resource as unsupported and sends no
+	// lookup. That is how older versions skip these rules safely: they cannot
+	// run the lookup as written, so they must not run it at all.
+	SemanticsDuplicateErrorListed = "duplicate-error-listed"
 	// SemanticsIdempotent means a create over an existing identity succeeds.
 	SemanticsIdempotent = "idempotent"
 	// SemanticsUpsert means a create updates the existing object.
@@ -40,7 +47,10 @@ const (
 
 // compilerFamilyDuplicate is the conflict family the pack build emits for a
 // duplicate identity, named here to avoid importing the build's code.
-const compilerFamilyDuplicate = "duplicate_conflict"
+const (
+	compilerFamilyDuplicate       = "duplicate_conflict"
+	compilerFamilyDuplicateListed = "duplicate_conflict_listed"
+)
 
 // RuntimeSemantics translates a pack build conflict family into the vocabulary
 // the resolver matches on. A family the resolver does not implement is an error,
@@ -49,6 +59,8 @@ func RuntimeSemantics(family string) (string, error) {
 	switch family {
 	case compilerFamilyDuplicate:
 		return SemanticsDuplicateError, nil
+	case compilerFamilyDuplicateListed:
+		return SemanticsDuplicateErrorListed, nil
 	default:
 		return "", fmt.Errorf("conflict family %q has no runtime semantics; add the mapping deliberately rather than defaulting", family)
 	}
