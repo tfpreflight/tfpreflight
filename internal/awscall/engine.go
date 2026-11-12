@@ -102,6 +102,8 @@ type Answer struct {
 	Reason string
 	// Failure says what went wrong when Result is Unknown.
 	Failure *Failure
+	// next is the continuation token of a listing with more pages.
+	next string
 }
 
 // Failure describes a lookup that established nothing, in one format for every
@@ -158,6 +160,45 @@ func (e *Engine) Lookup(ctx context.Context, spec Spec, region, id string) (Resu
 // It retries as the SDK's retry middleware does: the SDK's retryer for this
 // service and region, its retry quota and its clock skew correction.
 func (e *Engine) Inspect(ctx context.Context, spec Spec, region string, values map[string]string) Answer {
+	if spec.Success.Mode != rules.SuccessListExact {
+		return e.inspectPage(ctx, spec, region, values)
+	}
+	return e.inspectListing(ctx, spec, region, values)
+}
+
+// maxListingPages bounds how many pages a listing lookup reads. Matches of an
+// exact name are few; a listing that runs past this is left unanswered rather
+// than read without end.
+const maxListingPages = 10
+
+// inspectListing reads a listing page by page until an exact match, a complete
+// listing, or the page limit. It is the only lookup that sends more than one
+// request.
+func (e *Engine) inspectListing(ctx context.Context, spec Spec, region string, values map[string]string) Answer {
+	pageMember := ""
+	for _, input := range spec.Inputs {
+		if input.Page {
+			pageMember = input.Member
+		}
+	}
+	page := map[string]string{}
+	for key, value := range values {
+		page[key] = value
+	}
+	for pages := 1; ; pages++ {
+		answer := e.inspectPage(ctx, spec, region, page)
+		if answer.next == "" {
+			return answer
+		}
+		if pageMember == "" || pages >= maxListingPages {
+			return Answer{Result: Unknown, Reason: "the listing has more pages than this lookup reads", Failure: &Failure{Service: spec.Service, Operation: spec.Operation, Cause: "the listing has more pages than this lookup reads"}}
+		}
+		page[pageMember] = answer.next
+	}
+}
+
+// inspectPage sends one request, with retries, and answers from its response.
+func (e *Engine) inspectPage(ctx context.Context, spec Spec, region string, values map[string]string) Answer {
 	// Only reads are sent. Packs are checked when they load; this covers specs
 	// from anywhere else.
 	if err := spec.CheckReadOnly(); err != nil {
@@ -194,7 +235,7 @@ func (e *Engine) Inspect(ctx context.Context, spec Spec, region string, values m
 }
 
 func inspectionFailure(spec Spec, cause, detail string) Answer {
-	return Answer{Unknown, TransportFailure, &Failure{Service: spec.Service, Operation: spec.Operation, Cause: cause, Message: detail}}
+	return Answer{Result: Unknown, Reason: TransportFailure, Failure: &Failure{Service: spec.Service, Operation: spec.Operation, Cause: cause, Message: detail}}
 }
 
 type inspection struct {
@@ -275,7 +316,7 @@ func (r *inspection) retry(ctx context.Context, attempt int, sent sentAttempt) (
 
 func (e *Engine) canceled(ctx context.Context, spec Spec) Answer {
 	reason := contextReason(ctx)
-	return Answer{Unknown, reason, &Failure{Service: spec.Service, Operation: spec.Operation, Cause: reason}}
+	return Answer{Result: Unknown, Reason: reason, Failure: &Failure{Service: spec.Service, Operation: spec.Operation, Cause: reason}}
 }
 
 // outcome is one attempt's result. err is its error in the shape an SDK client
@@ -326,7 +367,7 @@ func (e *Engine) finish(ctx context.Context, c *client, attempt outcome, hasSkew
 	}
 	spec := attempt.spec
 	failure := &Failure{Service: spec.Service, Operation: spec.Operation}
-	unknown := func(reason string) Answer { return Answer{Unknown, reason, failure} }
+	unknown := func(reason string) Answer { return Answer{Result: Unknown, Reason: reason, Failure: failure} }
 	if attempt.failure != nil {
 		if ctx.Err() != nil {
 			return e.canceled(ctx, spec)
@@ -568,11 +609,33 @@ func succeeded(spec Spec, body []byte, id string) Answer {
 		}
 	}
 	switch spec.Success.Mode {
+	case rules.SuccessListExact:
+		return listed(spec, tree)
 	case rules.SuccessSingular, rules.SuccessEchoOrSingular:
 		return Answer{Result: Exists, Reason: "singular lookup for this identifier succeeded"}
 	default:
 		return Answer{Result: Unknown, Reason: "successful response did not prove the requested identifier exists"}
 	}
+}
+
+// listed answers a listing response that held no exact match. Only a response
+// that holds the list, with no continuation token, proves the identifier free;
+// a response without the list is not a listing, and a token means the match may
+// be on the next page.
+func listed(spec Spec, tree any) Answer {
+	holdsList := false
+	for _, path := range spec.Success.List {
+		if present(tree, path) {
+			holdsList = true
+		}
+	}
+	if !holdsList {
+		return Answer{Result: Unknown, Reason: "successful response did not hold the listing"}
+	}
+	if token := textAt(tree, spec.Success.NextToken); token != "" {
+		return Answer{Result: Unknown, Reason: "the listing continues on another page", next: token}
+	}
+	return Answer{Result: NotFound, Reason: "the complete listing has no object with this identifier"}
 }
 
 // errorCode reads the error code as each protocol carries it and normalises it
