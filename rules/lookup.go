@@ -101,6 +101,10 @@ type Spec struct {
 	// Verification records which live checks this spec passed against the SDK
 	// adapters.
 	Verification *Verification `json:"verification,omitempty"`
+
+	// Requires names the capability a reader needs to run this spec; see
+	// KnowsCapability. A reader without it leaves the spec out.
+	Requires string `json:"requires,omitempty"`
 }
 
 // Verification is what was checked live against the SDK adapters.

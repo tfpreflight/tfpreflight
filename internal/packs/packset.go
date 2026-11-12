@@ -45,6 +45,9 @@ type Set struct {
 	ranges []*rules.RangePack
 	mu     sync.Mutex
 	cache  map[string][]byte
+	// newer counts, per file read, the checks left out because they need a
+	// capability this version lacks; see rules.KnowsCapability.
+	newer map[string]int
 }
 
 // Versions lists every provider version the set covers, oldest first.
@@ -71,14 +74,35 @@ func (s *Set) ReadFile(name string) ([]byte, error) {
 		if data, ok := s.cache[name]; ok {
 			return data, nil
 		}
-		data, err := pack.Materialize(version)
+		data, skipped, err := pack.MaterializeFor(version, rules.KnowsCapability)
 		if err != nil {
 			return nil, err
 		}
 		s.cache[name] = data
+		// A lookup spec is not a check of its own: the rule that uses it is,
+		// and carries its own label.
+		if skipped > 0 && !strings.HasPrefix(name, "aws/lookup/") {
+			if s.newer == nil {
+				s.newer = map[string]int{}
+			}
+			s.newer[name] = skipped
+		}
 		return data, nil
 	}
 	return nil, &fs.PathError{Op: "open", Path: name, Err: fs.ErrNotExist}
+}
+
+// NewerChecks is how many checks the files read so far left out because they
+// need a capability this version lacks. A run reads one provider version's
+// files, so after a check it is the number the run could not make.
+func (s *Set) NewerChecks() int {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	total := 0
+	for _, n := range s.newer {
+		total += n
+	}
+	return total
 }
 
 // List returns the names of the set's files directly under dir.

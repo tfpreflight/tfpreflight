@@ -136,6 +136,21 @@ func (p *RangePack) index() map[string]int {
 // Materialize rebuilds one covered version's pack. Object members are sorted, so
 // it equals, as JSON, the per-version file the pack was built from.
 func (p *RangePack) Materialize(version string) ([]byte, error) {
+	data, _, err := p.MaterializeFor(version, nil)
+	return data, err
+}
+
+// MaterializeFor is Materialize for a reader that leaves out the entries that
+// require a capability it does not understand (see requiredCapability). It
+// returns how many it left out. With understands nil nothing is left out, which
+// is what the builder's own checks use.
+func (p *RangePack) MaterializeFor(version string, understands func(string) bool) ([]byte, int, error) {
+	g := &gate{understands: understands}
+	data, err := p.materialize(version, g)
+	return data, g.skipped, err
+}
+
+func (p *RangePack) materialize(version string, g *gate) ([]byte, error) {
 	if p.Format != RangePackFormat {
 		return nil, fmt.Errorf("%s: format %q, this tfpreflight reads %s", p.Name, p.Format, RangePackFormat)
 	}
@@ -157,7 +172,7 @@ func (p *RangePack) Materialize(version string) ([]byte, error) {
 		name, _ := json.Marshal(field.Name)
 		b.Write(name)
 		b.WriteByte(':')
-		if err := p.writeField(&b, index, field, version); err != nil {
+		if err := p.writeField(&b, index, field, version, g); err != nil {
 			return nil, err
 		}
 	}
@@ -165,15 +180,15 @@ func (p *RangePack) Materialize(version string) ([]byte, error) {
 	return untemplate(b.Bytes(), version), nil
 }
 
-func (p *RangePack) writeField(b *bytes.Buffer, index map[string]int, field RangeField, version string) error {
+func (p *RangePack) writeField(b *bytes.Buffer, index map[string]int, field RangeField, version string, g *gate) error {
 	switch field.Kind {
 	case FieldValue:
 		return p.writeValue(b, index, field, version)
 	case FieldMap:
-		writeMap(b, index, field, version)
+		writeMap(b, index, field, version, g)
 		return nil
 	case FieldList:
-		return p.writeList(b, index, field, version)
+		return p.writeList(b, index, field, version, g)
 	default:
 		return fmt.Errorf("%s: %s has kind %q", p.Name, field.Name, field.Kind)
 	}
@@ -189,10 +204,10 @@ func (p *RangePack) writeValue(b *bytes.Buffer, index map[string]int, field Rang
 	return fmt.Errorf("%s: %s has no value for %s", p.Name, field.Name, version)
 }
 
-func writeMap(b *bytes.Buffer, index map[string]int, field RangeField, version string) {
+func writeMap(b *bytes.Buffer, index map[string]int, field RangeField, version string, g *gate) {
 	var keys []int
 	for i, entry := range field.Entries {
-		if inRanges(index, entry.Versions, version) {
+		if inRanges(index, entry.Versions, version) && !g.leavesOut(entry.Value) {
 			keys = append(keys, i)
 		}
 	}
@@ -212,7 +227,7 @@ func writeMap(b *bytes.Buffer, index map[string]int, field RangeField, version s
 
 // writeList writes the entries that cover version, in the version's explicit
 // order when it has one.
-func (p *RangePack) writeList(b *bytes.Buffer, index map[string]int, field RangeField, version string) error {
+func (p *RangePack) writeList(b *bytes.Buffer, index map[string]int, field RangeField, version string, g *gate) error {
 	order, explicit := field.Order[version]
 	if !explicit {
 		for i, entry := range field.Entries {
@@ -222,13 +237,18 @@ func (p *RangePack) writeList(b *bytes.Buffer, index map[string]int, field Range
 		}
 	}
 	b.WriteByte('[')
-	for n, i := range order {
+	written := 0
+	for _, i := range order {
 		if i < 0 || i >= len(field.Entries) {
 			return fmt.Errorf("%s: %s orders entry %d of %d", p.Name, field.Name, i, len(field.Entries))
 		}
-		if n > 0 {
+		if g.leavesOut(field.Entries[i].Value) {
+			continue
+		}
+		if written > 0 {
 			b.WriteByte(',')
 		}
+		written++
 		b.Write(field.Entries[i].Value)
 	}
 	b.WriteByte(']')

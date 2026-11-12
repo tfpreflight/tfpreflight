@@ -17,6 +17,9 @@ type RuntimeRule struct {
 	Trust             string         `json:"trust"`
 	Identity          map[string]any `json:"identity,omitempty"`
 	SemanticsEvidence map[string]any `json:"semantics_evidence"`
+	// Requires names the capability a reader needs to run this rule; see
+	// KnowsCapability. A reader without it leaves the rule out.
+	Requires string `json:"requires,omitempty"`
 }
 
 // RuntimeRuleFile is the on-disk shape of either pack.

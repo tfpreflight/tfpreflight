@@ -94,6 +94,7 @@ func checkCommand(deps check.Dependencies) *cobra.Command {
 			if err := renderCheck(command.OutOrStdout(), command.ErrOrStderr(), outcome, options); err != nil {
 				return toolFailure(err)
 			}
+			noteNewerChecks(command.ErrOrStderr())
 			return outcome.commandError()
 		},
 	}
@@ -160,4 +161,22 @@ func writeSupportBundle(preview io.Writer, outcome checkOutcome, options checkOp
 	}
 	bundle := report.NewBundle(outcome.Report.Document(outcome.ToolError), Version, Commit, set.Info().ID, options.ReportSensitive)
 	return report.WriteBundle(preview, options.ReportPath, bundle)
+}
+
+// noteNewerChecks says, once and on the error stream so that no output format
+// changes, how many checks in the rules were left out because they need a newer
+// tfpreflight. They change nothing in the result: it is as if they were not in
+// the rules.
+func noteNewerChecks(out io.Writer) {
+	set, err := packs.Active()
+	if err != nil {
+		return
+	}
+	switch n := set.NewerChecks(); n {
+	case 0:
+	case 1:
+		_, _ = fmt.Fprintln(out, "tfpreflight: note: 1 newer check needs a newer tfpreflight; update tfpreflight to run it")
+	default:
+		_, _ = fmt.Fprintf(out, "tfpreflight: note: %d newer checks need a newer tfpreflight; update tfpreflight to run them\n", n)
+	}
 }
