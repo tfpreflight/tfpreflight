@@ -383,7 +383,10 @@ func TestAnEarlierReleaseNeverRunsTheNameRules(t *testing.T) {
 		t.Skipf("no pack set with the name rules: set %s", nameRulePacksEnv)
 	}
 	if packDir == "" {
-		packDir = filepath.Join("..", "..", "packs")
+		var err error
+		if packDir, err = filepath.Abs(filepath.Join("..", "..", "packs")); err != nil {
+			t.Fatal(err)
+		}
 	}
 	t.Run("it refuses packs of a newer schema", func(t *testing.T) {
 		aws := newFakeNameAWS(t, logGroupsBody("app"), securityGroupsBody("web"))
