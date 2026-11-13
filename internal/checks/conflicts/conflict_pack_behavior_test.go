@@ -39,6 +39,12 @@ func TestShippedConflictRulesWarnWithoutBlocking(t *testing.T) {
 		findings, coverage := checkTakenIdentity(rule)
 		// A rule whose create is idempotent or unproven exists precisely so the
 		// resolver refuses. An existing identity is not a failure there.
+		// A listed rule is answered by a lookup that lists, not by one that
+		// reads a single item, so this helper's fake does not apply. The
+		// resolver_listed and engine_listing tests cover those rules.
+		if rule.CreateSemantics == SemanticsDuplicateErrorListed {
+			continue
+		}
 		if rule.CreateSemantics != SemanticsDuplicateError {
 			assertConflictRefused(t, rule, findings, coverage)
 			refused++
@@ -119,7 +125,7 @@ func TestGeneratedConflictPackCarriesOnlyProvenDuplicates(t *testing.T) {
 		t.Fatal("the generated conflict pack is empty")
 	}
 	for _, entry := range file.Rules {
-		if entry.CreateSemantics != SemanticsDuplicateError {
+		if entry.CreateSemantics != SemanticsDuplicateError && entry.CreateSemantics != SemanticsDuplicateErrorListed {
 			t.Errorf("%s has generated semantics %q", entry.ResourceType, entry.CreateSemantics)
 		}
 		if entry.Trust != TrustGenerated {

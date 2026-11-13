@@ -58,6 +58,11 @@ func newFakeNameAWS(t *testing.T, logs, groups string) *fakeNameAWS {
 			w.Header().Set("Content-Type", "text/xml")
 			_, _ = io.WriteString(w, f.groups)
 		default:
+			// The future-rule tests use other services' lookups. If one is ever
+			// sent it must show up, so those tests can say none was.
+			if strings.HasPrefix(r.Header.Get("X-Amz-Target"), "AmazonSSM.") || strings.Contains(string(data), "Action=GetTopicAttributes") {
+				f.requests = append(f.requests, "other lookup "+string(data))
+			}
 			http.Error(w, "unsupported", http.StatusBadRequest)
 		}
 	}))

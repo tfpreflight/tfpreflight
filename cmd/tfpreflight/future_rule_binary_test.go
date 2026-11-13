@@ -108,8 +108,10 @@ func verdictLines(out string) string {
 
 const futureCapability = "a-capability-from-the-future"
 
-// futureFixture is the built binary, the repository's packs, a plan with a log
-// group and a security group, and what the check says with the packs as they are.
+// futureFixture is the built binary, the repository's packs, and a plan with a
+// topic and a parameter, and what the check says with the packs as they are. It
+// uses types the packs have no rules for, so the real name rules for log groups
+// and security groups, which the packs now carry, play no part.
 type futureFixture struct {
 	binary, packs string
 	plan          []byte
@@ -125,8 +127,14 @@ func newFutureFixture(t *testing.T) futureFixture {
 	f := futureFixture{
 		binary: filepath.Join(buildBinary(t), "tfpreflight"), packs: packs,
 		plan: planFile(t,
-			planResource{Type: "aws_cloudwatch_log_group", Name: "app", After: map[string]any{"name": "app"}},
-			planResource{Type: "aws_security_group", Name: "web", After: map[string]any{"name": "web", "vpc_id": sgVPC}}),
+			planResource{Type: "aws_sns_topic", Name: "events", After: map[string]any{"name": "events"}},
+			planResource{Type: "aws_ssm_parameter", Name: "setting", After: map[string]any{"name": "/app/setting"}}),
+	}
+	for _, kind := range []string{"aws_sns_topic", "aws_ssm_parameter"} {
+		data, err := os.ReadFile(filepath.Join(packs, "aws", "conflict", "generated-aws.json"))
+		if err != nil || strings.Contains(string(data), `"resource_type":"`+kind+`"`) {
+			t.Fatalf("the packs must hold no conflict rule for %s (read error: %v)", kind, err)
+		}
 	}
 	f.baseline, _ = f.run(t, packs)
 	if strings.Contains(f.baseline, "newer check") {
@@ -148,12 +156,12 @@ func (f futureFixture) run(t *testing.T, packDir string) (string, *fakeNameAWS) 
 	return out, aws
 }
 
-func logGroupRule(requires string) map[string]any {
-	return futureRule("aws_cloudwatch_log_group", "cloudwatchlogs", "DescribeLogGroups", requires)
+func topicRule(requires string) map[string]any {
+	return futureRule("aws_sns_topic", "sns", "GetTopicAttributes", requires)
 }
 
-func groupRule(requires string) map[string]any {
-	return futureRule("aws_security_group", "ec2", "DescribeSecurityGroups", requires)
+func parameterRule(requires string) map[string]any {
+	return futureRule("aws_ssm_parameter", "ssm", "GetParameter", requires)
 }
 
 // skippedCleanly checks that rules needing a capability this version lacks left
@@ -181,13 +189,13 @@ func (f futureFixture) skippedCleanly(t *testing.T, out string, aws *fakeNameAWS
 // unsupported, the same result, and one line saying how many it left out.
 func TestBuiltBinarySkipsARuleFromTheFutureCleanly(t *testing.T) {
 	f := newFutureFixture(t)
-	out, aws := f.run(t, copyPacksWithRules(t, f.packs, logGroupRule(futureCapability)))
+	out, aws := f.run(t, copyPacksWithRules(t, f.packs, topicRule(futureCapability)))
 	f.skippedCleanly(t, out, aws, "tfpreflight: note: 1 newer check needs a newer tfpreflight; update tfpreflight to run it")
 }
 
 func TestBuiltBinaryCountsTheRulesFromTheFuture(t *testing.T) {
 	f := newFutureFixture(t)
-	out, aws := f.run(t, copyPacksWithRules(t, f.packs, logGroupRule(futureCapability), groupRule(futureCapability)))
+	out, aws := f.run(t, copyPacksWithRules(t, f.packs, topicRule(futureCapability), parameterRule(futureCapability)))
 	f.skippedCleanly(t, out, aws, "tfpreflight: note: 2 newer checks need a newer tfpreflight; update tfpreflight to run them")
 }
 
@@ -196,7 +204,7 @@ func TestBuiltBinaryCountsTheRulesFromTheFuture(t *testing.T) {
 // unsupported. The label is what makes the difference.
 func TestTheSameRuleWithoutALabelIsUnsupportedNotSkipped(t *testing.T) {
 	f := newFutureFixture(t)
-	out, _ := f.run(t, copyPacksWithRules(t, f.packs, logGroupRule("")))
+	out, _ := f.run(t, copyPacksWithRules(t, f.packs, topicRule("")))
 	if line := conflictsLine(out); !strings.Contains(line, "1 unsupported") {
 		t.Errorf("conflicts coverage = %q, want 1 unsupported", line)
 	}
@@ -208,7 +216,7 @@ func TestTheSameRuleWithoutALabelIsUnsupportedNotSkipped(t *testing.T) {
 // A capability this version knows is not skipped.
 func TestARuleNeedingAKnownCapabilityIsKept(t *testing.T) {
 	f := newFutureFixture(t)
-	out, _ := f.run(t, copyPacksWithRules(t, f.packs, logGroupRule(rules.CapabilityListingLookups)))
+	out, _ := f.run(t, copyPacksWithRules(t, f.packs, topicRule(rules.CapabilityListingLookups)))
 	if line := conflictsLine(out); !strings.Contains(line, "1 unsupported") || strings.Contains(out, "newer check") {
 		t.Errorf("conflicts coverage = %q:\n%s", line, out)
 	}
