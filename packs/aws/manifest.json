@@ -1,9 +1,9 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "provider": "aws",
   "files": {
     "aws/conflict/aws.json": "d7e291451389ce654eabb931972ffc872e69681871c3c3cc818d5320f5a1683d",
-    "aws/conflict/generated-aws.json": "1629e16c40dd139b5bd2c88008c711b93a0dbc86bd033ae11a6cdc06cfb5522a",
+    "aws/conflict/generated-aws.json": "0e888a27cad1fc3eefd648cf23737d2ea660208dc8a581b3562fbb233a1713b9",
     "aws/dependency/enforcement.json": "76ba319428533320caaaf9fb4236e8b837c42bc6615bb9eb93791d3cef8e6e69",
     "aws/dependency/rules.json": "d5048a72f94942f26011c7391c69ca2732cab030a5aacf3d8015624e397d680d",
     "aws/generated/aws.json": "e5ecb3443ad88adc419ad0b3cc95e272409625082d0127f988d40036debae34d",
@@ -12,7 +12,7 @@
     "aws/generated/verified-aws.json": "d6d18c2e6f8f67ce6ca52b2d1460ea174104dd5555198f22bfd2e75f44e58656",
     "aws/iam/actions.json": "422d598cf3bfc228216206a8869210773302cb982985f40b35c456a010da95d1",
     "aws/knowledge/v1.json": "7760076dd3bd5b5dc643a6fa4d118f79480051c03387bdc54efd2a06be65a0ff",
-    "aws/lookup/conflict-specs.json": "65fdff0e71e05d4b231421e4ea3c37082434f0883ef05848ed7043f3701c1dff",
+    "aws/lookup/conflict-specs.json": "392ea73b479e834d5ae8d513ea31a9be785e044b75f7b9581e5128f8bc7518aa",
     "aws/lookup/specs.json": "781e17a77f4c34616590557b634f338d0a9f3a5e053265bd1d70fb1fadbb37d6"
   },
   "versions": [
