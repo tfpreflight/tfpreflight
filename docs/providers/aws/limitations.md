@@ -23,13 +23,13 @@ General limits that apply to any provider are in [limitations.md](../../limitati
 
 ## Not checked yet
 
-A clean result does not cover these. tfpreflight has no rule for them yet, so a plan that fails this way gets no warning. For a resource of a type with no such rule at all, the result says "was only checked for permissions; tfpreflight has no other checks for it yet".
+A clean result does not cover this. tfpreflight has no rule for it yet, so a plan that fails this way gets no warning. The result counts it as a check that could not finish.
 
 | What | What happens at apply | Seen |
 |---|---|---|
-| **The `subnet_id` of an `aws_instance`** that names a subnet that does not exist | `InvalidSubnetID.NotFound` | A real apply, on 2026-11-06 |
-| **A CloudWatch log group name that is already taken** | `ResourceAlreadyExistsException` | A real apply, on 2026-11-06 |
-| **A security group name that is already taken in the same VPC** | `InvalidGroup.Duplicate` | A real apply, on 2026-11-06 |
+| **A security group name that is already taken, when the group has no `vpc_id`** (it is created in the default VPC) | `InvalidGroup.Duplicate` | A real apply, on 2026-11-06 |
+
+A security group with a `vpc_id` is checked against the groups in that VPC. One in a VPC that the same plan creates is not looked up, because a new VPC is empty.
 
 ## Provider settings that can be a variable
 

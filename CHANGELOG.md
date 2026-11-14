@@ -2,6 +2,16 @@
 
 All notable changes to tfpreflight are recorded here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 0.1.0-beta.7 (2026-11-14)
+
+- New: a CloudWatch log group name that is already taken now gets a warning that a log group with that name already exists. tfpreflight asks AWS for the log groups whose names start with the name, and it counts only an exact match. At apply this is `ResourceAlreadyExistsException`.
+- New: a security group name that is already taken in the same VPC now gets a warning. Only a group with the same name in the same VPC counts: the same name in another VPC is fine. At apply this is `InvalidGroup.Duplicate`. A security group in a VPC that the same plan creates is not looked up and is not reported as unchecked, because a new VPC is empty. These two warn and never block, because the rules come from provider source and AWS metadata and have not been verified in a sandbox account.
+- Not checked yet: a security group with no `vpc_id` (it goes in the default VPC). It is counted as a check that could not finish.
+- New: an `aws_instance` whose `subnet_id` names a subnet that does not exist now gets a warning ("AWS can't find subnet subnet-... in this account and region; unless it is in another account, apply will fail"). The rule was already in the downloadable rules; it is now in the rules built into this release. A test runs the built program against a fake AWS that answers "subnet not found".
+- Rules were rebuilt for all 79 provider versions (5.98.0 to 6.71.0).
+- Changed: the rules format is now version 3. **0.1.0-beta.6 and earlier cannot read it**, so from the first version 3 rules download on, they keep the rules they have and get no more rule updates. `tfpreflight update` on those releases says the rules need a newer tfpreflight. To keep getting rule updates, upgrade to this release.
+- New: a rule can say which feature of tfpreflight it needs. A release that does not have that feature skips the rule: no lookup, no "unsupported", no change to the result. It prints one line to stderr, "N newer checks need a newer tfpreflight". New kinds of rules in the future will therefore not cut off this release the way version 3 cuts off the earlier ones.
+
 ## 0.1.0-beta.6 (2026-11-06)
 
 - Fixed: a clean result no longer says "Checked N of M resources fully", which read as everything being checked. It now says `✓ No problems found in the checks tfpreflight ran.` Under it, when they apply, one line counts the resources that had a check that could not finish, and one counts the resources that were only checked for permissions because tfpreflight has no other checks for them yet. A real apply of an instance in a subnet that does not exist (nothing connects `aws_instance.subnet_id` to a subnet yet) got "No problems found. Checked 1 of 1 resource fully." The same lines replace the old count under a failure or a warning. The JSON counts and the verdict values are unchanged.

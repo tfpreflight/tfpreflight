@@ -52,4 +52,6 @@ tfpreflight update --index=https://example.com/index.json
 
 Or set `TFPREFLIGHT_PACK_INDEX`.
 
-Sometimes new rules need a newer tfpreflight. If that happens, it tells you to upgrade tfpreflight first.
+Sometimes new rules need a newer tfpreflight. If that happens, `tfpreflight update` tells you to upgrade tfpreflight first.
+
+**Rule updates need 0.1.0-beta.7 or newer.** Rules downloaded from now on use format version 3, which 0.1.0-beta.6 and earlier cannot read. Those releases keep working with the rules they have, and get no more rule updates. Upgrade to get them. From beta.7 on, a rule that needs a feature your tfpreflight lacks is skipped on its own, with one line, "N newer checks need a newer tfpreflight", and everything else keeps updating.
