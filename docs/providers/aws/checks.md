@@ -34,6 +34,8 @@ Some AWS names must be unique, like IAM role names in your account. S3 bucket na
 
 If an S3 bucket name belongs to another AWS account, AWS won't say so for sure, so tfpreflight reports *couldn't check*, not a block.
 
+CloudWatch log group names are checked too, and so are security group names within one VPC. For these, tfpreflight asks AWS for the matching items and counts only an exact match. They warn and never block, because the rules have not been verified in a sandbox account. A security group with no `vpc_id` (it goes in the default VPC) is not checked yet.
+
 ## 3. Things your plan points at that don't exist
 
 For example, a subnet that uses an existing VPC ID. tfpreflight asks AWS whether the VPC exists, and blocks only when AWS clearly answers "not found".
