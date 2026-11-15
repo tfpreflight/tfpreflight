@@ -4,6 +4,7 @@ import (
 	"strings"
 	"testing"
 
+	generated "github.com/tfpreflight/tfpreflight/rules"
 	"github.com/tfpreflight/tfpreflight/rules/model"
 )
 
@@ -117,5 +118,66 @@ func TestUnprovenConditionalOperationIsStillSkipped(t *testing.T) {
 	operation := OperationRule{Name: "PutX", Permission: "svc:PutX", Certainty: CertaintyConditional}
 	if operation.Required(model.PlannedChange{After: map[string]any{"tags": map[string]any{"a": "b"}}}) {
 		t.Error("a conditional operation with no proven condition must not be required")
+	}
+}
+
+func createTable() OperationRule {
+	return OperationRule{
+		Name: "CreateTable", Permission: "dynamodb:CreateTable", Certainty: CertaintyConditional,
+		Condition: &OperationCondition{Type: ConditionNoneSet, Fields: []string{"restore_source_name", "restore_backup_arn", "import_table"}},
+	}
+}
+
+// dynamodb's CreateTable is the last else of a chain: it runs only when no
+// restore or import source is given.
+func TestNoneSetOperationRunsOnlyWhenNoFieldIsSet(t *testing.T) {
+	operation := createTable()
+	if !operation.ConditionEvaluable() {
+		t.Fatal("a none-set condition with fields must be decidable")
+	}
+	plain := model.PlannedChange{After: map[string]any{"name": "t", "restore_source_name": "", "import_table": []any{}}}
+	if !operation.Required(plain) {
+		t.Error("a table with no restore or import source must require CreateTable")
+	}
+	for name, after := range map[string]map[string]any{
+		"a restore source name": {"restore_source_name": "other"},
+		"a backup arn":          {"restore_backup_arn": "arn:aws:dynamodb:us-east-1:123456789012:table/t/backup/1"},
+		"an import block":       {"import_table": []any{map[string]any{"input_format": "CSV"}}},
+	} {
+		if operation.Required(model.PlannedChange{After: after}) {
+			t.Errorf("a table with %s must not require CreateTable", name)
+		}
+	}
+}
+
+// A source only known at apply may or may not be set, so CreateTable may run
+// and is checked. It is never dropped without a word.
+func TestNoneSetOperationMayRunWhenASourceIsUnknown(t *testing.T) {
+	change := model.PlannedChange{After: map[string]any{}, AfterUnknown: map[string]any{"restore_source_name": true}}
+	if !createTable().Required(change) {
+		t.Error("an unknown restore source must leave CreateTable checked")
+	}
+	known := model.PlannedChange{After: map[string]any{"restore_backup_arn": "arn:aws:dynamodb:us-east-1:123456789012:table/t/backup/1"}, AfterUnknown: map[string]any{"restore_source_name": true}}
+	if createTable().Required(known) {
+		t.Error("a known restore source rules CreateTable out even when another field is unknown")
+	}
+}
+
+// A none-set condition with no fields proves nothing.
+func TestNoneSetWithoutFieldsIsNotDecidable(t *testing.T) {
+	operation := createTable()
+	operation.Condition.Fields = nil
+	if operation.ConditionEvaluable() {
+		t.Error("none-set with no fields must not be decidable")
+	}
+}
+
+// The list of fields must survive from the generated pack into the rule, or the
+// condition would read as empty and the operation would never be checked.
+func TestGeneratedOperationKeepsTheNoneSetFields(t *testing.T) {
+	operation := generated.Operation{Service: "dynamodb", Name: "CreateTable", Certainty: "conditional", Condition: &generated.Condition{Type: ConditionNoneSet, Fields: []string{"a", "b"}}}
+	rule := generatedOperation(operation, "dynamodb:CreateTable")
+	if rule.Condition == nil || rule.Condition.Type != ConditionNoneSet || strings.Join(rule.Condition.Fields, ",") != "a,b" {
+		t.Fatalf("condition = %+v", rule.Condition)
 	}
 }
