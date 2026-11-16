@@ -179,8 +179,20 @@ func explicitDenyFinding(ctx context.Context, client iamSimulator, principal str
 		finding.Explanation = "A policy explicitly denies this action, so Terraform apply may fail when it makes this call."
 		return finding
 	}
+	if why := awaitingSandboxCheck[requirement.operation.Permission]; why != "" {
+		demote(&finding, "Reported as a warning: "+why, "Check: tfpreflight has not yet verified this call against AWS.")
+		finding.Explanation = "A policy explicitly denies this action, so Terraform apply may fail when it makes this call."
+		return finding
+	}
 	demoteIfOnlyBuiltARN(ctx, client, principal, requirement, b, &finding)
 	return finding
+}
+
+// awaitingSandboxCheck lists the actions whose explicit deny only warns, and
+// why. Each is a call the rules say is always made, but no recorded sandbox run
+// has confirmed it. An action leaves this list when such a run is recorded.
+var awaitingSandboxCheck = map[string]string{
+	"ec2:RunInstances": "the rule says the provider always launches the instance, but no recorded run has confirmed it yet.",
 }
 
 // explicitDenyDoubt says why an explicit deny may not stop the apply, as a note
