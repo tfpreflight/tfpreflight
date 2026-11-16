@@ -179,7 +179,7 @@ func explicitDenyFinding(ctx context.Context, client iamSimulator, principal str
 		finding.Explanation = "A policy explicitly denies this action, so Terraform apply may fail when it makes this call."
 		return finding
 	}
-	if why := awaitingSandboxCheck[requirement.operation.Permission]; why != "" {
+	if why := awaitingSandboxCheck[requirement.change.ResourceType+" "+requirement.operation.Permission]; why != "" {
 		demote(&finding, "Reported as a warning: "+why, "Check: tfpreflight has not yet verified this call against AWS.")
 		finding.Explanation = "A policy explicitly denies this action, so Terraform apply may fail when it makes this call."
 		return finding
@@ -188,11 +188,14 @@ func explicitDenyFinding(ctx context.Context, client iamSimulator, principal str
 	return finding
 }
 
-// awaitingSandboxCheck lists the actions whose explicit deny only warns, and
-// why. Each is a call the rules say is always made, but no recorded sandbox run
-// has confirmed it. An action leaves this list when such a run is recorded.
+// awaitingSandboxCheck lists the calls whose explicit deny only warns, and why.
+// The key is the resource type, a space, and the action: other resources that
+// use the same action are not affected. Each is a call the rules say is always
+// made, but no recorded sandbox run has confirmed it. A call leaves this list
+// when such a run is recorded.
 var awaitingSandboxCheck = map[string]string{
-	"ec2:RunInstances": "the rule says the provider always launches the instance, but no recorded run has confirmed it yet.",
+	"aws_instance ec2:RunInstances":                      "the rule says the provider always launches the instance, but no recorded run has confirmed it yet.",
+	"aws_neptune_global_cluster rds:CreateGlobalCluster": "the rule says the provider always makes this call, but no recorded run has confirmed it yet.",
 }
 
 // explicitDenyDoubt says why an explicit deny may not stop the apply, as a note
