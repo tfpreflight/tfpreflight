@@ -192,3 +192,19 @@ func TestTagConditionedDenySatisfiedByPlanDoesNotBlock(t *testing.T) {
 		t.Fatalf("finding = %+v", f)
 	}
 }
+
+// A call made only when the resource is created fresh is never stated as
+// certain: the note says "if", and names the sources that rule it out.
+func TestFreshOnlyOperationIsNotStatedAsCertain(t *testing.T) {
+	operation := packs.OperationRule{
+		Permission: "dynamodb:CreateTable", Certainty: packs.CertaintyConditional, Trust: "generated",
+		Condition: &packs.OperationCondition{Type: packs.ConditionNoneSet, Fields: []string{"import_table", "restore_backup_arn"}},
+	}
+	reason, check := explicitDenyDoubt(operation, nil, nil, nil)
+	if !strings.Contains(reason, "needed if the resource is created fresh") || !strings.Contains(reason, "import_table, restore_backup_arn") || !strings.Contains(check, "only if the resource is created fresh") {
+		t.Fatalf("reason = %q, check = %q", reason, check)
+	}
+	if freshOnlyNote(packs.OperationRule{Permission: "x", Certainty: packs.CertaintyConditional}) != "" {
+		t.Fatal("an operation without a none-set condition got the fresh-only note")
+	}
+}

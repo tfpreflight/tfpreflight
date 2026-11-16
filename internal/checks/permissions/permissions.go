@@ -152,6 +152,9 @@ func implicitDenyFinding(ctx context.Context, client iamSimulator, principal str
 	if requirement.operation.Trust == "generated" {
 		markGenerated(&finding)
 	}
+	if note := freshOnlyNote(requirement.operation); note != "" {
+		finding.Notes = append(finding.Notes, note)
+	}
 	// The simulation reads no resource-based policy, so an implicit deny blocks
 	// only when no such policy could allow the call.
 	if reason := resourcePolicyMayAllow(requirement, b.target); finding.Severity == model.SeverityError && reason != "" {
@@ -187,6 +190,9 @@ func explicitDenyDoubt(operation packs.OperationRule, missing []string, keys []c
 	case len(missing) > 0:
 		return "Reported as a warning: IAM needed request context the plan does not give (" + strings.Join(missing, ", ") + "), so the deny may not apply to the real request.",
 			"Check: the deny depends on request details the plan does not give (" + strings.Join(missing, ", ") + ")."
+	case freshOnlyNote(operation) != "":
+		return "Reported as a warning: " + freshOnlyNote(operation),
+			"Check: the provider makes this call only if the resource is created fresh."
 	case operation.Certainty == packs.CertaintyConditional:
 		return "Reported as a warning: the provider makes this call only in some cases, so the apply may not make it.",
 			"Check: the provider makes this call only in some cases."
@@ -199,6 +205,16 @@ func explicitDenyDoubt(operation packs.OperationRule, missing []string, keys []c
 			"Check: the deny depends on " + key.Name + ", whose value tfpreflight inferred."
 	}
 	return "", ""
+}
+
+// freshOnlyNote explains an operation the provider makes only when the resource
+// is created fresh, not restored, imported or copied from a source, or "" for
+// any other operation. It never states the call as certain.
+func freshOnlyNote(operation packs.OperationRule) string {
+	if operation.Certainty != packs.CertaintyConditional || operation.Condition == nil || operation.Condition.Type != packs.ConditionNoneSet {
+		return ""
+	}
+	return "this permission is needed if the resource is created fresh, and not if it is restored, imported or copied from " + strings.Join(operation.Condition.Fields, ", ") + "."
 }
 
 // denySource is where IAM says an explicit deny sits, as the "Fix:" line names
