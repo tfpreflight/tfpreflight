@@ -98,10 +98,11 @@ type Operation struct {
 }
 
 // Condition is a source-level condition. Field is empty unless the Terraform
-// attribute is proven.
+// attribute is proven. Fields lists the attributes of a "none-set" condition.
 type Condition struct {
-	Type  string `json:"type"`
-	Field string `json:"field,omitempty"`
+	Type   string   `json:"type"`
+	Field  string   `json:"field,omitempty"`
+	Fields []string `json:"fields,omitempty"`
 }
 
 // OperationSource is where in provider source an operation was found.

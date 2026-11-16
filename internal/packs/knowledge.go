@@ -77,6 +77,9 @@ type OperationRule struct {
 type OperationCondition struct {
 	Type  string `json:"type"`
 	Field string `json:"field,omitempty"`
+	// Fields is, for ConditionNoneSet, the attributes whose branches come
+	// before the operation's own in the provider's if and else-if chain.
+	Fields []string `json:"fields,omitempty"`
 	// Equals is, for ConditionAnyEquals, each field and the value that makes
 	// the operation run.
 	Equals map[string]any `json:"equals,omitempty"`
@@ -90,6 +93,10 @@ const (
 	// ConditionAnyEquals is satisfied when any field in Equals has its value,
 	// or is unknown until apply.
 	ConditionAnyEquals = "any-equals"
+	// ConditionNoneSet is satisfied unless the planned resource is known to set
+	// one of the fields. It describes the last else of a chain: dynamodb's CreateTable runs
+	// only when no restore or import source is given.
+	ConditionNoneSet = "none-set"
 )
 
 // ConditionEvaluable reports whether the plan can decide if this operation runs.
@@ -104,6 +111,8 @@ func (o OperationRule) ConditionEvaluable() bool {
 		return o.Condition.Field != ""
 	case o.Condition.Type == ConditionAnyEquals:
 		return len(o.Condition.Equals) > 0
+	case o.Condition.Type == ConditionNoneSet:
+		return len(o.Condition.Fields) > 0
 	}
 	return false
 }
@@ -123,7 +132,23 @@ func (o OperationRule) WillRun(change model.PlannedChange) bool {
 	if o.Condition.Type == ConditionAnyEquals {
 		return anyAttributeEquals(change, o.Condition.Equals)
 	}
+	if o.Condition.Type == ConditionNoneSet {
+		return noneAttributeSet(change, o.Condition.Fields)
+	}
 	return attributeIsSet(change, o.Condition.Field)
+}
+
+// noneAttributeSet is true when no field is known to be set. A field only known
+// at apply may turn out to be set or not, so the operation may run: it counts as
+// running and is checked, as a warning only because its condition is not proven.
+// Dropping it would leave the operation neither checked nor reported.
+func noneAttributeSet(change model.PlannedChange, fields []string) bool {
+	for _, field := range fields {
+		if !attributeUnknown(change.AfterUnknown, field) && attributeIsSet(change, field) {
+			return false
+		}
+	}
+	return true
 }
 
 // An unknown value counts as equal, for the same reason it counts as set.
@@ -294,7 +319,7 @@ func generatedOperation(operation generated.Operation, permission string) Operat
 	}
 	rule := OperationRule{Service: operation.Service, Name: operation.Name, Permission: permission, Certainty: certainty, Trust: "generated"}
 	if operation.Condition != nil {
-		rule.Condition = &OperationCondition{Type: operation.Condition.Type, Field: operation.Condition.Field}
+		rule.Condition = &OperationCondition{Type: operation.Condition.Type, Field: operation.Condition.Field, Fields: operation.Condition.Fields}
 	}
 	return rule
 }
