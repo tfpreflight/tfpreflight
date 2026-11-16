@@ -529,6 +529,20 @@ func TestMalformedIdentifierWarnsAndNeverBlocks(t *testing.T) {
 	}
 }
 
+// A value such as resolve:ssm:/path is a reference AWS resolves when it makes the
+// create call. It is not looked up and never reported: the lookup would call it
+// malformed, and the create would not be refused.
+func TestResolveReferenceIsNotLookedUp(t *testing.T) {
+	rule := subnetRule()
+	rule.Key = ReferenceKey{Kind: KeyID, Normalization: NormalizationNone}
+	resolver := &fakeResolver{answers: map[string]Existence{"resolve:ssm:/aws/service/x": Malformed}}
+	engine := Engine{Existence: []ExistenceRule{rule}, Resolver: resolver, ProviderVersion: "6.64.0"}
+	got := only(t, mustEvaluate(t, engine, "resolve:ssm:/aws/service/x"))
+	if got.Finding != nil || got.Verdict != VerdictPartial || !strings.Contains(got.Reason, "resolves when it makes the call") {
+		t.Fatalf("result = %+v", got)
+	}
+}
+
 func mustEvaluate(t *testing.T, engine Engine, id string) []Result {
 	t.Helper()
 	results, _ := engine.Evaluate(context.Background(), subnetPlan(OriginLiteral, id, nil))

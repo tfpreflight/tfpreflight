@@ -314,6 +314,11 @@ func (e Engine) inspectTarget(ctx context.Context, plan Plan, change PlannedValu
 		outcome.Finding = orderingFinding(change.Address, rule, "is destroyed by "+destroyed+" in this same plan")
 		return outcome, true
 	}
+	// "resolve:ssm:..." is not an ID: AWS swaps in the stored value when it
+	// makes the create call, and the lookup would call it malformed.
+	if strings.HasPrefix(identifier, "resolve:") {
+		return outcome.partial(identifier + " is a reference AWS resolves when it makes the call"), true
+	}
 	// Convert only now, so a planned or not-yet-known value is never parsed.
 	value, refusal := rule.Key.LookupValue(identifier)
 	if refusal != "" {
