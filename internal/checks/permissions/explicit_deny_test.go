@@ -208,3 +208,32 @@ func TestFreshOnlyOperationIsNotStatedAsCertain(t *testing.T) {
 		t.Fatal("an operation without a none-set condition got the fresh-only note")
 	}
 }
+
+// An action awaiting a sandbox check warns on an explicit deny even when its
+// rule says the call is always made. Any other required call still blocks.
+func TestExplicitDenyOnActionAwaitingSandboxCheckWarns(t *testing.T) {
+	requirement := requirementFor(t, model.PlannedChange{
+		Address: "aws_security_group.missing_permission", ResourceType: "aws_security_group",
+		After:        map[string]any{"name": "blocked", "vpc_id": "vpc-unknown-until-apply"},
+		AfterUnknown: map[string]any{"id": true},
+	}, "ec2:CreateSecurityGroup")
+	recorded := loadRecordedIAM(t, "security-group-create-explicit-deny.json")
+	if f := onlyFinding(t, simulatePermissions(context.Background(), recorded, principal, testScope, []plannedPermission{requirement})); f.Severity != model.SeverityError {
+		t.Fatalf("control: severity = %v, want error", f.Severity)
+	}
+	awaitingSandboxCheck["aws_security_group ec2:CreateSecurityGroup"] = "test."
+	defer delete(awaitingSandboxCheck, "aws_security_group ec2:CreateSecurityGroup")
+	f := onlyFinding(t, simulatePermissions(context.Background(), recorded, principal, testScope, []plannedPermission{requirement}))
+	if f.Severity != model.SeverityWarning || !strings.Contains(strings.Join(f.Notes, " "), "Reported as a warning: test.") {
+		t.Fatalf("finding = %+v", f)
+	}
+	for _, key := range []string{"aws_instance ec2:RunInstances", "aws_neptune_global_cluster rds:CreateGlobalCluster"} {
+		if _, listed := awaitingSandboxCheck[key]; !listed {
+			t.Fatalf("%s must stay warn-only in this release", key)
+		}
+	}
+	// The same action on another resource is not capped.
+	if _, listed := awaitingSandboxCheck["aws_rds_global_cluster rds:CreateGlobalCluster"]; listed {
+		t.Fatal("aws_rds_global_cluster must not be capped")
+	}
+}

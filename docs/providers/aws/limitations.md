@@ -31,6 +31,23 @@ A clean result does not cover this. tfpreflight has no rule for it yet, so a pla
 
 A security group with a `vpc_id` is checked against the groups in that VPC. One in a VPC that the same plan creates is not looked up, because a new VPC is empty.
 
+### Create permissions that are only listed as "may call"
+
+For some resources, tfpreflight knows the AWS permission the create step needs, but not whether this apply will make the call. It does not guess. The result lists the call as *may call* and does not simulate it, so a missing permission gets no warning.
+
+**Decided by the provider only during the apply.** The provider looks something up first, and only then chooses. A plan can't know the answer.
+
+| Resource | Call | What decides it |
+|---|---|---|
+| `aws_default_vpc`, `aws_default_subnet` | `CreateDefaultVpc`, `CreateDefaultSubnet` | Whether the default one already exists. |
+| `aws_volume_attachment` | `AttachVolume` | Whether the instance can be found when the apply starts. |
+| `aws_servicequotas_service_quota` | `RequestServiceQuotaIncrease` | Whether the quota is already at the value you ask for. |
+
+**Not checked yet.** The choice depends only on your configuration, but the pack builder does not read that shape of code yet, so tfpreflight has no rule for it. These may be checked in a later release.
+
+- `aws_dx_gateway_association`, `aws_lakeformation_lf_tag`, `aws_lightsail_key_pair`, `aws_neptune_cluster`, `aws_organizations_account`, `aws_redshift_cluster`, `aws_security_group_rule`: the create step picks between calls with a test the builder can't turn into a rule (a true/false value, a comparison with an empty string, or a nil test).
+- `aws_s3_bucket_versioning`, `aws_lightsail_lb_stickiness_policy`, `aws_networkfirewall_logging_configuration`, `aws_networkmanager_attachment_accepter`, `aws_directory_service_directory`: the call sits behind a test on a setting's value, a loop, or a switch.
+
 ## Provider settings that can be a variable
 
 tfpreflight reads these provider settings from your plan and from the provider block. Each can be written as plain text, as a root variable on its own (`var.name`, using the value the plan records), or as a local set to plain text. A function, a condition, or anything built from other values can't be resolved.
