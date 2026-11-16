@@ -15,7 +15,8 @@ import (
 
 // An aws_instance whose subnet_id names a subnet AWS does not have is a warning
 // in the built program, with the rules built into it. The fake AWS answers the
-// subnet lookup the way EC2 does for a subnet that does not exist.
+// subnet lookup the way EC2 does for a subnet that does not exist, and the same
+// way for every other EC2 call, which tfpreflight then cannot read as a verdict.
 func TestBuiltBinaryWarnsAboutAnInstanceInAMissingSubnet(t *testing.T) {
 	bin := buildBinary(t)
 	copyFixtureWithPeer(t, "testdata/realworld-cases/instance-in-missing-subnet", "unused")
@@ -62,7 +63,19 @@ func TestBuiltBinaryWarnsAboutAnInstanceInAMissingSubnet(t *testing.T) {
 	}
 	mu.Lock()
 	defer mu.Unlock()
-	if len(asked) != 1 || !strings.Contains(asked[0], "Action=DescribeSubnets") {
+	// The plan also names an ami, which the rules for aws_instance look up with
+	// DescribeImages. Nothing else may be asked.
+	subnets := 0
+	for _, body := range asked {
+		switch {
+		case strings.Contains(body, "Action=DescribeSubnets"):
+			subnets++
+		case strings.Contains(body, "Action=DescribeImages"):
+		default:
+			t.Errorf("AWS was asked an unexpected call: %s", body)
+		}
+	}
+	if subnets != 1 {
 		t.Errorf("AWS was asked %v, want one DescribeSubnets", asked)
 	}
 	if want := "AWS can't find subnet subnet-0a1b2c3d4e5f60718 in this account and region"; !strings.Contains(out.String(), want) {
