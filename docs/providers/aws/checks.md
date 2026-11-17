@@ -25,6 +25,8 @@ For every step in your plan, tfpreflight asks the IAM policy simulator: *"Is the
 - Most permission rules come from the provider's source code and aren't yet proven against AWS. When the simulator simply doesn't allow a step on one of those rules, you get a warning, not a block.
 - A policy that **explicitly denies** a step is different: no other policy can allow it. It blocks when AWS had everything it needed to decide and the provider always makes that call. Otherwise it's a warning that says why.
 - Some AWS resources, like S3 buckets and KMS keys, carry their own access rules (resource-based policies). The simulator doesn't read those. So when one of them *might* allow the step, you get a warning instead of a block.
+- Some calls are made only when a resource is created fresh, not restored from a backup or snapshot, imported or copied. For ten kinds of resource (for example a DynamoDB table, an RDS instance or an IoT certificate) tfpreflight checks the permission when your plan sets none of those sources, and skips it when the plan sets one. When a source is only known at apply, it still checks, and the warning says the permission is needed if the resource is created fresh. A denial here is always a warning.
+- A denial of `ec2:RunInstances` for an `aws_instance`, and of `rds:CreateGlobalCluster` for an `aws_neptune_global_cluster`, is always a warning, because no sandbox run has confirmed those calls yet.
 - Calls whose IAM permission tfpreflight doesn't know are listed under **Not checked** in `--details`.
 - So are references it could not check: a value that is unknown until apply, a lookup AWS would not answer (access denied, a timeout), or a lookup this tfpreflight cannot run. Each line names the argument and says why. If your tfpreflight cannot run the lookup, install the newest release.
 
@@ -39,6 +41,8 @@ CloudWatch log group names are checked too, and so are security group names with
 ## 3. Things your plan points at that don't exist
 
 For example, a subnet that uses an existing VPC ID. tfpreflight asks AWS whether the VPC exists, and blocks only when AWS clearly answers "not found".
+
+An `aws_instance` is checked for three of these: its `subnet_id`, its `vpc_security_group_ids` and its `ami`. They warn and never block. An `ami` written as `resolve:ssm:...` is not looked up, because AWS resolves it at apply; it is counted as a check that could not finish.
 
 ## 4. AWS service quotas
 
