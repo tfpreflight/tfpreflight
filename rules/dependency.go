@@ -94,6 +94,9 @@ type ExistenceRule struct {
 	// blocking rests only on verified enforcement evidence.
 	HighEligible bool   `json:"high_eligible"`
 	Evidence     string `json:"evidence"`
+	// Requires names the capability a reader needs to run this rule; see
+	// KnowsCapability. A reader without it leaves the rule out.
+	Requires string `json:"requires,omitempty"`
 }
 
 // EnforcementFingerprint identifies the semantics an observation was made
