@@ -33,6 +33,23 @@ func labelledInstanceAMIPacks(t *testing.T, label string) string {
 	if err != nil {
 		t.Fatal(err)
 	}
+	if labelAMIRules(t, pack, label) == 0 {
+		t.Fatal("the packs hold no aws_instance ami rule to label")
+	}
+	if data, err = pack.Encode(); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(file, data, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	setManifestDigest(t, to, "aws/dependency/rules.json", data)
+	return to
+}
+
+// labelAMIRules adds the label to every aws_instance ami existence rule of the
+// pack and returns how many it changed.
+func labelAMIRules(t *testing.T, pack *rules.RangePack, label string) int {
+	t.Helper()
 	labelled := 0
 	for i, field := range pack.Fields {
 		if field.Name != "existence_rules" {
@@ -47,22 +64,22 @@ func labelledInstanceAMIPacks(t *testing.T, label string) string {
 				continue
 			}
 			rule["requires"] = label
-			if pack.Fields[i].Entries[j].Value, err = json.Marshal(rule); err != nil {
+			value, err := json.Marshal(rule)
+			if err != nil {
 				t.Fatal(err)
 			}
+			pack.Fields[i].Entries[j].Value = value
 			labelled++
 		}
 	}
-	if labelled == 0 {
-		t.Fatal("the packs hold no aws_instance ami rule to label")
-	}
-	if data, err = pack.Encode(); err != nil {
-		t.Fatal(err)
-	}
-	if err := os.WriteFile(file, data, 0o644); err != nil {
-		t.Fatal(err)
-	}
-	manifestFile := filepath.Join(to, "aws", "manifest.json")
+	return labelled
+}
+
+// setManifestDigest records the digest of data as the manifest's digest of the
+// pack file, so the changed copy opens as any pack set does.
+func setManifestDigest(t *testing.T, packDir, name string, data []byte) {
+	t.Helper()
+	manifestFile := filepath.Join(packDir, "aws", "manifest.json")
 	manifestData, err := os.ReadFile(manifestFile)
 	if err != nil {
 		t.Fatal(err)
@@ -71,14 +88,13 @@ func labelledInstanceAMIPacks(t *testing.T, label string) string {
 	if err := json.Unmarshal(manifestData, &manifest); err != nil {
 		t.Fatal(err)
 	}
-	manifest["files"].(map[string]any)["aws/dependency/rules.json"] = rules.Digest(data)
+	manifest["files"].(map[string]any)[name] = rules.Digest(data)
 	if manifestData, err = json.Marshal(manifest); err != nil {
 		t.Fatal(err)
 	}
 	if err := os.WriteFile(manifestFile, manifestData, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	return to
 }
 
 // checkInstanceAMI runs the built program on a plan with one instance whose ami
