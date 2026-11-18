@@ -22,10 +22,16 @@ const (
 	// CapabilityListingLookups is the list_exact_match lookup, with its fixed
 	// and page inputs, and the create semantics duplicate-error-listed. beta.7.
 	CapabilityListingLookups = "listing-lookups"
+
+	// CapabilityResolveValues is leaving alone a value AWS resolves when it makes
+	// the call, such as resolve:ssm:/path in an ami. A dependency rule on an
+	// attribute that can hold one carries it, because a version without it would
+	// look the text up as an identifier and warn about a value that is fine. beta.8.
+	CapabilityResolveValues = "resolve-values"
 )
 
 // knownCapabilities is every capability this version can run.
-var knownCapabilities = []string{CapabilityListingLookups}
+var knownCapabilities = []string{CapabilityListingLookups, CapabilityResolveValues}
 
 // KnowsCapability reports whether this version can run entries that require
 // label.
