@@ -2,6 +2,17 @@
 
 All notable changes to tfpreflight are recorded here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 0.1.0-beta.8 (2026-11-17)
+
+- New: an `aws_instance` whose `ami` names an image that does not exist now gets a warning ("AWS can't find AMI ami-... in this account and region; unless it is in another account, apply will fail"). At apply this is `InvalidAMIID.NotFound`. A value that is not an image ID, such as `resolve:ssm:/aws/service/...`, is not looked up: AWS resolves it when it launches the instance. It is counted as a check that could not finish, and it is never reported as wrong.
+- New: the `aws_instance` `ami` check is marked as needing this release, with a new feature name, `resolve-values`. A release before this one skips the check when it reads the rules: no lookup, no warning, and one line to stderr, "1 newer check needs a newer tfpreflight". Without the mark, beta.7 would look up a `resolve:ssm:` value as if it were an image ID and warn about a value that is fine. To get the `ami` check, upgrade to this release.
+- New: an `aws_instance` whose `vpc_security_group_ids` names a security group that does not exist now gets a warning. At apply this is `InvalidGroup.NotFound`. Only `vpc_security_group_ids` is checked, not `security_groups` (names). Both new instance checks warn and never block, because the rules come from provider source and have not been verified in a sandbox account.
+- New: ten kinds of resource have a create call that the provider makes only when the resource is created fresh, not restored from a backup or snapshot, imported or copied: a DynamoDB table (`dynamodb:CreateTable`), an RDS instance, an RDS cluster, a DocumentDB cluster, an imported ACM certificate, an Auto Scaling attachment, three FSx file systems and an IoT certificate. tfpreflight now checks the permission for each when the plan sets none of those sources, and skips it when the plan sets one. When a source is only known at apply, it still checks, and the warning says the permission "is needed if the resource is created fresh". A denied call warns and never blocks. Before, these showed as "may call" and were not checked, so a role denied `dynamodb:CreateTable` got no warning.
+- Changed: the provider's retry loop (`backoff.NewLoop`) always makes its call at least once, so tfpreflight now knows that `ec2:RunInstances` is made for an `aws_instance`, and `rds:CreateGlobalCluster` for an `aws_neptune_global_cluster`. A denial of either warns and never blocks, until a sandbox run confirms the call. Other resources that use the same permission are not affected.
+- Changed: the rules now say, for four more kinds of resource, that AWS picks their IDs (instance, transit gateway, directory and SageMaker domain). The built-in table that held this is still in this release, so what you see does not change.
+- Rules were rebuilt for all 79 provider versions (5.98.0 to 6.71.0). In 5.98.0 to 5.100.0 the provider's code differs, and the `RunInstances` call stays "may call" there.
+- Docs: `docs/providers/aws/limitations.md` lists the create calls that stay "may call": those the provider decides only during the apply, and those tfpreflight does not check yet.
+
 ## 0.1.0-beta.7 (2026-11-14)
 
 - New: a CloudWatch log group name that is already taken now gets a warning that a log group with that name already exists. tfpreflight asks AWS for the log groups whose names start with the name, and it counts only an exact match. At apply this is `ResourceAlreadyExistsException`.
