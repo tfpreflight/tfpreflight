@@ -536,7 +536,7 @@ const (
 )
 
 func createdByValue(plan Plan, rule ExistenceRule, identifier string) valueCreation {
-	identity := targetIdentity(rule)
+	identity := rule.TargetIdentity
 	if identity == IdentityServerGenerated {
 		return notCreatedByValue
 	}
