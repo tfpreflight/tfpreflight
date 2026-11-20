@@ -550,12 +550,12 @@ func mustEvaluate(t *testing.T, engine Engine, id string) []Result {
 }
 
 // A plan that creates a group does not hide a missing one named by a literal
-// id: AWS picks group ids, so no planned create can be that id. This was
-// PARTIAL, with nothing said, because the pack calls the id's source unknown.
-func TestLiteralIDOfAnAssignedIDTypeWarnsEvenWhenThePlanCreatesOne(t *testing.T) {
-	for typ := range assignedIDs {
+// id: AWS picks group ids, so no planned create can be that id. The pack says
+// so with a server-generated identity.
+func TestLiteralIDOfAServerGeneratedTypeWarnsEvenWhenThePlanCreatesOne(t *testing.T) {
+	for _, typ := range formerlyAssignedIDs {
 		rule := subnetRule()
-		rule.TargetResource, rule.TargetAttribute, rule.TargetIdentity = typ, "id", IdentityUnknown
+		rule.TargetResource, rule.TargetAttribute, rule.TargetIdentity = typ, "id", IdentityServerGenerated
 		plan := subnetPlan(OriginLiteral, "x-gone", nil)
 		plan.Changes[typ+".other"] = PlannedValues{Address: typ + ".other", ResourceType: typ, Actions: []string{"create"}, After: map[string]any{}}
 		resolver := &fakeResolver{answers: map[string]Existence{"x-gone": NotFound}}
@@ -567,12 +567,13 @@ func TestLiteralIDOfAnAssignedIDTypeWarnsEvenWhenThePlanCreatesOne(t *testing.T)
 	}
 }
 
-// Names and ARNs are chosen by the user, and an attribute other than the id is
-// not the assigned id: those stay undecidable.
-func TestAssignedIDTableDoesNotCoverNamesOrOtherAttributes(t *testing.T) {
+// The runtime no longer adds knowledge of its own: an identity the pack calls
+// unknown stays undecidable, even for a type whose id AWS picks.
+func TestUnknownIdentityStaysUndecidableForEveryType(t *testing.T) {
 	for name, change := range map[string]func(*ExistenceRule){
 		"a bucket, named by the user": func(r *ExistenceRule) { r.TargetResource = "aws_s3_bucket" },
 		"the arn of a group":          func(r *ExistenceRule) { r.TargetResource, r.TargetAttribute = "aws_security_group", "arn" },
+		"the id of a group":           func(r *ExistenceRule) { r.TargetResource, r.TargetAttribute = "aws_security_group", "id" },
 	} {
 		rule := subnetRule()
 		rule.TargetIdentity = IdentityUnknown
@@ -584,19 +585,5 @@ func TestAssignedIDTableDoesNotCoverNamesOrOtherAttributes(t *testing.T) {
 		if result := only(t, results); result.Verdict != VerdictPartial {
 			t.Errorf("%s: result = %+v, want partial", name, result)
 		}
-	}
-}
-
-// The table never makes a finding block: with a verified claim a missing group
-// blocks or warns exactly as before, by the claim and not by the table.
-func TestAssignedIDsOnlyDecideTheSamePlanQuestion(t *testing.T) {
-	rule := subnetRule()
-	rule.TargetResource, rule.TargetAttribute, rule.TargetIdentity = "aws_security_group", "id", IdentityUnknown
-	if got := targetIdentity(rule); got != IdentityServerGenerated {
-		t.Fatalf("identity = %q", got)
-	}
-	rule.TargetIdentity = "name"
-	if got := targetIdentity(rule); got != "name" {
-		t.Fatalf("a pack's own answer was overridden: %q", got)
 	}
 }
