@@ -479,6 +479,27 @@ func TestNoServiceClients(t *testing.T) {
 
 var _ = aws.Config{}
 
+// notFoundPendingPacks are lookups where real AWS answered "not found" in a code
+// the packs of beta.8 did not accept, so the recorded outcome is UNKNOWN. The
+// packs of beta.9 accept it (the not-found type is the one the provider names,
+// and a missing Redshift snapshot's own code is listed). Until those packs ship,
+// a replay of either answer is right for these lookups. When they ship, the
+// recorded outcome of these cases becomes NOT_FOUND and this table is emptied.
+var notFoundPendingPacks = []string{
+	"elasticloadbalancingv2/DescribeTargetGroups/TargetGroupArns/",
+	"elasticache/DescribeUserGroups/UserGroupId/",
+	"redshift/DescribeClusterSnapshots/SnapshotIdentifier/",
+}
+
+func pendingNotFound(id string) bool {
+	for _, key := range notFoundPendingPacks {
+		if strings.Contains(id, key) {
+			return true
+		}
+	}
+	return false
+}
+
 // Recorded, redacted AWS responses must replay to the existence answer the
 // engine reached live. Every testdata/recorded*.json file is replayed.
 func TestRecordedResponsesReplay(t *testing.T) {
@@ -494,6 +515,10 @@ func TestRecordedResponsesReplay(t *testing.T) {
 		var slept []time.Duration
 		client := &fakeClient{responses: l.queue}
 		answer := testEngine(client, &slept).Inspect(context.Background(), l.spec, l.region, l.values)
+		if answer.Result == NotFound && l.expected == Unknown && pendingNotFound(id) {
+			// Real AWS said "not found"; see notFoundPendingPacks.
+			answer.Result = l.expected
+		}
 		if answer.Result != l.expected || len(client.requests) != len(l.queue) {
 			t.Errorf("%s: replay = %s (%s) after %d of %d responses, live = %s", id, answer.Result, answer.Reason, len(client.requests), len(l.queue), l.expected)
 		}
@@ -629,4 +654,22 @@ func recordedResponseLookup(t *testing.T, name string, byKey map[string]Spec, r 
 		spec: spec, region: region, values: values, expected: Result(strings.ToUpper(string(r.Expected))),
 		queue: []recorded{{Status: r.Status, Headers: r.Headers, Body: &body}},
 	}, true
+}
+
+// Every entry of the pending table has a recorded case whose outcome is
+// UNKNOWN. Once the packs that fix it ship and the outcome is changed to
+// NOT_FOUND, the entry has nothing left to excuse and must be removed.
+func TestPendingNotFoundLookupsStillHaveARecordedUnknown(t *testing.T) {
+	order, lookups := loadRecordedLookups(t, recordedSpecs(t))
+	for _, key := range notFoundPendingPacks {
+		unknown := 0
+		for _, id := range order {
+			if strings.Contains(id, key) && lookups[id].expected == Unknown {
+				unknown++
+			}
+		}
+		if unknown == 0 {
+			t.Errorf("%s has no recorded UNKNOWN left; remove it from notFoundPendingPacks", key)
+		}
+	}
 }
