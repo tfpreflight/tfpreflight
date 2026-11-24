@@ -2,6 +2,17 @@
 
 All notable changes to tfpreflight are recorded here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 0.1.0-beta.9 (2026-11-24)
+
+- New: three kinds of resource now get a warning when their name is already taken: a load balancer (`aws_lb`), a DB subnet group and an Auto Scaling group. tfpreflight asks AWS, and it counts only an exact match of a name that is known when the plan is made (a literal, not a value AWS picks during the apply). A name that is not known yet is not looked up. These warn and never block, because the rules come from provider source and AWS metadata and have not been verified in a sandbox account.
+- New: five more references are checked, and a missing target now gets a warning: the `role` of an `aws_iam_role_policy` and of an `aws_iam_role_policy_attachment`, the `iam_instance_profile` and `key_name` of an `aws_instance`, and the `zone_id` of an `aws_route53_record` (a `/hostedzone/` prefix is dropped before the lookup). These warn and never block, because they come from provider tests and documentation and have not been verified in a sandbox account.
+- Fixed: for six lookups, AWS's "not found" answer was not recognised, so a missing resource was counted as a check that could not finish. It is now a warning, as for other resources. The lookups are: load balancer target groups and listener rules (`DescribeTargetGroups`, `DescribeRules`), ElastiCache user groups, MemoryDB snapshots and subnet groups, and Redshift snapshots. The rules had the Go name of the error where AWS sends a different code.
+- New: create permissions are now checked for calls that had none: `s3:GetObject` for reading an S3 object, `s3:GetLifecycleConfiguration` and `s3:PutLifecycleConfiguration` for bucket lifecycle rules, `cloudfront:CreateDistribution`, and `dynamodb:RestoreTableToPointInTime` when a table is restored. A denial warns and never blocks. Tags on a CloudFront distribution still need `cloudfront:TagResource`, which is checked only when tags are set, as before.
+- Fixed: ECS and S3 resources no longer show a call named `Options` as one that could not be checked. It is a function of the AWS client, not a call to AWS.
+- Changed: the built-in table of resources whose IDs AWS picks is gone. The rules carry the same information, so what you see does not change.
+- Rules were rebuilt for all 79 provider versions (5.98.0 to 6.71.0).
+- Docs: `docs/providers/aws/limitations.md` lists what is still not checked: the names of an IAM policy and a Lambda permission, the subnets of an Auto Scaling group and of a DB subnet group (left out on purpose), `aws_alb` names, and the create calls that have no permission rule yet.
+
 ## 0.1.0-beta.8 (2026-11-17)
 
 - New: an `aws_instance` whose `ami` names an image that does not exist now gets a warning ("AWS can't find AMI ami-... in this account and region; unless it is in another account, apply will fail"). At apply this is `InvalidAMIID.NotFound`. A value that is not an image ID, such as `resolve:ssm:/aws/service/...`, is not looked up: AWS resolves it when it launches the instance. It is counted as a check that could not finish, and it is never reported as wrong.

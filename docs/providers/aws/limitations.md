@@ -28,6 +28,13 @@ A clean result does not cover this. tfpreflight has no rule for it yet, so a pla
 | What | What happens at apply | Seen |
 |---|---|---|
 | **A security group name that is already taken, when the group has no `vpc_id`** (it is created in the default VPC) | `InvalidGroup.Duplicate` | A real apply, on 2026-11-06 |
+| **An IAM policy name that is already taken** (`aws_iam_policy`) | The create fails | Not seen in a real apply |
+| **A Lambda permission statement ID that is already taken** (`aws_lambda_permission`) | The create fails | Not seen in a real apply |
+| **A load balancer name that is already taken, when the resource is `aws_alb`** (the old name of `aws_lb`) | The create fails | Not seen in a real apply |
+| **The subnets of an Auto Scaling group** (`vpc_zone_identifier`) | The create fails if a subnet does not exist | Not seen in a real apply |
+| **The subnets of a DB subnet group** (`subnet_ids`) | The create fails if a subnet does not exist | Not seen in a real apply |
+
+The DB subnet group is left out on purpose. Some of the provider's own tests create the subnets through a second provider configuration, in another region or account. A lookup in the main region could call a subnet that exists "missing", and tfpreflight does not warn on a guess.
 
 A security group with a `vpc_id` is checked against the groups in that VPC. One in a VPC that the same plan creates is not looked up, because a new VPC is empty.
 
@@ -46,7 +53,13 @@ For some resources, tfpreflight knows the AWS permission the create step needs, 
 **Not checked yet.** The choice depends only on your configuration, but the pack builder does not read that shape of code yet, so tfpreflight has no rule for it. These may be checked in a later release.
 
 - `aws_dx_gateway_association`, `aws_lakeformation_lf_tag`, `aws_lightsail_key_pair`, `aws_neptune_cluster`, `aws_organizations_account`, `aws_redshift_cluster`, `aws_security_group_rule`: the create step picks between calls with a test the builder can't turn into a rule (a true/false value, a comparison with an empty string, or a nil test).
-- `aws_s3_bucket_versioning`, `aws_lightsail_lb_stickiness_policy`, `aws_networkfirewall_logging_configuration`, `aws_networkmanager_attachment_accepter`, `aws_directory_service_directory`: the call sits behind a test on a setting's value, a loop, or a switch.
+- `aws_s3_bucket_versioning` (a denied create call too), `aws_lightsail_lb_stickiness_policy`, `aws_networkfirewall_logging_configuration`, `aws_networkmanager_attachment_accepter`, `aws_directory_service_directory`: the call sits behind a test on a setting's value, a loop, or a switch.
+
+**A few create calls have no permission rule yet.** tfpreflight knows the call but cannot name the one permission it needs, so it does not simulate it. The result lists the call as *couldn't check*:
+
+- `aws_s3_object_copy`: copying an object needs two permissions at once (read the source, write the target), and a rule holds one.
+- `aws_s3_bucket_metadata_configuration`.
+- Some Budgets, CodeCatalyst, CloudWatch Evidently, Keyspaces, MemoryDB, Observability Access Manager, Route 53 Recovery Control and S3 Control calls, where AWS lists several permissions for one call, or none, or uses a different service name.
 
 ## Provider settings that can be a variable
 
