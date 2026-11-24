@@ -2707,7 +2707,7 @@
     },
     {
       "body": "\u003cErrorResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eUserGroupNotFound\u003c/Code\u003e\n    \u003cMessage\u003eUser group !!not a valid identifier!! not found.\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003ea20afc97-1481-40c1-88e5-9881545d7f33\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
-      "expected": "UNKNOWN",
+      "expected": "NOT_FOUND",
       "headers": {
         "Content-Type": "text/xml"
       },
@@ -2718,7 +2718,7 @@
     },
     {
       "body": "\u003cErrorResponse xmlns=\"http://elasticache.amazonaws.com/doc/2015-02-02/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eUserGroupNotFound\u003c/Code\u003e\n    \u003cMessage\u003eUser group tfpreflight-absent-0123456789 not found.\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e87060a49-758b-478c-8d96-294b16d14a95\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
-      "expected": "UNKNOWN",
+      "expected": "NOT_FOUND",
       "headers": {
         "Content-Type": "text/xml"
       },
@@ -5433,7 +5433,7 @@
     },
     {
       "body": "\u003cErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eClusterSnapshotNotFound\u003c/Code\u003e\n    \u003cMessage\u003eSnapshot !!not a valid identifier!! not found.\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003ed86410b1-26a5-4b12-8c4a-471bc4c3e00c\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
-      "expected": "UNKNOWN",
+      "expected": "NOT_FOUND",
       "headers": {
         "Content-Type": "text/xml"
       },
@@ -5444,7 +5444,7 @@
     },
     {
       "body": "\u003cErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eClusterSnapshotNotFound\u003c/Code\u003e\n    \u003cMessage\u003eSnapshot !!not a valid identifier!! not found.\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e14c265fb-8ee7-49b7-adcc-029e16a067cb\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
-      "expected": "UNKNOWN",
+      "expected": "NOT_FOUND",
       "headers": {
         "Content-Type": "text/xml"
       },
@@ -5455,7 +5455,7 @@
     },
     {
       "body": "\u003cErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eClusterSnapshotNotFound\u003c/Code\u003e\n    \u003cMessage\u003eSnapshot tfpreflight-absent-0123456789 not found.\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e8e8b39ef-006d-4b30-b92f-647648233887\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
-      "expected": "UNKNOWN",
+      "expected": "NOT_FOUND",
       "headers": {
         "Content-Type": "text/xml"
       },
@@ -5466,7 +5466,7 @@
     },
     {
       "body": "\u003cErrorResponse xmlns=\"http://redshift.amazonaws.com/doc/2012-12-01/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eClusterSnapshotNotFound\u003c/Code\u003e\n    \u003cMessage\u003eSnapshot tfpreflight-absent-0123456789 not found.\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e845e385b-d595-432f-a47a-f1b256cdcf1d\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
-      "expected": "UNKNOWN",
+      "expected": "NOT_FOUND",
       "headers": {
         "Content-Type": "text/xml"
       },
