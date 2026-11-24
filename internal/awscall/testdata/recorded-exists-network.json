@@ -588,7 +588,7 @@
     },
     {
       "body": "\u003cErrorResponse xmlns=\"http://elasticloadbalancing.amazonaws.com/doc/2015-12-01/\"\u003e\n  \u003cError\u003e\n    \u003cType\u003eSender\u003c/Type\u003e\n    \u003cCode\u003eTargetGroupNotFound\u003c/Code\u003e\n    \u003cMessage\u003eOne or more target groups not found\u003c/Message\u003e\n  \u003c/Error\u003e\n  \u003cRequestId\u003e3ff65cd8-2391-4b0a-8830-8df9f732e70b\u003c/RequestId\u003e\n\u003c/ErrorResponse\u003e\n",
-      "expected": "UNKNOWN",
+      "expected": "NOT_FOUND",
       "headers": {
         "Content-Type": "text/xml"
       },
