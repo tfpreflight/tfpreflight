@@ -3,17 +3,17 @@
   "provider": "aws",
   "files": {
     "aws/conflict/aws.json": "d7e291451389ce654eabb931972ffc872e69681871c3c3cc818d5320f5a1683d",
-    "aws/conflict/generated-aws.json": "0e888a27cad1fc3eefd648cf23737d2ea660208dc8a581b3562fbb233a1713b9",
+    "aws/conflict/generated-aws.json": "e2b7f8a53541cd4a9d10917ddf24efc61913fbc3b675d0363089687d900d62e7",
     "aws/dependency/enforcement.json": "76ba319428533320caaaf9fb4236e8b837c42bc6615bb9eb93791d3cef8e6e69",
-    "aws/dependency/rules.json": "1bed74fb7d2b7aca8409c8b7948e5fbc76057cf0eca1d56f8d480014dfafa9e1",
-    "aws/generated/aws.json": "b03efb78c0e91db040759245593ec054a3339e6274c05ee658305c415918cd02",
+    "aws/dependency/rules.json": "a044f543f14b7a38a43b72a55826560d9783fdcef9addd7d5ba72118bbe98826",
+    "aws/generated/aws.json": "b60ab8259e2106d8e7a86271d45ca3b298550a3635e5f9798b33d310fe878f95",
     "aws/generated/quota-aws.json": "9d82bd8b05755467e93525bb2613ab686723450116d04d416eb10cac0c48e0f3",
     "aws/generated/quota-counter-aws.json": "85f59751f7d710623b4a8f7f911238b1bca19a39c7cd6f3a66070199d94c3faa",
     "aws/generated/verified-aws.json": "d6d18c2e6f8f67ce6ca52b2d1460ea174104dd5555198f22bfd2e75f44e58656",
-    "aws/iam/actions.json": "422d598cf3bfc228216206a8869210773302cb982985f40b35c456a010da95d1",
+    "aws/iam/actions.json": "0b6c8cf3176f305be0c7a7fb327cab7b0c6e9d0921470ca415bcfae5bcb98e8f",
     "aws/knowledge/v1.json": "7760076dd3bd5b5dc643a6fa4d118f79480051c03387bdc54efd2a06be65a0ff",
-    "aws/lookup/conflict-specs.json": "392ea73b479e834d5ae8d513ea31a9be785e044b75f7b9581e5128f8bc7518aa",
-    "aws/lookup/specs.json": "781e17a77f4c34616590557b634f338d0a9f3a5e053265bd1d70fb1fadbb37d6"
+    "aws/lookup/conflict-specs.json": "8c641612547fa33a71a455182cf231a247b4baa26b727659d988562a75cf8c96",
+    "aws/lookup/specs.json": "819cc5c30bcb9f9d297dbb7341b41336e4dbf02ce662cfa8cadc7215e9fdde54"
   },
   "versions": [
     "5.98.0",

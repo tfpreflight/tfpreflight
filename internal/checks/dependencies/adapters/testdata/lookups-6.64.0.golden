@@ -1,5 +1,5 @@
-rules 1683
-runnable 1672
+rules 1688
+runnable 1677
 lookups 275
 acm/DescribeCertificate/CertificateArn served
 acmpca/DescribeCertificateAuthority/CertificateAuthorityArn served

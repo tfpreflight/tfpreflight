@@ -8276,6 +8276,13 @@
   "cloudfront:createcontinuousdeploymentpolicy": {
    "resources": []
   },
+  "cloudfront:createdistribution": {
+   "resources": [],
+   "condition_keys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:TagKeys"
+   ]
+  },
   "cloudfront:createdistributiontenant": {
    "resources": [],
    "condition_keys": [
@@ -15503,6 +15510,16 @@
       "arn:${Partition}:dynamodb:${Region}:${Account}:table/${TableName}/backup/${BackupName}"
      ]
     },
+    {
+     "type": "table",
+     "formats": [
+      "arn:${Partition}:dynamodb:${Region}:${Account}:table/${TableName}"
+     ]
+    }
+   ]
+  },
+  "dynamodb:restoretabletopointintime": {
+   "resources": [
     {
      "type": "table",
      "formats": [
@@ -45100,6 +45117,24 @@
     "s3:x-amz-content-sha256"
    ]
   },
+  "s3:getlifecycleconfiguration": {
+   "resources": [
+    {
+     "type": "bucket",
+     "formats": [
+      "arn:${Partition}:s3:::${BucketName}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "s3:ResourceAccount",
+    "s3:TlsVersion",
+    "s3:authType",
+    "s3:signatureAge",
+    "s3:signatureversion",
+    "s3:x-amz-content-sha256"
+   ]
+  },
   "s3:getmetricsconfiguration": {
    "resources": [
     {
@@ -45176,6 +45211,32 @@
     "s3:authType",
     "s3:signatureAge",
     "s3:signatureversion"
+   ]
+  },
+  "s3:getobject": {
+   "resources": [
+    {
+     "type": "accesspointobject",
+     "formats": [
+      "arn:${Partition}:s3:${Region}:${Account}:accesspoint/${AccessPointName}/object/${ObjectName}"
+     ]
+    },
+    {
+     "type": "object",
+     "formats": [
+      "arn:${Partition}:s3:::${BucketName}/${ObjectName}"
+     ]
+    }
+   ],
+   "condition_keys": [
+    "s3:AccessGrantsInstanceArn",
+    "s3:ExistingObjectTag/\u003ckey\u003e",
+    "s3:ResourceAccount",
+    "s3:TlsVersion",
+    "s3:authType",
+    "s3:signatureAge",
+    "s3:signatureversion",
+    "s3:x-amz-content-sha256"
    ]
   },
   "s3:getreplicationconfiguration": {
