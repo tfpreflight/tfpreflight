@@ -70,7 +70,7 @@ func dependencyRuntime(ctx context.Context, plan dependencies.Plan, version stri
 	}
 	engine := dependencies.Engine{
 		Existence: rules, Resolver: resolver,
-		Scope:           dependencies.Scope{Region: decided.Region, Account: decided.Account},
+		Scope:           dependencies.Scope{Region: decided.Region, Account: decided.Account, Partition: decided.Partition},
 		Enforcement:     enforcement,
 		ProviderVersion: version,
 	}

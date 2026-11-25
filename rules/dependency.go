@@ -60,7 +60,15 @@ type ExistenceRule struct {
 	// TargetIdentity is IdentityServerGenerated, IdentityUnknown, or the planned
 	// attribute whose value becomes the target's id.
 	TargetIdentity string `json:"target_identity"`
-	Trust          string `json:"trust"`
+	// TargetIdentityName and TargetIdentityPrefix describe a target whose id is
+	// a name the user may choose: the planned attribute that holds the name, and
+	// the one that holds a prefix the provider extends when no name is given
+	// (name and name_prefix, say). They are set only beside a TargetIdentity of
+	// IdentityUnknown. A binary that does not know them reads the rule exactly
+	// as before, with an unknown identity.
+	TargetIdentityName   string `json:"target_identity_name,omitempty"`
+	TargetIdentityPrefix string `json:"target_identity_prefix,omitempty"`
+	Trust                string `json:"trust"`
 	// Key is what the configuration references the target by, and how that value
 	// becomes the one the lookup takes.
 	Key ReferenceKey `json:"key,omitempty"`

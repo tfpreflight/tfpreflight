@@ -6,6 +6,8 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/aws/aws-sdk-go-v2/aws/arn"
+
 	"github.com/tfpreflight/tfpreflight/rules/model"
 )
 
@@ -23,6 +25,8 @@ type ExistenceResolver interface {
 type Scope struct {
 	Region  string
 	Account string
+	// Partition is aws, aws-cn or aws-us-gov. Empty means it is not known.
+	Partition string
 }
 
 // Key identifies the question a lookup asks, for caching and deduplication.
@@ -329,7 +333,7 @@ func (e Engine) inspectTarget(ctx context.Context, plan Plan, change PlannedValu
 	case Exists:
 		return outcome, false
 	case NotFound:
-		return e.missing(plan, change, rule, identifier, why, outcome), true
+		return e.missing(plan, change, rule, identifier, value, why, outcome), true
 	case Malformed:
 		return malformed(change, rule, identifier, outcome), true
 	default:
@@ -342,14 +346,14 @@ func (e Engine) inspectTarget(ctx context.Context, plan Plan, change PlannedValu
 	}
 }
 
-func (e Engine) missing(plan Plan, change PlannedValues, rule ExistenceRule, identifier, why string, outcome Result) Result {
+func (e Engine) missing(plan Plan, change PlannedValues, rule ExistenceRule, identifier, value, why string, outcome Result) Result {
 	if !rule.Lookup.ProvesAbsence() {
 		decided := outcome.partial("the lookup cannot prove absence: " + why)
 		decided.Cause = CauseNoAnswer
 		return decided
 	}
 	// Rule out a create of the same identifier that no reference orders first.
-	switch createdByValue(plan, rule, identifier) {
+	switch createdByValue(plan, rule, identifier, value, e.Scope) {
 	case createdByValueMatch:
 		outcome.Verdict, outcome.Reason = VerdictOrderingRisk, identifier+" is created by this plan without a reference, so Terraform does not order it first"
 		outcome.Finding = orderingFinding(change.Address, rule, "is created by this same plan, but only by value, so Terraform does not create it first")
@@ -535,9 +539,14 @@ const (
 	createdByValueUndecidable
 )
 
-func createdByValue(plan Plan, rule ExistenceRule, identifier string) valueCreation {
-	identity := rule.TargetIdentity
-	if identity == IdentityServerGenerated {
+// createdByValue says whether a planned create could be the target that a
+// literal identifier names. identifier is the text in the plan; value is what
+// the lookup takes, which for an ARN is the name read out of it.
+//
+// Anything unclear is undecidable, which the caller reports as "couldn't
+// check". Only a clear difference rules a create out.
+func createdByValue(plan Plan, rule ExistenceRule, identifier, value string, scope Scope) valueCreation {
+	if rule.TargetIdentity == IdentityServerGenerated {
 		return notCreatedByValue
 	}
 	undecidable := false
@@ -545,22 +554,107 @@ func createdByValue(plan Plan, rule ExistenceRule, identifier string) valueCreat
 		if change.ResourceType != rule.TargetResource || !hasAction(change.Actions, "create") {
 			continue
 		}
-		if identity == IdentityUnknown || identity == "" {
-			undecidable = true
-			continue
-		}
-		if value, ok := change.After[identity].(string); ok {
-			if value == identifier {
-				return createdByValueMatch
+		switch sameTarget(change, rule, value) {
+		case sameTargetYes:
+			// A name matches only if the ARN also points at this account,
+			// partition and region; otherwise it may be someone else's.
+			if !arnInScope(rule, identifier, scope) {
+				undecidable = true
+				continue
 			}
-			continue
+			return createdByValueMatch
+		case sameTargetMaybe:
+			undecidable = true
 		}
-		undecidable = true
 	}
 	if undecidable {
 		return createdByValueUndecidable
 	}
 	return notCreatedByValue
+}
+
+type sameTargetAnswer int
+
+const (
+	sameTargetNo sameTargetAnswer = iota
+	sameTargetYes
+	sameTargetMaybe
+)
+
+// sameTarget compares one planned create with the name a literal refers to.
+func sameTarget(change PlannedValues, rule ExistenceRule, value string) sameTargetAnswer {
+	identity := rule.TargetIdentity
+	if identity != IdentityUnknown && identity != "" {
+		planned, ok := change.After[identity].(string)
+		switch {
+		case !ok:
+			return sameTargetMaybe
+		case planned == value:
+			return sameTargetYes
+		}
+		return sameTargetNo
+	}
+	if rule.TargetIdentityName == "" {
+		return sameTargetMaybe
+	}
+	// A name the user gave wins over a prefix. A name that is not known yet and
+	// a name nobody gave look the same in a plan (both are absent), so absence
+	// is never read as "no name".
+	if planned, ok := change.After[rule.TargetIdentityName].(string); ok && planned != "" {
+		return compareNames(planned, value, false)
+	}
+	if rule.TargetIdentityPrefix != "" {
+		if prefix, ok := change.After[rule.TargetIdentityPrefix].(string); ok && prefix != "" {
+			return compareNames(prefix, value, true)
+		}
+	}
+	return sameTargetMaybe
+}
+
+// compareNames reports whether value is, or could start with, planned. A
+// difference only in letter case is "maybe": IAM treats such names as one.
+func compareNames(planned, value string, prefix bool) sameTargetAnswer {
+	if prefix {
+		if strings.HasPrefix(value, planned) {
+			return sameTargetMaybe
+		}
+		if len(value) >= len(planned) && strings.EqualFold(value[:len(planned)], planned) {
+			return sameTargetMaybe
+		}
+		return sameTargetNo
+	}
+	if planned == value {
+		return sameTargetYes
+	}
+	if strings.EqualFold(planned, value) {
+		return sameTargetMaybe
+	}
+	return sameTargetNo
+}
+
+// arnInScope is true when the identifier is not an ARN, or is one that belongs
+// to the scope the plan runs in. The ARN's published format says which of
+// account and region it carries; a format that is not known demands both.
+func arnInScope(rule ExistenceRule, identifier string, scope Scope) bool {
+	if !arn.IsARN(identifier) {
+		return true
+	}
+	parsed, err := arn.Parse(identifier)
+	if err != nil || scope.Partition == "" || parsed.Partition != scope.Partition {
+		return false
+	}
+	format := rule.Key.ARNFormat
+	if format == "" || strings.Contains(format, "${Account}") {
+		if scope.Account == "" || parsed.AccountID != scope.Account {
+			return false
+		}
+	}
+	if format == "" || strings.Contains(format, "${Region}") {
+		if scope.Region == "" || parsed.Region != scope.Region {
+			return false
+		}
+	}
+	return true
 }
 
 func hasAction(actions []string, wanted string) bool {
