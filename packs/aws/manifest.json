@@ -5,7 +5,7 @@
     "aws/conflict/aws.json": "d7e291451389ce654eabb931972ffc872e69681871c3c3cc818d5320f5a1683d",
     "aws/conflict/generated-aws.json": "e2b7f8a53541cd4a9d10917ddf24efc61913fbc3b675d0363089687d900d62e7",
     "aws/dependency/enforcement.json": "76ba319428533320caaaf9fb4236e8b837c42bc6615bb9eb93791d3cef8e6e69",
-    "aws/dependency/rules.json": "a044f543f14b7a38a43b72a55826560d9783fdcef9addd7d5ba72118bbe98826",
+    "aws/dependency/rules.json": "994accdc9ac46d0bae6f64f1fba3cb16865aacb0c2a62eef515e31ba297a8642",
     "aws/generated/aws.json": "b60ab8259e2106d8e7a86271d45ca3b298550a3635e5f9798b33d310fe878f95",
     "aws/generated/quota-aws.json": "9d82bd8b05755467e93525bb2613ab686723450116d04d416eb10cac0c48e0f3",
     "aws/generated/quota-counter-aws.json": "85f59751f7d710623b4a8f7f911238b1bca19a39c7cd6f3a66070199d94c3faa",
