@@ -2,6 +2,14 @@
 
 All notable changes to tfpreflight are recorded here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## Unreleased
+
+- Fixed: when a reference is a full ARN and the same plan creates the thing it points to, tfpreflight now compares the name inside the ARN, not the whole ARN with the name. Before, it never matched, so it said "does not exist" for something the plan creates. Now it gives the finding for a dependency that Terraform does not order. This applies to references such as a Lambda function ARN, an IAM user ARN, a DynamoDB table ARN or an EKS cluster ARN.
+- Changed: an ARN is matched to a thing in this plan only when its partition matches, and its account and region match where the ARN has them (an S3 bucket ARN has no account). An ARN from another account or partition is now counted as a check that could not finish, not as "does not exist".
+- Changed: a name that differs from the planned name only in letter case is now counted as a check that could not finish, not as "does not exist", because some services treat such names as one.
+- New: for user-named IAM roles, instance profiles, key pairs and S3 buckets, tfpreflight now reads the planned `name` or `name_prefix` (`key_name` or `key_name_prefix` for a key pair, `bucket` or `bucket_prefix` for a bucket), so a missing reference that does not match any name created in the plan gets a warning instead of "could not be checked". A plan that sets neither, or sets a value that is not known until apply, stays "could not be checked". This needs rules built for this release. A rules file for an older release is read as before.
+- None of this blocks. Every finding keeps its severity (a warning), and a case it cannot decide is "could not be checked".
+
 ## 0.1.0-beta.9 (2026-11-24)
 
 - New: three kinds of resource now get a warning when their name is already taken: a load balancer (`aws_lb`), a DB subnet group and an Auto Scaling group. tfpreflight asks AWS, and it counts only an exact match of a name that is known when the plan is made (a literal, not a value AWS picks during the apply). A name that is not known yet is not looked up. These warn and never block, because the rules come from provider source and AWS metadata and have not been verified in a sandbox account.
