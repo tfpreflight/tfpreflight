@@ -158,7 +158,7 @@ func TestARNFormatDecidesWhichPartsMustMatch(t *testing.T) {
 		Key:    ReferenceKey{Kind: KeyARN, Normalization: NormalizationARNComponent, ARNService: "s3", ARNPrefix: "", ARNFormat: "arn:${Partition}:s3:::${BucketName}"},
 		Lookup: Lookup{Service: "s3", Operation: "HeadBucket", Field: "Bucket", NotFoundType: "NotFound", NotFoundCodes: []string{"NoSuchBucket"}},
 	}
-	plan := func(rule ExistenceRule, literal string) Plan {
+	plan := func(literal string) Plan {
 		return Plan{
 			References: map[string]map[string]AttributeReference{"aws_s3_bucket_policy.p": {"bucket": {Attribute: "bucket", Origin: OriginLiteral}}},
 			Actions:    map[string][]string{},
@@ -171,7 +171,7 @@ func TestARNFormatDecidesWhichPartsMustMatch(t *testing.T) {
 	}
 	run := func(rule ExistenceRule, literal string, scope Scope) Result {
 		resolver := &fakeResolver{answers: map[string]Existence{"logs": NotFound, "arn:aws:s3:::logs": NotFound}}
-		results, _ := Engine{Existence: []ExistenceRule{rule}, Resolver: resolver, Scope: scope}.Evaluate(context.Background(), plan(rule, literal))
+		results, _ := Engine{Existence: []ExistenceRule{rule}, Resolver: resolver, Scope: scope}.Evaluate(context.Background(), plan(literal))
 		for _, result := range results {
 			if result.Address == "aws_s3_bucket_policy.p" {
 				return result
