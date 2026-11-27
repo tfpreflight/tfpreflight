@@ -591,6 +591,9 @@ func sameTarget(change PlannedValues, rule ExistenceRule, value string) sameTarg
 			return sameTargetMaybe
 		case planned == value:
 			return sameTargetYes
+		case strings.EqualFold(planned, value):
+			// Some services treat names that differ only in letter case as one.
+			return sameTargetMaybe
 		}
 		return sameTargetNo
 	}

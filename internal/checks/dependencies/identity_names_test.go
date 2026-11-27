@@ -135,6 +135,19 @@ func TestAttributeIdentityReadsTheNameInsideAnARN(t *testing.T) {
 	}
 }
 
+// A name that differs only in letter case may be the same target (IAM user and
+// role names are not case sensitive), so the answer is "couldn't check", never
+// "does not exist". This is the planned-attribute path, not the name helpers.
+func TestAttributeIdentityCaseOnlyDifferenceCouldNotBeChecked(t *testing.T) {
+	rule := roleRule()
+	if got := evaluateRole(rule, rolePlan(appARN, map[string]any{"name": "App"}, nil), accountScope); got.Verdict != VerdictPartial {
+		t.Fatalf("ARN, case only: verdict = %q, want partial", got.Verdict)
+	}
+	if got := evaluateRole(rule, rolePlan(appARN, map[string]any{"name": "APP"}, nil), accountScope); got.Verdict != VerdictPartial {
+		t.Fatalf("ARN, upper case: verdict = %q, want partial", got.Verdict)
+	}
+}
+
 // An ARN whose published format has no account (S3) is checked on its name and
 // partition alone; one with a region needs the region to match as well.
 func TestARNFormatDecidesWhichPartsMustMatch(t *testing.T) {
